@@ -39,6 +39,13 @@ Règles ajoutées :
 - Consulter QUESTIONS_OUVERTES avant toute décision technique.
 - Produitire un rapport dans rapports/ après chaque exécution (jamais écraser).
 - Présenter l'état d'avancement en % à chaque réponse.
+## [2026-07-04T23:42:00Z] Correction — Cloud ≠ machine utilisateur
+
+- Rapport `012` : rapports 011 exécutés sur VM cursor, pas sur PC utilisateur
+- `EXECUTION_MACHINE_UTILISATEUR.md` + `setup_machine_locale.sh`
+- `run_real_local.sh` → `logs/machine_fingerprint.txt` (`USER_MACHINE` vs `CLOUD_AGENT`)
+- L'agent ne peut pas lancer de commandes sur le PC de l'utilisateur
+
 ## [2026-07-04T23:37:00Z] Correction — démo API sans frontend
 
 - Démo canonique = `make api` + `python3 scripts/demo_live.py` — **pas de navigateur**

@@ -77,6 +77,11 @@
 **Leçon :** Toujours synchroniser DECISIONS + DEMO_TEXTE quand l'utilisateur tranche Q-006.  
 **Action :** D-010 + `DEMO_TEXTE_ARTCB` + `ARTCB_DEMO_BOOK_PDF`.
 
+### L-019 — Cloud Agent ≠ machine utilisateur (4 juil. 2026)
+**Contexte :** Utilisateur exige exécution sur SON PC ; rapports 011 parlaient de « local » sur `/workspace` (VM cursor).  
+**Leçon :** L'agent Cloud **ne peut pas** exécuter sur le disque de l'utilisateur. Distinguer `CLOUD_AGENT` vs `USER_MACHINE` via `logs/machine_fingerprint.txt`.  
+**Action :** `EXECUTION_MACHINE_UTILISATEUR.md`, rapport `012`, détection hostname dans `run_real_local.sh`.
+
 ### L-018 — Démo ≠ ouvrir le frontend (4 juil. 2026)
 **Contexte :** Utilisateur refuse toute fenêtre locale ; ne connaît pas l'UI.  
 **Leçon :** La validation PROTOCOLE se fait via **script HTTP + logs** ; le frontend est optionnel (Phase 4), jamais imposé. Décrire l'UI en texte si l'utilisateur ne veut pas ouvrir de navigateur.  
