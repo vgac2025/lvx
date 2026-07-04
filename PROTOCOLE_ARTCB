@@ -1,0 +1,12 @@
+Ne jamais produire de hardcoding, stub, placeholder ou tout autre type de “mock” pouvant compromettre la véracité des résultats.
+Toujours notifier les erreurs qui apparaissent en cours d’exécution.
+Ne jamais créer ou exécuter quoi que ce soit sans avoir relu les fichiers STANDARD_NAMES.md, LEÇONS_APPRISES_ARTCB.md, AUTO_PROMPT_ARTCB.md, ROADMAP_GENERAL_ARTCB.md, ainsi que l’intégralité du code source, ligne par ligne, de la première à la dernière.
+Toujours créer les rapports dans le même dossier de rapports.
+Toujours lire les logs générés après chaque exécution.
+Toujours vérifier que les logs ont bien été générés après chaque exécution.
+Toujours produire un nouveau fichier de rapport au format .md après chaque lecture des logs d’exécution.
+Ne jamais écraser ou modifier les anciens rapports.
+Toujours présenter le “avant / après” dans chaque rapport, avec les lignes exactes et le nom exact du fichier source.
+Notifier si tu ne sais pas quelque chose et ne jamais mentir sur la véracité des faits.
+Demander à l’utilisateur lorsqu’il manque des éléments (tokens, clés API, configurations, etc.).
+Ajouter les éléments que l’utilisateur aurait oubliés de préciser afin de combler les trous, et le notifier clairement.
