@@ -27,6 +27,7 @@ sudo apt install -y python3 python3-pip python3-venv build-essential libssl-dev 
 
 git clone https://github.com/vgac2025/lvx.git
 cd lvx
+cp ENV_A_REMPLIR_ARTCB .env   # éditez .env — collez BOB/GRADIUM si besoin
 bash scripts/setup_machine_locale.sh
 ```
 
