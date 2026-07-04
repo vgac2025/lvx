@@ -48,6 +48,7 @@ class IRGraph(BaseModel):
     nodes: list[IRNode]
     edges: list[IREdge]
     macros: dict[str, IRMacro] = Field(default_factory=dict)
+    orig_symbols: dict[str, str] = Field(default_factory=dict)
     checksum: str
     join_sep: str = " "
 
@@ -59,6 +60,7 @@ class IRGraph(BaseModel):
             "nodes": [n.model_dump() for n in self.nodes],
             "edges": [e.model_dump(by_alias=True) for e in self.edges],
             "macros": {k: v.model_dump() for k, v in self.macros.items()},
+            "orig_symbols": self.orig_symbols,
             "checksum": self.checksum,
             "join_sep": self.join_sep,
         }
@@ -81,6 +83,7 @@ class IRGraph(BaseModel):
             nodes=nodes,
             edges=edges,
             macros=macros,
+            orig_symbols=data.get("orig_symbols", {}),
             checksum=data["checksum"],
             join_sep=data.get("join_sep", " "),
         )

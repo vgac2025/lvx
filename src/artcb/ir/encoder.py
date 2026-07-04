@@ -21,6 +21,7 @@ from artcb.ir.grammar import (
 )
 from artcb.ir.macros import apply_macros_to_graph
 from artcb.ir.models import IREdge, IRGraph, IRNode, sha256_text
+from artcb.ir.symbols import SymbolRegistry
 
 logger = logging.getLogger("artcb.ir.encoder")
 
@@ -33,7 +34,10 @@ class SentenceSpan:
 
 
 class IREncoder:
-    """Encode du texte en graphe IR avec réversibilité garantie via source_text + spans."""
+    """Encode text into IR graph with guaranteed reversibility via source_text + spans."""
+
+    def __init__(self, symbol_registry: SymbolRegistry | None = None) -> None:
+        self._registry = symbol_registry or SymbolRegistry()
 
     def encode(self, text: str, session_id: str | None = None) -> IRGraph:
         if not text or not text.strip():
@@ -92,6 +96,7 @@ class IREncoder:
             edges=edges,
             checksum=sha256_text(text),
             join_sep=join_sep,
+            orig_symbols=self._registry.export(),
         )
 
         if not graph.verify_integrity():
@@ -202,7 +207,7 @@ class IREncoder:
                 NodeType.EVENT: "E",
                 NodeType.CONTEXT: "M2",
             }
-            obj = type_fallback.get(node_type, "M3")
+            obj = type_fallback.get(node_type, self._registry.mint_original(sentence))
 
         return f"{action}{obj}"
 

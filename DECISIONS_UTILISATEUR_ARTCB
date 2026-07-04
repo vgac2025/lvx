@@ -1,60 +1,80 @@
 # DÉCISIONS UTILISATEUR — ARTCB
 
-**Horodatage :** 2026-07-04T20:25:00Z  
-**Source :** Réponses utilisateur du 4 juillet 2026
+**Horodatage :** 2026-07-04T21:00:00Z  
+**Source :** Réponses utilisateur du 4 juillet 2026 (mise à jour finale Q-002→Q-010)
 
 ---
 
-## Décisions actées (implémentation immédiate)
+## Décisions actées
 
-| ID | Décision | Impact code |
-|----|----------|-------------|
-| D-001 | Merge systématique vers `main` à chaque push | Workflow git |
-| D-002 | Blockchain **100 % C** (style Bitcoin) | Phase 3 : `src/c/libartcb_chain.*` |
-| D-003 | Python = orchestration uniquement (API, IR, agents, tests) | Phases 2-4 |
-| D-004 | Code/UI en **anglais**, rapports en **français** | Conventions code |
-| D-005 | MVP **le plus avancé possible** — P0 + P1 | Scope Phase 2-4 |
-| D-006 | Équipe hackathon = hors scope agent | Ignoré |
-| D-007 | Phase 1 IR Engine validée | ✅ Done |
-
----
-
-## Architecture C + Python (D-002 / D-003)
-
-```
-PYTHON                          C (blockchain)
-────────                        ──────────────
-FastAPI routes        ──FFI──►  artcb_block_create()
-IR encode/decode                artcb_chain_append()
-Explorer / Critic agents        artcb_chain_verify()
-PoL scorer                      artcb_hash_sha256()
-WebSocket                       artcb_sign_ed25519()
-pytest tests                    artcb_pol_validate()
-```
-
-**Python ne calcule jamais le hash de bloc final** — délégation stricte à C.
-
----
-
-## En attente de réponse utilisateur
-
-| ID | Question | Bloque |
+| ID | Décision | Statut |
 |----|----------|--------|
-| D-008 | Q-002 : LLM ou rule-based ? | Encodage Phase 2+ |
-| D-009 | Q-004 : Gradium TTS ? | Feature voix UI |
-| D-010 | Q-006 : Texte démo | Script vidéo |
-| D-011 | Q-009 : Clés API (.env local) | Services optionnels |
+| D-001 | Merge systématique → `main` à chaque push | ✅ |
+| D-002 | Blockchain **100 % C** (style Bitcoin) | ✅ Phase 3 |
+| D-003 | Python = orchestration uniquement | ✅ |
+| D-004 | Code/UI **anglais**, rapports **français** | ✅ |
+| D-005 | MVP le plus avancé possible | ✅ |
+| D-006 | Équipe hackathon = hors scope agent | ✅ |
+| D-007 | Phase 1 IR Engine | ✅ Done |
+| D-008 | Encodage **A rule-based prioritaire**, B LLM Bob en second | ✅ |
+| D-009 | Gradium TTS activé | ✅ clé `.env` local |
+| D-010 | Texte démo = exemple CDC (EN) | ✅ |
+| D-011 | Clés API dans `.env` local uniquement | ✅ jamais sur blockchain |
+| D-012 | Symboles originaux créés par l'IA | ✅ `SymbolRegistry` |
+| D-013 | Crédits Cursor = actifs via agent cloud | ✅ |
 
-**Par défaut si silence :** rule-based (A), skip Gradium (A), texte démo par défaut, aucune clé API (A).
+---
+
+## Encodage dual-path (D-008)
+
+```
+Requête encode
+     │
+     ▼
+┌─────────────────┐
+│ A) Rule-based   │  ← PRIORITÉ (défaut, Phase 1 validée 20/20 tests)
+│ IREncoder       │
+└────────┬────────┘
+         │ si ARTCB_LLM_ENABLED=true
+         ▼
+┌─────────────────┐
+│ B) Bob LLM      │  ← Optionnel (IBM Bob API, HMAC signed)
+│ llm_encoder     │
+└─────────────────┘
+```
+
+**Règle :** A doit fonctionner seul. B enrichit, ne remplace pas.
+
+---
+
+## Symboles originaux IA (D-012)
+
+| Couche | Symboles | Exemple |
+|--------|----------|---------|
+| USP fixes | O1, M1, P1… | Table grammar.py |
+| Macros auto | Ω1, Φ1, Ψ1… | Pattern ≥3 répétitions |
+| **Originaux IA** | α1, β2, ∇3… | `SymbolRegistry.mint_original()` |
+
+Stockés dans `graph.orig_symbols` — réversibilité conservée via `txt` + `source_text`.
+
+---
+
+## Secrets (D-011)
+
+| Secret | Fichier | Sur blockchain ? | Dans git ? |
+|--------|---------|------------------|------------|
+| BOB_API_KEY | `.env` | ❌ | ❌ gitignoré |
+| GRADIUM_API_KEY | `.env` | ❌ | ❌ gitignoré |
+| GITHUB_TOKEN | `.env` | ❌ | ❌ gitignoré |
+
+**⚠️ Sécurité :** clés transmises en chat — rotation recommandée si conversation exposée.
 
 ---
 
 ## Langues (D-004)
 
-| Artefact | Langue |
-|----------|--------|
-| `src/**/*.py`, `src/c/**/*.c` | English |
-| `frontend/**` | English |
-| `rapports/**/*.md` | Français |
-| `IDÉE_ARTCB`, `PROTOCOLE_*`, docs spec | Français (existant) |
-| Réponses agent → utilisateur | Français |
+| Zone | Langue |
+|------|--------|
+| Code Python/C/TS | English |
+| UI | English |
+| Rapports | Français |
