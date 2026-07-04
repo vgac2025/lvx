@@ -17,3 +17,5 @@ data/*
 !data/fixtures/wailly_le_roi_de_l_inconnu.pdf
 *.faiss
 *.key
+src/c/*.so
+src/c/test_chain

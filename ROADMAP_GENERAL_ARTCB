@@ -35,34 +35,36 @@
 
 ---
 
-## Phase 2 — Backend (P0 — 4h) 🟡 EN COURS
+## Phase 2 — Backend (P0 — 4h) ✅
 
 **Objectif :** API + RT-LEG + Dual-agent + PoL
 
 | Jalon | Livrable | Critère | Statut |
 |-------|----------|---------|--------|
-| 2.1 | FastAPI routes § 8 CDC | 12 endpoints | 🟡 6/12 |
-| 2.2 | RT-LEG events | Timeline append-only signée | ✅ base |
+| 2.1 | FastAPI routes § 8 CDC | 12 endpoints | ✅ |
+| 2.2 | RT-LEG events | Timeline append-only signée | ✅ |
 | 2.3 | Agent Explorateur | Décomposition texte → nœuds | ✅ |
 | 2.4 | Agent Critique | Validation + PoL | ✅ |
 | 2.5 | PoL Scorer | Formule § 3.2.4 + split collectif | ✅ |
-| 2.6 | Rapport `rapports/006_decisions_phase2.md` | Logs + métriques | ✅ |
+| 2.6 | Bob HTTP client | litellm-ibm-bob signed inference | ✅ |
+| 2.7 | WebSocket §20 | `/ws/graph/{session_id}` | ✅ |
+| 2.8 | Rapport `rapports/007_phase2_phase3_backend_chain.md` | Logs + métriques | ✅ |
 
 ---
 
-## Phase 3 — Blockchain (P0 — 3h)
+## Phase 3 — Blockchain (P0 — 3h) 🟡
 
 **Objectif :** Chaîne locale signée + persistance
 
-| Jalon | Livrable | Critère |
-|-------|----------|---------|
-| 3.1 | Block + Chain Python | Hash chaîné, signature Ed25519 |
-| 3.2 | Core C (**obligatoire** — D-002) | libartcb_chain SHA-256 + Ed25519 | ⏳ |
-| 3.3 | Persistance JSONL/SQLite | Survit au redémarrage |
-| 3.4 | `/chain/verify` | Détection tampering |
-| 3.5 | Rapport `rapports/003_blockchain.md` | Intégrité prouvée |
-| 3.6 | `artcb-devnet` + faucet tARTCB | Spec RESEAU_DEVNET |
-| 3.7 | Block reward + split PoL collectif | Spec TOKENOMICS §6-7 |
+| Jalon | Livrable | Critère | Statut |
+|-------|----------|---------|--------|
+| 3.1 | Block + Chain Python | Hash chaîné, signature Ed25519 | ✅ |
+| 3.2 | Core C (**obligatoire** — D-002) | libartcb_chain SHA-256 + verify | ✅ |
+| 3.3 | Persistance JSONL | Survit au redémarrage | ✅ |
+| 3.4 | `/chain/verify` | Détection tampering | ✅ |
+| 3.5 | Rapport `rapports/007_phase2_phase3_backend_chain.md` | Intégrité prouvée | ✅ |
+| 3.6 | `artcb-devnet` + faucet tARTCB | Spec RESEAU_DEVNET | ⏳ |
+| 3.7 | Block reward + split PoL collectif | Spec TOKENOMICS §6-7 | ⏳ |
 
 ---
 

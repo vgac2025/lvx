@@ -39,6 +39,14 @@ Règles ajoutées :
 - Consulter QUESTIONS_OUVERTES avant toute décision technique.
 - Produitire un rapport dans rapports/ après chaque exécution (jamais écraser).
 - Présenter l'état d'avancement en % à chaque réponse.
+## [2026-07-04T23:12:00Z] Mise à jour — Phase 2 ✅ + Phase 3 C base
+
+- 12 endpoints REST + WebSocket §20
+- Bob HTTP via litellm-ibm-bob (signed inference)
+- libartcb_chain.so (SHA256 + verify JSONL)
+- Rapport `rapports/007_phase2_phase3_backend_chain.md`
+- 41/41 tests
+
 ## [2026-07-04T23:05:00Z] Mise à jour — décisions Q-002→Q-016 actées
 
 - Q-006 : livre Wailly 100% → `DEMO_TEXTE_ARTCB`

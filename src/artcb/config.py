@@ -18,6 +18,9 @@ class ArtcbSettings:
     llm_enabled: bool
     bob_api_key: str | None
     bob_api_base: str
+    bob_model: str
+    bob_team_id: str | None
+    bob_instance_id: str | None
     gradium_api_key: str | None
     gradium_api_url: str
     github_token: str | None
@@ -41,6 +44,9 @@ def load_settings() -> ArtcbSettings:
         llm_enabled=_bool("ARTCB_LLM_ENABLED", "false"),
         bob_api_key=os.getenv("BOB_API_KEY") or os.getenv("OPENROUTER_API_KEY") or None,
         bob_api_base=os.getenv("BOB_API_BASE", "https://api.us-east.bob.ibm.com"),
+        bob_model=os.getenv("BOB_MODEL", "ibm/granite-3-8b-instruct"),
+        bob_team_id=os.getenv("BOB_TEAM_ID") or None,
+        bob_instance_id=os.getenv("BOB_INSTANCE_ID") or None,
         gradium_api_key=os.getenv("GRADIUM_API_KEY") or None,
         gradium_api_url=os.getenv("GRADIUM_API_URL", "https://api.gradium.ai"),
         github_token=os.getenv("GITHUB_TOKEN") or None,
