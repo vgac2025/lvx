@@ -1,10 +1,15 @@
 # STRUCTURE ARTCB — Arborescence projet MVP Avancé
 
-**Horodatage :** 2026-07-04T19:45:00Z
+**Horodatage :** 2026-07-04T19:55:00Z
 
 ```
 lvx/
-├── CAHIER_DES_CHARGES_ARTCB      # Ce cahier des charges
+├── README.md                     # Documentation publique GitHub
+├── INDEX_ARTCB                   # Cartographie et ordre de lecture
+├── CAHIER_DES_CHARGES_ARTCB      # Spec MVP Avancé v1.1
+├── CONFIGURATION_ARTCB           # Env, deps, ports, data dir
+├── CHECKLIST_PRE_DEV_ARTCB         # Gate avant développement
+├── QUESTIONS_OUVERTES_ARTCB        # Décisions en attente utilisateur
 ├── IDÉE_ARTCB                    # Vision projet
 ├── PROTOCOLE_ARTCB               # Règles de développement
 ├── AUTO_PROMPT_ARTCB             # Prompt agent
@@ -13,9 +18,8 @@ lvx/
 ├── LEÇONS_APPRISES_ARTCB         # Retours d'expérience
 ├── STRUCTURE_ARTCB               # Ce fichier
 ├── REGLES HACKATHON RAISE SOUMMIT
-├── README.md                     # Documentation publique
 │
-├── src/
+├── src/                          # ❌ À créer Phase 1 (après ordre utilisateur)
 │   ├── artcb/
 │   │   ├── __init__.py
 │   │   ├── ir/                   # IR Engine — encode/decode

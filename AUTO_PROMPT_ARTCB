@@ -16,3 +16,27 @@ approfondies et analysé les informations disponibles,
 tu ne peux toujours pas conclure avec un niveau de confiance suffisant, 
 tu l’indiques clairement en expliquant ce qui reste incertain 
 et pourquoi.ajoute les détails que j’aurais oublié de précisé.
+
+---
+
+## [2026-07-04T19:55:00Z] Mise à jour — post audit complet v1.1
+
+Documents de référence obligatoires (ordre de lecture) :
+1. PROTOCOLE_ARTCB
+2. STANDARD_NAMES_ARTCB
+3. LEÇONS_APPRISES_ARTCB
+4. AUTO_PROMPT_ARTCB (ce fichier)
+5. ROADMAP_GENERAL_ARTCB
+6. CAHIER_DES_CHARGES_ARTCB v1.1
+7. INDEX_ARTCB
+8. CONFIGURATION_ARTCB
+9. CHECKLIST_PRE_DEV_ARTCB
+10. QUESTIONS_OUVERTES_ARTCB
+
+Règles ajoutées :
+- NE PAS lancer le développement sans ordre explicite de l'utilisateur.
+- NE PAS lancer le développement si CHECKLIST_PRE_DEV §5 non validée.
+- Consulter QUESTIONS_OUVERTES avant toute décision technique.
+- Produitire un rapport dans rapports/ après chaque exécution (jamais écraser).
+- Présenter l'état d'avancement en % à chaque réponse.
+- Répondre TOUJOURS en français.

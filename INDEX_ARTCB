@@ -1,0 +1,106 @@
+# INDEX GÉNÉRAL — ARTCB
+
+**Horodatage :** 2026-07-04T19:55:00Z  
+**Statut dépôt :** Spécification complète — développement en attente d'ordres utilisateur
+
+---
+
+## État de synchronisation GitHub
+
+| Branche | Commit | Contenu |
+|---------|--------|---------|
+| `origin/main` | `1f6f2f9` | Docs de base (sans CDC complet) |
+| `origin/cursor/cahier-des-charges-mvp-1fce` | `7cdc341` | CDC + structure + roadmap + rapports/ |
+| **Branche active locale** | `7cdc341` | À jour avec remote feature branch |
+
+**Action requise avant dev :** merger la branche feature dans `main` (décision utilisateur).
+
+---
+
+## Ordre de lecture obligatoire (PROTOCOLE)
+
+| # | Fichier | Lignes | Statut | Rôle |
+|---|---------|--------|--------|------|
+| 1 | `PROTOCOLE_ARTCB` | 17 | ✅ Complet | Règles de dev inviolables |
+| 2 | `STANDARD_NAMES_ARTCB` | 145 | ✅ Complet | Conventions nommage |
+| 3 | `LEÇONS_APPRISES_ARTCB` | 47+ | ✅ Complet | Retours d'expérience |
+| 4 | `AUTO_PROMPT_ARTCB` | 18+ | ✅ Complet | Prompt agent |
+| 5 | `ROADMAP_GENERAL_ARTCB` | 107 | ✅ Complet | Phases et jalons |
+| 6 | `IDÉE_ARTCB` | 1429 | ✅ Complet | Vision + autocritique RT-LEG |
+| 7 | `CAHIER_DES_CHARGES_ARTCB` | 599+ | ✅ v1.1 | Spec MVP Avancé |
+| 8 | `STRUCTURE_ARTCB` | 81 | ✅ Complet | Arborescence cible |
+| 9 | `CONFIGURATION_ARTCB` | — | ✅ Nouveau | Config, deps, clés API |
+| 10 | `CHECKLIST_PRE_DEV_ARTCB` | — | ✅ Nouveau | Gate avant développement |
+| 11 | `QUESTIONS_OUVERTES_ARTCB` | — | ✅ Nouveau | Décisions en attente |
+| 12 | `REGLES HACKATHON RAISE SOUMMIT` | 332 | ✅ Complet | Contraintes événement |
+| 13 | `INDEX_ARTCB` | — | ✅ Ce fichier | Cartographie globale |
+
+---
+
+## Mapping PROTOCOLE → fichiers réels
+
+Le PROTOCOLE cite des noms `.md` incorrects. Voici la correspondance officielle :
+
+| Référence PROTOCOLE | Fichier réel |
+|--------------------|--------------|
+| `STANDARD_NAMES.md` | `STANDARD_NAMES_ARTCB` |
+| `LEÇONS_APPRISES_ARTCB.md` | `LEÇONS_APPRISES_ARTCB` |
+| `AUTO_PROMPT_ARTCB.md` | `AUTO_PROMPT_ARTCB` |
+| `ROADMAP_GENERAL_ARTCB.md` | `ROADMAP_GENERAL_ARTCB` |
+
+---
+
+## Code source
+
+| Élément | Statut |
+|---------|--------|
+| `/src/` | ❌ Absent — développement non lancé |
+| `/frontend/` | ❌ Absent |
+| `/tests/` | ❌ Absent |
+| `requirements.txt` | ❌ Absent (spec dans CONFIGURATION_ARTCB) |
+| `README.md` | ✅ Présent (vue d'ensemble) |
+
+---
+
+## Dossiers PROTOCOLE
+
+| Dossier | Statut | Contenu |
+|---------|--------|---------|
+| `rapports/` | ✅ Créé | `000_audit_complet.md` |
+| `logs/` | ✅ Créé | Vide (normal avant exécution) |
+
+---
+
+## Matrice de complétude documentaire
+
+| Domaine | Couvert par | Complet ? |
+|---------|-------------|-----------|
+| Vision produit | IDÉE_ARTCB, CDC §1-2 | ✅ |
+| Architecture | CDC §3, STRUCTURE | ✅ |
+| Exigences fonctionnelles | CDC §4 | ✅ |
+| Exigences non-fonctionnelles | CDC §5 | ✅ |
+| Stack technique | CDC §6, CONFIGURATION | ✅ |
+| Modèle de données | CDC §7 | ✅ |
+| API REST | CDC §8 | ✅ |
+| API WebSocket | CDC §20 (v1.1) | ✅ |
+| UX / démo | CDC §9 | ✅ |
+| Sécurité | CDC §10 | ✅ |
+| Tests | CDC §12 | ✅ |
+| Risques | CDC §13 | ✅ |
+| Config / env | CONFIGURATION_ARTCB | ✅ |
+| Clés API utilisateur | CONFIGURATION_ARTCB, QUESTIONS | ⚠️ À fournir par toi |
+| Fallback sans LLM | CDC §21 (v1.1) | ✅ |
+| Format export .artcb | CDC §22 (v1.1) | ✅ |
+| Exemples payloads API | CDC §23 (v1.1) | ✅ |
+| Script pitch 3 min | CDC §24 (v1.1) | ✅ |
+| Checklist soumission | CHECKLIST_PRE_DEV §4 | ✅ |
+| Décisions ouvertes | QUESTIONS_OUVERTES | ⚠️ 8 questions |
+
+---
+
+## Prochaine action (bloquée — en attente de tes ordres)
+
+1. Répondre aux `QUESTIONS_OUVERTES_ARTCB`
+2. Fournir clés API manquantes (si LLM/Gradium souhaités)
+3. Valider le CDC v1.1
+4. Donner l'ordre explicite : **« Lance le développement Phase 1 »**

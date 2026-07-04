@@ -15,3 +15,25 @@ TOUJOUR PRESENTER L'ETAT D'AVANCEMENT EN TEMPS REEL EN %.
 REPENDRE TOUJOUR EN FRANCAIS A LUTILISATEUR ET AINSI QUE DANS TES THINKING.
 DEVELOPEMENT EN PYTHON ET C OU EQUIVALENT.
 BLOCK CHAIN DECENTRALISER A 100%.
+
+---
+
+## [2026-07-04T19:55:00Z] Annexe — Correspondance noms fichiers
+
+Le PROTOCOLE original cite des noms avec extension `.md` incorrects.
+Utiliser TOUJOURS les fichiers réels suivants :
+
+| Référence originale | Fichier réel |
+|--------------------|--------------|
+| STANDARD_NAMES.md | STANDARD_NAMES_ARTCB |
+| LEÇONS_APPRISES_ARTCB.md | LEÇONS_APPRISES_ARTCB |
+| AUTO_PROMPT_ARTCB.md | AUTO_PROMPT_ARTCB |
+| ROADMAP_GENERAL_ARTCB.md | ROADMAP_GENERAL_ARTCB |
+
+Documents additionnels (v1.1) :
+- INDEX_ARTCB — cartographie globale
+- CONFIGURATION_ARTCB — config et dépendances
+- CHECKLIST_PRE_DEV_ARTCB — gate avant développement
+- QUESTIONS_OUVERTES_ARTCB — décisions en attente
+- CAHIER_DES_CHARGES_ARTCB — spec MVP v1.1
+- README.md — documentation publique

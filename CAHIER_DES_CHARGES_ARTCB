@@ -1,8 +1,8 @@
 # CAHIER DES CHARGES — ARTCB MVP Avancé v1.0
 
-**Horodatage :** 2026-07-04T19:40:00Z  
+**Horodatage :** 2026-07-04T19:55:00Z (v1.1 — compléments audit)  
 **Auteur :** Agent Cursor (Cloud)  
-**Statut :** Document de référence — prêt pour implémentation hackathon  
+**Statut :** Document de référence — complet, développement en attente d'ordres utilisateur  
 **Dépôt :** https://github.com/vgac2025/lvx  
 **Branche de travail :** `cursor/cahier-des-charges-mvp-1fce`
 
@@ -596,4 +596,189 @@ pytest tests/ -v --tb=short
 
 ---
 
-**Fin du cahier des charges — ARTCB MVP Avancé v1.0**
+---
+
+## 20. API WebSocket (temps réel)
+
+**Endpoint :** `ws://{host}:{port}/ws/graph/{session_id}`
+
+### Messages client → serveur
+
+| Type | Payload | Description |
+|------|---------|-------------|
+| `encode` | `{"text": "..."}` | Lancer encodage |
+| `search` | `{"query": "..."}` | Recherche sémantique |
+| `select_node` | `{"node_id": "n1"}` | Sélection nœud UI |
+
+### Messages serveur → client
+
+| Type | Payload | Description |
+|------|---------|-------------|
+| `node_added` | `{"node": {...}, "agent": "explorer"}` | Nœud créé par Explorateur |
+| `node_validated` | `{"node_id": "n1", "agent": "critic", "pol_delta": 0.05}` | Validation Critique |
+| `macro_created` | `{"macro": "Φ1", "expansion": ["n1","n2"]}` | Macro compressée |
+| `block_stored` | `{"index": 7, "hash": "abc..."}` | Bloc blockchain ajouté |
+| `pol_update` | `{"score": 0.81, "compression": 0.72}` | Mise à jour PoL |
+| `error` | `{"code": "...", "message": "..."}` | Erreur (notifiée, PROTOCOLE) |
+
+---
+
+## 21. Fallback encodage sans LLM (obligatoire MVP)
+
+Si `OPENROUTER_API_KEY` absent, l'IR Engine utilise un pipeline **100 % local** :
+
+1. **Tokenisation** — spaCy `fr_core_news_sm` ( phrases → tokens ).
+2. **Classification heuristique** — mots-clés → NodeType :
+   - « décision », « choisi », « décidé » → `DECISION`
+   - « hypothèse », « peut-être », « si » → `HYPOTHESIS`
+   - « parce que », « donc », « ainsi » → `REASON`
+   - défaut → `FACT`
+3. **USP mapping** — table fixe verbes/objets (§ 3.2.1).
+4. **Graphe** — une phrase = un nœud, liens `→t` entre phrases consécutives.
+5. **Réversibilité** — `txt` = phrase originale intégrale (jamais tronquée).
+
+**Garantie :** F-02 respecté même sans LLM (compression moindre, réversibilité identique).
+
+---
+
+## 22. Format export `.artcb`
+
+Fichier ZIP contenant :
+
+```
+export.artcb (ZIP)
+├── manifest.json       # version, date, graph_id, chain_length
+├── graph.json          # IR complet
+├── chain.jsonl         # Blocs blockchain exportés
+├── rtleg.jsonl         # Événements RT-LEG
+├── vectors.faiss       # Index vectoriel (optionnel)
+└── checksum.sha256     # Hash global
+```
+
+**manifest.json :**
+
+```json
+{
+  "format": "artcb-export",
+  "version": "0.1",
+  "exported_at": "2026-07-04T20:00:00Z",
+  "graph_id": "uuid",
+  "node_count": 42,
+  "block_count": 7,
+  "pol_score": 0.81,
+  "reversible": true
+}
+```
+
+---
+
+## 23. Exemples payloads API
+
+### POST `/api/v1/encode`
+
+**Request :**
+```json
+{
+  "text": "Nous avons décidé d'utiliser FastAPI. Le problème est la perte de contexte.",
+  "session_id": "sess_001",
+  "use_llm": false
+}
+```
+
+**Response :**
+```json
+{
+  "graph_id": "g_abc123",
+  "node_count": 2,
+  "edge_count": 1,
+  "compression_ratio": 0.68,
+  "pol_score": null,
+  "nodes_preview": [
+    {"id": "n1", "t": "D", "sym": "K1S1", "txt": "Nous avons décidé d'utiliser FastAPI."},
+    {"id": "n2", "t": "F", "sym": "O1P1", "txt": "Le problème est la perte de contexte."}
+  ]
+}
+```
+
+### POST `/api/v1/decode`
+
+**Request :**
+```json
+{"graph_id": "g_abc123"}
+```
+
+**Response :**
+```json
+{
+  "original_text": "Nous avons décidé d'utiliser FastAPI. Le problème est la perte de contexte.",
+  "similarity": 1.0,
+  "reversible": true
+}
+```
+
+### GET `/api/v1/pol/score`
+
+**Response :**
+```json
+{
+  "pol_score": 0.81,
+  "compression_rate": 0.72,
+  "validation_rate": 0.95,
+  "retrieval_accuracy": 0.88,
+  "blocks_accepted": 7,
+  "blocks_rejected": 1
+}
+```
+
+---
+
+## 24. Script pitch hackathon (3 minutes)
+
+### Slide mentale / narration
+
+| Temps | Contenu |
+|-------|---------|
+| 0:00–0:20 | **Problème** : « Chaque développeur qui utilise une IA connaît ça : après 2 heures, elle oublie tout. » |
+| 0:20–0:40 | **Impact** : « Chaque résumé détruit des nuances. Impossible de retrouver un raisonnement d'il y a 3 semaines. » |
+| 0:40–1:00 | **Solution** : « ARTCB — chaque pensée devient un nœud signé dans un graphe. Zéro résumé. Réversibilité 100 %. » |
+| 1:00–2:30 | **DÉMO LIVE** : coller texte → graphe → dual-agent → clic nœud → recherche → reconstruction → PoL → bloc signé |
+| 2:30–2:50 | **Innovation** : « IR réversible + Proof-of-Learning + dual-agent Explorateur/Critique. Pas un RAG. Pas un dashboard. » |
+| 2:50–3:00 | **Close** : « ARTCB — la mémoire que l'IA ne peut plus perdre. » |
+
+---
+
+## 25. Compléments audit v1.1 (trous comblés)
+
+| # | Trou identifié | Résolution |
+|---|---------------|------------|
+| 21 | Pas de spec WebSocket | § 20 |
+| 22 | Pas de fallback sans LLM | § 21 |
+| 23 | Pas de format export | § 22 |
+| 24 | Pas d'exemples API | § 23 |
+| 25 | Pas de script pitch | § 24 |
+| 26 | Pas d'INDEX global | `INDEX_ARTCB` |
+| 27 | Pas de CONFIG env/deps | `CONFIGURATION_ARTCB` |
+| 28 | Pas de questions ouvertes | `QUESTIONS_OUVERTES_ARTCB` |
+| 29 | Pas de gate pré-dev | `CHECKLIST_PRE_DEV_ARTCB` |
+| 30 | Pas de README | `README.md` |
+| 31 | Pas de rapport audit | `rapports/000_audit_complet.md` |
+| 32 | AUTO_PROMPT sans horodatage | Mis à jour |
+| 33 | PROTOCOLE noms fichiers erronés | Mapping dans INDEX + PROTOCOLE |
+| 34 | Branche main en retard | Documenté Q-001 |
+| 35 | Texte démo non défini | Exemple § 23 + Q-006 |
+
+---
+
+## 26. Références internes (mise à jour v1.1)
+
+| Document | Rôle |
+|----------|------|
+| `INDEX_ARTCB` | Cartographie et ordre de lecture |
+| `CONFIGURATION_ARTCB` | Variables env, deps, ports |
+| `CHECKLIST_PRE_DEV_ARTCB` | Gate avant développement |
+| `QUESTIONS_OUVERTES_ARTCB` | Décisions en attente |
+| *(autres inchangés — § 18)* | |
+
+---
+
+**Fin du cahier des charges — ARTCB MVP Avancé v1.1**

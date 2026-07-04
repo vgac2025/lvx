@@ -1,6 +1,6 @@
 # ROADMAP GÉNÉRALE — ARTCB MVP Avancé
 
-**Horodatage :** 2026-07-04T19:45:00Z
+**Horodatage :** 2026-07-04T19:55:00Z
 
 ---
 
@@ -8,9 +8,16 @@
 
 - [x] Relire l'intégralité du dépôt distant
 - [x] Rédiger CAHIER_DES_CHARGES_ARTCB v1.0
+- [x] Audit complet v1.1 — combler tous les trous documentaires
+- [x] Créer INDEX, CONFIGURATION, CHECKLIST, QUESTIONS_OUVERTES, README
+- [x] Rapport audit `rapports/000_audit_complet.md`
 - [x] Définir STRUCTURE_ARTCB
 - [x] Définir STANDARD_NAMES_ARTCB
-- [ ] Validation utilisateur du cahier des charges
+- [ ] Validation utilisateur du cahier des charges v1.1
+- [ ] Réponses QUESTIONS_OUVERTES_ARTCB
+- [ ] Ordre explicite utilisateur pour lancer Phase 1
+
+**Gate développement : 🔴 BLOQUÉ — en attente de tes ordres**
 
 ---
 

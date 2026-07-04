@@ -1,6 +1,6 @@
 # LEÇONS APPRISES — ARTCB
 
-**Horodatage :** 2026-07-04T19:45:00Z
+**Horodatage :** 2026-07-04T19:55:00Z
 
 ---
 
@@ -45,3 +45,18 @@
 **Contexte :** Remote HTTPS avec token limité ; clé SSH ajoutée le 4 juil. 2026.  
 **Leçon :** Configurer SSH dès le début pour éviter les limitations de push.  
 **Action :** Clé `cursor-cloud-agent-vgac2025-lvx` configurée.
+
+### L-009 — Audit v1.1 pré-développement
+**Contexte :** Demande utilisateur de relire tout, combler les trous, ne pas lancer le dev.  
+**Leçon :** 12 trous documentaires identifiés (WebSocket, fallback LLM, .artcb, INDEX, CONFIG…).  
+**Action :** CDC v1.1 §20-26 + 5 nouveaux fichiers + rapport `000_audit_complet.md`.
+
+### L-010 — main en retard vs feature branch
+**Contexte :** CDC complet sur `cursor/cahier-des-charges-mvp-1fce`, pas sur `main`.  
+**Leçon :** Les juges hackathon consultent souvent `main` par défaut.  
+**Action :** Q-001 dans QUESTIONS_OUVERTES — merge recommandé avant dev.
+
+### L-011 — Gate développement explicite
+**Contexte :** Utilisateur a demandé d'attendre ses ordres avant le dev.  
+**Leçon :** CHECKLIST_PRE_DEV_ARTCB §5 formalise le déblocage.  
+**Action :** Développement 🔴 BLOQUÉ jusqu'à ordre explicite + réponses Q-002/Q-003/Q-008 minimum.

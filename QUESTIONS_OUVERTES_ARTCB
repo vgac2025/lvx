@@ -1,0 +1,116 @@
+# QUESTIONS OUVERTES — ARTCB
+
+**Horodatage :** 2026-07-04T19:55:00Z  
+**Statut :** En attente de réponses utilisateur — développement bloqué jusqu'à clarification
+
+---
+
+## Q-001 — Merge branche feature → main
+
+**Contexte :** Le CDC complet est sur `cursor/cahier-des-charges-mvp-1fce` ; `main` est en retard (`1f6f2f9`).
+
+**Question :** Veux-tu merger la branche feature dans `main` avant de lancer le dev ?
+
+**Options :**
+- A) Merger maintenant (recommandé)
+- B) Continuer sur la branche feature
+- C) Travailler directement sur main sans merge
+
+**Impact :** Cohérence du dépôt public pour les juges hackathon.
+
+---
+
+## Q-002 — Encodage LLM vs rule-based
+
+**Contexte :** L'encodage intelligent nécessite une clé API (OpenRouter). Sans clé, fallback spaCy + règles.
+
+**Question :** As-tu une clé `OPENROUTER_API_KEY` ou préfères-tu le fallback rule-based pour le MVP ?
+
+**Recommandation MVP hackathon :** Fallback rule-based d'abord (pas de dépendance réseau), LLM en P1 si clé disponible.
+
+---
+
+## Q-003 — Blockchain C vs Python pur
+
+**Contexte :** PROTOCOLE exige C ; deadline serrée (~15h).
+
+**Question :** Priorité Phase 3 : core C complet ou blockchain Python pur avec interface C stub ?
+
+**Recommandation :** Python pur Phase 3 MVP, lib C en P1 post-hackathon si temps insuffisant.
+
+---
+
+## Q-004 — Gradium TTS (voix)
+
+**Contexte :** P1 dans le CDC — bouton « Lire » en démo.
+
+**Question :** Veux-tu intégrer Gradium TTS (nécessite clé + coupon RAISE-2026) ou skip pour le MVP ?
+
+---
+
+## Q-005 — Équipe hackathon
+
+**Contexte :** Règles : équipe remote 1-5 personnes, repo public, travail neuf.
+
+**Question :**
+- Combien de membres dans l'équipe ?
+- Présentiel (La Maison, 5 pers.) ou remote ?
+- Qui présente la démo dimanche ?
+
+---
+
+## Q-006 — Texte de démo
+
+**Contexte :** La démo utilise un texte/conversation exemple.
+
+**Question :** As-tu un texte réel de conversation Cursor à utiliser, ou utilisons-nous l'exemple générique du CDC ?
+
+**Exemple générique proposé :**
+> « Nous avons décidé d'utiliser FastAPI pour le backend. Le problème principal est la perte de contexte entre sessions. La solution ARTCB encode chaque raisonnement en graphe signé. Prochaine étape : implémenter l'IR Engine. »
+
+---
+
+## Q-007 — Langue UI
+
+**Contexte :** CDC § NF-10 : FR par défaut, EN optionnel.
+
+**Question :** UI 100 % français ou bilingue FR/EN ?
+
+**Recommandation :** 100 % français (cohérent avec le projet).
+
+---
+
+## Q-008 — Scope MVP si manque de temps
+
+**Contexte :** 15h restantes, scope ambitieux.
+
+**Question :** Si le temps manque, quelle fonctionnalité sacrifier en dernier ?
+
+**Ordre de priorité proposé (du plus au moins critique) :**
+1. Réversibilité encode/decode (F-02) — **non négociable**
+2. Visualisation graphe (F-06)
+3. Blockchain signée (F-03)
+4. Dual-agent visible (F-07)
+5. PoL jauge (F-08)
+6. Recherche sémantique (F-05)
+7. Gradium TTS (F-12)
+8. Export .artcb (F-13)
+
+**Confirme ou réordonne.**
+
+---
+
+## Réponses
+
+*(À remplir par l'utilisateur)*
+
+| ID | Réponse |
+|----|---------|
+| Q-001 | |
+| Q-002 | |
+| Q-003 | |
+| Q-004 | |
+| Q-005 | |
+| Q-006 | |
+| Q-007 | |
+| Q-008 | |
