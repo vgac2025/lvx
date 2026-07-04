@@ -1,7 +1,7 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-04T23:30:00Z  
-**Statut dépôt :** Phases 1–4 ✅ — Démo live ✅ — Phase 5 hackathon en attente
+**Horodatage :** 2026-07-04T23:37:00Z  
+**Statut dépôt :** Phases 1–4 ✅ — Démo live **API-only** ✅
 
 ---
 
@@ -55,20 +55,20 @@
 
 | Dossier | Statut | Contenu |
 |---------|--------|---------|
-| `rapports/` | ✅ | `000` → **`009`** |
+| `rapports/` | ✅ | `000` → **`010`** |
 | `logs/` | ✅ | API DEBUG + `demo_live_*` |
 
 ---
 
-## Lancer la démo (CDC §9.2)
+## Lancer la démo (backend — sans navigateur)
 
 ```bash
 make chain
 make api          # terminal 1 — :8000
-make frontend     # terminal 2 — :5173
-python3 scripts/demo_live.py   # ou: make demo (si API déjà up)
-# UI → http://localhost:5173
+python3 scripts/demo_live.py   # terminal 2 — logs/demo_live_latest.txt
 ```
+
+Frontend optionnel (Phase 4) : `make frontend` → `:5173` — **non requis** pour valider le MVP.
 
 ---
 
@@ -81,14 +81,12 @@ python3 scripts/demo_live.py   # ou: make demo (si API déjà up)
 | Phase 2 Backend | **100 %** | FastAPI, PoL, agents, WS |
 | Phase 3 Blockchain | **85 %** | C verify/store ; rewards collectifs + devnet ❌ |
 | Phase 4 Frontend | **100 %** | Parcours 9 étapes GUI |
-| Démo live + logs | **100 %** | Rapport 009, vidéo GUI |
-| Phase 5 Hackathon | **0 %** | README, soumission, vidéo 1 min |
+| Démo live API + logs | **100 %** | Rapports 009 + 010 |
 | **Global MVP** | **~92 %** | |
 
 ---
 
-## Prochaine action
+## Prochaine action (périmètre dev)
 
-1. **Phase 5** — README public, vidéo 1 min, soumission hackathon (5 juil. 2026 12h00 CEST)
-2. Phase 3 restant — `contributors[]`, `artcb-devnet`, faucet
-3. Optionnel — Gradium TTS API (remplacer Web Speech fallback)
+1. Phase 3 restant — `contributors[]`, `artcb-devnet`, faucet
+2. Optionnel — Gradium TTS API (remplacer Web Speech fallback)

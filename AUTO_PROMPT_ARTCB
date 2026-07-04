@@ -39,15 +39,18 @@ Règles ajoutées :
 - Consulter QUESTIONS_OUVERTES avant toute décision technique.
 - Produitire un rapport dans rapports/ après chaque exécution (jamais écraser).
 - Présenter l'état d'avancement en % à chaque réponse.
+## [2026-07-04T23:37:00Z] Correction — démo API sans frontend
+
+- Démo canonique = `make api` + `python3 scripts/demo_live.py` — **pas de navigateur**
+- Rapport `rapports/010_demo_api_sans_frontend.md` corrige le rapport 009 (GUI non requis)
+- Frontend tmux arrêté ; vidéo hackathon **hors périmètre** de cet agent
+- Aperçu UI décrit en texte dans rapport 010 pour l'utilisateur
+
 ## [2026-07-04T23:30:00Z] Mise à jour — Démo live complète ✅
 
-- Script `scripts/demo_live.py` — 9 étapes CDC §9.2 via HTTP réel (httpx, pas mock)
+- Script `scripts/demo_live.py` — 9 étapes via HTTP réel (httpx, pas mock)
 - Logs : `logs/demo_live_latest.txt`, `logs/demo_live_YYYYMMDD_HHMMSS.json`
-- Cible `make demo` (API + frontend doivent tourner)
-- Rapport `rapports/009_demo_live_execution.md` après lecture logs réels
-- PoL 0.6, reconstruction similarity 1.0, chaîne C valid=True, 42/42 tests
-- Vidéo GUI : `artcb_demo_live_wailly_9_steps.mp4`
-- Global MVP ~92 % ; Phase 5 hackathon reste
+- Rapport `rapports/009_demo_live_execution.md` (incluait test GUI — voir correction 010)
 
 ## [2026-07-04T23:18:00Z] Mise à jour — Phase 4 Frontend ✅
 

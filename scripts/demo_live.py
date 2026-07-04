@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""ARTCB live demo — 9 steps CDC §9.2 via real HTTP (PROTOCOLE: no mock)."""
+"""ARTCB live demo — 9 steps via real HTTP only (no browser, no frontend).
+
+Requires: `make api` on port 8000. Writes logs/demo_live_latest.txt + JSON.
+"""
 
 from __future__ import annotations
 

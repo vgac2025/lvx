@@ -15,8 +15,7 @@ frontend:
 frontend-build:
 	cd frontend && npm install && npm run build
 
-demo: chain
-	@echo "Start API (terminal 1): make api"
-	@echo "Start frontend (terminal 2): make frontend"
-	@echo "Then run: python3 scripts/demo_live.py"
+demo:
+	@echo "Requires API already running: make api  (port 8000)"
+	@echo "No browser / no frontend required."
 	python3 scripts/demo_live.py
