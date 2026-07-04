@@ -68,22 +68,22 @@
 
 ---
 
-## Phase 4 — Frontend (P0 — 4h)
+## Phase 4 — Frontend (P0 — 4h) ✅
 
 **Objectif :** UX démo hackathon § 9.2
 
-| Jalon | Livrable | Critère |
-|-------|----------|---------|
-| 4.1 | GraphViewer interactif | Zoom, clic, highlight |
-| 4.2 | AgentPanel temps réel | WebSocket Explorateur/Critique |
-| 4.3 | PolGauge | Jauge animée |
-| 4.4 | Reconstruct diff | Texte original côte à côte |
-| 4.5 | Parcours Demo.tsx | 9 étapes § 9.2 |
-| 4.6 | Rapport `rapports/004_frontend.md` | Screenshots |
+| Jalon | Livrable | Critère | Statut |
+|-------|----------|---------|--------|
+| 4.1 | GraphViewer interactif | Zoom, clic, highlight | ✅ Cytoscape |
+| 4.2 | AgentPanel temps réel | WebSocket Explorateur/Critique | ✅ |
+| 4.3 | PolGauge | Jauge animée | ✅ |
+| 4.4 | Reconstruct diff | Texte original côte à côte | ✅ |
+| 4.5 | Parcours Demo.tsx | 9 étapes § 9.2 | ✅ |
+| 4.6 | Rapport `rapports/008_phase4_frontend.md` | Build + parcours | ✅ |
 
 ---
 
-## Phase 5 — Polish & Soumission (P0 — 1h)
+## Phase 5 — Polish & Soumission (P0 — 1h) 🟡
 
 **Objectif :** Soumission hackathon 5 juil. 12h00
 

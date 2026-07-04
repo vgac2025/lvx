@@ -49,6 +49,28 @@ def _state(request: Request):
     return request.app.state.artcb
 
 
+@router.get("/demo/wailly-excerpt")
+def wailly_excerpt(request: Request, max_pages: int = 3) -> dict:
+    """Load Wailly book excerpt for hackathon demo (D-010)."""
+    from artcb.io.pdf_loader import extract_pdf_text, resolve_book_path
+
+    path = resolve_book_path()
+    state = _state(request)
+    if path is None:
+        fallback = state.settings.demo_book_pdf
+        if fallback.is_file():
+            path = fallback
+    if path is None or not path.is_file():
+        raise HTTPException(status_code=404, detail="Wailly PDF not found")
+    text = extract_pdf_text(path, max_pages=max_pages)
+    return {
+        "source": "wailly_le_roi_de_l_inconnu.pdf",
+        "max_pages": max_pages,
+        "char_count": len(text),
+        "text": text,
+    }
+
+
 @router.get("/health")
 def health(request: Request) -> dict:
     state = _state(request)

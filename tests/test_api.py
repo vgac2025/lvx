@@ -80,3 +80,13 @@ def test_rtleg_events(client: TestClient) -> None:
     events = client.get("/api/v1/rtleg/events")
     assert events.status_code == 200
     assert events.json()["count"] >= 1
+
+
+def test_wailly_demo_excerpt(client: TestClient) -> None:
+    response = client.get("/api/v1/demo/wailly-excerpt", params={"max_pages": 1})
+    if response.status_code == 404:
+        pytest.skip("Wailly PDF not available")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["char_count"] > 20
+    assert "text" in body

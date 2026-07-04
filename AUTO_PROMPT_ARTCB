@@ -39,6 +39,13 @@ Règles ajoutées :
 - Consulter QUESTIONS_OUVERTES avant toute décision technique.
 - Produitire un rapport dans rapports/ après chaque exécution (jamais écraser).
 - Présenter l'état d'avancement en % à chaque réponse.
+## [2026-07-04T23:18:00Z] Mise à jour — Phase 4 Frontend ✅
+
+- React + Vite + Cytoscape — parcours démo 9 étapes CDC §9.2
+- CORS FastAPI + GET /demo/wailly-excerpt
+- Rapport `rapports/008_phase4_frontend.md`
+- `make frontend` / `make frontend-build`
+
 ## [2026-07-04T23:12:00Z] Mise à jour — Phase 2 ✅ + Phase 3 C base
 
 - 12 endpoints REST + WebSocket §20
