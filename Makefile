@@ -1,4 +1,4 @@
-.PHONY: chain test api frontend demo
+.PHONY: chain test api frontend demo demo-real
 
 chain:
 	$(MAKE) -C src/c all
@@ -19,3 +19,6 @@ demo:
 	@echo "Requires API already running: make api  (port 8000)"
 	@echo "No browser / no frontend required."
 	python3 scripts/demo_live.py
+
+demo-real:
+	bash scripts/run_real_local.sh

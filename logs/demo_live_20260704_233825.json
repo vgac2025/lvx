@@ -1,0 +1,82 @@
+{
+  "session_id": "demo_live_233825",
+  "steps": {
+    "health": {
+      "status": "ok",
+      "debug": true,
+      "llm_enabled": false,
+      "bob_configured": true,
+      "demo_book": "data/fixtures/wailly_le_roi_de_l_inconnu.pdf",
+      "chain": {
+        "available": true,
+        "valid": true,
+        "message": "",
+        "block_count": 3,
+        "public_key": "j9lWM/ltkcJIXfKdx22wxupcVslrX+MsfiQw6kwASPE="
+      }
+    },
+    "wailly": {
+      "char_count": 1607,
+      "used": 1200
+    },
+    "agents": {
+      "graph_id": "g_ab0d84af5d33",
+      "node_count": 15,
+      "pol": {
+        "delta_compression": 0.0,
+        "validation_rate": 1.0,
+        "retrieval_accuracy": 1.0,
+        "pol_score": 0.6,
+        "block_accepted": true
+      },
+      "nodes_validated": 15,
+      "nodes_proposed": 15
+    },
+    "graph": {
+      "nodes": 15,
+      "node_id": "n1"
+    },
+    "search": {
+      "query": "roi",
+      "results": [
+        {
+          "graph_id": "g_ab0d84af5d33",
+          "node_id": "n1",
+          "score": 1.0,
+          "text": "Gaston de Wailly \nLE ROI DE L’INCONNU \n1925\n\nTable des matières \n \nI  LE DRAME DE LA POSADA DE « TRA LOS MONTES » ...",
+          "type": "F",
+          "symbol": "O1α1"
+        }
+      ],
+      "count": 1
+    },
+    "decode": {
+      "original_text": "Gaston de Wailly \nLE ROI DE L’INCONNU \n1925\n\nTable des matières \n \nI  LE DRAME DE LA POSADA DE « TRA LOS MONTES » ... 3 \nII  LE GOUFFRE DES DAMNÉS ............................................ 20 \nIII  LES NAUFRAGÉS DU VIDE ............................................ 37 \nIV  LA TABLE DE LA FAIM .................................................. 51 \nV  VOCIFER ............................................................................ 66 \nVI  ÉNIGMES SUR ÉNIGMES ................................................ 81 \nVII  LES MAINS COUPÉES .................................................... 95 \nVIII  L’OASIS ........................................................................ 115 \nIX  DEUX RENCONTRES .................................................... 135 \nX  UNE IDÉE DE GASPARD ................................................ 152 \nXI  LES JALONS DE NED .................................................... 173 \nXII  INVITATION ROYALE ................................................. 200 \nXIII  LE PALAIS DES MYSTÈRES ....................................... 219 \nXIV  LE MAÎTRE DES CAVERNES ..................................... 251 \nXV  LES PROUESSES DE GASPARD .....................",
+      "similarity": 1.0,
+      "reversible": true
+    },
+    "pol": {
+      "pol_score": 0.6,
+      "compression_rate": 0.0,
+      "validation_rate": 1.0,
+      "retrieval_accuracy": 1.0,
+      "blocks_accepted": 7,
+      "blocks_rejected": 0
+    },
+    "store": {
+      "block_index": 3,
+      "hash": "8795303b6298ca571c7b626a670bc8d18672e791b12d7e3f911a5f07efbd5af6",
+      "signature": "ed25519:f6e6150731ef8a471a0b349f13477902e772dfa5afb3f4602748ff743ae46aeb6f56c3d2103f035f60f330f593ee9f130649796da6358b06f99b38fe51aa1607",
+      "pol_score": 0.6,
+      "graph_id": "g_ab0d84af5d33"
+    },
+    "verify": {
+      "valid": true,
+      "message": "",
+      "block_count": 4,
+      "public_key": "j9lWM/ltkcJIXfKdx22wxupcVslrX+MsfiQw6kwASPE="
+    },
+    "chain_count": 4
+  },
+  "ok": true
+}
