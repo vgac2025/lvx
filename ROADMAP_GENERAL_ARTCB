@@ -57,7 +57,7 @@
 | Jalon | Livrable | Critère |
 |-------|----------|---------|
 | 3.1 | Block + Chain Python | Hash chaîné, signature Ed25519 |
-| 3.2 | Core C (optionnel P1) | libartcb_chain hash SHA-256 |
+| 3.2 | Core C (**obligatoire** — D-002) | libartcb_chain SHA-256 + Ed25519 | ⏳ |
 | 3.3 | Persistance JSONL/SQLite | Survit au redémarrage |
 | 3.4 | `/chain/verify` | Détection tampering |
 | 3.5 | Rapport `rapports/003_blockchain.md` | Intégrité prouvée |

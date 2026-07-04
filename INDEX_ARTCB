@@ -1,7 +1,7 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-04T19:55:00Z  
-**Statut dépôt :** Spécification complète — développement en attente d'ordres utilisateur
+**Horodatage :** 2026-07-04T20:25:00Z  
+**Statut dépôt :** Phase 1 ✅ — Phase 2 en attente d'ordre
 
 ---
 
@@ -9,11 +9,8 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `1f6f2f9` | Docs de base (sans CDC complet) |
-| `origin/cursor/cahier-des-charges-mvp-1fce` | `7cdc341` | CDC + structure + roadmap + rapports/ |
-| **Branche active locale** | `7cdc341` | À jour avec remote feature branch |
-
-**Action requise avant dev :** merger la branche feature dans `main` (décision utilisateur).
+| `origin/main` | `c82c40c` | Docs + Phase 1 IR Engine |
+| **Branche active** | `main` | À jour |
 
 ---
 
@@ -31,9 +28,10 @@
 | 8 | `STRUCTURE_ARTCB` | 81 | ✅ Complet | Arborescence cible |
 | 9 | `CONFIGURATION_ARTCB` | — | ✅ Nouveau | Config, deps, clés API |
 | 10 | `CHECKLIST_PRE_DEV_ARTCB` | — | ✅ Nouveau | Gate avant développement |
-| 11 | `QUESTIONS_OUVERTES_ARTCB` | — | ✅ Nouveau | Décisions en attente |
-| 12 | `REGLES HACKATHON RAISE SOUMMIT` | 332 | ✅ Complet | Contraintes événement |
-| 13 | `INDEX_ARTCB` | — | ✅ Ce fichier | Cartographie globale |
+| 11 | `QUESTIONS_OUVERTES_ARTCB` | — | ✅ v2 | Décisions + explications |
+| 12 | `DECISIONS_UTILISATEUR_ARTCB` | — | ✅ | Décisions actées D-001→D-007 |
+| 13 | `REGLES HACKATHON RAISE SOUMMIT` | 332 | ✅ | Contraintes événement |
+| 14 | `INDEX_ARTCB` | — | ✅ | Ce fichier |
 
 ---
 

@@ -1,7 +1,7 @@
 # CONFIGURATION — ARTCB MVP Avancé
 
-**Horodatage :** 2026-07-04T19:55:00Z  
-**Statut :** Spécification — fichiers `.env` créés au lancement du dev
+**Horodatage :** 2026-07-04T20:25:00Z  
+**Statut :** Décisions utilisateur intégrées — voir DECISIONS_UTILISATEUR_ARTCB
 
 ---
 
@@ -181,14 +181,39 @@ services:
 
 ---
 
-## 9. Éléments à fournir par l'utilisateur avant dev
+## 9. Clés API — clarification (blockchain décentralisée)
 
-| Élément | Priorité | Pour quoi |
-|---------|----------|-----------|
-| Validation CDC v1.1 | P0 | Gate développement |
-| Ordre explicite « lance dev » | P0 | PROTOCOLE |
-| `OPENROUTER_API_KEY` | P1 | Encodage LLM (sinon fallback spaCy) |
-| `GRADIUM_API_KEY` | P2 | TTS voix démo |
-| Nom équipe hackathon | P1 | Soumission |
-| Lien Discord équipe | P2 | Coordination |
-| Décision merge → main | P1 | Cohérence dépôt |
+### Principe
+
+**La blockchain ARTCB (C) ne contient et ne demande AUCUNE clé API.**
+
+Les clés ci-dessous sont **optionnelles**, pour services **externes** uniquement, stockées **localement** dans `.env` (gitignoré, jamais commitées, jamais sur la chaîne).
+
+| Variable | Service externe | Obligatoire ? | Sur blockchain ? |
+|----------|----------------|---------------|------------------|
+| `OPENROUTER_API_KEY` | IA cloud (encodage LLM) | Non — rule-based par défaut | ❌ Jamais |
+| `GRADIUM_API_KEY` | Synthèse vocale hackathon | Non — skip par défaut | ❌ Jamais |
+
+### Où vont les clés si tu en fournis ?
+
+```
+lvx/
+├── .env              ← TON fichier local (gitignoré)
+├── .env.example      ← Modèle sans secrets (dans le repo)
+├── data/chain/       ← Blockchain C (open source, pas de clés)
+└── src/c/            ← Core blockchain C
+```
+
+Chaque clone du repo public fonctionne **sans clé**. Les clés sont un choix **personnel local** pour activer des bonus (LLM, voix).
+
+### Éléments utilisateur — statut
+
+| Élément | Statut | Responsable |
+|---------|--------|-------------|
+| Validation CDC v1.1 | ✅ | Agent |
+| Phase 1 IR Engine | ✅ | Agent |
+| `OPENROUTER_API_KEY` | ⏳ Q-002 en attente | Toi (optionnel) |
+| `GRADIUM_API_KEY` | ⏳ Q-004 en attente | Toi (optionnel) |
+| Équipe hackathon | Hors scope agent | Toi |
+| Merge → main à chaque push | ✅ Règle D-001 | Agent |
+| Crédits Cursor formulaire | ⏳ | Toi |

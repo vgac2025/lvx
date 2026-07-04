@@ -1,27 +1,14 @@
 # CHECKLIST PRÉ-DÉVELOPPEMENT — ARTCB
 
-**Horodatage :** 2026-07-04T19:55:00Z  
-**Gate :** Aucun code `/src/` ne doit être créé tant que cette checklist n'est pas validée.
+**Horodatage :** 2026-07-04T20:25:00Z  
+**Gate Phase 1 :** ✅ Terminée  
+**Gate Phase 2 :** 🟡 Partiel — défauts applicables si pas de réponse Q-002/Q-004/Q-009
 
 ---
 
-## 1. Documentation (spec)
+## 1. Documentation (spec) ✅
 
-| # | Item | Statut |
-|---|------|--------|
-| 1.1 | IDÉE_ARTCB relu intégralement (1429 lignes) | ✅ |
-| 1.2 | PROTOCOLE_ARTCB relu | ✅ |
-| 1.3 | CAHIER_DES_CHARGES_ARTCB v1.1 complet | ✅ |
-| 1.4 | STRUCTURE_ARTCB défini | ✅ |
-| 1.5 | ROADMAP_GENERAL_ARTCB défini | ✅ |
-| 1.6 | STANDARD_NAMES_ARTCB défini | ✅ |
-| 1.7 | LEÇONS_APPRISES_ARTCB initialisé | ✅ |
-| 1.8 | CONFIGURATION_ARTCB créé | ✅ |
-| 1.9 | INDEX_ARTCB créé | ✅ |
-| 1.10 | QUESTIONS_OUVERTES_ARTCB créé | ✅ |
-| 1.11 | README.md créé | ✅ |
-| 1.12 | Rapport audit `rapports/000_audit_complet.md` | ✅ |
-| 1.13 | Dossiers `rapports/` et `logs/` existent | ✅ |
+Tous items ✅ — voir audit `rapports/000_audit_complet.md`
 
 ---
 
@@ -29,65 +16,41 @@
 
 | # | Item | Statut |
 |---|------|--------|
-| 2.1 | SSH configuré et testé | ✅ |
-| 2.2 | Branche feature poussée sur remote | ✅ |
-| 2.3 | Merge feature → main | ⏳ Décision Q-001 |
-| 2.4 | Repo public accessible | ✅ |
+| 2.1 | SSH configuré | ✅ |
+| 2.2 | Merge auto vers `main` à chaque push (D-001) | ✅ Règle actée |
+| 2.3 | Repo public | ✅ @ `c82c40c` |
 
 ---
 
-## 3. Décisions utilisateur requises
+## 3. Décisions utilisateur
 
 | # | Item | Statut |
 |---|------|--------|
-| 3.1 | Q-001 Merge branche | ⏳ |
-| 3.2 | Q-002 LLM vs fallback | ⏳ |
-| 3.3 | Q-003 C vs Python blockchain | ⏳ |
-| 3.4 | Q-004 Gradium TTS | ⏳ |
-| 3.5 | Q-005 Info équipe | ⏳ |
-| 3.6 | Q-006 Texte démo | ⏳ |
-| 3.7 | Q-007 Langue UI | ⏳ |
-| 3.8 | Q-008 Priorités scope | ⏳ |
-| 3.9 | Ordre explicite « Lance le dev » | ⏳ |
+| 3.1 | Q-001 Merge main | ✅ Toujours merge |
+| 3.2 | Q-002 LLM vs rule-based | ⏳ En attente (défaut: rule-based) |
+| 3.3 | Q-003 Blockchain C only | ✅ C comme Bitcoin |
+| 3.4 | Q-004 Gradium TTS | ⏳ En attente (défaut: skip) |
+| 3.5 | Q-005 Équipe | ✅ Hors scope agent |
+| 3.6 | Q-006 Texte démo | ⏳ En attente (défaut: exemple CDC EN) |
+| 3.7 | Q-007 Langue | ✅ EN code / FR rapports |
+| 3.8 | Q-008 MVP max | ✅ P0 + P1 |
+| 3.9 | Q-009 Clés API | ⏳ En attente (défaut: aucune) |
+| 3.10 | Phase 1 IR Engine | ✅ |
+| 3.11 | Ordre « Lance Phase 2 » | ⏳ |
 
 ---
 
-## 4. Checklist soumission hackathon (5 juil. 12h00)
+## 4. Phase 1 ✅
 
-| # | Item | Statut | Deadline |
-|---|------|--------|----------|
-| 4.1 | Crédits Cursor — formulaire Google | ⏳ | 4 juil. 17h CEST |
-| 4.2 | Repo public avec code hackathon | ⏳ | 5 juil. 12h |
-| 4.3 | Vidéo démo 1 min (YouTube/Loom) | ⏳ | 5 juil. 12h |
-| 4.4 | Soumission Cerebral Valley | ⏳ | 5 juil. 12h |
-| 4.5 | Travail identifiable comme neuf | ⏳ | Continu |
-| 4.6 | Pas de projet interdit (RAG basique, Streamlit…) | ✅ Spec OK |
-| 4.7 | Piste Cursor : UX interactive | ⏳ | Phase 4 |
-| 4.8 | Discord hackathon rejoint | ⏳ | Toi |
-
-**Lien soumission :** https://cerebralvalley.ai/e/raise-summit-hackathon/hackathon/submit
+| Jalon | Statut |
+|-------|--------|
+| IR Encoder/Decoder | ✅ |
+| 20 tests réversibilité 100% | ✅ |
+| Rapport `001_ir_engine.md` | ✅ |
 
 ---
 
-## 5. Gate développement — conditions de déblocage
+## 5. Phase 2 — prochaine (sur ordre)
 
-Le développement Phase 1 démarre **uniquement si** :
-
-```
-[ ] Utilisateur a répondu aux QUESTIONS_OUVERTES (minimum Q-002, Q-003, Q-008)
-[ ] Utilisateur a dit explicitement « Lance le développement » ou équivalent
-[ ] CAHIER_DES_CHARGES v1.1 validé par l'utilisateur
-```
-
-**Statut actuel : 🔴 BLOQUÉ — en attente de tes ordres**
-
----
-
-## 6. Première commande après déblocage
-
-```bash
-# Phase 1 — sera exécutée après ton ordre
-mkdir -p src/artcb/{ir,rtleg,agents,pol,memory,chain} src/api tests
-# + IR encoder/decoder + test_ir_reversibility.py
-# + rapport rapports/001_ir_engine.md
-```
+- FastAPI + RT-LEG + Agents + PoL
+- Rapport `002_backend.md`

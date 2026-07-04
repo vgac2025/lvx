@@ -1,0 +1,60 @@
+# DÉCISIONS UTILISATEUR — ARTCB
+
+**Horodatage :** 2026-07-04T20:25:00Z  
+**Source :** Réponses utilisateur du 4 juillet 2026
+
+---
+
+## Décisions actées (implémentation immédiate)
+
+| ID | Décision | Impact code |
+|----|----------|-------------|
+| D-001 | Merge systématique vers `main` à chaque push | Workflow git |
+| D-002 | Blockchain **100 % C** (style Bitcoin) | Phase 3 : `src/c/libartcb_chain.*` |
+| D-003 | Python = orchestration uniquement (API, IR, agents, tests) | Phases 2-4 |
+| D-004 | Code/UI en **anglais**, rapports en **français** | Conventions code |
+| D-005 | MVP **le plus avancé possible** — P0 + P1 | Scope Phase 2-4 |
+| D-006 | Équipe hackathon = hors scope agent | Ignoré |
+| D-007 | Phase 1 IR Engine validée | ✅ Done |
+
+---
+
+## Architecture C + Python (D-002 / D-003)
+
+```
+PYTHON                          C (blockchain)
+────────                        ──────────────
+FastAPI routes        ──FFI──►  artcb_block_create()
+IR encode/decode                artcb_chain_append()
+Explorer / Critic agents        artcb_chain_verify()
+PoL scorer                      artcb_hash_sha256()
+WebSocket                       artcb_sign_ed25519()
+pytest tests                    artcb_pol_validate()
+```
+
+**Python ne calcule jamais le hash de bloc final** — délégation stricte à C.
+
+---
+
+## En attente de réponse utilisateur
+
+| ID | Question | Bloque |
+|----|----------|--------|
+| D-008 | Q-002 : LLM ou rule-based ? | Encodage Phase 2+ |
+| D-009 | Q-004 : Gradium TTS ? | Feature voix UI |
+| D-010 | Q-006 : Texte démo | Script vidéo |
+| D-011 | Q-009 : Clés API (.env local) | Services optionnels |
+
+**Par défaut si silence :** rule-based (A), skip Gradium (A), texte démo par défaut, aucune clé API (A).
+
+---
+
+## Langues (D-004)
+
+| Artefact | Langue |
+|----------|--------|
+| `src/**/*.py`, `src/c/**/*.c` | English |
+| `frontend/**` | English |
+| `rapports/**/*.md` | Français |
+| `IDÉE_ARTCB`, `PROTOCOLE_*`, docs spec | Français (existant) |
+| Réponses agent → utilisateur | Français |

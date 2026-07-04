@@ -65,3 +65,9 @@
 **Contexte :** Tests montraient 1 seul nœud pour textes multi-phrases.  
 **Leçon :** L'espace ne doit pas figurer dans le set de ponctuation fermante post-point.  
 **Action :** Fix `_find_sentence_end` dans encoder.py — 20/20 tests passent.
+
+### L-013 — Décisions utilisateur (4 juil. 2026)
+**Contexte :** Réponses partielles aux QUESTIONS_OUVERTES.  
+**Leçon :** Q-002/Q-004/Q-009 nécessitaient des explications plain-language, pas du jargon.  
+**Décisions actées :** Merge auto main (D-001), blockchain C only (D-002), Python orchestration (D-003), EN code / FR rapports (D-004), MVP max (D-005).  
+**Action :** DECISIONS_UTILISATEUR_ARTCB + QUESTIONS_OUVERTES v2.

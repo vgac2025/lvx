@@ -1,116 +1,225 @@
 # QUESTIONS OUVERTES — ARTCB
 
-**Horodatage :** 2026-07-04T19:55:00Z  
-**Statut :** En attente de réponses utilisateur — développement bloqué jusqu'à clarification
+**Horodatage :** 2026-07-04T20:25:00Z  
+**Statut :** Partiellement résolu — voir § « Ce qui reste à répondre »
 
 ---
 
-## Q-001 — Merge branche feature → main
+## Réponses enregistrées (utilisateur — 4 juillet 2026)
 
-**Contexte :** Le CDC complet est sur `cursor/cahier-des-charges-mvp-1fce` ; `main` est en retard (`1f6f2f9`).
-
-**Question :** Veux-tu merger la branche feature dans `main` avant de lancer le dev ?
-
-**Options :**
-- A) Merger maintenant (recommandé)
-- B) Continuer sur la branche feature
-- C) Travailler directement sur main sans merge
-
-**Impact :** Cohérence du dépôt public pour les juges hackathon.
-
----
-
-## Q-002 — Encodage LLM vs rule-based
-
-**Contexte :** L'encodage intelligent nécessite une clé API (OpenRouter). Sans clé, fallback spaCy + règles.
-
-**Question :** As-tu une clé `OPENROUTER_API_KEY` ou préfères-tu le fallback rule-based pour le MVP ?
-
-**Recommandation MVP hackathon :** Fallback rule-based d'abord (pas de dépendance réseau), LLM en P1 si clé disponible.
+| ID | Réponse utilisateur | Décision retenue |
+|----|--------------------|------------------|
+| Q-001 | *TOUJOUR MERGE QUAND JE TE DIT DE PUSH | ✅ Merge systématique vers `main` à chaque push |
+| Q-002 | *C'EST À DIRE ? EXPLIQUE | ⏳ **En attente** — voir explication § Q-002 ci-dessous |
+| Q-003 | *UNIQUEMENT EN C, COMME BITCOIN | ✅ Blockchain **100 % en C** (hash, blocs, chaîne, signatures) |
+| Q-004 | *C'EST À DIRE ? EXPLIQUE | ⏳ **En attente** — voir explication § Q-004 ci-dessous |
+| Q-005 | *CE N'EST PAS TA PRIORITÉ | ✅ Hors scope agent — tu t'en occupes |
+| Q-006 | *(pas de réponse)* | ⏳ **En attente** — texte démo |
+| Q-007 | *ANGLAIS DEV, FRANÇAIS RAPPORTS | ✅ Code/UI en **anglais**, rapports en **français** |
+| Q-008 | *MVP LE PLUS AVANCÉ POSSIBLE | ✅ Toutes fonctions P0 + P1 visées, aucune sacrifiée sauf urgence |
+| Q-009 | *C'EST À DIRE ? EXPLIQUE | ⏳ **En attente** — voir explication § Q-009 ci-dessous |
+| Q-010 | *(pas de réponse)* | ⏳ Crédits Cursor — **ta responsabilité** |
+| Q-011 | *Lance le dev (Phase 1 faite) | ✅ Phase 1 terminée — Phase 2+ sur ordre |
 
 ---
 
-## Q-003 — Blockchain C vs Python pur
+## Q-001 — Merge branche → main ✅ RÉSOLU
 
-**Contexte :** PROTOCOLE exige C ; deadline serrée (~15h).
+**Ta réponse :** *Toujours merge quand je te dis de push.*
 
-**Question :** Priorité Phase 3 : core C complet ou blockchain Python pur avec interface C stub ?
-
-**Recommandation :** Python pur Phase 3 MVP, lib C en P1 post-hackathon si temps insuffisant.
+**Règle retenue :** À chaque push, merger la branche de travail dans `main` puis `git push origin main`.
 
 ---
 
-## Q-004 — Gradium TTS (voix)
+## Q-002 — Encodage LLM vs rule-based ⏳ EXPLICATION + ATTENTE
 
-**Contexte :** P1 dans le CDC — bouton « Lire » en démo.
+### De quoi parle cette question ?
 
-**Question :** Veux-tu intégrer Gradium TTS (nécessite clé + coupon RAISE-2026) ou skip pour le MVP ?
+Quand ARTCB transforme un **texte humain** en **graphe IR**, il y a **deux méthodes** :
 
----
+| Méthode | Comment ça marche | Avantages | Inconvénients |
+|---------|-------------------|-----------|---------------|
+| **Rule-based (actuel Phase 1)** | Règles locales : découpe phrases, mots-clés (« décidé » → DECISION), symboles USP | Gratuit, offline, open source, déjà codé | Moins « intelligent » sur textes complexes |
+| **LLM (OpenRouter)** | Envoie le texte à une IA cloud (Claude, GPT…) via API payante | Meilleure classification sémantique | Clé API requise, internet, coût, dépendance externe |
 
-## Q-005 — Équipe hackathon
+**OpenRouter** = service qui donne accès à plusieurs LLM via une seule clé API (`OPENROUTER_API_KEY`).
 
-**Contexte :** Règles : équipe remote 1-5 personnes, repo public, travail neuf.
+### Ce que tu dois répondre (une ligne) :
 
-**Question :**
-- Combien de membres dans l'équipe ?
-- Présentiel (La Maison, 5 pers.) ou remote ?
-- Qui présente la démo dimanche ?
-
----
-
-## Q-006 — Texte de démo
-
-**Contexte :** La démo utilise un texte/conversation exemple.
-
-**Question :** As-tu un texte réel de conversation Cursor à utiliser, ou utilisons-nous l'exemple générique du CDC ?
-
-**Exemple générique proposé :**
-> « Nous avons décidé d'utiliser FastAPI pour le backend. Le problème principal est la perte de contexte entre sessions. La solution ARTCB encode chaque raisonnement en graphe signé. Prochaine étape : implémenter l'IR Engine. »
+- **A)** « Rule-based seulement » → on garde Phase 1 tel quel, pas de clé API
+- **B)** « LLM aussi » → tu me fournis une clé `OPENROUTER_API_KEY` (fichier `.env` local, jamais sur la blockchain)
 
 ---
 
-## Q-007 — Langue UI
+## Q-003 — Blockchain C vs Python ✅ RÉSOLU
 
-**Contexte :** CDC § NF-10 : FR par défaut, EN optionnel.
+**Ta réponse :** *Uniquement en C, comme Bitcoin.*
 
-**Question :** UI 100 % français ou bilingue FR/EN ?
+### Architecture retenue
 
-**Recommandation :** 100 % français (cohérent avec le projet).
+```
+┌─────────────────────────────────────────┐
+│  PYTHON — orchestration (pas blockchain) │
+│  • API FastAPI (routes HTTP/WebSocket)   │
+│  • IR Engine (encode/decode) ✅ Phase 1  │
+│  • Agents Explorateur / Critique         │
+│  • PoL scorer                            │
+│  • Tests, CLI, rapports                  │
+└─────────────────┬───────────────────────┘
+                  │ ctypes / FFI
+┌─────────────────▼───────────────────────┐
+│  C — blockchain (comme Bitcoin)          │
+│  • SHA-256 hash des blocs                │
+│  • Structure block / chain               │
+│  • Signatures Ed25519                    │
+│  • Validation chaîne                     │
+│  • Proof-of-Learning (acceptation bloc)  │
+│  • Persistance blocks.jsonl              │
+└─────────────────────────────────────────┘
+```
+
+### À quoi sert Python alors ?
+
+Python **ne remplace pas** la blockchain. Il sert de **couche de liaison** :
+
+1. **Recevoir** les requêtes utilisateur (API, frontend).
+2. **Encoder/décoder** le texte en graphe IR (déjà fait Phase 1).
+3. **Appeler** la lib C pour : créer un bloc, signer, valider la chaîne, vérifier l'intégrité.
+4. **Orchestrer** les agents et le PoL avant d'écrire sur la chaîne C.
+
+**Analogie Bitcoin :** Bitcoin Core a du C++ pour la chaîne + des outils/scripts autour. ARTCB = **C pour la chaîne** + **Python pour tout le reste**.
 
 ---
 
-## Q-008 — Scope MVP si manque de temps
+## Q-004 — Gradium TTS (voix) ⏳ EXPLICATION + ATTENTE
 
-**Contexte :** 15h restantes, scope ambitieux.
+### De quoi parle cette question ?
 
-**Question :** Si le temps manque, quelle fonctionnalité sacrifier en dernier ?
+**Gradium** est un **partenaire du hackathon RAISE 2026** qui fournit une API de **synthèse vocale** (Text-to-Speech).
 
-**Ordre de priorité proposé (du plus au moins critique) :**
-1. Réversibilité encode/decode (F-02) — **non négociable**
-2. Visualisation graphe (F-06)
-3. Blockchain signée (F-03)
-4. Dual-agent visible (F-07)
-5. PoL jauge (F-08)
-6. Recherche sémantique (F-05)
-7. Gradium TTS (F-12)
-8. Export .artcb (F-13)
+Concrètement : un bouton **« Read aloud »** dans l'interface qui **lit à voix haute** le contenu d'un nœud du graphe.
 
-**Confirme ou réordonne.**
+| Sans Gradium | Avec Gradium |
+|--------------|--------------|
+| Démo visuelle uniquement (graphe, texte) | Démo visuelle + **voix** qui lit les nœuds |
+| Aucune clé API | Clé `GRADIUM_API_KEY` (gratuite hackathon, coupon `RAISE-2026`) |
+
+**Ce n'est PAS la blockchain.** C'est un **bonus UX** pour impressionner les juges (piste Cursor = expérience interactive).
+
+### Ce que tu dois répondre :
+
+- **A)** « Skip Gradium » → pas de voix, on se concentre sur le graphe + blockchain
+- **B)** « Gradium oui » → tu crées une clé sur gradium.ai et me la donnes (`.env` local uniquement)
 
 ---
 
-## Réponses
+## Q-005 — Équipe hackathon ✅ HORS SCOPE AGENT
 
-*(À remplir par l'utilisateur)*
+**Ta réponse :** *Ce n'est pas ta priorité, tu dois coder.*
 
-| ID | Réponse |
-|----|---------|
-| Q-001 | |
-| Q-002 | |
-| Q-003 | |
-| Q-004 | |
-| Q-005 | |
-| Q-006 | |
-| Q-007 | |
-| Q-008 | |
+**Action agent :** Ignoré — tu gères équipe/soumission de ton côté.
+
+---
+
+## Q-006 — Texte de démo ⏳ EN ATTENTE
+
+**Question :** Quel texte utiliser pour la démo vidéo ?
+
+**Option par défaut si tu ne réponds pas :**
+> Nous have decided to use FastAPI for the backend. The main problem is context loss between sessions. The ARTCB solution encodes each reasoning step into a signed graph. Next step: implement the IR Engine.
+
+*(Version anglaise conforme Q-007)*
+
+**Ou** envoie ton propre texte/conversation.
+
+---
+
+## Q-007 — Langue ✅ RÉSOLU
+
+| Zone | Langue |
+|------|--------|
+| Code source (Python, C, TS) | **Anglais** (noms, commentaires, UI) |
+| Rapports (`rapports/*.md`) | **Français** |
+| Communication agent → toi | **Français** |
+
+---
+
+## Q-008 — Priorités MVP ✅ RÉSOLU
+
+**Ta réponse :** *MVP le plus avancé possible.*
+
+**Ordre de développement retenu (tout viser) :**
+
+1. Réversibilité IR ✅ (Phase 1 done)
+2. API FastAPI + RT-LEG + Agents + PoL (Phase 2)
+3. Blockchain C signée (Phase 3)
+4. Frontend graphe interactif (Phase 4)
+5. Gradium TTS si Q-004 = oui
+6. Export `.artcb`
+
+---
+
+## Q-009 — Clés API et blockchain décentralisée ⏳ EXPLICATION + ATTENTE
+
+### De quoi parle cette question ?
+
+Tu as raison de questionner : **une blockchain décentralisée open source ne doit PAS dépendre de clés API centralisées.**
+
+### Clarification importante
+
+| Élément | Sur la blockchain ? | Où ça vit ? |
+|---------|--------------------|-------------|
+| Blocs, hashes, signatures | ✅ Oui — chaîne C locale/décentralisée | `data/chain/` |
+| Graphes IR, RT-LEG | ✅ Oui — persistés signés | `data/graphs/`, `data/rtleg/` |
+| Clé OpenRouter (LLM) | ❌ **Jamais** | `.env` local, gitignoré |
+| Clé Gradium (voix) | ❌ **Jamais** | `.env` local, gitignoré |
+| Code source | ✅ Repo public GitHub | github.com/vgac2025/lvx |
+
+**Les clés API sont optionnelles** et servent uniquement à des **services externes** (IA cloud, voix). Elles ne touchent **jamais** la blockchain.
+
+Chaque utilisateur qui clone le repo :
+- Fonctionne **sans aucune clé** (rule-based + blockchain C).
+- Ajoute **optionnellement** ses clés dans `.env` s'il veut LLM ou voix.
+
+### CONFIGURATION §9 — explication
+
+Ce paragraphe listait ce que **tu** pouvais fournir. En réalité :
+
+| Élément | Encore nécessaire ? |
+|---------|---------------------|
+| Validation CDC | ✅ Fait |
+| Ordre « lance dev » | ✅ Phase 1 faite |
+| `OPENROUTER_API_KEY` | ⏳ Seulement si Q-002 = B |
+| `GRADIUM_API_KEY` | ⏳ Seulement si Q-004 = B |
+| Équipe hackathon | ❌ Ton domaine |
+| Merge main | ✅ Règle Q-001 |
+
+### Ce que tu dois répondre :
+
+- **A)** « Pas de clés API » → 100 % offline, rule-based, pas de voix
+- **B)** « OpenRouter seulement » → tu me donnes la clé
+- **C)** « Gradium seulement » → tu me donnes la clé
+- **D)** « Les deux » → tu me donnes les deux clés
+
+---
+
+## Q-010 — Crédits Cursor ⏳ TA RESPONSABILITÉ
+
+Formulaire : https://forms.gle/djEGNfieyDtFuBBy6  
+Deadline était 4 juil. 17h CEST — à vérifier de ton côté.
+
+---
+
+## Ce qui reste à répondre (résumé)
+
+Réponds en **une ligne par numéro** :
+
+| # | Question courte | Réponses possibles |
+|---|-----------------|-------------------|
+| **Q-002** | LLM OpenRouter ou rule-based seulement ? | A = rule-based / B = LLM + clé |
+| **Q-004** | Bouton voix Gradium dans la démo ? | A = skip / B = oui + clé |
+| **Q-006** | Texte démo custom ou exemple par défaut ? | « défaut » ou colle ton texte |
+| **Q-009** | Clés API (après explication) ? | A = aucune / B = OpenRouter / C = Gradium / D = les deux |
+| **Q-010** | Crédits Cursor | Ton action — pas bloquant pour le code |
+
+**Tout le reste est tranché ✅**
