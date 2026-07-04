@@ -35,18 +35,18 @@
 
 ---
 
-## Phase 2 — Backend (P0 — 4h)
+## Phase 2 — Backend (P0 — 4h) 🟡 EN COURS
 
 **Objectif :** API + RT-LEG + Dual-agent + PoL
 
-| Jalon | Livrable | Critère |
-|-------|----------|---------|
-| 2.1 | FastAPI routes § 8 CDC | 12 endpoints |
-| 2.2 | RT-LEG events | Timeline append-only signée |
-| 2.3 | Agent Explorateur | Décomposition texte → nœuds H, R, F |
-| 2.4 | Agent Critique | Validation + compression macro |
-| 2.5 | PoL Scorer | Formule § 3.2.4 implémentée |
-| 2.6 | Rapport `rapports/002_backend.md` | Logs + métriques |
+| Jalon | Livrable | Critère | Statut |
+|-------|----------|---------|--------|
+| 2.1 | FastAPI routes § 8 CDC | 12 endpoints | 🟡 6/12 |
+| 2.2 | RT-LEG events | Timeline append-only signée | ✅ base |
+| 2.3 | Agent Explorateur | Décomposition texte → nœuds | ✅ |
+| 2.4 | Agent Critique | Validation + PoL | ✅ |
+| 2.5 | PoL Scorer | Formule § 3.2.4 + split collectif | ✅ |
+| 2.6 | Rapport `rapports/006_decisions_phase2.md` | Logs + métriques | ✅ |
 
 ---
 

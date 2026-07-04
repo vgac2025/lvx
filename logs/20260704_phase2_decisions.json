@@ -1,0 +1,41 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace
+configfile: pyproject.toml
+plugins: anyio-4.14.1, cov-7.1.0
+collecting ... collected 31 items
+
+tests/test_book_wailly.py::test_book_file_readable PASSED                [  3%]
+tests/test_book_wailly.py::test_book_first_pages_reversibility PASSED    [  6%]
+tests/test_book_wailly.py::test_book_chunk_reversibility PASSED          [  9%]
+tests/test_book_wailly.py::test_book_orig_symbols_minted PASSED          [ 12%]
+tests/test_book_wailly.py::test_book_node_count_scales PASSED            [ 16%]
+tests/test_grammar.py::test_detect_macros_empty_on_short_text PASSED     [ 19%]
+tests/test_grammar.py::test_symbols_assigned PASSED                      [ 22%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Nous avons d\xe9cid\xe9 d'utiliser FastAPI. Le probl\xe8me est la perte de contexte.] PASSED [ 25%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Observer le monde pour apprendre.] PASSED [ 29%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Regarder le probl\xe8me, cr\xe9er une solution et l'apprendre.] PASSED [ 32%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Si l'hypoth\xe8se est correcte, donc nous validons la solution.] PASSED [ 35%]
+tests/test_ir_reversibility.py::test_reversibility_exact[L'objectif est de m\xe9moriser chaque raisonnement sans perte.] PASSED [ 38%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Hier, nous avons discut\xe9 de l'architecture. Aujourd'hui, nous impl\xe9mentons l'IR Engine.] PASSED [ 41%]
+tests/test_ir_reversibility.py::test_reversibility_exact[La preuve est dans le checksum sha256.] PASSED [ 45%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Contexte: session hackathon RAISE Summit 2026.] PASSED [ 48%]
+tests/test_ir_reversibility.py::test_reversibility_exact[A\n\nB\n\nC] PASSED [ 51%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Nous avons d\xe9cid\xe9 d'utiliser FastAPI pour le backend. Le probl\xe8me principal est la perte de contexte entre sessions. La solution ARTCB encode chaque raisonnement en graphe sign\xe9. Prochaine \xe9tape : impl\xe9menter l'IR Engine.] PASSED [ 54%]
+tests/test_ir_reversibility.py::test_graph_integrity PASSED              [ 58%]
+tests/test_ir_reversibility.py::test_json_roundtrip PASSED               [ 61%]
+tests/test_ir_reversibility.py::test_temporal_edges_chain PASSED         [ 64%]
+tests/test_ir_reversibility.py::test_node_classification PASSED          [ 67%]
+tests/test_ir_reversibility.py::test_compression_ratio_positive PASSED   [ 70%]
+tests/test_ir_reversibility.py::test_macro_detection_on_repeated_pattern PASSED [ 74%]
+tests/test_ir_reversibility.py::test_empty_text_raises PASSED            [ 77%]
+tests/test_ir_reversibility.py::test_decode_invalid_graph_raises PASSED  [ 80%]
+tests/test_pol.py::test_pol_score_high_for_valid_graph PASSED            [ 83%]
+tests/test_pol.py::test_collective_reward_split PASSED                   [ 87%]
+tests/test_pol.py::test_dual_agent_loop PASSED                           [ 90%]
+tests/test_symbols.py::test_mint_original_symbol_stable PASSED           [ 93%]
+tests/test_symbols.py::test_encoder_stores_orig_symbols PASSED           [ 96%]
+tests/test_symbols.py::test_original_symbol_in_node PASSED               [100%]
+
+============================== 31 passed in 4.78s ==============================

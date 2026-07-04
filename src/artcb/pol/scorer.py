@@ -1,0 +1,96 @@
+"""Proof-of-Learning scorer — CDC §3.2.4."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+from artcb.config import load_settings
+from artcb.ir.models import IRGraph
+
+
+@dataclass(frozen=True)
+class PolMetrics:
+    delta_compression: float
+    validation_rate: float
+    retrieval_accuracy: float
+    pol_score: float
+    block_accepted: bool
+
+    def to_dict(self) -> dict:
+        return {
+            "delta_compression": self.delta_compression,
+            "validation_rate": self.validation_rate,
+            "retrieval_accuracy": self.retrieval_accuracy,
+            "pol_score": round(self.pol_score, 4),
+            "block_accepted": self.block_accepted,
+        }
+
+
+class PolScorer:
+    """PoL_score = α×Δcompression + β×validation_rate + γ×retrieval_accuracy."""
+
+    def __init__(
+        self,
+        alpha: float | None = None,
+        beta: float | None = None,
+        gamma: float | None = None,
+        threshold: float | None = None,
+    ) -> None:
+        settings = load_settings()
+        self.alpha = alpha if alpha is not None else settings.pol_alpha
+        self.beta = beta if beta is not None else settings.pol_beta
+        self.gamma = gamma if gamma is not None else settings.pol_gamma
+        self.threshold = threshold if threshold is not None else settings.pol_threshold
+
+    def score(
+        self,
+        graph: IRGraph,
+        *,
+        nodes_validated: int | None = None,
+        nodes_proposed: int | None = None,
+        nodes_retrieved: int | None = None,
+        nodes_correct: int | None = None,
+        ir_size: int | None = None,
+    ) -> PolMetrics:
+        proposed = nodes_proposed if nodes_proposed is not None else len(graph.nodes)
+        validated = nodes_validated if nodes_validated is not None else proposed
+        proposed = max(proposed, 1)
+        validated = min(validated, proposed)
+
+        if nodes_retrieved is None:
+            nodes_retrieved = proposed
+        if nodes_correct is None:
+            nodes_correct = nodes_retrieved if graph.verify_integrity() else 0
+
+        source_len = max(len(graph.source_text), 1)
+        if ir_size is None:
+            ir_size = len(graph.to_json(indent=None))
+        delta_compression = max(0.0, min(1.0, 1.0 - (ir_size / source_len)))
+
+        validation_rate = validated / proposed
+        retrieval_accuracy = nodes_correct / max(nodes_retrieved, 1)
+
+        pol_score = (
+            self.alpha * delta_compression
+            + self.beta * validation_rate
+            + self.gamma * retrieval_accuracy
+        )
+
+        return PolMetrics(
+            delta_compression=round(delta_compression, 4),
+            validation_rate=round(validation_rate, 4),
+            retrieval_accuracy=round(retrieval_accuracy, 4),
+            pol_score=round(pol_score, 4),
+            block_accepted=pol_score >= self.threshold,
+        )
+
+    @staticmethod
+    def split_reward(block_reward: float, contributor_scores: dict[str, float]) -> dict[str, float]:
+        """Collective split — TOKENOMICS §6.2."""
+        total = sum(contributor_scores.values())
+        if total <= 0:
+            return {k: 0.0 for k in contributor_scores}
+        return {
+            address: round(block_reward * (score / total), 8)
+            for address, score in contributor_scores.items()
+        }

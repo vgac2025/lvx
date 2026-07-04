@@ -1,56 +1,30 @@
-# CHECKLIST PRÉ-DÉVELOPPEMENT — ARTCB
+# CHECKLIST PRE-DÉVELOPPEMENT — ARTCB
 
-**Horodatage :** 2026-07-04T20:25:00Z  
-**Gate Phase 1 :** ✅ Terminée  
-**Gate Phase 2 :** 🟡 Partiel — défauts applicables si pas de réponse Q-002/Q-004/Q-009
-
----
-
-## 1. Documentation (spec) ✅
-
-Tous items ✅ — voir audit `rapports/000_audit_complet.md`
+**Horodatage :** 2026-07-04T23:10:00Z  
+**Gate Phase 2 :** 🟢 **DÉBLOQUÉ** — Q-002, Q-004, Q-006, Q-009, Q-015, Q-016 résolues
 
 ---
 
-## 2. Infrastructure Git / GitHub
+## §3 Décisions utilisateur
 
-| # | Item | Statut |
-|---|------|--------|
-| 2.1 | SSH configuré | ✅ |
-| 2.2 | Merge auto vers `main` à chaque push (D-001) | ✅ Règle actée |
-| 2.3 | Repo public | ✅ @ `c82c40c` |
-
----
-
-## 3. Décisions utilisateur
-
-| # | Item | Statut |
-|---|------|--------|
-| 3.1 | Q-001 Merge main | ✅ Toujours merge |
-| 3.2 | Q-002 LLM vs rule-based | ⏳ En attente (défaut: rule-based) |
-| 3.3 | Q-003 Blockchain C only | ✅ C comme Bitcoin |
-| 3.4 | Q-004 Gradium TTS | ⏳ En attente (défaut: skip) |
-| 3.5 | Q-005 Équipe | ✅ Hors scope agent |
-| 3.6 | Q-006 Texte démo | ⏳ En attente (défaut: exemple CDC EN) |
-| 3.7 | Q-007 Langue | ✅ EN code / FR rapports |
-| 3.8 | Q-008 MVP max | ✅ P0 + P1 |
-| 3.9 | Q-009 Clés API | ⏳ En attente (défaut: aucune) |
-| 3.10 | Phase 1 IR Engine | ✅ |
-| 3.11 | Ordre « Lance Phase 2 » | ⏳ |
+| # | Question | Statut |
+|---|----------|--------|
+| 3.1 | Q-001 Merge main | ✅ |
+| 3.2 | Q-002 LLM + rule-based (les deux) | ✅ D-008 — Bob CLI |
+| 3.3 | Q-003 Blockchain C only | ✅ |
+| 3.4 | Q-004 Gradium TTS | ✅ D-009 |
+| 3.5 | Q-005 Équipe | ✅ Hors scope |
+| 3.6 | Q-006 Texte démo Wailly 100% | ✅ D-010 |
+| 3.7 | Q-007 Langue | ✅ |
+| 3.8 | Q-008 MVP max | ✅ |
+| 3.9 | Q-009 Clés Bob + Gradium | ✅ D-021 |
+| 3.10 | Q-015 Deux unités pARTCB + pubARTCB | ✅ D-019 |
+| 3.11 | Q-016 Mineurs humain + IA | ✅ D-020 |
 
 ---
 
-## 4. Phase 1 ✅
+## §5 Gate développement
 
-| Jalon | Statut |
-|-------|--------|
-| IR Encoder/Decoder | ✅ |
-| 20 tests réversibilité 100% | ✅ |
-| Rapport `001_ir_engine.md` | ✅ |
-
----
-
-## 5. Phase 2 — prochaine (sur ordre)
-
-- FastAPI + RT-LEG + Agents + PoL
-- Rapport `002_backend.md`
+**Phase 2 : EN COURS** — PoL, agents, RT-LEG, FastAPI  
+**Phase 3 :** blockchain C + devnet  
+**Phase 4 :** frontend

@@ -230,9 +230,11 @@ Si fraude détectée (compression gonflée, retrieval falsifié) :
 
 | Réseau | Coin | Valeur |
 |--------|------|--------|
-| `artcb-devnet` | tARTCB (test) | **Aucune** — faucet gratuit |
-| Chaîne privée locale | ARTCB privé | Usage interne utilisateur |
-| Réseau fédéré public (post-MVP) | ARTCB | Gouvernance à définir (Q-015) |
+| `artcb-devnet` | **tARTCB** (test) | **Aucune** — faucet gratuit |
+| Chaîne privée locale | **pARTCB** | Usage interne — ledger privé (D-019) |
+| Réseau fédéré public (post-MVP) | **pubARTCB** | Ledger public séparé (D-019) |
+
+**D-019 (Q-015 = C) :** **deux unités distinctes** — `pARTCB` et `pubARTCB` ne sont **pas interchangeables**. Chaque ledger a son plafond 21M.
 
 **Faucet devnet :** distribution initiale de tARTCB pour tests mineurs (Phase 3.6).
 
@@ -252,15 +254,15 @@ Si fraude détectée (compression gonflée, retrieval falsifié) :
 
 ---
 
-## 12. Décisions en attente (utilisateur)
+## 12. Décisions utilisateur (actées 4 juil. 2026)
 
-| ID | Question | Proposition documentée |
-|----|----------|------------------------|
-| Q-012 | Plafond 21M ARTCB ? | **Oui** (demande utilisateur) |
-| Q-013 | Split 100 % collectif ? | **Oui** (formule §6.2) |
-| Q-014 | Halving style Bitcoin ? | **Oui** (210 000 blocs) |
-| Q-015 | Coin privé seul ou aussi réseau public ? | ⏳ En attente |
-| Q-016 | Mineur humain seul ou aussi agent IA ? | ⏳ En attente (MVP : les deux via signatures Ed25519) |
+| ID | Question | Réponse |
+|----|----------|---------|
+| Q-012 | Plafond 21M ? | ✅ Oui — D-014 |
+| Q-013 | Split collectif ? | ✅ Oui — D-015 |
+| Q-014 | Halving Bitcoin ? | ✅ Oui — D-016 |
+| Q-015 | Unités coin | ✅ **C** — pARTCB + pubARTCB — D-019 |
+| Q-016 | Mineurs | ✅ **C** — humain + IA — D-020 |
 
 ---
 

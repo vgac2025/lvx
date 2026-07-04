@@ -1,303 +1,118 @@
 # QUESTIONS OUVERTES — ARTCB
 
-**Horodatage :** 2026-07-04T22:50:00Z  
-**Statut :** v3 — tokenomics PoL collectif documentée ; Q-015/Q-016 en attente
+**Horodatage :** 2026-07-04T23:05:00Z  
+**Statut :** v4 — **toutes questions MVP résolues** sauf Q-010 (hors scope agent)
 
 ---
 
-## Réponses enregistrées (utilisateur — 4 juillet 2026)
+## Tableau synthèse
 
-| ID | Réponse utilisateur | Décision retenue |
-|----|--------------------|------------------|
-| Q-001 | *TOUJOUR MERGE QUAND JE TE DIT DE PUSH | ✅ Merge systématique vers `main` à chaque push |
-| Q-002 | *C'EST À DIRE ? EXPLIQUE | ⏳ **En attente** — voir explication § Q-002 ci-dessous |
-| Q-003 | *UNIQUEMENT EN C, COMME BITCOIN | ✅ Blockchain **100 % en C** (hash, blocs, chaîne, signatures) |
-| Q-004 | *C'EST À DIRE ? EXPLIQUE | ⏳ **En attente** — voir explication § Q-004 ci-dessous |
-| Q-005 | *CE N'EST PAS TA PRIORITÉ | ✅ Hors scope agent — tu t'en occupes |
-| Q-006 | *(pas de réponse)* | ⏳ **En attente** — texte démo |
-| Q-007 | *ANGLAIS DEV, FRANÇAIS RAPPORTS | ✅ Code/UI en **anglais**, rapports en **français** |
-| Q-008 | *MVP LE PLUS AVANCÉ POSSIBLE | ✅ Toutes fonctions P0 + P1 visées, aucune sacrifiée sauf urgence |
-| Q-009 | *C'EST À DIRE ? EXPLIQUE | ⏳ **En attente** — voir explication § Q-009 ci-dessous |
-| Q-010 | *(pas de réponse)* | ⏳ Crédits Cursor — **ta responsabilité** |
-| Q-011 | *Lance le dev (Phase 1 faite) | ✅ Phase 1 terminée — Phase 2+ sur ordre |
-
----
-
-## Q-001 — Merge branche → main ✅ RÉSOLU
-
-**Ta réponse :** *Toujours merge quand je te dis de push.*
-
-**Règle retenue :** À chaque push, merger la branche de travail dans `main` puis `git push origin main`.
+| ID | Réponse utilisateur | Décision |
+|----|--------------------|----------|
+| Q-001 | Toujours merge au push | ✅ D-001 |
+| Q-002 | **Les deux** — rule-based + LLM Bob | ✅ D-008 |
+| Q-003 | Blockchain 100 % C | ✅ D-002 |
+| Q-004 | **Gradium oui** | ✅ D-009 |
+| Q-005 | Hors scope agent | ✅ D-006 |
+| Q-006 | **Livre Wailly 100 %** | ✅ D-010 |
+| Q-007 | EN code / FR rapports | ✅ D-004 |
+| Q-008 | MVP le plus avancé | ✅ D-005 |
+| Q-009 | **D = les deux clés** (Bob + Gradium) | ✅ D-021 |
+| Q-010 | Crédits Cursor | ⏳ Utilisateur — hors scope agent |
+| Q-011 | Lance dev Phase 1 | ✅ Done |
+| Q-012 | 21M ARTCB | ✅ D-014 |
+| Q-013 | Split PoL collectif | ✅ D-015 |
+| Q-014 | Halving Bitcoin-style | ✅ D-016 |
+| Q-015 | **C = deux unités** (pARTCB + pubARTCB) | ✅ D-019 |
+| Q-016 | **C = humain + agent IA** | ✅ D-020 |
+| Q-017 | Pas Bitcoin testnet | ✅ D-017 |
 
 ---
 
-## Q-002 — Encodage LLM vs rule-based ⏳ EXPLICATION + ATTENTE
+## Q-002 — Encodage ✅ RÉSOLU
 
-### De quoi parle cette question ?
+**Ta réponse :** *Je veux les deux* — rule-based **et** LLM.
 
-Quand ARTCB transforme un **texte humain** en **graphe IR**, il y a **deux méthodes** :
+**Retenu (D-008) :**
+- **A)** Rule-based — toujours disponible, priorité offline ;
+- **B)** Bob LLM — si `ARTCB_LLM_ENABLED=true` + clé Bob.
 
-| Méthode | Comment ça marche | Avantages | Inconvénients |
-|---------|-------------------|-----------|---------------|
-| **Rule-based (actuel Phase 1)** | Règles locales : découpe phrases, mots-clés (« décidé » → DECISION), symboles USP | Gratuit, offline, open source, déjà codé | Moins « intelligent » sur textes complexes |
-| **LLM (OpenRouter)** | Envoie le texte à une IA cloud (Claude, GPT…) via API payante | Meilleure classification sémantique | Clé API requise, internet, coût, dépendance externe |
-
-**OpenRouter** = service qui donne accès à plusieurs LLM via une seule clé API (`OPENROUTER_API_KEY`).
-
-### Ce que tu dois répondre (une ligne) :
-
-- **A)** « Rule-based seulement » → on garde Phase 1 tel quel, pas de clé API
-- **B)** « LLM aussi » → tu me fournis une clé `OPENROUTER_API_KEY` (fichier `.env` local, jamais sur la blockchain)
+**OpenRouter hackathon :** **non fourni.** Utiliser la clé **Bob CLI** :
+- `BOB_API_KEY=bob_prod_...` (canonique)
+- ou `OPENROUTER_API_KEY=...` (**alias** — même clé Bob, compatibilité doc)
 
 ---
 
-## Q-003 — Blockchain C vs Python ✅ RÉSOLU
+## Q-004 — Gradium ✅ RÉSOLU
 
-**Ta réponse :** *Uniquement en C, comme Bitcoin.*
+**Ta réponse :** *Oui* — bouton voix dans la démo.
 
-### Architecture retenue
-
-```
-┌─────────────────────────────────────────┐
-│  PYTHON — orchestration (pas blockchain) │
-│  • API FastAPI (routes HTTP/WebSocket)   │
-│  • IR Engine (encode/decode) ✅ Phase 1  │
-│  • Agents Explorateur / Critique         │
-│  • PoL scorer                            │
-│  • Tests, CLI, rapports                  │
-└─────────────────┬───────────────────────┘
-                  │ ctypes / FFI
-┌─────────────────▼───────────────────────┐
-│  C — blockchain (comme Bitcoin)          │
-│  • SHA-256 hash des blocs                │
-│  • Structure block / chain               │
-│  • Signatures Ed25519                    │
-│  • Validation chaîne                     │
-│  • Proof-of-Learning (acceptation bloc)  │
-│  • Persistance blocks.jsonl              │
-└─────────────────────────────────────────┘
-```
-
-### À quoi sert Python alors ?
-
-Python **ne remplace pas** la blockchain. Il sert de **couche de liaison** :
-
-1. **Recevoir** les requêtes utilisateur (API, frontend).
-2. **Encoder/décoder** le texte en graphe IR (déjà fait Phase 1).
-3. **Appeler** la lib C pour : créer un bloc, signer, valider la chaîne, vérifier l'intégrité.
-4. **Orchestrer** les agents et le PoL avant d'écrire sur la chaîne C.
-
-**Analogie Bitcoin :** Bitcoin Core a du C++ pour la chaîne + des outils/scripts autour. ARTCB = **C pour la chaîne** + **Python pour tout le reste**.
+**Retenu (D-009) :** `GRADIUM_API_KEY` dans `.env` local.
 
 ---
 
-## Q-004 — Gradium TTS (voix) ⏳ EXPLICATION + ATTENTE
+## Q-006 — Texte démo ✅ RÉSOLU
 
-### De quoi parle cette question ?
+**Ta réponse :** *Utiliser le livre à 100 % fourni.*
 
-**Gradium** est un **partenaire du hackathon RAISE 2026** qui fournit une API de **synthèse vocale** (Text-to-Speech).
+**Retenu (D-010) :**
 
-Concrètement : un bouton **« Read aloud »** dans l'interface qui **lit à voix haute** le contenu d'un nœud du graphe.
+| Élément | Valeur |
+|---------|--------|
+| Fichier | `data/fixtures/wailly_le_roi_de_l_inconnu.pdf` |
+| Couverture | **Intégralité du livre** |
+| Doc | `DEMO_TEXTE_ARTCB` |
 
-| Sans Gradium | Avec Gradium |
-|--------------|--------------|
-| Démo visuelle uniquement (graphe, texte) | Démo visuelle + **voix** qui lit les nœuds |
-| Aucune clé API | Clé `GRADIUM_API_KEY` (gratuite hackathon, coupon `RAISE-2026`) |
-
-**Ce n'est PAS la blockchain.** C'est un **bonus UX** pour impressionner les juges (piste Cursor = expérience interactive).
-
-### Ce que tu dois répondre :
-
-- **A)** « Skip Gradium » → pas de voix, on se concentre sur le graphe + blockchain
-- **B)** « Gradium oui » → tu crées une clé sur gradium.ai et me la donnes (`.env` local uniquement)
+**Note :** le rapport `002_decisions_secrets.md` mentionnait à tort l'exemple CDC — **corrigé** par D-010.
 
 ---
 
-## Q-005 — Équipe hackathon ✅ HORS SCOPE AGENT
+## Q-009 — Clés API ✅ RÉSOLU
 
-**Ta réponse :** *Ce n'est pas ta priorité, tu dois coder.*
+**Ta réponse :** *D = les deux* — Bob + Gradium.
 
-**Action agent :** Ignoré — tu gères équipe/soumission de ton côté.
+**Retenu (D-021, D-022) :**
 
----
+| Clé | Service | Fourni hackathon ? |
+|-----|---------|-------------------|
+| `BOB_API_KEY` | LLM encodage path B | Non — **ta clé Bob CLI** |
+| `OPENROUTER_API_KEY` | Alias Bob (optionnel) | Non |
+| `GRADIUM_API_KEY` | TTS voix | Coupon hackathon possible |
 
-## Q-006 — Texte de démo ⏳ EN ATTENTE
-
-**Question :** Quel texte utiliser pour la démo vidéo ?
-
-**Option par défaut si tu ne réponds pas :**
-> Nous have decided to use FastAPI for the backend. The main problem is context loss between sessions. The ARTCB solution encodes each reasoning step into a signed graph. Next step: implement the IR Engine.
-
-*(Version anglaise conforme Q-007)*
-
-**Ou** envoie ton propre texte/conversation.
+Jamais sur blockchain. Toujours `.env` gitignoré.
 
 ---
 
-## Q-007 — Langue ✅ RÉSOLU
+## Q-015 — Deux unités coin ✅ RÉSOLU
 
-| Zone | Langue |
-|------|--------|
-| Code source (Python, C, TS) | **Anglais** (noms, commentaires, UI) |
-| Rapports (`rapports/*.md`) | **Français** |
-| Communication agent → toi | **Français** |
+**Ta réponse :** *C — deux unités* ; *toujours les deux si les deux options sont possibles.*
 
----
-
-## Q-008 — Priorités MVP ✅ RÉSOLU
-
-**Ta réponse :** *MVP le plus avancé possible.*
-
-**Ordre de développement retenu (tout viser) :**
-
-1. Réversibilité IR ✅ (Phase 1 done)
-2. API FastAPI + RT-LEG + Agents + PoL (Phase 2)
-3. Blockchain C signée (Phase 3)
-4. Frontend graphe interactif (Phase 4)
-5. Gradium TTS si Q-004 = oui
-6. Export `.artcb`
+**Retenu (D-019) :**
+- **pARTCB** — chaîne privée locale ;
+- **pubARTCB** — réseau public fédéré ;
+- **tARTCB** — devnet test.
 
 ---
 
-## Q-009 — Clés API et blockchain décentralisée ⏳ EXPLICATION + ATTENTE
+## Q-016 — Mineurs ✅ RÉSOLU
 
-### De quoi parle cette question ?
+**Ta réponse :** *C — les deux* (humain + agent IA, signatures Ed25519 distinctes).
 
-Tu as raison de questionner : **une blockchain décentralisée open source ne doit PAS dépendre de clés API centralisées.**
-
-### Clarification importante
-
-| Élément | Sur la blockchain ? | Où ça vit ? |
-|---------|--------------------|-------------|
-| Blocs, hashes, signatures | ✅ Oui — chaîne C locale/décentralisée | `data/chain/` |
-| Graphes IR, RT-LEG | ✅ Oui — persistés signés | `data/graphs/`, `data/rtleg/` |
-| Clé OpenRouter (LLM) | ❌ **Jamais** | `.env` local, gitignoré |
-| Clé Gradium (voix) | ❌ **Jamais** | `.env` local, gitignoré |
-| Code source | ✅ Repo public GitHub | github.com/vgac2025/lvx |
-
-**Les clés API sont optionnelles** et servent uniquement à des **services externes** (IA cloud, voix). Elles ne touchent **jamais** la blockchain.
-
-Chaque utilisateur qui clone le repo :
-- Fonctionne **sans aucune clé** (rule-based + blockchain C).
-- Ajoute **optionnellement** ses clés dans `.env` s'il veut LLM ou voix.
-
-### CONFIGURATION §9 — explication
-
-Ce paragraphe listait ce que **tu** pouvais fournir. En réalité :
-
-| Élément | Encore nécessaire ? |
-|---------|---------------------|
-| Validation CDC | ✅ Fait |
-| Ordre « lance dev » | ✅ Phase 1 faite |
-| `OPENROUTER_API_KEY` | ⏳ Seulement si Q-002 = B |
-| `GRADIUM_API_KEY` | ⏳ Seulement si Q-004 = B |
-| Équipe hackathon | ❌ Ton domaine |
-| Merge main | ✅ Règle Q-001 |
-
-### Ce que tu dois répondre :
-
-- **A)** « Pas de clés API » → 100 % offline, rule-based, pas de voix
-- **B)** « OpenRouter seulement » → tu me donnes la clé
-- **C)** « Gradium seulement » → tu me donnes la clé
-- **D)** « Les deux » → tu me donnes les deux clés
+**Retenu (D-020).**
 
 ---
 
-## Q-010 — Crédits Cursor ⏳ TA RESPONSABILITÉ
+## Q-010 — Crédits Cursor ⏳ HORS SCOPE AGENT
 
 Formulaire : https://forms.gle/djEGNfieyDtFuBBy6  
-Deadline était 4 juil. 17h CEST — à vérifier de ton côté.
+**Responsable :** utilisateur uniquement.
 
 ---
 
-## Q-012 — Supply max 21M ARTCB ✅ DOCUMENTÉ (proposition utilisateur)
+## Ce qui reste (hors agent)
 
-**Question :** Plafond fixe 21 000 000 ARTCB comme Bitcoin ?
+| # | Action | Responsable |
+|---|--------|-------------|
+| Q-010 | Formulaire crédits Cursor | Toi |
 
-**Ta réflexion (4 juil. 2026) :** Oui — même concept de supply limitée, émission via minage d'apprentissage.
-
-**Décision retenue (D-014) :** ✅ **21 000 000 ARTCB**, 8 décimales, spec complète `TOKENOMICS_ARTCB` §3-4.
-
-**Confirmation explicite optionnelle :** réponds « oui » ou « non » pour acter définitivement.
-
----
-
-## Q-013 — Répartition collective du block reward ✅ DOCUMENTÉ
-
-**Question :** Tous les mineurs PoL d'un bloc gagnent collectivement (pas winner-takes-all Bitcoin) ?
-
-**Ta réflexion :** Oui — split proportionnel, 100 % des ressources de calcul orientées apprentissage.
-
-**Décision retenue (D-015) :** ✅ Formule :
-
-```
-reward_i = block_reward × (PoL_score_i / Σ PoL_score_j)
-```
-
-Spec : `TOKENOMICS_ARTCB` §6.
-
----
-
-## Q-014 — Halving style Bitcoin ✅ DOCUMENTÉ
-
-**Question :** Halving de la récompense bloc comme Bitcoin ?
-
-**Ta réflexion :** Oui — même concept d'émission décroissante.
-
-**Décision retenue (D-016) :** ✅ Block reward initial **50 ARTCB**, halving tous les **210 000 blocs** PoL.
-
----
-
-## Q-015 — Coin sur chaîne privée seule ou aussi réseau public ? ⏳ EN ATTENTE
-
-**Question :** L'unité ARTCB existe-t-elle uniquement sur la chaîne privée locale, ou aussi sur le futur réseau fédéré public ?
-
-| Option | Description |
-|--------|-------------|
-| **A** | Privé seulement — coin = compteur local utilisateur |
-| **B** | Privé + public fédéré — même unité ARTCB |
-| **C** | Deux unités séparées (privé vs public) |
-
-**Proposition agent (MVP) :** privé local + tARTCB sur `artcb-devnet` ; mainnet fédéré = Q-015.
-
----
-
-## Q-016 — Mineur humain seul ou aussi agent IA autonome ? ⏳ EN ATTENTE
-
-**Question :** Qui peut « miner » PoL et recevoir des rewards ?
-
-| Option | Description |
-|--------|-------------|
-| **A** | Humain seulement |
-| **B** | Agent IA autonome seulement |
-| **C** | Les deux (signatures Ed25519 distinctes) |
-
-**Proposition agent (MVP) :** **C** — dual-agents Explorateur/Critique impliquent des agents ; spec `TOKENOMICS_ARTCB` §2.
-
----
-
-## Q-017 — Bitcoin testnet3/4 pour ARTCB ? ✅ RÉSOLU — NON
-
-**Question :** Les testnet Bitcoin serviraient-ils pour notre blockchain ?
-
-**Réponse :** **Non.** Protocoles incompatibles. Réseau maison : **`artcb-devnet`**.
-
-**Document :** `RESEAU_DEVNET_ARTCB` — D-017.
-
----
-
-## Ce qui reste à répondre (résumé)
-
-Réponds en **une ligne par numéro** :
-
-| # | Question courte | Réponses possibles |
-|---|-----------------|-------------------|
-| **Q-002** | LLM OpenRouter ou rule-based seulement ? | A = rule-based / B = LLM + clé |
-| **Q-004** | Bouton voix Gradium dans la démo ? | A = skip / B = oui + clé |
-| **Q-006** | Texte démo custom ou exemple par défaut ? | « défaut » ou colle ton texte |
-| **Q-009** | Clés API (après explication) ? | A = aucune / B = OpenRouter / C = Gradium / D = les deux |
-| **Q-010** | Crédits Cursor | Ton action — pas bloquant pour le code |
-| **Q-015** | Coin privé seul ou aussi réseau public ? | A / B / C — voir § Q-015 |
-| **Q-016** | Mineur humain, IA, ou les deux ? | A / B / C — voir § Q-016 |
-
-**Tranché et documenté ✅ :** Q-012 (21M), Q-013 (collectif), Q-014 (halving), Q-017 (pas Bitcoin testnet)
+**Gate MVP : 🟢 DÉBLOQUÉ** — Phase 2+ peut continuer.

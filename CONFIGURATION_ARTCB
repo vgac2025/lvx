@@ -1,7 +1,7 @@
 # CONFIGURATION — ARTCB MVP Avancé
 
-**Horodatage :** 2026-07-04T22:50:00Z  
-**Statut :** Tokenomics + devnet intégrés — voir TOKENOMICS_ARTCB, RESEAU_DEVNET_ARTCB
+**Horodatage :** 2026-07-04T23:05:00Z  
+**Statut :** Q-002→Q-016 résolues — voir DECISIONS D-019→D-022
 
 ---
 
@@ -26,13 +26,16 @@
 | `ARTCB_P2P_PORT` | Non | `18444` | Port P2P artcb-devnet (Phase 3) |
 | `ARTCB_BLOCK_REWARD` | Non | `50` | Block reward initial ARTCB (TOKENOMICS) |
 | `ARTCB_HALVING_INTERVAL` | Non | `210000` | Blocs entre halvings |
-| `ARTCB_MAX_SUPPLY` | Non | `21000000` | Supply max ARTCB |
-| `OPENROUTER_API_KEY` | Non* | — | Clé LLM pour encodage intelligent |
-| `OPENROUTER_MODEL` | Non | `anthropic/claude-3.5-sonnet` | Modèle LLM |
-| `GRADIUM_API_KEY` | Non | — | TTS voix (P1 hackathon) |
+| `ARTCB_MAX_SUPPLY` | Non | `21000000` | Supply max par ledger (pARTCB / pubARTCB) |
+| `ARTCB_DEMO_BOOK_PDF` | Non | `data/fixtures/wailly_le_roi_de_l_inconnu.pdf` | Livre démo Q-006 — 100 % |
+| `BOB_API_KEY` | Non* | — | **Canonique** — LLM path B (IBM Bob CLI) |
+| `OPENROUTER_API_KEY` | Non* | — | **Alias** de `BOB_API_KEY` — hackathon ne fournit pas OpenRouter |
+| `BOB_API_BASE` | Non | `https://api.us-east.bob.ibm.com` | Base URL Bob |
+| `ARTCB_LLM_ENABLED` | Non | `false` | Activer path B si clé Bob présente |
+| `GRADIUM_API_KEY` | Non | — | TTS voix (Q-004 = oui) |
 | `GRADIUM_API_URL` | Non | `https://api.gradium.ai` | Base URL Gradium |
 
-\* Obligatoire seulement si encodage LLM activé ; sinon fallback rule-based (CDC §21).
+\* Path B : `BOB_API_KEY` **ou** `OPENROUTER_API_KEY` (même clé). Rule-based (path A) fonctionne **sans** clé.
 
 ---
 
@@ -196,8 +199,8 @@ Les clés ci-dessous sont **optionnelles**, pour services **externes** uniquemen
 
 | Variable | Service externe | Obligatoire ? | Sur blockchain ? |
 |----------|----------------|---------------|------------------|
-| `OPENROUTER_API_KEY` | IA cloud (encodage LLM) | Non — **remplacé par BOB_API_KEY** | ❌ Jamais |
-| `BOB_API_KEY` | IBM Bob CLI/IDE — **même rôle qu'OpenRouter** | Non — rule-based par défaut | ❌ Jamais |
+| `OPENROUTER_API_KEY` | Alias **Bob CLI** (même clé) — hackathon **ne fournit pas** OpenRouter | Non — path B optionnel | ❌ Jamais |
+| `BOB_API_KEY` | IBM Bob CLI — LLM path B (canonique) | Non — rule-based par défaut | ❌ Jamais |
 | `GRADIUM_API_KEY` | Synthèse vocale hackathon | Non — skip par défaut | ❌ Jamais |
 
 ### Où vont les clés si tu en fournis ?
@@ -218,8 +221,8 @@ Chaque clone du repo public fonctionne **sans clé**. Les clés sont un choix **
 |---------|--------|-------------|
 | Validation CDC v1.1 | ✅ | Agent |
 | Phase 1 IR Engine | ✅ | Agent |
-| `OPENROUTER_API_KEY` | ⏳ Q-002 en attente | Toi (optionnel) |
-| `GRADIUM_API_KEY` | ⏳ Q-004 en attente | Toi (optionnel) |
+| `OPENROUTER_API_KEY` / `BOB_API_KEY` | ✅ Q-002 + Q-009 D — `.env` local Bob CLI | Toi |
+| `GRADIUM_API_KEY` | ✅ Q-004 oui — `.env` local | Toi |
 | Équipe hackathon | Hors scope agent | Toi |
 | Merge → main à chaque push | ✅ Règle D-001 | Agent |
 | Crédits Cursor formulaire | ⏳ | Toi |

@@ -24,6 +24,11 @@ class ArtcbSettings:
     data_dir: Path
     log_dir: Path
     reports_dir: Path
+    demo_book_pdf: Path
+    pol_alpha: float
+    pol_beta: float
+    pol_gamma: float
+    pol_threshold: float
 
 
 def load_settings() -> ArtcbSettings:
@@ -34,7 +39,7 @@ def load_settings() -> ArtcbSettings:
         debug=_bool("ARTCB_DEBUG", "true"),
         encode_mode=os.getenv("ARTCB_ENCODE_MODE", "rule-based"),
         llm_enabled=_bool("ARTCB_LLM_ENABLED", "false"),
-        bob_api_key=os.getenv("BOB_API_KEY") or None,
+        bob_api_key=os.getenv("BOB_API_KEY") or os.getenv("OPENROUTER_API_KEY") or None,
         bob_api_base=os.getenv("BOB_API_BASE", "https://api.us-east.bob.ibm.com"),
         gradium_api_key=os.getenv("GRADIUM_API_KEY") or None,
         gradium_api_url=os.getenv("GRADIUM_API_URL", "https://api.gradium.ai"),
@@ -42,4 +47,14 @@ def load_settings() -> ArtcbSettings:
         data_dir=Path(os.getenv("ARTCB_DATA_DIR", "./data")),
         log_dir=Path(os.getenv("ARTCB_LOG_DIR", "./logs")),
         reports_dir=Path(os.getenv("ARTCB_REPORTS_DIR", "./rapports")),
+        demo_book_pdf=Path(
+            os.getenv(
+                "ARTCB_DEMO_BOOK_PDF",
+                "data/fixtures/wailly_le_roi_de_l_inconnu.pdf",
+            )
+        ),
+        pol_alpha=float(os.getenv("ARTCB_POL_ALPHA", "0.4")),
+        pol_beta=float(os.getenv("ARTCB_POL_BETA", "0.3")),
+        pol_gamma=float(os.getenv("ARTCB_POL_GAMMA", "0.3")),
+        pol_threshold=float(os.getenv("ARTCB_POL_THRESHOLD", "0.6")),
     )

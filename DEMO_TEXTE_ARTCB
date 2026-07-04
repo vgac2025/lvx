@@ -1,0 +1,42 @@
+# TEXTE DÉMO — ARTCB (Q-006)
+
+**Horodatage :** 2026-07-04T23:05:00Z  
+**Décision :** D-010 — **livre Wailly intégral à 100 %**
+
+---
+
+## Source officielle démo
+
+| Élément | Valeur |
+|---------|--------|
+| Fichier | `data/fixtures/wailly_le_roi_de_l_inconnu.pdf` |
+| Titre | *Le Roi de l'Inconnu* — Wailly |
+| Usage | Encodage IR, tests réversibilité, démo hackathon, pitch vidéo |
+| Couverture | **100 % du livre** — pas l'exemple CDC anglais |
+
+---
+
+## Règles
+
+1. **Parcours démo live** : extraire / encoder des passages du PDF Wailly (pas le texte fictif FastAPI du CDC §23).
+2. **Tests** : `tests/test_book_wailly.py` — référence obligatoire ; étendre à couverture complète en Phase 2+.
+3. **UI** : afficher reconstruction du texte original depuis le graphe IR (réversibilité prouvée sur vrai livre).
+4. **Langue** : français (source livre) ; code/UI restent en anglais (D-004).
+
+---
+
+## Variable config
+
+```bash
+ARTCB_DEMO_BOOK_PDF=data/fixtures/wailly_le_roi_de_l_inconnu.pdf
+```
+
+---
+
+## Abandon explicite
+
+L'exemple CDC suivant **n'est plus** le texte de démo :
+
+> *Nous have decided to use FastAPI for the backend…*
+
+Conservé uniquement comme exemple payload API (§23 CDC), pas comme contenu démo utilisateur.
