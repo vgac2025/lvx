@@ -1,7 +1,7 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-04T20:25:00Z  
-**Statut dépôt :** Phase 1 ✅ — Phase 2 en attente d'ordre
+**Horodatage :** 2026-07-04T22:50:00Z  
+**Statut dépôt :** Phase 1 ✅ — Tokenomics v1.0 documentée — Phase 2 en attente d'ordre
 
 ---
 
@@ -9,42 +9,31 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `c82c40c` | Docs + Phase 1 IR Engine |
-| **Branche active** | `main` | À jour |
+| `origin/main` | `9ccbc1e` | Phase 1 + docs |
+| **Branche active** | `main` | Mise à jour tokenomics en cours |
 
 ---
 
 ## Ordre de lecture obligatoire (PROTOCOLE)
 
-| # | Fichier | Lignes | Statut | Rôle |
-|---|---------|--------|--------|------|
-| 1 | `PROTOCOLE_ARTCB` | 17 | ✅ Complet | Règles de dev inviolables |
-| 2 | `STANDARD_NAMES_ARTCB` | 145 | ✅ Complet | Conventions nommage |
-| 3 | `LEÇONS_APPRISES_ARTCB` | 47+ | ✅ Complet | Retours d'expérience |
-| 4 | `AUTO_PROMPT_ARTCB` | 18+ | ✅ Complet | Prompt agent |
-| 5 | `ROADMAP_GENERAL_ARTCB` | 107 | ✅ Complet | Phases et jalons |
-| 6 | `IDÉE_ARTCB` | 1429 | ✅ Complet | Vision + autocritique RT-LEG |
-| 7 | `CAHIER_DES_CHARGES_ARTCB` | 599+ | ✅ v1.1 | Spec MVP Avancé |
-| 8 | `STRUCTURE_ARTCB` | 81 | ✅ Complet | Arborescence cible |
-| 9 | `CONFIGURATION_ARTCB` | — | ✅ Nouveau | Config, deps, clés API |
-| 10 | `CHECKLIST_PRE_DEV_ARTCB` | — | ✅ Nouveau | Gate avant développement |
-| 11 | `QUESTIONS_OUVERTES_ARTCB` | — | ✅ v2 | Décisions + explications |
-| 12 | `DECISIONS_UTILISATEUR_ARTCB` | — | ✅ | Décisions actées D-001→D-007 |
-| 13 | `REGLES HACKATHON RAISE SOUMMIT` | 332 | ✅ | Contraintes événement |
-| 14 | `INDEX_ARTCB` | — | ✅ | Ce fichier |
-
----
-
-## Mapping PROTOCOLE → fichiers réels
-
-Le PROTOCOLE cite des noms `.md` incorrects. Voici la correspondance officielle :
-
-| Référence PROTOCOLE | Fichier réel |
-|--------------------|--------------|
-| `STANDARD_NAMES.md` | `STANDARD_NAMES_ARTCB` |
-| `LEÇONS_APPRISES_ARTCB.md` | `LEÇONS_APPRISES_ARTCB` |
-| `AUTO_PROMPT_ARTCB.md` | `AUTO_PROMPT_ARTCB` |
-| `ROADMAP_GENERAL_ARTCB.md` | `ROADMAP_GENERAL_ARTCB` |
+| # | Fichier | Statut | Rôle |
+|---|---------|--------|------|
+| 1 | `PROTOCOLE_ARTCB` | ✅ | Règles de dev inviolables |
+| 2 | `STANDARD_NAMES_ARTCB` | ✅ | Conventions nommage |
+| 3 | `LEÇONS_APPRISES_ARTCB` | ✅ | Retours d'expérience |
+| 4 | `AUTO_PROMPT_ARTCB` | ✅ v1.2 | Prompt agent |
+| 5 | `ROADMAP_GENERAL_ARTCB` | ✅ | Phases et jalons |
+| 6 | `IDÉE_ARTCB` | ✅ | Vision + autocritique RT-LEG |
+| 7 | `CAHIER_DES_CHARGES_ARTCB` | ✅ **v1.2** | Spec MVP + tokenomics §27-28 |
+| 8 | `STRUCTURE_ARTCB` | ✅ | Arborescence cible |
+| 9 | `CONFIGURATION_ARTCB` | ✅ | Config, deps, clés API |
+| 10 | `CHECKLIST_PRE_DEV_ARTCB` | ✅ | Gate avant développement |
+| 11 | `QUESTIONS_OUVERTES_ARTCB` | ✅ **v3** | Q-012→Q-017 |
+| 12 | `DECISIONS_UTILISATEUR_ARTCB` | ✅ | D-001→D-018 |
+| 13 | **`TOKENOMICS_ARTCB`** | ✅ **Nouveau** | 21M, PoL collectif, halving |
+| 14 | **`RESEAU_DEVNET_ARTCB`** | ✅ **Nouveau** | artcb-devnet vs Bitcoin testnet |
+| 15 | `REGLES HACKATHON RAISE SOUMMIT` | ✅ | Contraintes événement |
+| 16 | `INDEX_ARTCB` | ✅ | Ce fichier |
 
 ---
 
@@ -52,11 +41,10 @@ Le PROTOCOLE cite des noms `.md` incorrects. Voici la correspondance officielle 
 
 | Élément | Statut |
 |---------|--------|
-| `/src/` | ❌ Absent — développement non lancé |
-| `/frontend/` | ❌ Absent |
-| `/tests/` | ❌ Absent |
-| `requirements.txt` | ❌ Absent (spec dans CONFIGURATION_ARTCB) |
-| `README.md` | ✅ Présent (vue d'ensemble) |
+| `/src/artcb/ir/` | ✅ Phase 1 — IR Engine |
+| `/tests/` | ✅ 28 tests passent |
+| `/src/c/` | ❌ Phase 3 — blockchain C |
+| `/frontend/` | ❌ Phase 4 |
 
 ---
 
@@ -64,8 +52,8 @@ Le PROTOCOLE cite des noms `.md` incorrects. Voici la correspondance officielle 
 
 | Dossier | Statut | Contenu |
 |---------|--------|---------|
-| `rapports/` | ✅ Créé | `000_audit_complet.md` |
-| `logs/` | ✅ Créé | Vide (normal avant exécution) |
+| `rapports/` | ✅ | `000` → `005` |
+| `logs/` | ✅ | Logs DEBUG Phase 1 |
 
 ---
 
@@ -73,32 +61,32 @@ Le PROTOCOLE cite des noms `.md` incorrects. Voici la correspondance officielle 
 
 | Domaine | Couvert par | Complet ? |
 |---------|-------------|-----------|
-| Vision produit | IDÉE_ARTCB, CDC §1-2 | ✅ |
+| Vision produit | IDÉE, CDC §1-2 | ✅ |
+| **Tokenomics 21M + PoL collectif** | **TOKENOMICS §1-12** | ✅ **v1.0** |
+| **Réseau devnet vs Bitcoin testnet** | **RESEAU_DEVNET** | ✅ **v1.0** |
 | Architecture | CDC §3, STRUCTURE | ✅ |
-| Exigences fonctionnelles | CDC §4 | ✅ |
-| Exigences non-fonctionnelles | CDC §5 | ✅ |
-| Stack technique | CDC §6, CONFIGURATION | ✅ |
-| Modèle de données | CDC §7 | ✅ |
-| API REST | CDC §8 | ✅ |
-| API WebSocket | CDC §20 (v1.1) | ✅ |
-| UX / démo | CDC §9 | ✅ |
-| Sécurité | CDC §10 | ✅ |
-| Tests | CDC §12 | ✅ |
-| Risques | CDC §13 | ✅ |
-| Config / env | CONFIGURATION_ARTCB | ✅ |
-| Clés API utilisateur | CONFIGURATION_ARTCB, QUESTIONS | ⚠️ À fournir par toi |
-| Fallback sans LLM | CDC §21 (v1.1) | ✅ |
-| Format export .artcb | CDC §22 (v1.1) | ✅ |
-| Exemples payloads API | CDC §23 (v1.1) | ✅ |
-| Script pitch 3 min | CDC §24 (v1.1) | ✅ |
-| Checklist soumission | CHECKLIST_PRE_DEV §4 | ✅ |
-| Décisions ouvertes | QUESTIONS_OUVERTES | ⚠️ 8 questions |
+| PoL formule + split reward | CDC §3.2.4, TOKENOMICS §6 | ✅ |
+| Blockchain C | ROADMAP Phase 3 | ❌ code |
+| Wallet / faucet / explorer | TOKENOMICS §8-10, CDC F-20→F-24 | ❌ code |
+| Décisions ouvertes | Q-015, Q-016 | ⚠️ 2 questions |
 
 ---
 
-## Prochaine action (bloquée — en attente de tes ordres)
+## État d'avancement global
 
-1. Répondre aux `QUESTIONS_OUVERTES_ARTCB`
-2. Fournir clés API manquantes (si LLM/Gradium souhaités)
-3. Valider le CDC v1.1
-4. Donner l'ordre explicite : **« Lance le développement Phase 1 »**
+| Phase | % | Détail |
+|-------|---|--------|
+| Phase 0 Spec | **100 %** | CDC v1.2 + tokenomics + devnet |
+| Phase 1 IR | **100 %** | 28/28 tests |
+| Phase 2 Backend | **0 %** | FastAPI, PoL scorer |
+| Phase 3 Blockchain | **0 %** | C + rewards + devnet |
+| Phase 4 Frontend | **0 %** | Graphe + explorer |
+| **Global MVP** | **~35 %** | Spec complète, code partiel |
+
+---
+
+## Prochaine action
+
+1. Répondre **Q-015** et **Q-016** (une ligne chacune)
+2. Ordre explicite : **« Lance Phase 2 »** ou **« Lance Phase 3 »**
+3. Implémenter PoL scorer + blockchain C + `artcb-devnet`

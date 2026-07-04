@@ -72,7 +72,7 @@
 **Décisions actées :** Merge auto main (D-001), blockchain C only (D-002), Python orchestration (D-003), EN code / FR rapports (D-004), MVP max (D-005).  
 **Action :** DECISIONS_UTILISATEUR_ARTCB + QUESTIONS_OUVERTES v2.
 
-### L-014 — Clés API en phase développement
-**Contexte :** Utilisateur refuse de régénérer les clés à chaque session dev.  
-**Leçon :** En phase dev, conserver `.env` local stable — ne pas demander rotation sauf fuite git confirmée.  
-**Action :** `.env` gitignoré, réutilisé entre sessions agent.
+### L-015 — Tokenomics PoL collectif vs Bitcoin (4 juil. 2026)
+**Contexte :** Utilisateur propose 21M coins, minage d'apprentissage, récompense collective (pas winner-takes-all Bitcoin). Question sur testnet3/4.  
+**Leçon :** Bitcoin testnet ≠ ARTCB — protocoles incompatibles. La différenciation économique = **split PoL proportionnel**, pas copier PoW. Nuancer : pools Bitcoin redistribuent ; PoL collectif ≠ zéro consensus.  
+**Action :** `TOKENOMICS_ARTCB`, `RESEAU_DEVNET_ARTCB`, CDC v1.2 §27-28, D-014→D-018, rapport `005`.

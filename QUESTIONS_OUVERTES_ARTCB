@@ -1,7 +1,7 @@
 # QUESTIONS OUVERTES — ARTCB
 
-**Horodatage :** 2026-07-04T20:25:00Z  
-**Statut :** Partiellement résolu — voir § « Ce qui reste à répondre »
+**Horodatage :** 2026-07-04T22:50:00Z  
+**Statut :** v3 — tokenomics PoL collectif documentée ; Q-015/Q-016 en attente
 
 ---
 
@@ -210,6 +210,82 @@ Deadline était 4 juil. 17h CEST — à vérifier de ton côté.
 
 ---
 
+## Q-012 — Supply max 21M ARTCB ✅ DOCUMENTÉ (proposition utilisateur)
+
+**Question :** Plafond fixe 21 000 000 ARTCB comme Bitcoin ?
+
+**Ta réflexion (4 juil. 2026) :** Oui — même concept de supply limitée, émission via minage d'apprentissage.
+
+**Décision retenue (D-014) :** ✅ **21 000 000 ARTCB**, 8 décimales, spec complète `TOKENOMICS_ARTCB` §3-4.
+
+**Confirmation explicite optionnelle :** réponds « oui » ou « non » pour acter définitivement.
+
+---
+
+## Q-013 — Répartition collective du block reward ✅ DOCUMENTÉ
+
+**Question :** Tous les mineurs PoL d'un bloc gagnent collectivement (pas winner-takes-all Bitcoin) ?
+
+**Ta réflexion :** Oui — split proportionnel, 100 % des ressources de calcul orientées apprentissage.
+
+**Décision retenue (D-015) :** ✅ Formule :
+
+```
+reward_i = block_reward × (PoL_score_i / Σ PoL_score_j)
+```
+
+Spec : `TOKENOMICS_ARTCB` §6.
+
+---
+
+## Q-014 — Halving style Bitcoin ✅ DOCUMENTÉ
+
+**Question :** Halving de la récompense bloc comme Bitcoin ?
+
+**Ta réflexion :** Oui — même concept d'émission décroissante.
+
+**Décision retenue (D-016) :** ✅ Block reward initial **50 ARTCB**, halving tous les **210 000 blocs** PoL.
+
+---
+
+## Q-015 — Coin sur chaîne privée seule ou aussi réseau public ? ⏳ EN ATTENTE
+
+**Question :** L'unité ARTCB existe-t-elle uniquement sur la chaîne privée locale, ou aussi sur le futur réseau fédéré public ?
+
+| Option | Description |
+|--------|-------------|
+| **A** | Privé seulement — coin = compteur local utilisateur |
+| **B** | Privé + public fédéré — même unité ARTCB |
+| **C** | Deux unités séparées (privé vs public) |
+
+**Proposition agent (MVP) :** privé local + tARTCB sur `artcb-devnet` ; mainnet fédéré = Q-015.
+
+---
+
+## Q-016 — Mineur humain seul ou aussi agent IA autonome ? ⏳ EN ATTENTE
+
+**Question :** Qui peut « miner » PoL et recevoir des rewards ?
+
+| Option | Description |
+|--------|-------------|
+| **A** | Humain seulement |
+| **B** | Agent IA autonome seulement |
+| **C** | Les deux (signatures Ed25519 distinctes) |
+
+**Proposition agent (MVP) :** **C** — dual-agents Explorateur/Critique impliquent des agents ; spec `TOKENOMICS_ARTCB` §2.
+
+---
+
+## Q-017 — Bitcoin testnet3/4 pour ARTCB ? ✅ RÉSOLU — NON
+
+**Question :** Les testnet Bitcoin serviraient-ils pour notre blockchain ?
+
+**Réponse :** **Non.** Protocoles incompatibles. Réseau maison : **`artcb-devnet`**.
+
+**Document :** `RESEAU_DEVNET_ARTCB` — D-017.
+
+---
+
 ## Ce qui reste à répondre (résumé)
 
 Réponds en **une ligne par numéro** :
@@ -221,5 +297,7 @@ Réponds en **une ligne par numéro** :
 | **Q-006** | Texte démo custom ou exemple par défaut ? | « défaut » ou colle ton texte |
 | **Q-009** | Clés API (après explication) ? | A = aucune / B = OpenRouter / C = Gradium / D = les deux |
 | **Q-010** | Crédits Cursor | Ton action — pas bloquant pour le code |
+| **Q-015** | Coin privé seul ou aussi réseau public ? | A / B / C — voir § Q-015 |
+| **Q-016** | Mineur humain, IA, ou les deux ? | A / B / C — voir § Q-016 |
 
-**Tout le reste est tranché ✅**
+**Tranché et documenté ✅ :** Q-012 (21M), Q-013 (collectif), Q-014 (halving), Q-017 (pas Bitcoin testnet)

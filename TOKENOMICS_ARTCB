@@ -1,0 +1,278 @@
+# TOKENOMICS — ARTCB (Proof-of-Learning collectif)
+
+**Horodatage :** 2026-07-04T22:50:00Z  
+**Statut :** Spécification v1.0 — **proposée par l'utilisateur**, implémentation Phase 3+  
+**Références :** `CAHIER_DES_CHARGES_ARTCB` §3.2.4, §27 ; `RESEAU_DEVNET_ARTCB`
+
+---
+
+## 0. Résumé exécutif
+
+ARTCB n'est **pas** une cryptomonnaie au sens Bitcoin (PoW SHA-256, spéculation BTC).  
+C'est une **blockchain de traçabilité cognitive** avec une **unité de compte interne** (`ARTCB`) qui récompense le **minage d'apprentissage** (Proof-of-Learning, PoL).
+
+**Innovation économique proposée :** répartition **collective** du block reward — tous les contributeurs PoL signataires d'un bloc validé sont payés proportionnellement à leur score, contrairement au modèle Bitcoin où un seul mineur (ou pool) remporte le bloc.
+
+---
+
+## 1. Positionnement vs Bitcoin
+
+| Aspect | Bitcoin (BTC) | ARTCB |
+|--------|---------------|-------|
+| Objectif | Monnaie décentralisée, réserve de valeur | Mémoire IA + traçabilité + récompense PoL |
+| Consensus | Proof-of-Work (hash SHA-256 compétitif) | Proof-of-Learning (métriques vérifiables) |
+| Travail mesuré | Nonce trouvé en premier | Δcompression + validation + retrieval |
+| Récompense bloc | **Winner-takes-all** (1 gagnant / bloc) | **Collective** (split proportionnel PoL) |
+| Gaspillage calcul | Compétition volontaire (sécurité PoW) | Calcul orienté apprentissage utile |
+| Supply max | 21 000 000 BTC | **21 000 000 ARTCB** (proposition) |
+| Subdivision | 1 BTC = 10⁸ satoshi | 1 ARTCB = 10⁸ satoshi (unité : `satoshi`) |
+| Réseau test | testnet3 / testnet4 (Bitcoin) | **`artcb-devnet`** (réseau maison — voir `RESEAU_DEVNET_ARTCB`) |
+
+---
+
+## 2. Cibles utilisateur
+
+### 2.1 Cible prioritaire (pitch économique)
+
+**Mineurs d'apprentissage** — personnes ou agents qui :
+
+- encodent / valident / compressent de la connaissance ;
+- améliorent mesurables PoL (compression, validation, retrieval) ;
+- cherchent une **récompense proportionnelle** à leur contribution.
+
+### 2.2 Cibles complémentaires (rail utilitaire)
+
+| Public | Motivation | Coin requis ? |
+|--------|------------|---------------|
+| Développeurs / agents IA | Mémoire persistante, réversibilité | Non (optionnel) |
+| Chercheurs R&D | Audit causal des raisonnements | Non |
+| Utilisateurs mémoire privée | Chaîne chiffrée locale | Non |
+| Mineurs PoL | Gain économique vérifiable | Oui |
+
+**Deux rails coexistent :**
+
+1. **Rail utilitaire** — graphe IR, RT-LEG, blockchain signée (sans coin).
+2. **Rail économique** — émission ARTCB via PoL collectif (avec coin).
+
+---
+
+## 3. Unité monétaire
+
+| Paramètre | Valeur |
+|-----------|--------|
+| Symbole | `ARTCB` |
+| Supply maximale | **21 000 000 ARTCB** |
+| Décimales | 8 (comme Bitcoin) |
+| Plus petite unité | 1 satoshi = 0,00000001 ARTCB |
+| Supply en satoshi | 2 100 000 000 000 000 |
+
+---
+
+## 4. Émission (style Bitcoin adapté au PoL)
+
+### 4.1 Block reward initial
+
+| Paramètre | Valeur proposée |
+|-----------|-----------------|
+| Block reward initial | **50 ARTCB** par bloc PoL accepté |
+| Intervalle cible | ~10 minutes (ajustable sur devnet) |
+| Halving | Tous les **210 000 blocs** PoL acceptés |
+| Séquence halving | 50 → 25 → 12,5 → … → ~0 |
+
+### 4.2 Durée d'émission estimée
+
+Avec halving tous les 210 000 blocs et intervalle ~10 min :
+
+- ~4 ans par epoch de halving ;
+- émission complète des 21M sur ~130 ans (même ordre de grandeur que Bitcoin).
+
+**Note :** ces paramètres sont **calibrables** sur `artcb-devnet` avant mainnet fédéré.
+
+---
+
+## 5. Proof-of-Learning — formule de score (rappel CDC §3.2.4)
+
+```
+PoL_score = α × Δcompression + β × validation_rate + γ × retrieval_accuracy
+
+Où :
+  Δcompression = 1 - (size_IR / size_original)
+  validation_rate = nodes_validated / nodes_proposed
+  retrieval_accuracy = nodes_correctly_retrieved / nodes_queried
+
+  α = 0.4, β = 0.3, γ = 0.3  (configurable via ARTCB_POL_*)
+```
+
+**Seuil d'acceptation bloc :** `PoL_score ≥ 0.6` ET signature Critique valide.
+
+---
+
+## 6. Répartition collective (cœur de l'innovation)
+
+### 6.1 Principe
+
+Contrairement à Bitcoin où **un seul** mineur remporte le block reward :
+
+> **Tous les contributeurs PoL signataires** d'un bloc validé reçoivent une part **proportionnelle** à leur `PoL_score_i`.
+
+### 6.2 Formule
+
+```
+block_reward = f(halving_epoch)   # ex. 50 ARTCB au genesis
+
+Pour chaque contributeur i signataire du bloc :
+  reward_i = block_reward × (PoL_score_i / Σ PoL_score_j)
+
+Contraintes :
+  Σ reward_i = block_reward
+  PoL_score_i > 0 pour être éligible
+  Σ PoL_score_j > 0 sinon bloc rejeté (pas d'émission)
+```
+
+### 6.3 Exemple
+
+Bloc avec `block_reward = 50 ARTCB`, 3 contributeurs :
+
+| Contributeur | PoL_score | Part | Reward |
+|--------------|-----------|------|--------|
+| Alice | 0.80 | 0.80/2.00 = 40 % | 20 ARTCB |
+| Bob | 0.70 | 0.70/2.00 = 35 % | 17,5 ARTCB |
+| Agent-7 | 0.50 | 0.50/2.00 = 25 % | 12,5 ARTCB |
+| **Total** | **2.00** | **100 %** | **50 ARTCB** |
+
+### 6.4 Nuances (corrections à la réflexion utilisateur)
+
+| Affirmation | Correction |
+|-------------|------------|
+| « 99 % des mineurs Bitcoin perdent tout » | Les **pools** redistribuent en interne ; ce n'est pas 1 gagnant / 100 000 perdants secs. |
+| « 99 % du calcul Bitcoin est inutile » | Ce calcul est le **modèle de sécurité PoW** — gaspillage volontaire, pas un bug. |
+| « 100 % utilisé chez ARTCB » | Vrai **si** le consensus PoL évite la duplication inutile ; sinon 1000 validations identiques = gaspillage aussi. |
+| « Tout le monde gagne toujours » | **Non** — seuil PoL ≥ 0.6, anti-Sybil, slashing ; sinon inflation et spam. |
+
+---
+
+## 7. Structure de bloc enrichie (Phase 3)
+
+Extension du bloc CDC §3.2.5 :
+
+```json
+{
+  "index": 42,
+  "timestamp": "2026-07-04T22:00:00Z",
+  "prev_hash": "abc123...",
+  "merkle_root": "def456...",
+  "graph_root": "ghi789...",
+  "pol_score": 0.78,
+  "pol_aggregate": 2.15,
+  "block_reward": 5000000000,
+  "contributors": [
+    {
+      "address": "artcb1q...",
+      "pol_score": 0.80,
+      "reward_satoshi": 2000000000,
+      "signature": "ed25519:..."
+    },
+    {
+      "address": "artcb1q...",
+      "pol_score": 0.70,
+      "reward_satoshi": 1750000000,
+      "signature": "ed25519:..."
+    }
+  ],
+  "hash": "jkl012...",
+  "signature": "ed25519:critic...",
+  "visibility": "private|public"
+}
+```
+
+**Champs nouveaux :**
+
+| Champ | Type | Description |
+|-------|------|-------------|
+| `pol_aggregate` | float | Σ PoL_score_j |
+| `block_reward` | int | Reward en satoshi |
+| `contributors[]` | array | Liste signataires + parts |
+
+---
+
+## 8. Wallet et inscription (Phase 3+)
+
+| Élément | Spécification |
+|---------|---------------|
+| Clé | Ed25519 (aligné blockchain C D-002) |
+| Adresse | Préfixe `artcb1` + hash pubkey (Bech32-like, à implémenter) |
+| Balance | Somme des `reward_satoshi` des blocs où l'adresse apparaît |
+| Inscription | Génération clé locale — **aucune clé API cloud on-chain** (D-011) |
+
+---
+
+## 9. Anti-fraude
+
+### 9.1 Sybil
+
+| Risque | Mitigation proposée |
+|--------|---------------------|
+| 10 000 faux mineurs | PoL vérifiable (compression réelle, retrieval test) |
+| Multi-comptes | Rate limit par epoch + coût computationnel PoL |
+| Collusion | Signatures multiples + audit Critique |
+
+### 9.2 Slashing
+
+Si fraude détectée (compression gonflée, retrieval falsifié) :
+
+1. Bloc **rejeté** — pas d'émission ;
+2. Adresse contributeur → **blacklist temporaire** (N epochs) ;
+3. Log RT-LEG + rapport DEBUG (PROTOCOLE).
+
+---
+
+## 10. Devnet vs valeur réelle
+
+| Réseau | Coin | Valeur |
+|--------|------|--------|
+| `artcb-devnet` | tARTCB (test) | **Aucune** — faucet gratuit |
+| Chaîne privée locale | ARTCB privé | Usage interne utilisateur |
+| Réseau fédéré public (post-MVP) | ARTCB | Gouvernance à définir (Q-015) |
+
+**Faucet devnet :** distribution initiale de tARTCB pour tests mineurs (Phase 3.6).
+
+---
+
+## 11. Ce qui manque encore (implémentation)
+
+| Élément | Phase | Statut |
+|---------|-------|--------|
+| PoL Scorer (code) | 2 | ❌ |
+| Blockchain C + rewards | 3 | ❌ |
+| `artcb-devnet` | 3 | ❌ |
+| Wallet UI | 4 | ❌ |
+| Explorer blocs + rewards | 4 | ❌ |
+| Faucet devnet | 3 | ❌ |
+| Gouvernance paramètres α,β,γ | 6 | ❌ |
+
+---
+
+## 12. Décisions en attente (utilisateur)
+
+| ID | Question | Proposition documentée |
+|----|----------|------------------------|
+| Q-012 | Plafond 21M ARTCB ? | **Oui** (demande utilisateur) |
+| Q-013 | Split 100 % collectif ? | **Oui** (formule §6.2) |
+| Q-014 | Halving style Bitcoin ? | **Oui** (210 000 blocs) |
+| Q-015 | Coin privé seul ou aussi réseau public ? | ⏳ En attente |
+| Q-016 | Mineur humain seul ou aussi agent IA ? | ⏳ En attente (MVP : les deux via signatures Ed25519) |
+
+---
+
+## 13. Références internes
+
+| Document | Rôle |
+|----------|------|
+| `CAHIER_DES_CHARGES_ARTCB` §27 | Intégration CDC v1.2 |
+| `RESEAU_DEVNET_ARTCB` | artcb-devnet vs Bitcoin testnet |
+| `DECISIONS_UTILISATEUR_ARTCB` | D-014 → D-018 |
+| `QUESTIONS_OUVERTES_ARTCB` | Q-012 → Q-016 |
+
+---
+
+**Fin TOKENOMICS_ARTCB v1.0**

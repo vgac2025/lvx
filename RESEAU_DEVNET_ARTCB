@@ -1,0 +1,171 @@
+# RÉSEAU & DEVNET — ARTCB vs Bitcoin Testnet
+
+**Horodatage :** 2026-07-04T22:50:00Z  
+**Statut :** Spécification v1.0  
+**Question utilisateur :** *« Les testnet3 ou testnet4 serviraient-ils pour notre blockchain qui n'a rien à voir avec de la crypto monnaie ? »*
+
+---
+
+## 0. Réponse courte
+
+**Non.** Bitcoin testnet3 et testnet4 **ne servent pas** pour ARTCB.
+
+Ce sont des réseaux **Bitcoin** (BTC) avec leurs propres règles PoW, adresses, explorateurs et faucets BTC. ARTCB doit utiliser son propre réseau de test : **`artcb-devnet`**.
+
+---
+
+## 1. Pourquoi Bitcoin testnet ≠ ARTCB
+
+| Critère | Bitcoin testnet3/4 | ARTCB |
+|---------|-------------------|-------|
+| Protocole | Bitcoin Core (PoW SHA-256) | PoL + IR + RT-LEG + blockchain C maison |
+| Unité | tBTC (test bitcoin) | tARTCB (test ARTCB) |
+| Bloc | Nonce + merkle transactions BTC | PoL_score + contributors[] + graph_root |
+| Consensus | Difficulté hash compétitive | Seuil PoL ≥ 0.6 + Critique |
+| Récompense | 1 gagnant / bloc (ou pool) | Split collectif PoL |
+| Adresses | bc1… / tb1… (Bitcoin) | artcb1… (ARTCB) |
+| Explorateur | blockstream.info testnet, etc. | Explorer ARTCB maison (Phase 4) |
+| Objectif | Tester **Bitcoin** avant mainnet | Tester **mémoire IA + PoL** avant fédération |
+
+**Conclusion :** utiliser testnet3/4 reviendrait à miner du Bitcoin test — **aucun lien** avec les blocs PoL, graphes IR ou rewards ARTCB.
+
+---
+
+## 2. ARTCB n'est pas une « crypto monnaie » classique
+
+### 2.1 Ce qu'ARTCB n'est PAS
+
+- Pas un clone Bitcoin pour spéculation ;
+- Pas un token ERC-20 sur Ethereum ;
+- Pas un réseau PoW SHA-256 compétitif ;
+- Pas dépendant de testnet Bitcoin.
+
+### 2.2 Ce qu'ARTCB EST
+
+| Couche | Rôle |
+|--------|------|
+| **Blockchain** | Intégrité, signatures Ed25519, immutabilité, audit |
+| **IR + RT-LEG** | Mémoire cognitive réversible et traçable |
+| **PoL** | Preuve d'apprentissage mesurable |
+| **ARTCB (unité)** | Compteur interne de récompense PoL — **incentive**, pas objectif principal du MVP hackathon |
+
+**Analogie :** Bitcoin testnet teste la **monnaie Bitcoin**.  
+`artcb-devnet` teste la **chaîne de mémoire IA + récompenses PoL**.
+
+---
+
+## 3. Architecture réseau ARTCB
+
+```mermaid
+flowchart TB
+    subgraph local [Phase MVP]
+        A[Node local single-node]
+        B[Chaîne privée chiffrée]
+        C[Wallet Ed25519 local]
+    end
+    subgraph devnet [Phase 3+]
+        D[artcb-devnet]
+        E[Faucet tARTCB]
+        F[Explorer PoL]
+        G[Sync P2P 2+ nœuds]
+    end
+    subgraph future [Post-MVP]
+        H[Réseau fédéré public]
+        I[Publication opt-in blocs publics]
+    end
+    A --> D
+    D --> G
+    G --> H
+    B --> I
+```
+
+---
+
+## 4. Spécification `artcb-devnet`
+
+### 4.1 Paramètres réseau
+
+| Paramètre | Valeur |
+|-----------|--------|
+| Network ID | `artcb-devnet-1` |
+| Magic bytes | `0xARTC0001` (4 octets — à fixer en C) |
+| Default port P2P | `18444` (à confirmer CONFIGURATION) |
+| Default port API | `8000` (FastAPI existant CDC) |
+| Genesis message | `"ARTCB devnet — Proof-of-Learning collective"` |
+| Coin devnet | **tARTCB** (sans valeur réelle) |
+
+### 4.2 Différences devnet vs mainnet ARTCB (futur)
+
+| Paramètre | devnet | mainnet fédéré |
+|-----------|--------|----------------|
+| Coin | tARTCB | ARTCB |
+| Faucet | Oui (gratuit) | Non |
+| Block time | Accéléré possible (ex. 1 min) | ~10 min |
+| Halving | Accéléré pour tests | 210 000 blocs |
+| Valeur marché | Aucune | Gouvernance Q-015 |
+
+### 4.3 Composants à implémenter (Phase 3)
+
+| Composant | Fichier cible | Rôle |
+|-----------|---------------|------|
+| Chain params | `src/c/chain_params.h` | Magic, ports, genesis |
+| Devnet flag | `ARTCB_NETWORK=devnet` (.env) | Bascule réseau |
+| Faucet | `scripts/devnet_faucet.py` | Distribue tARTCB test |
+| Explorer | `/api/v1/chain/explorer` | Blocs, PoL, rewards |
+| Verify | `/chain/verify` | Intégrité (CDC Phase 3) |
+
+---
+
+## 5. Tableau comparatif complet
+
+| | Bitcoin mainnet | Bitcoin testnet3/4 | ARTCB privé local | artcb-devnet |
+|--|-----------------|-------------------|-------------------|--------------|
+| PoW SHA-256 | ✅ | ✅ | ❌ | ❌ |
+| PoL | ❌ | ❌ | ✅ | ✅ |
+| Graphe IR | ❌ | ❌ | ✅ | ✅ |
+| Dual-agents | ❌ | ❌ | ✅ | ✅ |
+| Récompense collective | ❌ | ❌ | ✅ (spec) | ✅ (spec) |
+| 21M supply | BTC | tBTC illimité* | ARTCB spec | tARTCB spec |
+| Utilisable pour ARTCB | ❌ | ❌ | ✅ MVP | ✅ tests réseau |
+
+\* Le faucet testnet Bitcoin recrée des tBTC — ce n'est pas le modèle ARTCB.
+
+---
+
+## 6. Flux mineur sur artcb-devnet (A→Z)
+
+1. **Inscription** — générer wallet Ed25519 → adresse `artcb1…`
+2. **Faucet** — recevoir tARTCB initiaux (devnet seulement)
+3. **Encoder** — texte → graphe IR (Phase 1 ✅)
+4. **Agents** — Explorateur propose, Critique valide (Phase 2)
+5. **PoL** — scorer calcule `PoL_score_i` (Phase 2)
+6. **Bloc** — candidat avec `contributors[]` (Phase 3 C)
+7. **Validation** — `PoL ≥ 0.6` → bloc accepté
+8. **Reward** — split collectif → balance wallet (Phase 3)
+9. **Explorer** — visualiser bloc, PoL, rewards (Phase 4)
+
+---
+
+## 7. Erreurs fréquentes à éviter
+
+| Erreur | Réalité |
+|--------|---------|
+| « Brancher ARTCB sur testnet4 » | Impossible — protocoles incompatibles |
+| « tBTC = tARTCB » | Non — unités et chaînes différentes |
+| « Pas besoin de devnet, local suffit » | Local OK pour MVP ; devnet requis pour tester sync multi-nœuds |
+| « ARTCB = crypto speculatif » | ARTCB = mémoire IA ; coin = incentive PoL optionnel |
+
+---
+
+## 8. Références
+
+| Document | Section |
+|----------|---------|
+| `TOKENOMICS_ARTCB` | Émission, rewards, 21M |
+| `CAHIER_DES_CHARGES_ARTCB` §28 | Intégration CDC |
+| `CONFIGURATION_ARTCB` | `ARTCB_NETWORK`, ports |
+| `DECISIONS_UTILISATEUR_ARTCB` D-002 | Blockchain 100 % C |
+
+---
+
+**Fin RESEAU_DEVNET_ARTCB v1.0**

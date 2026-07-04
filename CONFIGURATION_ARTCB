@@ -1,7 +1,7 @@
 # CONFIGURATION — ARTCB MVP Avancé
 
-**Horodatage :** 2026-07-04T20:25:00Z  
-**Statut :** Décisions utilisateur intégrées — voir DECISIONS_UTILISATEUR_ARTCB
+**Horodatage :** 2026-07-04T22:50:00Z  
+**Statut :** Tokenomics + devnet intégrés — voir TOKENOMICS_ARTCB, RESEAU_DEVNET_ARTCB
 
 ---
 
@@ -22,6 +22,11 @@
 | `ARTCB_POL_BETA` | Non | `0.3` | Poids validation_rate |
 | `ARTCB_POL_GAMMA` | Non | `0.3` | Poids retrieval_accuracy |
 | `ARTCB_POL_THRESHOLD` | Non | `0.6` | Seuil acceptation bloc |
+| `ARTCB_NETWORK` | Non | `local` | Réseau : `local`, `devnet`, `federated` |
+| `ARTCB_P2P_PORT` | Non | `18444` | Port P2P artcb-devnet (Phase 3) |
+| `ARTCB_BLOCK_REWARD` | Non | `50` | Block reward initial ARTCB (TOKENOMICS) |
+| `ARTCB_HALVING_INTERVAL` | Non | `210000` | Blocs entre halvings |
+| `ARTCB_MAX_SUPPLY` | Non | `21000000` | Supply max ARTCB |
 | `OPENROUTER_API_KEY` | Non* | — | Clé LLM pour encodage intelligent |
 | `OPENROUTER_MODEL` | Non | `anthropic/claude-3.5-sonnet` | Modèle LLM |
 | `GRADIUM_API_KEY` | Non | — | TTS voix (P1 hackathon) |

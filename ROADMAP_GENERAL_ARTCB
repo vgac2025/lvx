@@ -1,6 +1,6 @@
 # ROADMAP GÉNÉRALE — ARTCB MVP Avancé
 
-**Horodatage :** 2026-07-04T19:55:00Z
+**Horodatage :** 2026-07-04T22:50:00Z
 
 ---
 
@@ -61,6 +61,8 @@
 | 3.3 | Persistance JSONL/SQLite | Survit au redémarrage |
 | 3.4 | `/chain/verify` | Détection tampering |
 | 3.5 | Rapport `rapports/003_blockchain.md` | Intégrité prouvée |
+| 3.6 | `artcb-devnet` + faucet tARTCB | Spec RESEAU_DEVNET |
+| 3.7 | Block reward + split PoL collectif | Spec TOKENOMICS §6-7 |
 
 ---
 

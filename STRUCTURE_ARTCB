@@ -1,12 +1,14 @@
 # STRUCTURE ARTCB — Arborescence projet MVP Avancé
 
-**Horodatage :** 2026-07-04T19:55:00Z
+**Horodatage :** 2026-07-04T22:50:00Z
 
 ```
 lvx/
 ├── README.md                     # Documentation publique GitHub
 ├── INDEX_ARTCB                   # Cartographie et ordre de lecture
-├── CAHIER_DES_CHARGES_ARTCB      # Spec MVP Avancé v1.1
+├── CAHIER_DES_CHARGES_ARTCB      # Spec MVP Avancé v1.2
+├── TOKENOMICS_ARTCB              # Supply 21M, PoL collectif, halving
+├── RESEAU_DEVNET_ARTCB           # artcb-devnet vs Bitcoin testnet
 ├── CONFIGURATION_ARTCB           # Env, deps, ports, data dir
 ├── CHECKLIST_PRE_DEV_ARTCB         # Gate avant développement
 ├── QUESTIONS_OUVERTES_ARTCB        # Décisions en attente utilisateur

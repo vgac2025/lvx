@@ -1,8 +1,8 @@
-# CAHIER DES CHARGES — ARTCB MVP Avancé v1.0
+# CAHIER DES CHARGES — ARTCB MVP Avancé v1.2
 
-**Horodatage :** 2026-07-04T19:55:00Z (v1.1 — compléments audit)  
+**Horodatage :** 2026-07-04T22:50:00Z (v1.2 — tokenomics PoL collectif + devnet)  
 **Auteur :** Agent Cursor (Cloud)  
-**Statut :** Document de référence — complet, développement en attente d'ordres utilisateur  
+**Statut :** Document de référence — Phase 1 ✅, tokenomics spécifiée, Phase 2+ en attente  
 **Dépôt :** https://github.com/vgac2025/lvx  
 **Branche de travail :** `cursor/cahier-des-charges-mvp-1fce`
 
@@ -15,8 +15,9 @@
 1. Un **langage IR hybride** (symbolique + vectoriel) — pas du texte humain.
 2. Un **graphe d'exécution temporel signé** (RT-LEG) — traçabilité sans résumés destructeurs.
 3. Une **blockchain décentralisée** pour l'intégrité publique/privée (conforme au PROTOCOLE).
-4. Un **Proof-of-Learning (PoL)** mesurable — récompense = Δ compression + Δ performance.
+4. Un **Proof-of-Learning (PoL)** mesurable — récompense = Δ compression + Δ performance, **répartition collective** (voir `TOKENOMICS_ARTCB`).
 5. Une **dualité cognitive** Explorateur / Critique — génération vs validation.
+6. Une **unité de compte ARTCB** (supply max 21M proposée) — incentive PoL, **pas** une cryptomonnaie PoW clone Bitcoin (voir `RESEAU_DEVNET_ARTCB`).
 
 Ce cahier des charges définit le **MVP Avancé** : la version la plus ambitieuse **démontrable en ~15 heures** avant la soumission hackathon (5 juillet 2026, 12h00 CEST).
 
@@ -28,7 +29,9 @@ Ce cahier des charges définit le **MVP Avancé** : la version la plus ambitieus
 
 > *« Quand je travaille longtemps avec une IA, elle oublie ce qu'on s'est dit. Je dois tout réexpliquer. Je ne peux pas retrouver un raisonnement précis d'il y a 3 semaines. »*
 
-**Persona cible :** développeur / chercheur / créateur utilisant Cursor ou un agent IA sur des projets multi-sessions.
+**Persona cible (priorité pitch) :** mineur d'apprentissage PoL — personne ou agent cherchant une récompense mesurable pour compression/validation de connaissance.
+
+**Personas complémentaires :** développeur / chercheur / créateur utilisant Cursor ou un agent IA sur des projets multi-sessions (rail utilitaire sans coin obligatoire).
 
 ### 1.2 Problème technique
 
@@ -240,6 +243,14 @@ Où :
 
 Un bloc n'est ajouté à la chaîne que si `PoL_score ≥ 0.6` ET signature Critique valide.
 
+**Récompense collective (v1.2 — spec complète `TOKENOMICS_ARTCB` §6) :**
+
+```
+reward_i = block_reward × (PoL_score_i / Σ PoL_score_j)
+```
+
+Tous les contributeurs PoL signataires d'un bloc validé reçoivent une part proportionnelle — pas de winner-takes-all Bitcoin.
+
 #### 3.2.5 Blockchain Light (100 % décentralisable)
 
 **Conformité PROTOCOLE :** blockchain décentralisée à 100 %.
@@ -256,12 +267,18 @@ Un bloc n'est ajouté à la chaîne que si `PoL_score ≥ 0.6` ET signature Crit
   "merkle_root": "def456...",
   "graph_root": "ghi789...",
   "pol_score": 0.78,
-  "nonce": 0,
+  "pol_aggregate": 2.15,
+  "block_reward": 5000000000,
+  "contributors": [
+    {"address": "artcb1q...", "pol_score": 0.80, "reward_satoshi": 2000000000, "signature": "ed25519:..."}
+  ],
   "hash": "jkl012...",
   "signature": "ed25519:...",
   "visibility": "private|public"
 }
 ```
+
+**Note v1.2 :** champs `contributors[]`, `block_reward`, `pol_aggregate` — spec détaillée `TOKENOMICS_ARTCB` §7. Pas de nonce SHA-256 compétitif.
 
 **Implémentation :**
 - Core en **C** (performance, hash, signatures).
@@ -562,6 +579,8 @@ pytest tests/ -v --tb=short
 | **IR** | Intermediate Representation — format interne symbolique+vectoriel |
 | **RT-LEG** | Real-Time Learning Execution Graph |
 | **PoL** | Proof-of-Learning — métrique d'apprentissage vérifiable |
+| **ARTCB** | Unité de compte interne — supply max 21M proposée (`TOKENOMICS_ARTCB`) |
+| **artcb-devnet** | Réseau de test maison — **pas** Bitcoin testnet3/4 (`RESEAU_DEVNET_ARTCB`) |
 | **USP** | Unité de Sens Stable — identifiant sémantique (O1, M1…) |
 | **Macro** | Compression d'une séquence en symbole unique (Φ1, Ψ1…) |
 | **STM** | Short-Term Memory — mémoire session |
@@ -781,4 +800,65 @@ export.artcb (ZIP)
 
 ---
 
-**Fin du cahier des charges — ARTCB MVP Avancé v1.1**
+## 27. Tokenomics PoL collectif (v1.2)
+
+**Documents :** `TOKENOMICS_ARTCB`, `DECISIONS_UTILISATEUR_ARTCB` D-014→D-018
+
+| Paramètre | Valeur proposée |
+|-----------|-----------------|
+| Supply max | 21 000 000 ARTCB |
+| Block reward initial | 50 ARTCB |
+| Halving | Tous les 210 000 blocs PoL |
+| Split reward | Collectif proportionnel au PoL_score |
+| Seuil bloc | PoL ≥ 0.6 + signature Critique |
+| Anti-fraude | Sybil + slashing (spec TOKENOMICS §9) |
+
+**Exigences fonctionnelles ajoutées (Phase 3+) :**
+
+| ID | Exigence | Phase |
+|----|----------|-------|
+| F-20 | Émission block reward sur bloc PoL accepté | 3 |
+| F-21 | Split collectif `contributors[]` persisté on-chain | 3 |
+| F-22 | Wallet Ed25519 + balance | 3 |
+| F-23 | Faucet `artcb-devnet` | 3 |
+| F-24 | Explorer blocs / rewards / PoL | 4 |
+
+---
+
+## 28. Réseau — artcb-devnet vs Bitcoin testnet (v1.2)
+
+**Document :** `RESEAU_DEVNET_ARTCB`
+
+**Règle :** Bitcoin testnet3/4 **ne sont pas utilisables** pour ARTCB. Réseau de test dédié : **`artcb-devnet`**.
+
+| Réseau | Usage ARTCB |
+|--------|-------------|
+| Chaîne privée locale | MVP single-node, mémoire chiffrée |
+| `artcb-devnet` | Tests multi-nœuds, faucet tARTCB, explorer |
+| Bitcoin testnet3/4 | ❌ Interdit — protocole incompatible |
+
+---
+
+## 29. Compléments audit v1.2
+
+| # | Trou identifié | Résolution |
+|---|---------------|------------|
+| 36 | Pas de tokenomics 21M + PoL collectif | `TOKENOMICS_ARTCB` + §27 |
+| 37 | Confusion Bitcoin testnet | `RESEAU_DEVNET_ARTCB` + §28 |
+| 38 | Bloc sans contributors/rewards | §3.2.5 enrichi |
+| 39 | Persona mineur PoL absent | §1.1 + §0 |
+| 40 | Q-012→Q-016 non documentées | `QUESTIONS_OUVERTES_ARTCB` v3 |
+
+---
+
+## 30. Références internes (mise à jour v1.2)
+
+| Document | Rôle |
+|----------|------|
+| `TOKENOMICS_ARTCB` | Supply 21M, halving, split PoL collectif |
+| `RESEAU_DEVNET_ARTCB` | artcb-devnet vs Bitcoin testnet |
+| *(autres — §18, §26)* | |
+
+---
+
+**Fin du cahier des charges — ARTCB MVP Avancé v1.2**

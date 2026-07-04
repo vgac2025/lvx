@@ -39,4 +39,14 @@ Règles ajoutées :
 - Consulter QUESTIONS_OUVERTES avant toute décision technique.
 - Produitire un rapport dans rapports/ après chaque exécution (jamais écraser).
 - Présenter l'état d'avancement en % à chaque réponse.
-- Répondre TOUJOURS en français.
+## [2026-07-04T22:50:00Z] Mise à jour — tokenomics PoL collectif v1.2
+
+Documents ajoutés :
+- `TOKENOMICS_ARTCB` — supply 21M, halving, split PoL collectif, anti-fraude
+- `RESEAU_DEVNET_ARTCB` — artcb-devnet vs Bitcoin testnet3/4
+
+Décisions documentées : D-014 → D-018 dans `DECISIONS_UTILISATEUR_ARTCB`.
+
+Règles inchangées :
+- Rapport `rapports/005_tokenomics_pol_collectif.md` après cette session.
+- CDC v1.2 §27-28 intègre tokenomics et réseau.
