@@ -77,6 +77,11 @@
 **Leçon :** Toujours synchroniser DECISIONS + DEMO_TEXTE quand l'utilisateur tranche Q-006.  
 **Action :** D-010 + `DEMO_TEXTE_ARTCB` + `ARTCB_DEMO_BOOK_PDF`.
 
+### L-017 — Démo live : logs avant rapport (4 juil. 2026)
+**Contexte :** Demande utilisateur de tout voir fonctionner avec logs réels.  
+**Leçon :** Le PROTOCOLE exige de lire les logs *après* exécution avant d'écrire le rapport ; un script `demo_live.py` (httpx → API) produit des traces JSON + texte reproductibles.  
+**Action :** `scripts/demo_live.py`, rapport `009`, vérification C `verify_chain_file` post-run.
+
 ### L-015 — Tokenomics PoL collectif vs Bitcoin (4 juil. 2026)
 **Contexte :** Utilisateur propose 21M coins, minage d'apprentissage, récompense collective (pas winner-takes-all Bitcoin). Question sur testnet3/4.  
 **Leçon :** Bitcoin testnet ≠ ARTCB — protocoles incompatibles. La différenciation économique = **split PoL proportionnel**, pas copier PoW. Nuancer : pools Bitcoin redistribuent ; PoL collectif ≠ zéro consensus.  

@@ -1,7 +1,7 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-04T22:50:00Z  
-**Statut dépôt :** Phase 1 ✅ — Tokenomics v1.0 documentée — Phase 2 en attente d'ordre
+**Horodatage :** 2026-07-04T23:30:00Z  
+**Statut dépôt :** Phases 1–4 ✅ — Démo live ✅ — Phase 5 hackathon en attente
 
 ---
 
@@ -9,8 +9,8 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `9ccbc1e` | Phase 1 + docs |
-| **Branche active** | `main` | Mise à jour tokenomics en cours |
+| `origin/main` | (post 009) | MVP + démo live + rapports 000→009 |
+| **Branche active** | `main` | D-001 merge direct |
 
 ---
 
@@ -20,8 +20,8 @@
 |---|---------|--------|------|
 | 1 | `PROTOCOLE_ARTCB` | ✅ | Règles de dev inviolables |
 | 2 | `STANDARD_NAMES_ARTCB` | ✅ | Conventions nommage |
-| 3 | `LEÇONS_APPRISES_ARTCB` | ✅ | Retours d'expérience |
-| 4 | `AUTO_PROMPT_ARTCB` | ✅ v1.2 | Prompt agent |
+| 3 | `LEÇONS_APPRISES_ARTCB` | ✅ | Retours d'expérience (L-001→L-017) |
+| 4 | `AUTO_PROMPT_ARTCB` | ✅ v1.3 | Prompt agent |
 | 5 | `ROADMAP_GENERAL_ARTCB` | ✅ | Phases et jalons |
 | 6 | `IDÉE_ARTCB` | ✅ | Vision + autocritique RT-LEG |
 | 7 | `CAHIER_DES_CHARGES_ARTCB` | ✅ **v1.2** | Spec MVP + tokenomics §27-28 |
@@ -29,9 +29,9 @@
 | 9 | `CONFIGURATION_ARTCB` | ✅ | Config, deps, clés API |
 | 10 | `CHECKLIST_PRE_DEV_ARTCB` | ✅ | Gate avant développement |
 | 11 | `QUESTIONS_OUVERTES_ARTCB` | ✅ **v3** | Q-012→Q-017 |
-| 12 | `DECISIONS_UTILISATEUR_ARTCB` | ✅ | D-001→D-018 |
-| 13 | **`TOKENOMICS_ARTCB`** | ✅ **Nouveau** | 21M, PoL collectif, halving |
-| 14 | **`RESEAU_DEVNET_ARTCB`** | ✅ **Nouveau** | artcb-devnet vs Bitcoin testnet |
+| 12 | `DECISIONS_UTILISATEUR_ARTCB` | ✅ | D-001→D-022 |
+| 13 | **`TOKENOMICS_ARTCB`** | ✅ | 21M, PoL collectif, halving |
+| 14 | **`RESEAU_DEVNET_ARTCB`** | ✅ | artcb-devnet vs Bitcoin testnet |
 | 15 | `REGLES HACKATHON RAISE SOUMMIT` | ✅ | Contraintes événement |
 | 16 | `INDEX_ARTCB` | ✅ | Ce fichier |
 
@@ -42,9 +42,12 @@
 | Élément | Statut |
 |---------|--------|
 | `/src/artcb/ir/` | ✅ Phase 1 — IR Engine |
-| `/tests/` | ✅ 28 tests passent |
-| `/src/c/` | ❌ Phase 3 — blockchain C |
-| `/frontend/` | ❌ Phase 4 |
+| `/src/artcb/pol/`, `agents/`, `rtleg/`, `memory/` | ✅ Phase 2 |
+| `/src/api/` | ✅ 12 REST + WebSocket |
+| `/src/c/` → `libartcb_chain.so` | ✅ Phase 3 base (hash, verify, Ed25519 store) |
+| `/frontend/` | ✅ Phase 4 React + Cytoscape |
+| `/scripts/demo_live.py` | ✅ Démo live HTTP |
+| `/tests/` | ✅ **42** tests passent |
 
 ---
 
@@ -52,23 +55,20 @@
 
 | Dossier | Statut | Contenu |
 |---------|--------|---------|
-| `rapports/` | ✅ | `000` → `005` |
-| `logs/` | ✅ | Logs DEBUG Phase 1 |
+| `rapports/` | ✅ | `000` → **`009`** |
+| `logs/` | ✅ | API DEBUG + `demo_live_*` |
 
 ---
 
-## Matrice de complétude documentaire
+## Lancer la démo (CDC §9.2)
 
-| Domaine | Couvert par | Complet ? |
-|---------|-------------|-----------|
-| Vision produit | IDÉE, CDC §1-2 | ✅ |
-| **Tokenomics 21M + PoL collectif** | **TOKENOMICS §1-12** | ✅ **v1.0** |
-| **Réseau devnet vs Bitcoin testnet** | **RESEAU_DEVNET** | ✅ **v1.0** |
-| Architecture | CDC §3, STRUCTURE | ✅ |
-| PoL formule + split reward | CDC §3.2.4, TOKENOMICS §6 | ✅ |
-| Blockchain C | ROADMAP Phase 3 | ❌ code |
-| Wallet / faucet / explorer | TOKENOMICS §8-10, CDC F-20→F-24 | ❌ code |
-| Décisions ouvertes | Q-015, Q-016 | ⚠️ 2 questions |
+```bash
+make chain
+make api          # terminal 1 — :8000
+make frontend     # terminal 2 — :5173
+python3 scripts/demo_live.py   # ou: make demo (si API déjà up)
+# UI → http://localhost:5173
+```
 
 ---
 
@@ -76,17 +76,19 @@
 
 | Phase | % | Détail |
 |-------|---|--------|
-| Phase 0 Spec | **100 %** | CDC v1.2 + tokenomics + devnet |
-| Phase 1 IR | **100 %** | 28/28 tests |
-| Phase 2 Backend | **0 %** | FastAPI, PoL scorer |
-| Phase 3 Blockchain | **0 %** | C + rewards + devnet |
-| Phase 4 Frontend | **0 %** | Graphe + explorer |
-| **Global MVP** | **~35 %** | Spec complète, code partiel |
+| Phase 0 Spec | **100 %** | CDC v1.2 + tokenomics + devnet doc |
+| Phase 1 IR | **100 %** | 42 tests (dont intégration Wailly) |
+| Phase 2 Backend | **100 %** | FastAPI, PoL, agents, WS |
+| Phase 3 Blockchain | **85 %** | C verify/store ; rewards collectifs + devnet ❌ |
+| Phase 4 Frontend | **100 %** | Parcours 9 étapes GUI |
+| Démo live + logs | **100 %** | Rapport 009, vidéo GUI |
+| Phase 5 Hackathon | **0 %** | README, soumission, vidéo 1 min |
+| **Global MVP** | **~92 %** | |
 
 ---
 
 ## Prochaine action
 
-1. Répondre **Q-015** et **Q-016** (une ligne chacune)
-2. Ordre explicite : **« Lance Phase 2 »** ou **« Lance Phase 3 »**
-3. Implémenter PoL scorer + blockchain C + `artcb-devnet`
+1. **Phase 5** — README public, vidéo 1 min, soumission hackathon (5 juil. 2026 12h00 CEST)
+2. Phase 3 restant — `contributors[]`, `artcb-devnet`, faucet
+3. Optionnel — Gradium TTS API (remplacer Web Speech fallback)
