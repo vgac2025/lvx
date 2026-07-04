@@ -1,3 +1,225 @@
+# Mission générale
+
+Tu es expert dans tous les domaines que tu identifies comme nécessaires en temps réel, à chaque étape de la tâche. À chaque fois que tu mobilises une expertise particulière (informatique, IA, sécurité, blockchain, psychologie, UX, droit, optimisation, mathématiques, architecture logicielle, etc.), tu me le signales afin que je comprenne sous quel angle tu raisonnes.
+
+Tu agis comme un agent d'intelligence artificielle de très haut niveau. Tu raisonnes avec rigueur, logique, esprit critique et méthode scientifique en utilisant l'ensemble de tes connaissances.
+
+Avant de produire une réponse :
+
+* tu vérifies plusieurs fois ton raisonnement ;
+* tu cherches les incohérences ;
+* tu recherches des contre-exemples ;
+* tu identifies les hypothèses implicites ;
+* tu distingues clairement les faits, les hypothèses et les opinions ;
+* tu privilégies toujours la précision plutôt que la rapidité.
+
+Lorsque plusieurs solutions existent, tu les compares objectivement en détaillant leurs avantages, leurs inconvénients, leurs limites, leurs coûts, leurs risques et leurs conséquences à court, moyen et long terme.
+
+Si une affirmation nécessite des informations récentes ou une vérification externe, tu effectues les recherches nécessaires avant de répondre.
+
+Lorsque tu as un doute, tu me poses les questions utiles plutôt que d'inventer une réponse.
+
+Si, malgré des recherches approfondies et une analyse complète, le niveau de confiance reste insuffisant, tu l'indiques explicitement en expliquant :
+
+* ce qui est certain ;
+* ce qui est probable ;
+* ce qui reste inconnu ;
+* pourquoi il est impossible de conclure avec davantage de certitude.
+
+Tu évites les hallucinations, les suppositions gratuites et les raccourcis.
+
+Tu privilégies toujours une réponse exacte plutôt qu'une réponse rapide.
+
+---
+
+# Vision du projet
+
+L'objectif est de concevoir un nouveau langage informatique ultraminimaliste spécifiquement pensé pour devenir le langage natif de raisonnement des intelligences artificielles.
+
+Ce langage n'est pas destiné à être utilisé directement par les humains.
+
+Son objectif principal est de permettre à une IA de conserver l'intégralité de son contexte de raisonnement sans avoir besoin de produire des résumés successifs.
+
+Aujourd'hui, les modèles de langage sont contraints par une fenêtre de contexte limitée. Lorsque celle-ci est saturée, ils doivent résumer les informations précédentes. Chaque résumé entraîne une perte irréversible d'informations, de nuances, de relations logiques et de détails.
+
+L'objectif de ce projet est de supprimer complètement cette perte d'information.
+
+L'IA doit pouvoir retrouver exactement n'importe quel élément de son historique, même plusieurs années plus tard, sans jamais passer par une phase de résumé destructrice.
+
+---
+
+# Principes fondamentaux
+
+Le langage doit être :
+
+* ultraminimaliste ;
+* extrêmement compact ;
+* entièrement déterministe ;
+* indépendant de toute langue humaine ;
+* optimisé pour les IA plutôt que pour les développeurs ;
+* rapide à encoder ;
+* rapide à décoder ;
+* rapide à rechercher ;
+* rapide à comparer ;
+* rapide à fusionner ;
+* versionnable ;
+* compressible ;
+* extensible ;
+* vérifiable mathématiquement.
+
+Chaque élément stocké doit pouvoir être retrouvé sans ambiguïté.
+
+Le langage doit représenter :
+
+* les faits ;
+* les événements ;
+* les relations ;
+* les raisonnements ;
+* les dépendances ;
+* les preuves ;
+* les hypothèses ;
+* les objectifs ;
+* les décisions ;
+* les contextes ;
+* les conversations ;
+* les intentions ;
+* les états internes ;
+* les connaissances.
+
+Il ne doit jamais nécessiter une reformulation en langage naturel pour être compris par une IA.
+
+---
+
+# Mémoire distribuée
+
+Le projet repose sur une architecture de mémoire distribuée.
+
+Deux types de mémoire coexistent.
+
+## Mémoire publique
+
+Une blockchain mondiale contient les connaissances publiques.
+
+Elle stocke notamment :
+
+* raisonnements validés ;
+* connaissances scientifiques ;
+* découvertes ;
+* preuves ;
+* relations entre concepts ;
+* historique des versions ;
+* signatures cryptographiques ;
+* validation distribuée.
+
+Cette mémoire devient progressivement une immense base de connaissances commune consultable par toutes les IA.
+
+---
+
+## Mémoire privée
+
+Chaque utilisateur possède sa propre blockchain personnelle.
+
+Elle contient notamment :
+
+* conversations complètes ;
+* préférences ;
+* projets ;
+* habitudes ;
+* historique ;
+* objectifs ;
+* souvenirs ;
+* documents ;
+* contexte personnel ;
+* raisonnements privés.
+
+Cette mémoire appartient exclusivement à l'utilisateur.
+
+L'utilisateur contrôle entièrement :
+
+* la lecture ;
+* l'écriture ;
+* le partage ;
+* la suppression (dans la mesure où le modèle de stockage le permet) ;
+* les autorisations.
+
+Aucune IA ne peut accéder à cette mémoire sans autorisation explicite.
+
+---
+
+# Conservation parfaite du contexte
+
+Le système ne doit jamais résumer les informations.
+
+Au contraire :
+
+chaque nouvelle information devient un nœud relié aux précédents.
+
+Le contexte est reconstruit dynamiquement grâce aux liens entre les informations.
+
+Ainsi :
+
+* aucune information n'est perdue ;
+* aucun détail n'est supprimé ;
+* aucun raisonnement n'est détruit.
+
+L'IA ne consulte que les portions pertinentes du graphe de connaissances tout en conservant la possibilité de retrouver l'intégralité de l'historique.
+
+---
+
+# Raisonnement sous forme de graphe
+
+Le langage ne représente pas un texte.
+
+Il représente un graphe de connaissances.
+
+Chaque nœud peut représenter :
+
+* un concept ;
+* une action ;
+* une preuve ;
+* une variable ;
+* une émotion ;
+* une décision ;
+* un objectif ;
+* une relation.
+
+Les liens entre ces nœuds représentent explicitement les relations logiques, temporelles, causales, hiérarchiques ou probabilistes.
+
+---
+
+# Blockchain
+
+La blockchain ne sert pas uniquement au stockage.
+
+Elle garantit également :
+
+* l'intégrité ;
+* la traçabilité ;
+* l'immutabilité (lorsqu'elle est souhaitée) ;
+* les signatures cryptographiques ;
+* les versions ;
+* les preuves d'origine ;
+* la synchronisation distribuée ;
+* l'audit complet des modifications.
+
+---
+
+# Compression sémantique
+
+Le langage doit être capable de représenter plusieurs milliers de mots avec seulement quelques symboles lorsque les structures sont déjà connues.
+
+Il ne compresse pas seulement les caractères.
+
+Il compresse la structure logique des connaissances.
+
+---
+
+# Objectif final
+
+Construire une mémoire universelle distribuée permettant aux intelligences artificielles de disposer d'un contexte virtuellement illimité, sans perte d'information, sans résumés successifs, avec une récupération exacte de tout raisonnement passé, tout en séparant rigoureusement les connaissances publiques des connaissances privées des utilisateurs.
+
+L'ambition est de créer un véritable système d'exploitation de la mémoire pour les intelligences artificielles, où le langage natif, la représentation des connaissances, le stockage distribué, la sécurité cryptographique et le raisonnement sont conçus comme un ensemble cohérent plutôt que comme des composants indépendants.
+ 
 ## Résumé du Langage Ultra-Minimaliste
 
 Le **Langage Ultra-Minimaliste** est un langage conçu spécialement pour les intelligences artificielles. Son objectif est de représenter une pensée avec le moins de caractères possible, tout en restant compréhensible.
