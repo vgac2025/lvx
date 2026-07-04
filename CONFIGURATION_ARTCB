@@ -191,7 +191,8 @@ Les clés ci-dessous sont **optionnelles**, pour services **externes** uniquemen
 
 | Variable | Service externe | Obligatoire ? | Sur blockchain ? |
 |----------|----------------|---------------|------------------|
-| `OPENROUTER_API_KEY` | IA cloud (encodage LLM) | Non — rule-based par défaut | ❌ Jamais |
+| `OPENROUTER_API_KEY` | IA cloud (encodage LLM) | Non — **remplacé par BOB_API_KEY** | ❌ Jamais |
+| `BOB_API_KEY` | IBM Bob CLI/IDE — **même rôle qu'OpenRouter** | Non — rule-based par défaut | ❌ Jamais |
 | `GRADIUM_API_KEY` | Synthèse vocale hackathon | Non — skip par défaut | ❌ Jamais |
 
 ### Où vont les clés si tu en fournis ?

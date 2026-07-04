@@ -10,6 +10,9 @@ build/
 .ruff_cache/
 htmlcov/
 .coverage
-data/
+data/*
+!data/fixtures/
+!data/fixtures/README.md
+*.pdf
 *.faiss
 *.key

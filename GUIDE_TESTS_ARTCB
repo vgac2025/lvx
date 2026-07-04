@@ -1,0 +1,98 @@
+# Guide des tests — ARTCB
+
+**Horodatage :** 2026-07-04T21:30:00Z  
+**Langue :** Français (rapport) — code tests en anglais
+
+---
+
+## Comment lancer les tests
+
+```bash
+pip install -e ".[dev]"
+python3 -m pytest tests/ -v
+```
+
+Tests livre (PDF requis) :
+
+```bash
+# Copier le PDF ici :
+# data/fixtures/wailly_le_roi_de_l_inconnu.pdf
+python3 -m pytest tests/test_book_wailly.py -v
+```
+
+---
+
+## Fichier 1 — `tests/test_ir_reversibility.py`
+
+**But global :** prouver le critère **F-02** du cahier des charges — l'encodage IR est **réversible à 100 %**.
+
+| Test | Type | Ce qu'il vérifie exactement |
+|------|------|----------------------------|
+| `test_reversibility_exact` (×10) | **Réversibilité** | 10 textes FR/EN → encode → decode → texte **identique bit à bit** |
+| `test_graph_integrity` | **Intégrité** | Checksums SHA-256 du graphe cohérents après encodage |
+| `test_json_roundtrip` | **Sérialisation** | Graphe → JSON → rechargement → decode = texte original |
+| `test_temporal_edges_chain` | **Structure graphe** | 3 phrases → 2 liens temporels `→t` entre nœuds |
+| `test_node_classification` | **Classification** | « Nous avons décidé… » → nœud type **D** (DECISION) |
+| `test_compression_ratio_positive` | **Métrique** | Le ratio de compression IR est calculable (float) |
+| `test_macro_detection_on_repeated_pattern` | **Macros** | Phrase répétée 3× → au moins 3 nœuds créés |
+| `test_empty_text_raises` | **Erreur** | Texte vide → exception (pas de graphe invalide) |
+| `test_decode_invalid_graph_raises` | **Sécurité** | Checksum corrompu → decode refuse (pas de faux texte) |
+
+---
+
+## Fichier 2 — `tests/test_symbols.py`
+
+**But global :** prouver que le **langage IA inclut des symboles originaux de sa création**.
+
+| Test | Type | Ce qu'il vérifie exactement |
+|------|------|----------------------------|
+| `test_mint_original_symbol_stable` | **Symboles originaux** | Même concept → **même symbole** `α1`, `β2`, `∇n` |
+| `test_encoder_stores_orig_symbols` | **Persistance** | Graphe contient `orig_symbols` pour mots inconnus |
+| `test_original_symbol_in_node` | **Visibilité** | Symbole original apparaît dans `node.sym` |
+
+---
+
+## Fichier 3 — `tests/test_grammar.py`
+
+**But global :** vérifier grammaire USP et macros de base.
+
+| Test | Type | Ce qu'il vérifie exactement |
+|------|------|----------------------------|
+| `test_detect_macros_empty_on_short_text` | **Macros** | Texte court → pas de macro forcée |
+| `test_symbols_assigned` | **Grammaire** | Chaque nœud a un `sym` + checksum `sha256:` |
+
+---
+
+## Fichier 4 — `tests/test_book_wailly.py` (tests réels — PDF)
+
+**But global :** tester sur un **vrai livre** (*Wailly — Le Roi de l'inconnu*).
+
+**Prérequis :** copier le PDF vers :
+- `data/fixtures/wailly_le_roi_de_l_inconnu.pdf`, **ou**
+- `/home/lvx/Downloads/wailly_le_roi_de_l_inconnu.pdf`, **ou**
+- variable `ARTCB_TEST_BOOK_PDF=/chemin/vers/fichier.pdf`
+
+| Test | Type | Ce qu'il vérifie exactement |
+|------|------|----------------------------|
+| `test_book_file_readable` | **Integration PDF** | Extraction texte 3 pages → contenu non vide |
+| `test_book_first_pages_reversibility` | **Réversibilité réelle** | 3 pages livre → encode/decode **100 % exact** |
+| `test_book_chunk_reversibility` | **Réversibilité par morceaux** | 5 chunks de 2000 caractères → chacun réversible |
+| `test_book_orig_symbols_minted` | **Symboles originaux réels** | Mots du livre → symboles IA créés |
+| `test_book_node_count_scales` | **Performance structure** | 10 pages → ≥ 5 nœuds (graphe non trivial) |
+
+**Statut actuel VM :** PDF **absent** → ces tests sont **skipped** jusqu'à copie du fichier.
+
+---
+
+## Synthèse des types de tests
+
+| Type | Signification | Fichiers |
+|------|---------------|----------|
+| **Réversibilité** | Texte entrée = texte sortie, zéro perte | test_ir_reversibility, test_book_wailly |
+| **Intégrité** | Hashes SHA-256 cohérents, pas de corruption | test_graph_integrity, test_decode_invalid |
+| **Sérialisation** | JSON export/import sans perte | test_json_roundtrip |
+| **Structure graphe** | Nœuds, arêtes temporelles, classification | test_temporal_edges, test_node_classification |
+| **Symboles originaux IA** | Langage propre à l'IA (`α1`, `∇n`) | test_symbols, test_book_orig |
+| **Macros** | Compression Ω, Φ, Ψ sur répétitions | test_macro_detection, test_grammar |
+| **Integration PDF** | Données réelles (livre entier) | test_book_wailly |
+| **Erreurs** | Comportement correct sur entrées invalides | test_empty_text, test_decode_invalid |

@@ -1,0 +1,53 @@
+# Langage IA — Symboles originaux ARTCB
+
+**Horodatage :** 2026-07-04T21:30:00Z
+
+---
+
+## Réponse directe : OUI, c'est inclus ✅
+
+Le langage IA ARTCB comporte **3 couches de symboles** :
+
+| Couche | Créateur | Exemples | Fichier |
+|--------|----------|----------|---------|
+| **1. USP fixes** | Spécification humaine | `O1`, `M1`, `P1`, `A1` | `grammar.py` |
+| **2. Macros auto** | IA (détection patterns) | `Ω1`, `Φ1`, `Ψ1` | `macros.py` |
+| **3. Originaux IA** | IA (concepts nouveaux) | `α1`, `β2`, `∇3` | `symbols.py` |
+
+---
+
+## Couche 3 — Symboles originaux de création IA
+
+Quand l'IA rencontre un **concept absent du dictionnaire USP**, elle **crée** un symbole original :
+
+```
+Texte : "The flarnick process requires observation."
+         ↓
+Concept inconnu "flarnick" → mint_original() → symbole α1
+         ↓
+Nœud : { sym: "O1α1", orig_symbols: { "...flarnick...": "α1" } }
+```
+
+**Propriétés :**
+- Stable : même concept → même symbole
+- Unique : chaque nouveau concept → nouveau symbole
+- Réversible : `txt` conserve le texte original intégral
+- Exportable : `graph.orig_symbols` dans le JSON IR
+
+---
+
+## Tests qui le prouvent
+
+```bash
+python3 -m pytest tests/test_symbols.py -v
+```
+
+3 tests dédiés — tous passent.
+
+---
+
+## Ce qui reste à enrichir (Phase 2+)
+
+- Agent **Explorateur** qui propose activement de nouveaux symboles
+- Registre global persistant entre sessions (`data/symbols/registry.json`)
+- Symboles partagés entre agents via blockchain publique (Phase 3+)

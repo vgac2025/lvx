@@ -71,3 +71,8 @@
 **Leçon :** Q-002/Q-004/Q-009 nécessitaient des explications plain-language, pas du jargon.  
 **Décisions actées :** Merge auto main (D-001), blockchain C only (D-002), Python orchestration (D-003), EN code / FR rapports (D-004), MVP max (D-005).  
 **Action :** DECISIONS_UTILISATEUR_ARTCB + QUESTIONS_OUVERTES v2.
+
+### L-014 — Clés API en phase développement
+**Contexte :** Utilisateur refuse de régénérer les clés à chaque session dev.  
+**Leçon :** En phase dev, conserver `.env` local stable — ne pas demander rotation sauf fuite git confirmée.  
+**Action :** `.env` gitignoré, réutilisé entre sessions agent.
