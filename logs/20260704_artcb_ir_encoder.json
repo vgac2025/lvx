@@ -1,0 +1,2 @@
+{"ts": "2026-07-04T19:52:46.969712+00:00", "level": "DEBUG", "module": "artcb.ir.encoder", "message": "Encodage graph_id=g_8ef0cc423a2d spans=2 chars=37"}
+{"ts": "2026-07-04T19:52:46.969924+00:00", "level": "DEBUG", "module": "artcb.ir.encoder", "message": "Encodage terminé nodes=2 edges=1 macros=0 compression=-17.05"}

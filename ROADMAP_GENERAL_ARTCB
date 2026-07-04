@@ -21,17 +21,17 @@
 
 ---
 
-## Phase 1 — Fondations (P0 — 3h)
+## Phase 1 — Fondations (P0 — 3h) ✅
 
 **Objectif :** IR Engine fonctionnel + tests réversibilité
 
-| Jalon | Livrable | Critère |
-|-------|----------|---------|
-| 1.1 | Structure repo `/src/` | Arborescence conforme STRUCTURE_ARTCB |
-| 1.2 | IR Encoder v0.1 | Texte → JSON graphe |
-| 1.3 | IR Decoder v0.1 | JSON graphe → texte original |
-| 1.4 | Tests réversibilité | 10 textes, diff ≤ 1 % |
-| 1.5 | Rapport `rapports/001_ir_engine.md` | Avant/après + logs |
+| Jalon | Livrable | Critère | Statut |
+|-------|----------|---------|--------|
+| 1.1 | Structure repo `/src/` | Arborescence conforme STRUCTURE_ARTCB | ✅ |
+| 1.2 | IR Encoder v0.1 | Texte → JSON graphe | ✅ |
+| 1.3 | IR Decoder v0.1 | JSON graphe → texte original | ✅ |
+| 1.4 | Tests réversibilité | 10 textes, diff ≤ 1 % | ✅ 100 % |
+| 1.5 | Rapport `rapports/001_ir_engine.md` | Avant/après + logs | ✅ |
 
 ---
 

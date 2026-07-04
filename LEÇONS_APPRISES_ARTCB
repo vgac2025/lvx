@@ -59,4 +59,9 @@
 ### L-011 — Gate développement explicite
 **Contexte :** Utilisateur a demandé d'attendre ses ordres avant le dev.  
 **Leçon :** CHECKLIST_PRE_DEV_ARTCB §5 formalise le déblocage.  
-**Action :** Développement 🔴 BLOQUÉ jusqu'à ordre explicite + réponses Q-002/Q-003/Q-008 minimum.
+**Action :** Développement lancé Phase 1 le 4 juil. 2026 sur ordre utilisateur.
+
+### L-012 — Bug découpage de phrases (Phase 1)
+**Contexte :** Tests montraient 1 seul nœud pour textes multi-phrases.  
+**Leçon :** L'espace ne doit pas figurer dans le set de ponctuation fermante post-point.  
+**Action :** Fix `_find_sentence_end` dans encoder.py — 20/20 tests passent.

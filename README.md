@@ -27,8 +27,8 @@ Chaque pensée devient un **nœud signé** dans un graphe de connaissances :
 | Phase | Statut |
 |-------|--------|
 | Spécification | ✅ Complète (CDC v1.1) |
-| Développement | 🔴 En attente d'ordres utilisateur |
-| Démo hackathon | ⏳ Deadline 5 juil. 2026 12h00 CEST |
+| Phase 1 — IR Engine | ✅ Terminée (20 tests, 100 % réversibilité) |
+| Phase 2 — Backend API | ⏳ En attente d'ordre |
 
 ## Documentation
 
@@ -41,15 +41,23 @@ Chaque pensée devient un **nœud signé** dans un graphe de connaissances :
 | [CONFIGURATION_ARTCB](./CONFIGURATION_ARTCB) | Config, dépendances, clés API |
 | [CHECKLIST_PRE_DEV_ARTCB](./CHECKLIST_PRE_DEV_ARTCB) | Gate avant développement |
 
-## Installation (après lancement dev)
+## Installation
 
 ```bash
-# Sera disponible après Phase 1
 git clone git@github.com:vgac2025/lvx.git
 cd lvx
-cp .env.example .env
-pip install -r requirements.txt
-uvicorn src.api.main:app --reload
+pip install -e ".[dev]"
+python3 -m pytest tests/ -v
+```
+
+### CLI IR Engine (Phase 1)
+
+```bash
+# Encoder
+python3 scripts/ir_cli.py encode "Observer le monde pour apprendre."
+
+# Décoder (depuis fichier JSON)
+python3 scripts/ir_cli.py decode graph.json
 ```
 
 ## Hackathon RAISE Summit 2026 — Piste Cursor
