@@ -2,7 +2,7 @@
 
 **Horodatage :** 2026-07-04T23:44:00Z  
 **Statut dépôt :** MVP ~92 % — handoff agent suivant  
-**Commit main :** `9277e8f` → https://github.com/vgac2025/lvx
+**Commit main :** `39e104c` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `9277e8f` | Phases 1–4 + démo API + rapports 000→012 + handoff |
+| `origin/main` | `39e104c` | MVP + ENV_A_REMPLIR + handoff + rapports 000→013 |
 | **Branche active** | `main` | D-001 push direct |
 
 ---
