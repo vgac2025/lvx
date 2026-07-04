@@ -1,4 +1,5 @@
 Ne jamais produire de hardcoding, stub, placeholder ou tout autre type de “mock” pouvant compromettre la véracité des résultats.
+TOUJOUR CODER EN MODE DEBUG TEMPS QUE L'UTILISATEURN NA PAS DEMANDER LUI MEME DE DESACTIVER LE MODE DEBUG.
 Toujours notifier les erreurs qui apparaissent en cours d’exécution.
 Ne jamais créer ou exécuter quoi que ce soit sans avoir relu les fichiers STANDARD_NAMES.md, LEÇONS_APPRISES_ARTCB.md, AUTO_PROMPT_ARTCB.md, ROADMAP_GENERAL_ARTCB.md, ainsi que l’intégralité du code source, ligne par ligne, de la première à la dernière.
 Toujours créer les rapports dans le même dossier de rapports.
