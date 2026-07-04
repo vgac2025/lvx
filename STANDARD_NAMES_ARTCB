@@ -1,1 +1,145 @@
-A METRE A JOUR CE FICHIER AVEC LES HORODATAGE A CHAQUE FOIS.
+# STANDARD DE NOMMAGE — ARTCB
+
+**Horodatage :** 2026-07-04T19:45:00Z
+
+---
+
+## 1. Fichiers documentation (racine)
+
+| Pattern | Exemple | Règle |
+|---------|---------|-------|
+| `{NOM}_ARTCB` | `IDÉE_ARTCB` | Majuscules, suffixe `_ARTCB`, sans extension `.md` |
+| Exceptions | `REGLES HACKATHON RAISE SOUMMIT` | Document externe hackathon |
+
+**Note PROTOCOLE :** Le PROTOCOLE cite `STANDARD_NAMES.md` — le fichier réel est `STANDARD_NAMES_ARTCB`.
+
+---
+
+## 2. Code Python
+
+| Élément | Convention | Exemple |
+|---------|------------|---------|
+| Modules | snake_case | `ir_encoder.py` |
+| Classes | PascalCase | `IREncoder`, `BlockChain` |
+| Fonctions | snake_case | `encode_text()` |
+| Constantes | UPPER_SNAKE | `POL_ALPHA = 0.4` |
+| Enums | PascalCase | `NodeType.FACT` |
+| Tests | `test_{module}.py` | `test_ir_reversibility.py` |
+
+---
+
+## 3. Code C
+
+| Élément | Convention | Exemple |
+|---------|------------|---------|
+| Fichiers | snake_case | `libartcb_chain.c` |
+| Fonctions | snake_case préfixe `artcb_` | `artcb_hash_block()` |
+| Structs | snake_case | `artcb_block_t` |
+| Headers | `libartcb_{module}.h` | `libartcb_chain.h` |
+
+---
+
+## 4. Frontend (TypeScript/React)
+
+| Élément | Convention | Exemple |
+|---------|------------|---------|
+| Composants | PascalCase.tsx | `GraphViewer.tsx` |
+| Hooks | camelCase préfixe `use` | `useGraphData()` |
+| Types/Interfaces | PascalCase | `ArtcbNode` |
+| CSS modules | camelCase | `graphViewer.module.css` |
+
+---
+
+## 5. API REST
+
+| Élément | Convention | Exemple |
+|---------|------------|---------|
+| Base path | `/api/v1/` | `/api/v1/encode` |
+| Ressources | kebab-case pluriel | `/api/v1/rtleg/events` |
+| Query params | snake_case | `?graph_id=abc` |
+| JSON fields | snake_case | `"pol_score"` |
+
+---
+
+## 6. IR / Langage ARTCB
+
+| Élément | Convention | Exemple |
+|---------|------------|---------|
+| USP Actions | `{Lettre}{chiffre}` | `O1`, `C1`, `A1` |
+| USP Objets | `{Lettre}{chiffre}` | `M1`, `P1`, `S1` |
+| Macros | `{Grec}{chiffre}` | `Φ1`, `Ψ1`, `Ω1` |
+| Node IDs | `n{seq}` | `n1`, `n42` |
+| Event IDs | `evt_{seq:03d}` | `evt_001` |
+| Block index | entier | `0`, `1`, `42` |
+| Hashes | préfixe algo | `sha256:abc123...` |
+| Signatures | préfixe algo | `ed25519:def456...` |
+
+---
+
+## 7. Types de nœuds (NodeType)
+
+| Code | Nom complet |
+|------|-------------|
+| `F` | FACT |
+| `E` | EVENT |
+| `R` | REASON |
+| `H` | HYPOTHESIS |
+| `D` | DECISION |
+| `G` | GOAL |
+| `P` | PROOF |
+| `C` | CONTEXT |
+| `M` | MACRO |
+
+---
+
+## 8. Types de liens (EdgeType)
+
+| Symbole | Nom |
+|---------|-----|
+| `→` | CAUSES |
+| `⇒` | IMPLIES |
+| `⊃` | DEPENDS |
+| `→t` | TEMPORAL |
+| `⊥` | CONTRADICTS |
+| `⊢` | SUPPORTS |
+| `≡` | COMPRESSES |
+
+---
+
+## 9. Rapports (PROTOCOLE)
+
+| Pattern | Exemple |
+|---------|---------|
+| `rapports/{seq:03d}_{module}.md` | `rapports/001_ir_engine.md` |
+| Jamais écraser | Nouveau fichier à chaque exécution |
+| Contenu obligatoire | Avant/après, lignes exactes, nom fichier source |
+
+---
+
+## 10. Logs (mode DEBUG)
+
+| Pattern | Exemple |
+|---------|---------|
+| `logs/{date}_{module}.json` | `logs/20260704_ir_engine.json` |
+| Format | JSON structuré |
+| Niveau défaut | DEBUG |
+
+---
+
+## 11. Branches Git
+
+| Pattern | Exemple |
+|---------|---------|
+| `cursor/{description}-1fce` | `cursor/cahier-des-charges-mvp-1fce` |
+| Base | `main` |
+
+---
+
+## 12. Commits
+
+Format : `{verbe} {description courte}`
+
+Exemples :
+- `Create CAHIER_DES_CHARGES_ARTCB v1.0`
+- `Add IR encoder with reversibility tests`
+- `Fix PoL score calculation`

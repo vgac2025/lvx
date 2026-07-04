@@ -1,1 +1,107 @@
-A METRE A JOUR CE FICHIER AVEC LES HORODATAGE A CHAQUE FOIS.
+# ROADMAP GÉNÉRALE — ARTCB MVP Avancé
+
+**Horodatage :** 2026-07-04T19:45:00Z
+
+---
+
+## Phase 0 — Spécification ✅ (4 juillet 2026)
+
+- [x] Relire l'intégralité du dépôt distant
+- [x] Rédiger CAHIER_DES_CHARGES_ARTCB v1.0
+- [x] Définir STRUCTURE_ARTCB
+- [x] Définir STANDARD_NAMES_ARTCB
+- [ ] Validation utilisateur du cahier des charges
+
+---
+
+## Phase 1 — Fondations (P0 — 3h)
+
+**Objectif :** IR Engine fonctionnel + tests réversibilité
+
+| Jalon | Livrable | Critère |
+|-------|----------|---------|
+| 1.1 | Structure repo `/src/` | Arborescence conforme STRUCTURE_ARTCB |
+| 1.2 | IR Encoder v0.1 | Texte → JSON graphe |
+| 1.3 | IR Decoder v0.1 | JSON graphe → texte original |
+| 1.4 | Tests réversibilité | 10 textes, diff ≤ 1 % |
+| 1.5 | Rapport `rapports/001_ir_engine.md` | Avant/après + logs |
+
+---
+
+## Phase 2 — Backend (P0 — 4h)
+
+**Objectif :** API + RT-LEG + Dual-agent + PoL
+
+| Jalon | Livrable | Critère |
+|-------|----------|---------|
+| 2.1 | FastAPI routes § 8 CDC | 12 endpoints |
+| 2.2 | RT-LEG events | Timeline append-only signée |
+| 2.3 | Agent Explorateur | Décomposition texte → nœuds H, R, F |
+| 2.4 | Agent Critique | Validation + compression macro |
+| 2.5 | PoL Scorer | Formule § 3.2.4 implémentée |
+| 2.6 | Rapport `rapports/002_backend.md` | Logs + métriques |
+
+---
+
+## Phase 3 — Blockchain (P0 — 3h)
+
+**Objectif :** Chaîne locale signée + persistance
+
+| Jalon | Livrable | Critère |
+|-------|----------|---------|
+| 3.1 | Block + Chain Python | Hash chaîné, signature Ed25519 |
+| 3.2 | Core C (optionnel P1) | libartcb_chain hash SHA-256 |
+| 3.3 | Persistance JSONL/SQLite | Survit au redémarrage |
+| 3.4 | `/chain/verify` | Détection tampering |
+| 3.5 | Rapport `rapports/003_blockchain.md` | Intégrité prouvée |
+
+---
+
+## Phase 4 — Frontend (P0 — 4h)
+
+**Objectif :** UX démo hackathon § 9.2
+
+| Jalon | Livrable | Critère |
+|-------|----------|---------|
+| 4.1 | GraphViewer interactif | Zoom, clic, highlight |
+| 4.2 | AgentPanel temps réel | WebSocket Explorateur/Critique |
+| 4.3 | PolGauge | Jauge animée |
+| 4.4 | Reconstruct diff | Texte original côte à côte |
+| 4.5 | Parcours Demo.tsx | 9 étapes § 9.2 |
+| 4.6 | Rapport `rapports/004_frontend.md` | Screenshots |
+
+---
+
+## Phase 5 — Polish & Soumission (P0 — 1h)
+
+**Objectif :** Soumission hackathon 5 juil. 12h00
+
+| Jalon | Livrable | Critère |
+|-------|----------|---------|
+| 5.1 | README.md public | Install + démo en 5 lignes |
+| 5.2 | Vidéo démo 1 min | YouTube/Loom |
+| 5.3 | Soumission Cerebral Valley | Formulaire rempli |
+| 5.4 | Rapport final `rapports/005_soumission.md` | Checklist complète |
+
+---
+
+## Phase 6 — Extensions (P1/P2 — post-hackathon)
+
+- [ ] Gradium TTS/STT intégration
+- [ ] P2P sync 2 nœuds
+- [ ] Publication blocs publics
+- [ ] CLI standalone
+- [ ] IR v0.2 grammaire enrichie
+- [ ] Whitepaper scientifique
+
+---
+
+## Jalons critiques
+
+| Date | Heure (CEST) | Jalon |
+|------|--------------|-------|
+| 4 juil. 2026 | 17h00 | Crédits Cursor — deadline formulaire |
+| 4 juil. 2026 | 22h00 | Phase 1+2 terminées (backend) |
+| 5 juil. 2026 | 06h00 | Phase 3+4 terminées (frontend) |
+| 5 juil. 2026 | 10h00 | Vidéo démo enregistrée |
+| 5 juil. 2026 | 12h00 | **SOUMISSION FINALE** |

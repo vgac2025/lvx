@@ -1,0 +1,599 @@
+# CAHIER DES CHARGES — ARTCB MVP Avancé v1.0
+
+**Horodatage :** 2026-07-04T19:40:00Z  
+**Auteur :** Agent Cursor (Cloud)  
+**Statut :** Document de référence — prêt pour implémentation hackathon  
+**Dépôt :** https://github.com/vgac2025/lvx  
+**Branche de travail :** `cursor/cahier-des-charges-mvp-1fce`
+
+---
+
+## 0. Résumé exécutif
+
+**ARTCB** (*AI Reasoning Trace & Cognitive Blockchain*) vise à créer une **couche de mémoire persistante pour agents IA** basée sur :
+
+1. Un **langage IR hybride** (symbolique + vectoriel) — pas du texte humain.
+2. Un **graphe d'exécution temporel signé** (RT-LEG) — traçabilité sans résumés destructeurs.
+3. Une **blockchain décentralisée** pour l'intégrité publique/privée (conforme au PROTOCOLE).
+4. Un **Proof-of-Learning (PoL)** mesurable — récompense = Δ compression + Δ performance.
+5. Une **dualité cognitive** Explorateur / Critique — génération vs validation.
+
+Ce cahier des charges définit le **MVP Avancé** : la version la plus ambitieuse **démontrable en ~15 heures** avant la soumission hackathon (5 juillet 2026, 12h00 CEST).
+
+---
+
+## 1. Contexte et problème
+
+### 1.1 Problème utilisateur (piste Cursor)
+
+> *« Quand je travaille longtemps avec une IA, elle oublie ce qu'on s'est dit. Je dois tout réexpliquer. Je ne peux pas retrouver un raisonnement précis d'il y a 3 semaines. »*
+
+**Persona cible :** développeur / chercheur / créateur utilisant Cursor ou un agent IA sur des projets multi-sessions.
+
+### 1.2 Problème technique
+
+Les LLM actuels :
+- ont une **fenêtre de contexte limitée** ;
+- **résument** quand saturés → perte irréversible ;
+- stockent la mémoire dans des **vector stores opaques** sans traçabilité causale ;
+- ne séparent pas rigoureusement **mémoire publique** vs **privée**.
+
+### 1.3 Opportunité hackathon
+
+| Critère RAISE Cursor | Alignement ARTCB |
+|---------------------|------------------|
+| Problème réel quotidien | Perte de contexte IA multi-sessions |
+| UX / parcours interactif | Visualisation graphe + voix (Gradium) |
+| Démo fonctionnelle (50 %) | Encode → stocke → retrouve → reconstruit |
+| Innovation (15 %) | IR réversible + PoL + dual-agent |
+| Repo public, travail neuf | Oui |
+
+**Projets interdits évités :** pas de RAG basique, pas de dashboard-only, pas de Streamlit.
+
+---
+
+## 2. Vision produit (MVP Avancé)
+
+### 2.1 Énoncé
+
+> **ARTCB est un système d'exploitation de mémoire pour agents IA** : chaque pensée devient un nœud signé dans un graphe, compressible sans perte, retrouvable à l'identique, avec séparation publique/privée.
+
+### 2.2 Ce que le MVP Avancé DOIT prouver (démo 1 min)
+
+1. **Encoder** une conversation ou un texte en IR ARTCB compact.
+2. **Stocker** le graphe dans une chaîne privée locale signée (blockchain light).
+3. **Naviguer** visuellement dans le graphe (UX interactive).
+4. **Retrouver** un nœud exact par requête sémantique ou ID.
+5. **Reconstruire** le texte original à 100 % (réversibilité prouvée).
+6. **Montrer** le dual-agent : Explorateur propose, Critique valide/comprime.
+7. **Afficher** une métrique PoL (taux de compression + score de validation).
+
+### 2.3 Ce que le MVP Avancé NE FAIT PAS (hors scope)
+
+- Blockchain mondiale publique à l'échelle planétaire.
+- Réseau P2P multi-nœuds en production.
+- Entraînement de modèle propriétaire.
+- Support multilingue complet (FR + EN suffisent).
+- Livre 300 pages en temps réel (démo sur chapitre / extrait).
+
+---
+
+## 3. Architecture technique
+
+### 3.1 Schéma global
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    COUCHE UX (Cursor Track)                  │
+│  Web App React/Vite  │  Graphe interactif  │  Voix Gradium  │
+└──────────────────────────────┬──────────────────────────────┘
+                               │ REST / WebSocket
+┌──────────────────────────────▼──────────────────────────────┐
+│                    API Gateway (FastAPI)                     │
+└──┬──────────┬──────────┬──────────┬──────────┬───────────────┘
+   │          │          │          │          │
+   ▼          ▼          ▼          ▼          ▼
+┌──────┐ ┌────────┐ ┌─────────┐ ┌────────┐ ┌──────────────┐
+│ IR   │ │ RT-LEG │ │ Dual    │ │ PoL    │ │ Blockchain   │
+│Engine│ │ Engine │ │ Agents  │ │ Engine │ │ Light (C)    │
+└──┬───┘ └───┬────┘ └────┬────┘ └───┬────┘ └──────┬───────┘
+   │         │           │          │             │
+   └─────────┴───────────┴──────────┴─────────────┘
+                               │
+                    ┌──────────▼──────────┐
+                    │   Memory Stack       │
+                    │ STM │ Vector │ Graph│
+                    └─────────────────────┘
+```
+
+### 3.2 Modules détaillés
+
+#### 3.2.1 IR Engine (Langage ARTCB v0.1)
+
+**Rôle :** Convertir texte humain ↔ graphe IR ↔ reconstruction 100 %.
+
+**Types de nœuds (enum `NodeType`) :**
+
+| Type | Code | Description |
+|------|------|-------------|
+| FACT | `F` | Fait vérifiable |
+| EVENT | `E` | Événement temporel |
+| REASON | `R` | Étape de raisonnement |
+| HYPOTHESIS | `H` | Hypothèse non validée |
+| DECISION | `D` | Décision prise |
+| GOAL | `G` | Objectif |
+| PROOF | `P` | Preuve / citation |
+| CONTEXT | `C` | Contexte de session |
+| MACRO | `M` | Macro compressée (Φ, Ψ, Ω…) |
+
+**Types de liens (enum `EdgeType`) :**
+
+| Lien | Symbole | Sémantique |
+|------|---------|------------|
+| CAUSES | `→` | Causalité |
+| IMPLIES | `⇒` | Implication logique |
+| DEPENDS | `⊃` | Dépendance |
+| TEMPORAL | `→t` | Ordre temporel |
+| CONTRADICTS | `⊥` | Contradiction |
+| SUPPORTS | `⊢` | Support / preuve |
+| COMPRESSES | `≡` | Macro ↔ expansion |
+
+**Format IR sérialisé (JSON canonique) :**
+
+```json
+{
+  "v": "0.1",
+  "nodes": [
+    {"id": "n1", "t": "F", "sym": "O1M1", "txt": "Observer le monde", "vec": [0.12, -0.34, "..."]},
+    {"id": "n2", "t": "R", "sym": "A1", "txt": "Apprendre", "parent": "n1"}
+  ],
+  "edges": [
+    {"from": "n1", "to": "n2", "rel": "→", "w": 1.0}
+  ],
+  "macros": {
+    "Ω1": {"expansion": ["n1", "n2"], "sym": "O1M1A1"}
+  },
+  "checksum": "sha256:..."
+}
+```
+
+**Grammaire formelle v0.1 (EBNF simplifiée) :**
+
+```ebnf
+graph     = node { edge } ;
+node      = id type symbol text? vector? ;
+edge      = from rel to weight? ;
+type      = "F"|"E"|"R"|"H"|"D"|"G"|"P"|"C"|"M" ;
+rel       = "→"|"⇒"|"⊃"|"→t"|"⊥"|"⊢"|"≡" ;
+symbol    = USP | MACRO ;
+USP       = ACTION OBJECT? ;
+ACTION    = "O1"|"C1"|"K1"|"V1"|"A1"|"M1"|"R1"|"D1" ;
+OBJECT    = "M1"|"M2"|"M3"|"P1"|"S1" ;
+MACRO     = greek letter + digit ;  (* Φ1, Ψ1, Ω1 *)
+```
+
+**Garantie de réversibilité :**
+
+Chaque nœud conserve obligatoirement :
+- `sym` — forme compressée ;
+- `txt` — texte source original (ou pointeur vers blob immuable) ;
+- `checksum` — hash du contenu original.
+
+La reconstruction = parcours du graphe + décompression des macros + concaténation ordonnée des `txt`.
+
+#### 3.2.2 RT-LEG Engine (Real-Time Learning Execution Graph)
+
+**Rôle :** Journal immuable des actions IA horodatées.
+
+**Structure d'un événement :**
+
+```json
+{
+  "event_id": "evt_001",
+  "timestamp": "2026-07-04T19:00:00Z",
+  "agent": "explorer|critic",
+  "action": "encode|validate|compress|store|retrieve",
+  "input_hash": "sha256:...",
+  "output_hash": "sha256:...",
+  "graph_delta": {"added_nodes": 3, "added_edges": 2},
+  "signature": "ed25519:..."
+}
+```
+
+**Propriétés :**
+- Append-only (jamais de modification, seulement ajout).
+- Chaînage par hash (`prev_hash`).
+- Signature Ed25519 par agent.
+
+#### 3.2.3 Dual Agents
+
+| Agent | Rôle | Comportement MVP |
+|-------|------|------------------|
+| **Explorateur** | Génération, hypothèses | Propose nouveaux nœuds H, explore connexions |
+| **Critique** | Validation, compression | Valide/rejette, crée macros, calcule PoL |
+
+**Boucle MVP :**
+
+```
+Input texte → Explorateur (décompose en nœuds)
+           → Critique (vérifie cohérence, compresse en macro si pattern répété)
+           → RT-LEG (enregistre trace)
+           → Blockchain Light (persiste bloc)
+```
+
+#### 3.2.4 Proof-of-Learning (PoL)
+
+**Formule MVP :**
+
+```
+PoL_score = α × Δcompression + β × validation_rate + γ × retrieval_accuracy
+
+Où :
+  Δcompression = 1 - (size_IR / size_original)
+  validation_rate = nodes_validated / nodes_proposed
+  retrieval_accuracy = nodes_correctly_retrieved / nodes_queried
+  
+  α = 0.4, β = 0.3, γ = 0.3  (configurable)
+```
+
+**Seuil de minage (acceptation d'un bloc) :**
+
+Un bloc n'est ajouté à la chaîne que si `PoL_score ≥ 0.6` ET signature Critique valide.
+
+#### 3.2.5 Blockchain Light (100 % décentralisable)
+
+**Conformité PROTOCOLE :** blockchain décentralisée à 100 %.
+
+**MVP :** chaîne locale single-node avec architecture **prête pour P2P**.
+
+**Structure de bloc :**
+
+```json
+{
+  "index": 42,
+  "timestamp": "2026-07-04T19:00:00Z",
+  "prev_hash": "abc123...",
+  "merkle_root": "def456...",
+  "graph_root": "ghi789...",
+  "pol_score": 0.78,
+  "nonce": 0,
+  "hash": "jkl012...",
+  "signature": "ed25519:...",
+  "visibility": "private|public"
+}
+```
+
+**Implémentation :**
+- Core en **C** (performance, hash, signatures).
+- Bindings **Python** via ctypes / pybind11.
+- Persistance : fichiers JSONL ou SQLite chiffré.
+
+**Mémoire publique vs privée :**
+- `visibility: private` — clé utilisateur locale.
+- `visibility: public` — futur réseau fédéré (hors MVP, interface préparée).
+
+#### 3.2.6 Memory Stack (3 couches)
+
+| Couche | Technologie MVP | Rôle |
+|--------|----------------|------|
+| **STM** | Redis / dict Python | Contexte session courante |
+| **Vector** | FAISS / numpy | Recherche sémantique |
+| **Graph** | NetworkX + persistance | Relations causales |
+
+---
+
+## 4. Exigences fonctionnelles
+
+### 4.1 Must-Have (P0 — bloquant démo)
+
+| ID | Exigence | Critère d'acceptation |
+|----|----------|----------------------|
+| F-01 | Encodage texte → IR | Input 500 mots → graphe JSON valide en < 2s |
+| F-02 | Reconstruction IR → texte | Similarité ≥ 99 % avec original (diff textuelle) |
+| F-03 | Stockage blockchain | Bloc signé persisté, hash vérifiable |
+| F-04 | Retrieval par ID | Retour nœud exact en < 100ms |
+| F-05 | Retrieval sémantique | Top-3 nœuds pertinents pour requête |
+| F-06 | Visualisation graphe | UI interactive : zoom, clic nœud, détail |
+| F-07 | Dual-agent visible | Log montrant Explorateur + Critique |
+| F-08 | Métrique PoL affichée | Score calculé et visible en UI |
+| F-09 | RT-LEG consultable | Timeline des événements exportable |
+| F-10 | Mode DEBUG | Logs détaillés activés par défaut |
+
+### 4.2 Should-Have (P1 — MVP avancé)
+
+| ID | Exigence | Critère d'acceptation |
+|----|----------|----------------------|
+| F-11 | Macros auto (Φ, Ψ, Ω) | Pattern répété 3× → macro créée |
+| F-12 | Voix (Gradium TTS) | Lecture d'un nœud à voix haute |
+| F-13 | Export/import chaîne | Fichier `.artcb` exportable |
+| F-14 | Multi-session | Reprendre contexte après redémarrage |
+| F-15 | Diff entre versions | Comparer graphe t vs t+1 |
+
+### 4.3 Could-Have (P2 — si temps restant)
+
+| ID | Exigence |
+|----|----------|
+| F-16 | STT Gradium pour input vocal |
+| F-17 | P2P sync 2 nœuds local |
+| F-18 | Publication bloc public |
+| F-19 | CLI standalone |
+
+---
+
+## 5. Exigences non-fonctionnelles
+
+| ID | Catégorie | Exigence |
+|----|-----------|----------|
+| NF-01 | Performance | Encodage 500 mots < 2s sur laptop standard |
+| NF-02 | Performance | Reconstruction < 1s |
+| NF-03 | Sécurité | Clés Ed25519, jamais en clair dans logs |
+| NF-04 | Sécurité | Mémoire privée chiffrée at-rest (AES-256) |
+| NF-05 | Fiabilité | Aucune perte de données sur crash (WAL) |
+| NF-06 | Observabilité | Logs structurés JSON, dossier `rapports/` |
+| NF-07 | Qualité | Mode DEBUG actif, zéro mock/stub (PROTOCOLE) |
+| NF-08 | Portabilité | Linux + macOS, Python 3.11+ |
+| NF-09 | Licence | Open source, repo public |
+| NF-10 | Langue UI | Français par défaut, EN optionnel |
+
+---
+
+## 6. Stack technique
+
+| Composant | Technologie | Justification |
+|-----------|-------------|---------------|
+| Backend API | Python 3.11 + FastAPI | Rapidité dev, écosystème IA |
+| Blockchain core | C (libartcb_chain) | Performance hash/signature |
+| Graphe | NetworkX | Prototypage rapide |
+| Vecteurs | FAISS ou numpy | Recherche sémantique légère |
+| Frontend | React + Vite + D3.js / Cytoscape | Graphe interactif hackathon |
+| Voix | Gradium API (TTS) | Partenaire hackathon |
+| LLM | OpenRouter / API externe | Encodage intelligent (si clé dispo) |
+| Tests | pytest | Standard Python |
+| CI | GitHub Actions | Lint + tests auto |
+| Conteneur | Docker Compose | Démo reproductible |
+
+---
+
+## 7. Modèle de données
+
+### 7.1 Entités principales
+
+```
+User
+  ├── id: UUID
+  ├── public_key: Ed25519
+  └── chain_id: UUID
+
+Session
+  ├── id: UUID
+  ├── user_id: FK
+  ├── started_at: datetime
+  └── graph_id: FK
+
+Graph
+  ├── id: UUID
+  ├── nodes: Node[]
+  ├── edges: Edge[]
+  ├── macros: Macro[]
+  └── root_hash: sha256
+
+Node
+  ├── id: string
+  ├── type: NodeType
+  ├── symbol: string
+  ├── text_original: string
+  ├── vector: float[]
+  ├── created_at: datetime
+  └── visibility: private|public
+
+Block
+  ├── index: int
+  ├── prev_hash: string
+  ├── graph_root: string
+  ├── pol_score: float
+  ├── signature: string
+  └── events: Event[]
+```
+
+---
+
+## 8. API REST (MVP)
+
+| Méthode | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/api/v1/encode` | Texte → graphe IR |
+| POST | `/api/v1/decode` | Graphe IR → texte original |
+| GET | `/api/v1/graph/{id}` | Récupérer graphe complet |
+| GET | `/api/v1/node/{id}` | Récupérer nœud par ID |
+| POST | `/api/v1/search` | Recherche sémantique |
+| POST | `/api/v1/store` | Persister dans blockchain |
+| GET | `/api/v1/chain` | Liste des blocs |
+| GET | `/api/v1/chain/verify` | Vérifier intégrité chaîne |
+| GET | `/api/v1/rtleg/events` | Timeline RT-LEG |
+| GET | `/api/v1/pol/score` | Score PoL courant |
+| POST | `/api/v1/agents/run` | Lancer boucle dual-agent |
+| GET | `/api/v1/health` | Healthcheck |
+
+---
+
+## 9. UX — Parcours utilisateur (piste Cursor)
+
+### 9.1 Problème présenté
+
+> *« Mon IA oublie nos conversations. Je veux une mémoire qu'elle ne peut pas perdre. »*
+
+### 9.2 Parcours démo (60 secondes)
+
+1. **Accueil** — L'utilisateur voit un champ texte : « Collez une conversation ou un paragraphe ».
+2. **Encodage** — Clic « Mémoriser » → animation graphe qui se construit nœud par nœud.
+3. **Dual-agent** — Panneau latéral : Explorateur (bleu) et Critique (vert) commentent en temps réel.
+4. **Exploration** — L'utilisateur clique un nœud → détail + connexions surlignées.
+5. **Recherche** — « Retrouve la décision sur l'architecture » → nœud surligné.
+6. **Reconstruction** — Clic « Reconstruire » → texte original affiché côte à côte (diff vert).
+7. **PoL** — Jauge affiche : Compression 72 %, Validation 95 %, PoL 0.81.
+8. **Voix** (P1) — Bouton « Lire » → Gradium lit le nœud sélectionné.
+9. **Blockchain** — Footer : « Bloc #7 signé ✓ — hash abc123… »
+
+### 9.3 Principes UX
+
+- **Pas de dashboard administratif** — expérience narrative, pas un panel de stats.
+- **Feedback temps réel** — WebSocket pour construction graphe.
+- **Mobile-friendly** — responsive pour démo sur téléphone.
+- **Accessibilité** — contrastes WCAG AA, navigation clavier.
+
+---
+
+## 10. Sécurité et confidentialité
+
+| Mesure | Implémentation MVP |
+|--------|-------------------|
+| Authentification | Clé Ed25519 locale (pas de compte cloud obligatoire) |
+| Chiffrement at-rest | AES-256-GCM sur fichiers chaîne privée |
+| Signature | Chaque bloc et événement RT-LEG signé |
+| Permissions | IA ne lit mémoire privée sans token explicite |
+| Logs | Jamais de texte utilisateur en clair en production |
+| RGPD | Export/suppression chaîne privée locale possible |
+
+---
+
+## 11. Éléments manquants identifiés (ajoutés à ce cahier)
+
+Ces éléments étaient absents ou vides dans le dépôt et sont maintenant spécifiés :
+
+| # | Élément manquant | Ajout dans ce CDC |
+|---|-----------------|-------------------|
+| 1 | Grammaire formelle du langage | § 3.2.1 EBNF v0.1 |
+| 2 | Modèle computationnel exact | § 3.2 RT-LEG + PoL |
+| 3 | Différenciation vs LLM+DB | § 1.2 + réversibilité 100 % |
+| 4 | Résolution blockchain vs DAG | § 3.2.5 — blockchain light + RT-LEG complémentaires |
+| 5 | MVP scope hackathon | § 2.2 / 2.3 |
+| 6 | Parcours UX Cursor | § 9 |
+| 7 | API REST | § 8 |
+| 8 | Modèle de données | § 7 |
+| 9 | Critères d'acceptation | § 4 |
+| 10 | Stack technique | § 6 |
+| 11 | Métriques PoL formelles | § 3.2.4 |
+| 12 | Structure projet | STRUCTURE_ARTCB |
+| 13 | Nomenclature fichiers | STANDARD_NAMES_ARTCB |
+| 14 | Roadmap phases | ROADMAP_GENERAL_ARTCB |
+| 15 | Dossier rapports | `rapports/` (PROTOCOLE) |
+| 16 | Script démo 1 min | § 9.2 |
+| 17 | Tests requis | § 12 |
+| 18 | Risques et mitigations | § 13 |
+| 19 | Incohérence noms fichiers PROTOCOLE | Note : fichiers sans `.md`, suffixe `_ARTCB` |
+| 20 | Clés API requises | OpenRouter/LLM, Gradium TTS (optionnel P1) |
+
+---
+
+## 12. Stratégie de tests
+
+| Type | Couverture MVP |
+|------|---------------|
+| Unitaires | IR encode/decode, PoL calcul, hash chain |
+| Intégration | API → Engine → Blockchain → retrieve |
+| Réversibilité | 100 textes → encode → decode → diff ≤ 1 % |
+| Performance | Benchmark encode 500 mots < 2s |
+| Sécurité | Vérification signature, tampering detection |
+| E2E | Parcours démo complet Playwright |
+
+**Commande :**
+
+```bash
+pytest tests/ -v --tb=short
+```
+
+---
+
+## 13. Risques et mitigations
+
+| Risque | Probabilité | Impact | Mitigation |
+|--------|-------------|--------|------------|
+| Scope trop large | Élevée | Élevé | P0 strict, P1/P2 optionnels |
+| Pas de clé LLM | Moyenne | Moyen | Fallback règles + spaCy |
+| Blockchain C trop long | Moyenne | Élevé | MVP Python pur, C en P1 |
+| UX insuffisante pour juges | Moyenne | Élevé | § 9 parcours soigné, D3.js |
+| Réversibilité non prouvée | Faible | Critique | Tests automatisés F-02 |
+| Deadline 12h demain | Élevée | Critique | Roadmap par phases |
+
+---
+
+## 14. Roadmap d'implémentation (15h restantes)
+
+| Phase | Durée | Livrables |
+|-------|-------|-----------|
+| **P0 — Fondations** | 3h | Structure repo, IR Engine, tests réversibilité |
+| **P1 — Backend** | 4h | FastAPI, RT-LEG, Dual-agent, PoL |
+| **P2 — Blockchain** | 3h | Chain light C/Python, persistance |
+| **P3 — Frontend** | 4h | UI graphe, parcours démo, WebSocket |
+| **P4 — Polish** | 1h | Vidéo démo, README, rapports |
+
+---
+
+## 15. Livrables attendus
+
+| Livrable | Format | Emplacement |
+|----------|--------|-------------|
+| Cahier des charges | Ce fichier | `/CAHIER_DES_CHARGES_ARTCB` |
+| Code source | Python + C | `/src/` |
+| Frontend | React | `/frontend/` |
+| Tests | pytest | `/tests/` |
+| Rapports d'exécution | Markdown | `/rapports/` |
+| Vidéo démo | 1 min | YouTube/Loom (soumission) |
+| README | Markdown | `/README.md` |
+
+---
+
+## 16. Critères de succès hackathon
+
+| Critère | Poids | Cible |
+|---------|-------|-------|
+| Impact | 25 % | Problème mémoire IA universel |
+| Démo | 50 % | 9 étapes § 9.2 fonctionnelles |
+| Créativité | 15 % | IR réversible + PoL + dual-agent |
+| Pitch | 10 % | 3 min, story utilisateur claire |
+
+---
+
+## 17. Glossaire
+
+| Terme | Définition |
+|-------|------------|
+| **ARTCB** | AI Reasoning Trace & Cognitive Blockchain |
+| **IR** | Intermediate Representation — format interne symbolique+vectoriel |
+| **RT-LEG** | Real-Time Learning Execution Graph |
+| **PoL** | Proof-of-Learning — métrique d'apprentissage vérifiable |
+| **USP** | Unité de Sens Stable — identifiant sémantique (O1, M1…) |
+| **Macro** | Compression d'une séquence en symbole unique (Φ1, Ψ1…) |
+| **STM** | Short-Term Memory — mémoire session |
+
+---
+
+## 18. Références internes
+
+| Document | Rôle |
+|----------|------|
+| `IDÉE_ARTCB` | Vision et analyse critique |
+| `PROTOCOLE_ARTCB` | Règles de développement |
+| `AUTO_PROMPT_ARTCB` | Prompt agent |
+| `STRUCTURE_ARTCB` | Arborescence projet |
+| `STANDARD_NAMES_ARTCB` | Conventions de nommage |
+| `ROADMAP_GENERAL_ARTCB` | Phases et jalons |
+| `LEÇONS_APPRISES_ARTCB` | Retours d'expérience |
+| `REGLES HACKATHON RAISE SOUMMIT` | Contraintes événement |
+
+---
+
+## 19. Autocritique de ce cahier des charges
+
+| Limite | Commentaire |
+|--------|-------------|
+| IR v0.1 simplifiée | Grammaire EBNF minimale, à enrichir en v0.2 |
+| Blockchain MVP single-node | Pas encore P2P décentralisé réel |
+| Embeddings | Vecteurs placeholder si pas de modèle — risque sémantique |
+| Estimation 15h | Optimiste si frontend ambitieux |
+| Pas de budget cloud | Infra locale uniquement |
+| LLM externe | Dépendance API si pas de fallback |
+
+---
+
+**Fin du cahier des charges — ARTCB MVP Avancé v1.0**

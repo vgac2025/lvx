@@ -1,1 +1,47 @@
-A METRE A JOUR CE FICHIER AVEC LES HORODATAGE A CHAQUE FOIS.
+# LEÇONS APPRISES — ARTCB
+
+**Horodatage :** 2026-07-04T19:45:00Z
+
+---
+
+## 2026-07-04 — Phase spécification
+
+### L-001 — Dépôt documentation-only au départ
+**Contexte :** Le dépôt ne contenait que des fichiers texte, aucun code source.  
+**Leçon :** Toujours vérifier la présence de code avant d'estimer l'avancement.  
+**Action :** CAHIER_DES_CHARGES_ARTCB créé pour cadrer l'implémentation.
+
+### L-002 — Contradiction blockchain vs RT-LEG
+**Contexte :** IDÉE_ARTCB propose DAG event-sourced ; PROTOCOLE exige blockchain 100 % décentralisée.  
+**Leçon :** Les deux ne sont pas mutuellement exclusifs — blockchain light pour persistance + RT-LEG pour exécution.  
+**Action :** Architecture hybride spécifiée dans CDC § 3.2.5.
+
+### L-003 — Fichiers placeholder vides
+**Contexte :** ROADMAP, STANDARD_NAMES, STRUCTURE, LEÇONS ne contenaient qu'une ligne.  
+**Leçon :** Un dépôt avec placeholders crée une fausse impression de structure.  
+**Action :** Tous remplis lors de cette session.
+
+### L-004 — Incohérence noms fichiers PROTOCOLE
+**Contexte :** PROTOCOLE cite `STANDARD_NAMES.md` mais le fichier est `STANDARD_NAMES_ARTCB`.  
+**Leçon :** Documenter l'écart dans STANDARD_NAMES § 1.  
+**Action :** Note ajoutée, pas de renommage pour ne pas casser l'historique.
+
+### L-005 — Scope hackathon vs vision long terme
+**Contexte :** Vision = OS mémoire IA + blockchain mondiale ; deadline = 15h.  
+**Leçon :** MVP Avancé doit prouver le concept minimal (réversibilité + graphe + PoL), pas la vision complète.  
+**Action :** P0/P1/P2 définis dans CDC § 4 et ROADMAP.
+
+### L-006 — Piste Cursor = UX obligatoire
+**Contexte :** Le projet était 100 % backend/théorie.  
+**Leçon :** 50 % du jugement = démo qui fonctionne avec parcours utilisateur.  
+**Action :** § 9 CDC — parcours 60 secondes spécifié.
+
+### L-007 — Critique « redécouverte » des fondations
+**Contexte :** Analyse externe : tokenisation, Huffman, embeddings existent déjà.  
+**Leçon :** La différenciation n'est pas la compression mais la **réversibilité 100 % + traçabilité causale + PoL mesurable**.  
+**Action :** Positionnement clarifié dans CDC § 1.2 et § 2.1.
+
+### L-008 — SSH requis pour push
+**Contexte :** Remote HTTPS avec token limité ; clé SSH ajoutée le 4 juil. 2026.  
+**Leçon :** Configurer SSH dès le début pour éviter les limitations de push.  
+**Action :** Clé `cursor-cloud-agent-vgac2025-lvx` configurée.

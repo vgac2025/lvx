@@ -1,1 +1,81 @@
-.
+# STRUCTURE ARTCB — Arborescence projet MVP Avancé
+
+**Horodatage :** 2026-07-04T19:45:00Z
+
+```
+lvx/
+├── CAHIER_DES_CHARGES_ARTCB      # Ce cahier des charges
+├── IDÉE_ARTCB                    # Vision projet
+├── PROTOCOLE_ARTCB               # Règles de développement
+├── AUTO_PROMPT_ARTCB             # Prompt agent
+├── ROADMAP_GENERAL_ARTCB         # Phases et jalons
+├── STANDARD_NAMES_ARTCB          # Conventions de nommage
+├── LEÇONS_APPRISES_ARTCB         # Retours d'expérience
+├── STRUCTURE_ARTCB               # Ce fichier
+├── REGLES HACKATHON RAISE SOUMMIT
+├── README.md                     # Documentation publique
+│
+├── src/
+│   ├── artcb/
+│   │   ├── __init__.py
+│   │   ├── ir/                   # IR Engine — encode/decode
+│   │   │   ├── encoder.py
+│   │   │   ├── decoder.py
+│   │   │   ├── grammar.py        # Grammaire EBNF v0.1
+│   │   │   └── macros.py         # Compression Φ, Ψ, Ω
+│   │   ├── rtleg/                # RT-LEG Engine
+│   │   │   ├── events.py
+│   │   │   └── timeline.py
+│   │   ├── agents/               # Dual Agents
+│   │   │   ├── explorer.py
+│   │   │   └── critic.py
+│   │   ├── pol/                  # Proof-of-Learning
+│   │   │   └── scorer.py
+│   │   ├── memory/               # Memory Stack
+│   │   │   ├── stm.py
+│   │   │   ├── vector_store.py
+│   │   │   └── graph_store.py
+│   │   └── chain/                # Blockchain Light
+│   │       ├── block.py
+│   │       ├── chain.py
+│   │       └── crypto.py
+│   ├── c/                        # Core C (hash, signatures)
+│   │   ├── libartcb_chain.c
+│   │   ├── libartcb_chain.h
+│   │   └── Makefile
+│   └── api/                      # FastAPI
+│       ├── main.py
+│       ├── routes/
+│       └── websocket.py
+│
+├── frontend/                     # React + Vite
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── GraphViewer.tsx   # Visualisation graphe D3/Cytoscape
+│   │   │   ├── AgentPanel.tsx    # Explorateur + Critique
+│   │   │   ├── PolGauge.tsx      # Jauge PoL
+│   │   │   └── Reconstruct.tsx   # Reconstruction texte
+│   │   ├── pages/
+│   │   │   └── Demo.tsx          # Parcours démo hackathon
+│   │   └── App.tsx
+│   └── package.json
+│
+├── tests/
+│   ├── test_ir_reversibility.py  # F-02 critique
+│   ├── test_pol.py
+│   ├── test_chain.py
+│   └── test_api.py
+│
+├── rapports/                     # Rapports d'exécution (PROTOCOLE)
+│   └── .gitkeep
+│
+├── logs/                         # Logs DEBUG (PROTOCOLE)
+│   └── .gitkeep
+│
+├── docker-compose.yml
+├── requirements.txt
+├── pyproject.toml
+└── .github/
+    └── workflows/
+        └── ci.yml
+```
