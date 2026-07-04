@@ -1,0 +1,6 @@
+timestamp_utc=2026-07-04T23:44:26Z
+hostname=cursor
+user=ubuntu
+pwd=/workspace
+uname=Linux cursor 6.12.58+ #1 SMP PREEMPT_DYNAMIC Thu Jun 25 19:50:23 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+execution_env=CLOUD_AGENT

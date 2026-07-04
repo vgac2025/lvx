@@ -1,7 +1,8 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-04T23:37:00Z  
-**Statut dépôt :** Phases 1–4 ✅ — Démo live **API-only** ✅
+**Horodatage :** 2026-07-04T23:44:00Z  
+**Statut dépôt :** MVP ~92 % — handoff agent suivant  
+**Commit main :** `9277e8f` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -9,31 +10,33 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | (post 009) | MVP + démo live + rapports 000→009 |
-| **Branche active** | `main` | D-001 merge direct |
+| `origin/main` | `9277e8f` | Phases 1–4 + démo API + rapports 000→012 + handoff |
+| **Branche active** | `main` | D-001 push direct |
+
+---
+
+## Fichiers critiques pour agent suivant
+
+| Fichier | Rôle |
+|---------|------|
+| **`HANDOFF_POUR_AGENT_SUIVANT.md`** | État complet + priorités utilisateur |
+| **`EXECUTION_MACHINE_UTILISATEUR.md`** | Exécution sur PC utilisateur (pas cloud) |
+| `PROTOCOLE_ARTCB` | Règles inviolables |
+| `scripts/setup_machine_locale.sh` | Install deps machine utilisateur |
+| `scripts/run_real_local.sh` | Démo + `logs/machine_fingerprint.txt` |
+| `scripts/demo_live.py` | 9 étapes HTTP sans navigateur |
 
 ---
 
 ## Ordre de lecture obligatoire (PROTOCOLE)
 
-| # | Fichier | Statut | Rôle |
-|---|---------|--------|------|
-| 1 | `PROTOCOLE_ARTCB` | ✅ | Règles de dev inviolables |
-| 2 | `STANDARD_NAMES_ARTCB` | ✅ | Conventions nommage |
-| 3 | `LEÇONS_APPRISES_ARTCB` | ✅ | Retours d'expérience (L-001→L-017) |
-| 4 | `AUTO_PROMPT_ARTCB` | ✅ v1.3 | Prompt agent |
-| 5 | `ROADMAP_GENERAL_ARTCB` | ✅ | Phases et jalons |
-| 6 | `IDÉE_ARTCB` | ✅ | Vision + autocritique RT-LEG |
-| 7 | `CAHIER_DES_CHARGES_ARTCB` | ✅ **v1.2** | Spec MVP + tokenomics §27-28 |
-| 8 | `STRUCTURE_ARTCB` | ✅ | Arborescence cible |
-| 9 | `CONFIGURATION_ARTCB` | ✅ | Config, deps, clés API |
-| 10 | `CHECKLIST_PRE_DEV_ARTCB` | ✅ | Gate avant développement |
-| 11 | `QUESTIONS_OUVERTES_ARTCB` | ✅ **v3** | Q-012→Q-017 |
-| 12 | `DECISIONS_UTILISATEUR_ARTCB` | ✅ | D-001→D-022 |
-| 13 | **`TOKENOMICS_ARTCB`** | ✅ | 21M, PoL collectif, halving |
-| 14 | **`RESEAU_DEVNET_ARTCB`** | ✅ | artcb-devnet vs Bitcoin testnet |
-| 15 | `REGLES HACKATHON RAISE SOUMMIT` | ✅ | Contraintes événement |
-| 16 | `INDEX_ARTCB` | ✅ | Ce fichier |
+| # | Fichier | Statut |
+|---|---------|--------|
+| 1 | `PROTOCOLE_ARTCB` | ✅ |
+| 2 | `STANDARD_NAMES_ARTCB` | ✅ |
+| 3 | `LEÇONS_APPRISES_ARTCB` | ✅ L-001→L-019 |
+| 4 | `AUTO_PROMPT_ARTCB` | ✅ v1.4 |
+| 5–16 | (voir versions précédentes INDEX) | ✅ |
 
 ---
 
@@ -41,52 +44,51 @@
 
 | Élément | Statut |
 |---------|--------|
-| `/src/artcb/ir/` | ✅ Phase 1 — IR Engine |
-| `/src/artcb/pol/`, `agents/`, `rtleg/`, `memory/` | ✅ Phase 2 |
+| `/src/artcb/ir/` | ✅ Phase 1 |
+| `/src/artcb/pol/`, `agents/`, `memory/` | ✅ Phase 2 |
 | `/src/api/` | ✅ 12 REST + WebSocket |
-| `/src/c/` → `libartcb_chain.so` | ✅ Phase 3 base (hash, verify, Ed25519 store) |
-| `/frontend/` | ✅ Phase 4 React + Cytoscape |
-| `/scripts/demo_live.py` | ✅ Démo live HTTP |
-| `/tests/` | ✅ **42** tests passent |
+| `/src/c/` | ✅ Phase 3 base (85 %) |
+| `/frontend/` | ✅ Phase 4 — **optionnel** (user refuse navigateur) |
+| `/scripts/` | ✅ demo_live, run_real_local, setup |
+| `/tests/` | ✅ **42** tests |
 
 ---
 
 ## Dossiers PROTOCOLE
 
-| Dossier | Statut | Contenu |
-|---------|--------|---------|
-| `rapports/` | ✅ | `000` → **`010`** |
-| `logs/` | ✅ | API DEBUG + `demo_live_*` |
+| Dossier | Contenu |
+|---------|---------|
+| `rapports/` | `000` → **`012`** |
+| `logs/` | `demo_live_*`, `machine_fingerprint.txt`, API DEBUG |
 
 ---
 
-## Lancer la démo (backend — sans navigateur)
+## Lancer la démo (API — sans navigateur)
 
 ```bash
-make chain
-make api          # terminal 1 — :8000
-python3 scripts/demo_live.py   # terminal 2 — logs/demo_live_latest.txt
+bash scripts/setup_machine_locale.sh   # une fois
+bash scripts/run_real_local.sh         # sur machine UTILISATEUR
 ```
-
-Frontend optionnel (Phase 4) : `make frontend` → `:5173` — **non requis** pour valider le MVP.
 
 ---
 
 ## État d'avancement global
 
-| Phase | % | Détail |
-|-------|---|--------|
-| Phase 0 Spec | **100 %** | CDC v1.2 + tokenomics + devnet doc |
-| Phase 1 IR | **100 %** | 42 tests (dont intégration Wailly) |
-| Phase 2 Backend | **100 %** | FastAPI, PoL, agents, WS |
-| Phase 3 Blockchain | **85 %** | C verify/store ; rewards collectifs + devnet ❌ |
-| Phase 4 Frontend | **100 %** | Parcours 9 étapes GUI |
-| Démo live API + logs | **100 %** | Rapports 009 + 010 |
-| **Global MVP** | **~92 %** | |
+| Phase | % |
+|-------|---|
+| 0 Spec | 100 % |
+| 1 IR | 100 % |
+| 2 Backend | 100 % |
+| 3 Blockchain C | 85 % |
+| 4 Frontend | 100 % (optionnel) |
+| Démo API + logs | 100 % |
+| **Exécution PC utilisateur** | **0 %** — à faire par humain/agent local |
+| **Global MVP code** | **~92 %** |
 
 ---
 
-## Prochaine action (périmètre dev)
+## Prochaine action (agent suivant)
 
-1. Phase 3 restant — `contributors[]`, `artcb-devnet`, faucet
-2. Optionnel — Gradium TTS API (remplacer Web Speech fallback)
+1. Aider utilisateur à exécuter `run_real_local.sh` **sur son PC** — lire `machine_fingerprint.txt`
+2. Phase 3 : rewards collectifs, artcb-devnet
+3. **Ne pas** imposer frontend ni vidéo hackathon
