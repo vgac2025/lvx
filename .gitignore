@@ -14,5 +14,6 @@ data/*
 !data/fixtures/
 !data/fixtures/README.md
 *.pdf
+!data/fixtures/wailly_le_roi_de_l_inconnu.pdf
 *.faiss
 *.key
