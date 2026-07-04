@@ -20,7 +20,8 @@
 | Fichier | Rôle |
 |---------|------|
 | **`HANDOFF_POUR_AGENT_SUIVANT.md`** | État complet + priorités utilisateur |
-| **`EXECUTION_MACHINE_UTILISATEUR.md`** | Exécution sur PC utilisateur (pas cloud) |
+| **`ENV_A_REMPLIR_ARTCB`** | **Secrets → copier vers `.env` local** |
+| **`EXECUTION_MACHINE_UTILISATEUR.md`** | Exécution sur PC utilisateur |
 | `PROTOCOLE_ARTCB` | Règles inviolables |
 | `scripts/setup_machine_locale.sh` | Install deps machine utilisateur |
 | `scripts/run_real_local.sh` | Démo + `logs/machine_fingerprint.txt` |

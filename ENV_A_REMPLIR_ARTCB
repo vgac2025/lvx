@@ -1,0 +1,82 @@
+# FICHIER SECRETS LOCAL — ARTCB
+# ═══════════════════════════════════════════════════════════════════
+# INSTRUCTIONS (à faire sur VOTRE machine, une seule fois) :
+#
+#   1. Copiez ce fichier vers .env (gitignoré, jamais pushé) :
+#        cp ENV_A_REMPLIR_ARTCB .env
+#
+#   2. Remplacez chaque COLLEZ_ICI_... par votre vraie clé/token.
+#
+#   3. NE COMMITEZ JAMAIS .env sur GitHub.
+#
+# DÉMO MINIMALE (9 étapes, Wailly, PoL, blockchain) :
+#   → Aucune clé obligatoire. Laissez BOB/GRADIUM commentés.
+#   → Lancez : bash scripts/run_real_local.sh
+#
+# Horodatage modèle : 2026-07-04T23:49:00Z
+# Référence : DECISIONS D-011, D-021, D-022 | CONFIGURATION_ARTCB §1
+# ═══════════════════════════════════════════════════════════════════
+
+# ── CORE (recommandé — valeurs par défaut OK) ─────────────────────
+ARTCB_DEBUG=true
+ARTCB_LOG_LEVEL=DEBUG
+ARTCB_LOG_DIR=./logs
+ARTCB_REPORTS_DIR=./rapports
+ARTCB_DATA_DIR=./data
+ARTCB_HOST=127.0.0.1
+ARTCB_PORT=8000
+
+# Encodage : rule-based = sans clé (path A — toujours disponible)
+ARTCB_ENCODE_MODE=rule-based
+ARTCB_LLM_ENABLED=false
+
+# PoL (seuil 0.6 = acceptation bloc)
+ARTCB_POL_ALPHA=0.4
+ARTCB_POL_BETA=0.3
+ARTCB_POL_GAMMA=0.3
+ARTCB_POL_THRESHOLD=0.6
+
+# Livre démo Wailly 100 % (Q-006) — PDF déjà dans le repo
+ARTCB_DEMO_BOOK_PDF=data/fixtures/wailly_le_roi_de_l_inconnu.pdf
+
+# Réseau local (devnet P2P = Phase 3, pas encore codé)
+ARTCB_NETWORK=local
+
+# ── SECRETS OPTIONNELS — décommentez et collez vos clés ───────────
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ BOB API (IBM Bob CLI) — Path B encodage LLM (D-008, D-021)     │
+# │ Obligatoire seulement si ARTCB_LLM_ENABLED=true                 │
+# │ Format typique hackathon : bob_prod_... ou clé fournie IBM       │
+# └─────────────────────────────────────────────────────────────────┘
+# BOB_API_KEY=COLLEZ_ICI_VOTRE_CLE_BOB
+# OPENROUTER_API_KEY=COLLEZ_ICI_Même_CLE_BOB_si_alias
+# BOB_API_BASE=https://api.us-east.bob.ibm.com
+# BOB_MODEL=ibm/granite-3-8b-instruct
+# BOB_TEAM_ID=COLLEZ_ICI_SI_FOURNI_PAR_IBM
+# BOB_INSTANCE_ID=COLLEZ_ICI_SI_FOURNI_PAR_IBM
+# ARTCB_LLM_ENABLED=true
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ GRADIUM TTS — synthèse vocale UI (D-009, D-022)                 │
+# │ Sans clé : UI utilise Web Speech API navigateur (fr-FR)         │
+# └─────────────────────────────────────────────────────────────────┘
+# GRADIUM_API_KEY=COLLEZ_ICI_VOTRE_CLE_GRADIUM
+# GRADIUM_API_URL=https://api.gradium.ai
+
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ GITHUB — push HTTPS si SSH indisponible (optionnel)             │
+# │ Préférez SSH ; token : Settings → Developer settings → PAT      │
+# └─────────────────────────────────────────────────────────────────┘
+# GITHUB_TOKEN=COLLEZ_ICI_ghp_ou_github_pat_...
+
+# ── Clés AUTO-GÉNÉRÉES au premier run (ne pas remplir) ────────────
+# ARTCB_CHAIN_KEY_PATH=./data/chain.key      ← Ed25519 blockchain
+# ARTCB_ENCRYPTION_KEY=                      ← AES auto si absent
+
+# ── Vérification après remplissage ────────────────────────────────
+#   source .env   # ou relancez le terminal
+#   bash scripts/run_real_local.sh
+#   curl -s http://127.0.0.1:8000/api/v1/health | python3 -m json.tool
+#   → "bob_configured": true si BOB_API_KEY valide
+#   → "llm_enabled": true si ARTCB_LLM_ENABLED=true

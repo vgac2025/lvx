@@ -40,7 +40,8 @@ bash scripts/run_real_local.sh
 
 Preuve machine : `logs/machine_fingerprint.txt` → `execution_env=USER_MACHINE`
 
-Guide : **`EXECUTION_MACHINE_UTILISATEUR.md`**
+Guide : **`EXECUTION_MACHINE_UTILISATEUR.md`**  
+Secrets : **`ENV_A_REMPLIR_ARTCB`** → `cp ENV_A_REMPLIR_ARTCB .env` puis coller vos clés
 
 ---
 
