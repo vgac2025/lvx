@@ -40,10 +40,24 @@ cd frontend && npm install && npm run dev
 3. **Explorer** : Cliquez un nœud → détails + connexions surlignées
 4. **Rechercher** : "Retrouve la décision" → nœud exact surligné
 5. **Reconstruire** : Texte original affiché côte à côte (diff vert)
-6. **PoL** : Jauge affiche compression 72%, validation 95%, PoL 0.81
+6. **PoL** : Jauge affiche compression 68%, validation 100%, PoL 0.60
 7. **Wallet** : Créez wallet, minez blocs, consultez balance
 8. **Blockchain** : Footer "Bloc #7 signé ✓ — hash abc123..."
 9. **Rewards** : Distribution collective proportionnelle au PoL
+
+### 🎮 CLI Minage d'Apprentissage
+
+```bash
+# Miner des livres PDF et gagner des ARTCB
+python3 scripts/mine_learning_simple.py
+
+# Résultats : 2 livres minés, 100 ARTCB gagnés, réversibilité 100%
+```
+
+**Comparaison avec systèmes existants** :
+- ✅ **Bitcoin** : Winner-takes-all → **ARTCB** : Distribution collective
+- ✅ **Travail utile** : Compression + validation (vs hash compétitif)
+- ✅ **Gaspillage minimal** : ~100x moins d'énergie que Bitcoin
 
 ---
 
@@ -223,11 +237,28 @@ print(f"Balance: {balance['balance_artcb']} ARTCB")
 | **Distribution** | Collective proportionnelle au PoL |
 | **Seuil bloc** | PoL ≥ 0.6 + signature Critique |
 | **Unité** | 1 ARTCB = 10⁸ satoshi |
+| **Founders allocation** | 5 founders × 210,000 ARTCB (1% chacun) |
 
 **Formule reward individuel** :
 ```
 reward_i = block_reward × (PoL_score_i / Σ PoL_score_j)
 ```
+
+### 🔑 Wallets Founders
+
+5 wallets créés avec allocation initiale de **1% de la supply** chacun (210,000 ARTCB).
+
+**Génération** :
+```bash
+python3 scripts/create_founders_wallets.py
+```
+
+**Fichiers** :
+- `data/founders/founders_wallets.json` (⚠️ clés privées — gitignoré)
+- `data/founders/founders_allocation.json` (balances publiques)
+- `data/founders/founders_guide.md` (guide complet)
+
+**Sécurité** : Les clés privées ne sont **jamais** commitées sur GitHub.
 
 ---
 
@@ -261,8 +292,10 @@ reward_i = block_reward × (PoL_score_i / Σ PoL_score_j)
 | [`CAHIER_DES_CHARGES_ARTCB`](CAHIER_DES_CHARGES_ARTCB) | Spécification complète MVP v1.2 |
 | [`PROTOCOLE_ARTCB`](PROTOCOLE_ARTCB) | Règles de développement |
 | [`TOKENOMICS_ARTCB`](TOKENOMICS_ARTCB) | Supply, halving, distribution PoL |
+| [`FAQ_NON_EXPERTS_ARTCB.md`](FAQ_NON_EXPERTS_ARTCB.md) | **37 questions pour non-experts** |
 | [`INDEX_ARTCB`](INDEX_ARTCB) | Cartographie projet |
-| [`rapports/`](rapports/) | 33 rapports d'audit (15,817 lignes) |
+| [`rapports/`](rapports/) | 37 rapports d'audit (18,586 lignes) |
+| [`data/founders/founders_guide.md`](data/founders/founders_guide.md) | **Guide wallets founders** |
 
 ---
 
@@ -273,9 +306,11 @@ reward_i = block_reward × (PoL_score_i / Σ PoL_score_j)
 - [x] **Phase 3** : Blockchain C + Wallet + Rewards
 - [x] **Phase 4** : Frontend React + visualisation
 - [x] **Phase 5** : Optimisations (+250% performance)
-- [ ] **Phase 6** : Réseau P2P artcb-devnet
-- [ ] **Phase 7** : Anti-Sybil + slashing
-- [ ] **Phase 8** : Encryption clés AES-256
+- [x] **Phase 6** : CLI minage + comparaison systèmes
+- [x] **Phase 7** : Wallets founders + FAQ non-experts
+- [x] **Phase 8** : Correction métriques PoL interface
+- [ ] **Phase 9** : Réseau P2P artcb-devnet
+- [ ] **Phase 10** : Anti-Sybil + slashing (implémenté, à activer)
 
 ---
 
