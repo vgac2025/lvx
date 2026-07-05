@@ -195,7 +195,7 @@ grep -r "eval\|exec\|__import__\|pickle\|yaml.load\|shell=True" src/
 **⚠️ Amélioration Possible** :
 ```python
 # Actuel : Clé en clair dans .env
-BOB_API_KEY=bob_prod_bob-admin_4aJoegTu...
+BOB_API_KEY=<votre_clé_ici>
 
 # Recommandé : Chiffrement clé au repos
 from cryptography.fernet import Fernet
