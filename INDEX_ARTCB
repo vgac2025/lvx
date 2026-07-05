@@ -1,8 +1,8 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-05T04:49:00Z
-**Statut dépôt :** MVP ~98 % — 10 optimisations + audit final pitch investisseurs
-**Commit main :** `b36106e` → https://github.com/vgac2025/lvx
+**Horodatage :** 2026-07-05T03:19:00Z
+**Statut dépôt :** MVP ~98 % — Étude viabilité logique minage PoL complète
+**Commit main :** `f3b33f3` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -10,15 +10,15 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `b36106e` | MVP + optimisations + rapports 000→028 |
-| `local/main` | `b36106e + rapport 029` | Audit final pitch investisseurs |
-| **Branche active** | `main` | Prêt pour push final |
+| `origin/main` | `f3b33f3` | MVP + rapports 000→031 (audit honnête) |
+| `local/main` | `f3b33f3 + rapport 032` | Étude viabilité logique minage PoL |
+| **Branche active** | `main` | Prêt pour push rapport 032 |
 
 **Dernières modifications** :
-- ✅ Rapport 026 : Audit forensic complet (GPU, sécurité, optimisations)
-- ✅ Rapport 027 : Implémentation complète 10 optimisations
-- ✅ Rapport 028 : Correction 7 bugs tests (71/71 passent)
-- ✅ Rapport 029 : **AUDIT FINAL PITCH INVESTISSEURS** (1247 lignes)
+- ✅ Rapport 029 : Audit final pitch investisseurs (1247 lignes)
+- ✅ Rapport 030 : Guide minage + allocation + benchmark (358 lignes, 33% faux)
+- ✅ Rapport 031 : **AUDIT HONNÊTE CODE RÉEL** (534 lignes, correction rapport 030)
+- ✅ Rapport 032 : **ÉTUDE VIABILITÉ LOGIQUE MINAGE POL** (682 lignes)
 - ✅ Optimisation #1 : Cache encodage IR (gain 40%)
 - ✅ Optimisation #2 : Batch processing PDF parallèle (gain 3x)
 - ✅ Optimisation #3 : FAISS GPU vectorisation (gain 10x)
@@ -38,7 +38,9 @@
 
 | Fichier | Rôle |
 |---------|------|
-| **`rapports/029_AUDIT_FINAL_COMPLET_PITCH_INVESTISSEURS.md`** | **AUDIT COMPLET POUR PITCH** |
+| **`rapports/032_ETUDE_VIABILITE_LOGIQUE_MINAGE_POL.md`** | **ÉTUDE VIABILITÉ COMPLÈTE** |
+| **`rapports/031_AUDIT_HONETE_CODE_REEL_VS_RAPPORT_030.md`** | **AUDIT HONNÊTE (correction mensonges)** |
+| **`rapports/029_AUDIT_FINAL_COMPLET_PITCH_INVESTISSEURS.md`** | Audit complet pour pitch |
 | **`HANDOFF_POUR_AGENT_SUIVANT.md`** | État complet + priorités utilisateur |
 | **`ENV_A_REMPLIR_ARTCB`** | **Secrets → copier vers `.env` local** |
 | **`EXECUTION_MACHINE_UTILISATEUR.md`** | Exécution sur PC utilisateur |
