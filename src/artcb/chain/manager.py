@@ -13,6 +13,8 @@ from nacl import encoding, signing
 from artcb.chain import ffi
 from artcb.config import load_settings
 from artcb.pol.scorer import PolScorer
+from artcb.security.anti_sybil import AntiSybilValidator
+from artcb.security.slashing import SlashingManager
 
 logger = logging.getLogger("artcb.chain.manager")
 
@@ -54,12 +56,28 @@ GENESIS_PREV_HASH = "0" * 64
 
 
 class ChainManager:
-    def __init__(self, blocks_path: Path, key_path: Path | None = None) -> None:
+    def __init__(
+        self,
+        blocks_path: Path,
+        key_path: Path | None = None,
+        enable_security: bool = True
+    ) -> None:
         settings = load_settings()
         self.blocks_path = blocks_path
         self.blocks_path.parent.mkdir(parents=True, exist_ok=True)
         self.key_path = key_path or (settings.data_dir / "chain.key")
         self._signing_key = self._load_or_create_key()
+        
+        # Security modules
+        self.enable_security = enable_security
+        if enable_security:
+            self.anti_sybil = AntiSybilValidator()
+            self.slashing = SlashingManager()
+            logger.info("Security modules enabled (Anti-Sybil + Slashing)")
+        else:
+            self.anti_sybil = None
+            self.slashing = None
+            logger.warning("Security modules DISABLED")
 
     def _load_or_create_key(self) -> signing.SigningKey:
         if self.key_path.exists():
@@ -108,6 +126,31 @@ class ChainManager:
         prev_hash = self.last_hash()
         merkle = merkle_root or graph_root
         
+        # Security validation (Anti-Sybil)
+        if self.enable_security and self.anti_sybil and contributors:
+            valid, reason = self.anti_sybil.validate_block(contributors, pol_score, index)
+            if not valid:
+                logger.error(f"Block {index} rejected by Anti-Sybil: {reason}")
+                # Slash contributors
+                if self.slashing:
+                    for contributor in contributors:
+                        self.slashing.slash(
+                            address=contributor["address"],
+                            reason=reason or "Anti-Sybil validation failed",
+                            severity="minor",
+                            reward_satoshi=0,
+                            block_index=index
+                        )
+                raise ValueError(f"Block rejected: {reason}")
+            
+            # Check slashing status for each contributor
+            if self.slashing:
+                for contributor in contributors:
+                    allowed, reason = self.slashing.is_allowed(contributor["address"])
+                    if not allowed:
+                        logger.error(f"Contributor {contributor['address'][:12]}... not allowed: {reason}")
+                        raise ValueError(f"Contributor blocked: {reason}")
+        
         # Calculate block reward (halving every 210,000 blocks)
         if block_reward is None:
             block_reward = self._calculate_block_reward(index)
@@ -150,6 +193,11 @@ class ChainManager:
         )
         with self.blocks_path.open("a", encoding="utf-8") as handle:
             handle.write(block.to_json_line() + "\n")
+        
+        # Record valid block in reputation
+        if self.enable_security and self.anti_sybil and contributors:
+            self.anti_sybil.record_valid_block(contributors, pol_score, index)
+        
         logger.debug(
             "Appended block index=%d hash=%s reward=%d contributors=%d",
             index, block_hash, block_reward, len(final_contributors)

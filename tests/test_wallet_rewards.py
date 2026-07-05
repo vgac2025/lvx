@@ -304,7 +304,8 @@ class TestWalletBalance:
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet = wallet_mgr.create_wallet(name="test")
         
-        chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
+        # Disable security for fast tests (no 60s delay)
+        chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl", enable_security=False)
         
         # Block 1: Full reward
         contributors1 = [{"address": wallet.address, "pol_score": 1.0, "signature": "sig1"}]
