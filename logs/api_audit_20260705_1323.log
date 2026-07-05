@@ -1,0 +1,32 @@
+2026-07-05T13:24:26 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [183310]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:47452 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "GET /api/v1/demo/wailly-excerpt?max_pages=2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "POST /api/v1/agents/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "GET /api/v1/graph/g_623fdf3589e0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "GET /api/v1/node/n1?graph_id=g_623fdf3589e0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "POST /api/v1/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "POST /api/v1/decode HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "POST /api/v1/store HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47464 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54106 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54110 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "GET /api/v1/demo/wailly-excerpt?max_pages=2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "POST /api/v1/agents/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "GET /api/v1/graph/g_6ea0ff390f33 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "GET /api/v1/node/n1?graph_id=g_6ea0ff390f33 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "POST /api/v1/search HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "POST /api/v1/decode HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "POST /api/v1/store HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54120 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54134 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54142 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
