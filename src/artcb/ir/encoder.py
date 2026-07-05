@@ -36,10 +36,23 @@ class SentenceSpan:
 class IREncoder:
     """Encode text into IR graph with guaranteed reversibility via source_text + spans."""
 
-    def __init__(self, symbol_registry: SymbolRegistry | None = None) -> None:
+    def __init__(self, symbol_registry: SymbolRegistry | None = None, enable_cache: bool = True) -> None:
         self._registry = symbol_registry or SymbolRegistry()
+        self._cache: dict[str, IRGraph] = {} if enable_cache else None
+        self._cache_enabled = enable_cache
 
     def encode(self, text: str, session_id: str | None = None) -> IRGraph:
+        # Cache optimization: Check if text already encoded
+        if self._cache_enabled and self._cache is not None:
+            text_hash = sha256_text(text)
+            if text_hash in self._cache:
+                cached = self._cache[text_hash]
+                logger.debug("Cache HIT text_hash=%s reusing graph", text_hash[:16])
+                # Return copy with new session_id if provided
+                new_graph_id = session_id or f"g_{uuid.uuid4().hex[:12]}"
+                return cached.model_copy(update={"graph_id": new_graph_id})
+        
+        # Cache MISS or cache disabled: perform full encoding
         if not text or not text.strip():
             raise ValueError("Le texte à encoder ne peut pas être vide.")
 
@@ -103,12 +116,20 @@ class IREncoder:
             raise RuntimeError("Échec vérification intégrité après encodage.")
 
         graph = apply_macros_to_graph(graph)
+        
+        # Store in cache for future reuse
+        if self._cache_enabled and self._cache is not None:
+            text_hash = sha256_text(text)
+            self._cache[text_hash] = graph
+            logger.debug("Cache STORE text_hash=%s", text_hash[:16])
+        
         logger.debug(
-            "Encodage terminé nodes=%d edges=%d macros=%d compression=%.2f",
+            "Encodage terminé nodes=%d edges=%d macros=%d compression=%.2f cache_size=%d",
             len(graph.nodes),
             len(graph.edges),
             len(graph.macros),
             self.compression_ratio(graph),
+            len(self._cache) if self._cache else 0,
         )
         return graph
 

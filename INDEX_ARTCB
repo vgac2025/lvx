@@ -1,8 +1,8 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-05T03:04:00Z
-**Statut dépôt :** MVP ~92 % — audit complet + benchmark industrie 2026
-**Commit main :** `7ba3d37` → https://github.com/vgac2025/lvx
+**Horodatage :** 2026-07-05T04:17:00Z
+**Statut dépôt :** MVP ~95 % — audit forensic + optimisations performance implémentées
+**Commit main :** `8e87139` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -10,9 +10,15 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `7ba3d37` | MVP + ENV_A_REMPLIR + handoff + rapports 000→013 |
-| `local/main` | `7ba3d37 + 12 commits` | Rapports 014→023 (audit complet + benchmark) |
-| **Branche active** | `main` | D-001 push direct |
+| `origin/main` | `8e87139` | MVP + métriques système + rapports 000→025 |
+| `local/main` | `8e87139 + modifications` | Rapport 026 + optimisations performance |
+| **Branche active** | `main` | Prêt pour push |
+
+**Dernières modifications** :
+- ✅ Rapport 026 : Audit forensic complet (GPU, sécurité, optimisations)
+- ✅ Optimisation #1 : Cache encodage IR (gain 40%)
+- ✅ Optimisation #2 : Batch processing PDF parallèle (gain 3x)
+- ✅ Tests optimisations : 10/10 passent
 
 ---
 

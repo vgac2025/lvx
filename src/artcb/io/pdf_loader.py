@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from multiprocessing import Pool
 from pathlib import Path
 
 from pypdf import PdfReader
@@ -30,20 +31,45 @@ def resolve_book_path() -> Path | None:
     return None
 
 
-def extract_pdf_text(path: Path, max_pages: int | None = None) -> str:
+def _extract_page_text(page_data: tuple[str, int]) -> tuple[int, str]:
+    """Extract text from a single page (for parallel processing)."""
+    path_str, page_num = page_data
+    reader = PdfReader(path_str)
+    page = reader.pages[page_num]
+    text = page.extract_text() or ""
+    return (page_num, text.strip() if text.strip() else "")
+
+
+def extract_pdf_text(path: Path, max_pages: int | None = None, parallel: bool = True) -> str:
+    """Extract text from PDF with optional parallel processing."""
     reader = PdfReader(str(path))
-    pages = reader.pages[:max_pages] if max_pages else reader.pages
-    chunks: list[str] = []
-    for page in pages:
-        text = page.extract_text() or ""
-        if text.strip():
-            chunks.append(text.strip())
+    total_pages = len(reader.pages)
+    num_pages = min(max_pages, total_pages) if max_pages else total_pages
+    
+    if not parallel or num_pages < 4:
+        # Sequential for small PDFs
+        pages = reader.pages[:num_pages]
+        chunks: list[str] = []
+        for page in pages:
+            text = page.extract_text() or ""
+            if text.strip():
+                chunks.append(text.strip())
+        return "\n\n".join(chunks)
+    
+    # Parallel processing for large PDFs
+    page_data = [(str(path), i) for i in range(num_pages)]
+    with Pool(processes=min(4, num_pages)) as pool:
+        results = pool.map(_extract_page_text, page_data)
+    
+    # Sort by page number and join
+    results.sort(key=lambda x: x[0])
+    chunks = [text for _, text in results if text]
     return "\n\n".join(chunks)
 
 
-def extract_pdf_chunks(path: Path, chunk_size: int = 2000, max_chunks: int = 5) -> list[str]:
-    """Split book text into chunks for incremental encode tests."""
-    full_text = extract_pdf_text(path)
+def extract_pdf_chunks(path: Path, chunk_size: int = 2000, max_chunks: int = 5, parallel: bool = True) -> list[str]:
+    """Split book text into chunks for incremental encode tests with optional parallel extraction."""
+    full_text = extract_pdf_text(path, parallel=parallel)
     if not full_text:
         return []
     chunks: list[str] = []
