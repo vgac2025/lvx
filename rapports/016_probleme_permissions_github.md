@@ -36,9 +36,10 @@ Le compte `vgacofc` n'a **pas les permissions d'écriture** sur le dépôt `vgac
 2. Elle doit être ajoutée sur le compte **`vgac2025`** à la place
 3. Aller sur https://github.com/settings/keys **en étant connecté comme `vgac2025`**
 4. Supprimer l'ancienne clé si nécessaire
-5. Ajouter cette clé publique :
-   ```
-   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwzvfSpiRH3Otytq6i7UNg4MIrHftmFsK42HOi7A+m4 artcb-mvp@hackathon.raise2026
+5. Ajouter la clé publique :
+   ```bash
+   cat ~/.ssh/github_artcb_lvx.pub
+   # Copiez la sortie et ajoutez-la sur GitHub
    ```
 
 ---

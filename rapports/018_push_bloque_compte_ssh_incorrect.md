@@ -59,8 +59,9 @@ Host github.com
 ✅ **Clé publique** : Existe (`~/.ssh/github_artcb_lvx.pub`)
 
 ### Clé Publique à Ajouter sur vgac2025
-```
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBHZQJcT8F3xqxGxvxvxvxvxvxvxvxvxvxvxvxvxvxvx lvx@artcb-local
+```bash
+cat ~/.ssh/github_artcb_lvx.pub
+# Copiez la sortie et ajoutez-la sur GitHub Settings > SSH Keys
 ```
 
 ---
