@@ -118,3 +118,7 @@
 {"ts": "2026-07-05T08:13:12.273249+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}
 {"ts": "2026-07-05T08:23:14.173887+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=demo_hackathon"}
 {"ts": "2026-07-05T08:23:14.210484+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}
+{"ts": "2026-07-05T08:43:22.018201+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=demo_hackathon"}
+{"ts": "2026-07-05T08:43:22.057489+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}
+{"ts": "2026-07-05T08:56:18.291336+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=demo_hackathon"}
+{"ts": "2026-07-05T08:56:18.321582+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}
