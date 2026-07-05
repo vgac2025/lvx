@@ -1,0 +1,161 @@
+Security modules DISABLED
+
+================================================================================
+  🔨 ARTCB — CLI de Minage d'Apprentissage (Proof-of-Learning)
+================================================================================
+
+
+================================================================================
+  📊 COMPARAISON AVEC SYSTÈMES EXISTANTS
+================================================================================
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ Système         │ Consensus            │ Distribution Reward                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Bitcoin (PoW)   │ Proof-of-Work        │ ❌ Winner-takes-all (1 gagnant)         │
+│ Ethereum (PoS)  │ Proof-of-Stake       │ ⚠️  Validateurs sélectionnés           │
+│ Filecoin (PoSt) │ Proof-of-Spacetime   │ ⚠️  Stockage prouvé                    │
+│ ARTCB (PoL)     │ Proof-of-Learning    │ ✅ COLLECTIF proportionnel PoL          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+=======================🎯 INNOVATIONS ARTCB vs EXISTANTS ========================
+
+  1. ✅ REWARD COLLECTIF
+     • Bitcoin: 1 mineur gagne tout (winner-takes-all)
+     • ARTCB: TOUS les contributeurs PoL payés proportionnellement
+
+  2. ✅ TRAVAIL UTILE
+     • Bitcoin: Hash SHA-256 compétitif (gaspillage volontaire)
+     • ARTCB: Compression + validation (apprentissage utile)
+
+  3. ✅ GASPILLAGE MINIMAL
+     • Bitcoin: ~99% calcul perdu (sécurité PoW)
+     • ARTCB: Calcul orienté apprentissage (minimal)
+
+  4. ✅ RÉVERSIBILITÉ 100%
+     • Systèmes existants: Pas de garantie reconstruction
+     • ARTCB: Reconstruction exacte du texte original
+
+  5. ✅ DUAL-AGENT VALIDATION
+     • Systèmes existants: Validation simple
+     • ARTCB: Explorer propose + Critic valide
+
+================================================================================
+
+
+================================================================================
+  🔨 MINAGE D'APPRENTISSAGE — wailly_le_roi_de_l_inconnu.pdf
+================================================================================
+
+✅ Wallet chargé: miner_demo
+📍 Adresse mineur: artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4
+
+[1/6] Chargement PDF...
+Security modules DISABLED
+  • Fichier                             : wailly_le_roi_de_l_inconnu.pdf 
+  • Taille originale                    : 654,767 caractères
+  • Taille fichier                      : 1615.9 KB
+
+[2/6] Encodage en IR ARTCB...
+  • Graph ID                            : g_1ac2c2b6c4ff 
+  • Nœuds créés                         : 6407 
+  • Arêtes créées                       : 6786 
+  • Taille IR                           : 4,150,317 bytes
+  • Compression                         : -533.86% 
+  • Temps encodage                      : 0.70 s
+
+[3/6] Test de réversibilité...
+  • Texte reconstruit                   : 654,767 caractères
+  • Similarité                          : 1.0000 
+  • Réversible                          : ✅ OUI 
+  • Temps décodage                      : 0.02 s
+
+[4/6] Calcul Proof-of-Learning...
+  • PoL Score                           : 0.6000 
+  • Seuil acceptation                   : 0.6000 
+  • Bloc accepté                        : ✅ OUI 
+
+[5/6] Création bloc blockchain...
+  • Bloc index                          : 2 
+  • Hash bloc                           : 4df60f0800a2b8e4... 
+  • Signature                           : ed25519:fa979494a604c848707e7661... 
+
+[6/6] Distribution rewards collectifs...
+  • Block reward                        : 50.00000000 ARTCB
+  • Reward mineur (100%)                : 50.00000000 ARTCB
+  • Reward satoshi                      : 5,000,000,000 sat
+  • Balance totale                      : 100.00000000 ARTCB
+  • Blocs minés                         : 2 
+
+--------------------------------------------------------------------------------
+  • ⏱️  Temps total minage              : 25.85 s
+  • ⚡ Vitesse                           : 25328 char/s
+--------------------------------------------------------------------------------
+
+
+================================================================================
+  🔨 MINAGE D'APPRENTISSAGE — quintus_de_smyrne_la_fin_de_l_iliade.pdf
+================================================================================
+
+✅ Wallet chargé: miner_demo
+📍 Adresse mineur: artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4
+
+[1/6] Chargement PDF...
+  • Fichier                             : quintus_de_smyrne_la_fin_de_l_iliade.pdf 
+  • Taille originale                    : 548,843 caractères
+  • Taille fichier                      : 1341.8 KB
+
+[2/6] Encodage en IR ARTCB...
+  • Graph ID                            : g_3eaa39e7ef36 
+  • Nœuds créés                         : 2829 
+  • Arêtes créées                       : 3442 
+  • Taille IR                           : 2,475,936 bytes
+  • Compression                         : -351.12% 
+  • Temps encodage                      : 0.32 s
+
+[3/6] Test de réversibilité...
+  • Texte reconstruit                   : 548,843 caractères
+  • Similarité                          : 1.0000 
+  • Réversible                          : ✅ OUI 
+  • Temps décodage                      : 0.01 s
+
+[4/6] Calcul Proof-of-Learning...
+  • PoL Score                           : 0.6000 
+  • Seuil acceptation                   : 0.6000 
+  • Bloc accepté                        : ✅ OUI 
+
+[5/6] Création bloc blockchain...
+  • Bloc index                          : 3 
+  • Hash bloc                           : da60d420570194aa... 
+  • Signature                           : ed25519:5948d94b8e6d710b90db4843... 
+
+[6/6] Distribution rewards collectifs...
+  • Block reward                        : 50.00000000 ARTCB
+  • Reward mineur (100%)                : 50.00000000 ARTCB
+  • Reward satoshi                      : 5,000,000,000 sat
+  • Balance totale                      : 150.00000000 ARTCB
+  • Blocs minés                         : 3 
+
+--------------------------------------------------------------------------------
+  • ⏱️  Temps total minage              : 13.07 s
+  • ⚡ Vitesse                           : 42007 char/s
+--------------------------------------------------------------------------------
+
+
+================================================================================
+  📈 RÉSUMÉ FINAL MINAGE
+================================================================================
+
+  • Livres minés                        : 2 
+  • Reward total                        : 100.00000000 ARTCB
+  • PoL moyen                           : 0.6000 
+  • Compression moyenne                 : -442.49% 
+  • Réversibilité                       : ✅ 100% 
+  • Balance finale                      : 150.00000000 ARTCB
+
+================================================================================
+✅ Minage terminé avec succès !
+================================================================================
+
+📄 Résultats sauvegardés: logs/mining_results_20260705_102023.json
+

@@ -1,0 +1,45 @@
+{
+  "miner_address": "data/fixtures/wailly_le_roi_de_l_inconnu.pdf",
+  "timestamp": "2026-07-05T10:20:23.336011",
+  "results": [
+    {
+      "pdf_path": "data/fixtures/wailly_le_roi_de_l_inconnu.pdf",
+      "graph_id": "g_1ac2c2b6c4ff",
+      "block_index": 2,
+      "block_hash": "4df60f0800a2b8e446d7859aec7efdde7369a7db035901cd8bd70d13a4ee4ef7",
+      "pol_score": 0.6,
+      "compression_ratio": -5.338616637674165,
+      "reversible": true,
+      "similarity": 1.0,
+      "reward_artcb": 50.0,
+      "reward_satoshi": 5000000000,
+      "balance_artcb": 100.0,
+      "total_time": 25.851587057113647,
+      "nodes_count": 6407,
+      "edges_count": 6786
+    },
+    {
+      "pdf_path": "data/fixtures/quintus_de_smyrne_la_fin_de_l_iliade.pdf",
+      "graph_id": "g_3eaa39e7ef36",
+      "block_index": 3,
+      "block_hash": "da60d420570194aab5b50cf6937463f3a240fea745f78fe97ec59e029845da66",
+      "pol_score": 0.6,
+      "compression_ratio": -3.511191725138154,
+      "reversible": true,
+      "similarity": 1.0,
+      "reward_artcb": 50.0,
+      "reward_satoshi": 5000000000,
+      "balance_artcb": 150.0,
+      "total_time": 13.06561541557312,
+      "nodes_count": 2829,
+      "edges_count": 3442
+    }
+  ],
+  "summary": {
+    "total_blocks": 2,
+    "total_reward_artcb": 100.0,
+    "avg_pol_score": 0.6,
+    "avg_compression": -4.424904181406159,
+    "final_balance_artcb": 150.0
+  }
+}

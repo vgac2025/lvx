@@ -1,8 +1,8 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-05T10:14:00+02:00
-**Statut dépôt :** **MVP 100% OPÉRATIONNEL — MONITORING TEMPS RÉEL VALIDÉ**
-**Commit main :** `60eb40f` → https://github.com/vgac2025/lvx
+**Horodatage :** 2026-07-05T10:21:00+02:00
+**Statut dépôt :** **MVP 100% OPÉRATIONNEL — CLI MINAGE + COMPARAISON SYSTÈMES**
+**Commit main :** `b10778e` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -10,8 +10,8 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `60eb40f` | **MVP COMPLET + Sécurité + README + Rapport final + INDEX** |
-| `local/main` | `60eb40f` | Synchronisé avec origin |
+| `origin/main` | `b10778e` | **MVP COMPLET + Sécurité + README + Monitoring + CLI Minage** |
+| `local/main` | `b10778e` | Synchronisé avec origin |
 | **Branche active** | `main` | **SYSTÈME 100% OPÉRATIONNEL** |
 
 **Dernières modifications** :
@@ -22,6 +22,10 @@
 - ✅ Rapport 033 : **IMPLÉMENTATION SYSTÈME MINAGE REWARDS COMPLET** (1024 lignes)
 - ✅ Rapport 034 : **RAPPORT FINAL SOUMISSION HACKATHON RAISE 2026** (720 lignes)
 - ✅ Rapport 035 : **MONITORING EXÉCUTION TEMPS RÉEL 100% OPÉRATIONNEL** (398 lignes)
+- ✅ Rapport 036 : **CLI MINAGE APPRENTISSAGE + COMPARAISON SYSTÈMES** (545 lignes)
+- ✅ **CLI minage** : `scripts/mine_learning_simple.py` (283 lignes)
+- ✅ **Livre 2 ajouté** : `quintus_de_smyrne_la_fin_de_l_iliade.pdf` (1.4 MB)
+- ✅ **Minage 2 livres** : 100 ARTCB gagnés, réversibilité 100%
 - ✅ **Module wallet** : Adresses Bech32-like Ed25519 (3 fichiers, 318 lignes)
 - ✅ **Module sécurité** : Anti-Sybil + Rate Limiting + Slashing (3 fichiers, 775 lignes)
 - ✅ **Block rewards** : Halving + distribution collective PoL (82 lignes)
@@ -51,6 +55,8 @@
 |---------|------|
 | **`rapports/034_RAPPORT_FINAL_SOUMISSION_HACKATHON_RAISE_2026.md`** | **RAPPORT FINAL SOUMISSION** |
 | **`rapports/035_MONITORING_EXECUTION_TEMPS_REEL_100_POURCENT.md`** | **MONITORING TEMPS RÉEL VALIDÉ** |
+| **`rapports/036_CLI_MINAGE_APPRENTISSAGE_COMPARAISON_SYSTEMES.md`** | **CLI MINAGE + COMPARAISON** |
+| **`scripts/mine_learning_simple.py`** | **CLI minage apprentissage** |
 | **`README.md`** | **Installation 5 lignes + doc complète** |
 | **`rapports/033_IMPLEMENTATION_SYSTEME_MINAGE_REWARDS_COMPLET.md`** | Implémentation rewards complète |
 | **`rapports/032_ETUDE_VIABILITE_LOGIQUE_MINAGE_POL.md`** | Étude viabilité complète |

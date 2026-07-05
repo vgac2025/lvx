@@ -1,0 +1,96 @@
+Security modules DISABLED
+
+================================================================================
+  🔨 ARTCB — CLI de Minage d'Apprentissage (Proof-of-Learning)
+================================================================================
+
+
+================================================================================
+  📊 COMPARAISON AVEC SYSTÈMES EXISTANTS
+================================================================================
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ Système         │ Consensus            │ Distribution Reward                    │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Bitcoin (PoW)   │ Proof-of-Work        │ ❌ Winner-takes-all (1 gagnant)         │
+│ Ethereum (PoS)  │ Proof-of-Stake       │ ⚠️  Validateurs sélectionnés           │
+│ Filecoin (PoSt) │ Proof-of-Spacetime   │ ⚠️  Stockage prouvé                    │
+│ ARTCB (PoL)     │ Proof-of-Learning    │ ✅ COLLECTIF proportionnel PoL          │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+=======================🎯 INNOVATIONS ARTCB vs EXISTANTS ========================
+
+  1. ✅ REWARD COLLECTIF
+     • Bitcoin: 1 mineur gagne tout (winner-takes-all)
+     • ARTCB: TOUS les contributeurs PoL payés proportionnellement
+
+  2. ✅ TRAVAIL UTILE
+     • Bitcoin: Hash SHA-256 compétitif (gaspillage volontaire)
+     • ARTCB: Compression + validation (apprentissage utile)
+
+  3. ✅ GASPILLAGE MINIMAL
+     • Bitcoin: ~99% calcul perdu (sécurité PoW)
+     • ARTCB: Calcul orienté apprentissage (minimal)
+
+  4. ✅ RÉVERSIBILITÉ 100%
+     • Systèmes existants: Pas de garantie reconstruction
+     • ARTCB: Reconstruction exacte du texte original
+
+  5. ✅ DUAL-AGENT VALIDATION
+     • Systèmes existants: Validation simple
+     • ARTCB: Explorer propose + Critic valide
+
+================================================================================
+
+
+================================================================================
+  🔨 MINAGE D'APPRENTISSAGE — wailly_le_roi_de_l_inconnu.pdf
+================================================================================
+
+✅ Nouveau wallet créé: miner_demo
+📍 Adresse mineur: artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4
+
+[1/6] Chargement PDF...
+  • Fichier                             : wailly_le_roi_de_l_inconnu.pdf 
+  • Taille originale                    : 654,767 caractères
+  • Taille fichier                      : 1615.9 KB
+
+[2/6] Encodage en IR ARTCB...
+  • Graph ID                            : g_0947cf8c7238 
+  • Nœuds créés                         : 6407 
+  • Arêtes créées                       : 6786 
+  • Taille IR                           : 4,150,317 bytes
+  • Compression                         : -533.86% 
+  • Temps encodage                      : 0.72 s
+
+[3/6] Test de réversibilité...
+  • Texte reconstruit                   : 654,767 caractères
+  • Similarité                          : 1.0000 
+  • Réversible                          : ✅ OUI 
+  • Temps décodage                      : 0.02 s
+
+[4/6] Calcul Proof-of-Learning...
+  • PoL Score                           : 0.6000 
+  • Seuil acceptation                   : 0.6000 
+  • Bloc accepté                        : ✅ OUI 
+
+[5/6] Création bloc blockchain...
+  • Bloc index                          : 1 
+  • Hash bloc                           : 662436dde83906ec... 
+  • Signature                           : ed25519:8c7f9bfa0678a40288827679... 
+
+[6/6] Distribution rewards collectifs...
+  • Block reward                        : 50.00000000 ARTCB
+  • Reward mineur (100%)                : 50.00000000 ARTCB
+  • Reward satoshi                      : 5,000,000,000 sat
+  • Balance totale                      : 50.00000000 ARTCB
+Traceback (most recent call last):
+  File "/home/lvx/ARTCB/lvx/scripts/mine_learning_simple.py", line 322, in <module>
+    main()
+  File "/home/lvx/ARTCB/lvx/scripts/mine_learning_simple.py", line 266, in main
+    result = mine_book(book)
+             ^^^^^^^^^^^^^^^
+  File "/home/lvx/ARTCB/lvx/scripts/mine_learning_simple.py", line 216, in mine_book
+    print_metric("Blocs minés", balance["blocks_count"])
+                                ~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'blocks_count'
