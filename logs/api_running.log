@@ -1,1 +1,12 @@
-nohup: failed to run command 'uvicorn': No such file or directory
+=== Démarrage API ARTCB ===
+✓ Lancement uvicorn sur http://localhost:8000
+INFO:     Will watch for changes in these directories: ['/home/lvx/ARTCB/lvx']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [88820] using WatchFiles
+2026-07-05T04:00:07 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [88827]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59748 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59754 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36732 - "GET /api/v1/metrics HTTP/1.1" 200 OK

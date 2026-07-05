@@ -12,6 +12,7 @@ import { AgentPanel } from "../components/AgentPanel";
 import { GraphViewer } from "../components/GraphViewer";
 import { PolGauge } from "../components/PolGauge";
 import { Reconstruct } from "../components/Reconstruct";
+import { SystemMetrics } from "../components/SystemMetrics";
 import type { AgentMessage, ChainBlock, IRGraph, PolMetrics } from "../types";
 
 const SESSION_ID = "demo_hackathon";
@@ -161,80 +162,106 @@ export function Demo() {
   }, [selectedNodeId, graph]);
 
   return (
-    <div className="app-shell">
-      <header style={{ marginBottom: "1rem" }}>
+    <div style={{
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden",
+      padding: "1rem",
+      gap: "1rem"
+    }}>
+      <header style={{ flexShrink: 0 }}>
         <h1 style={{ margin: 0, fontSize: "1.5rem" }}>ARTCB — Persistent AI Memory</h1>
         <p style={{ color: "var(--muted)", margin: "0.35rem 0 0" }}>
           Reversible IR graph · Dual agents · Proof-of-Learning · Signed blockchain
         </p>
       </header>
 
-      <div className="panel">
-        <h2>1. Paste conversation or paragraph</h2>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Paste text… (Wailly book excerpt loads by default)"
-          aria-label="Input text"
-        />
-        <div className="toolbar">
-          <button className="primary" onClick={handleMemorize} disabled={loading}>
-            {loading ? "Memorizing…" : "Memorize"}
-          </button>
-          <button onClick={() => fetchWaillyExcerpt(3).then(setText)}>Load Wailly excerpt</button>
-        </div>
+      {/* Métriques système */}
+      <div style={{ flexShrink: 0 }}>
+        <SystemMetrics />
       </div>
 
-      <div className="demo-grid" style={{ marginTop: "1rem" }}>
-        <div>
-          <div className="panel">
-            <h2>2–4. Graph · Explore · Search</h2>
-            <GraphViewer
-              graph={graph}
-              selectedNodeId={selectedNodeId}
-              highlightIds={highlightIds}
-              onSelectNode={setSelectedNodeId}
-            />
-            {nodeDetail && (
-              <div style={{ marginTop: "0.75rem", fontSize: "0.85rem", color: "var(--muted)" }}>
-                <strong>Selected:</strong> {nodeDetail}
-              </div>
-            )}
-            <div className="toolbar">
-              <input
-                style={{ flex: 1, minWidth: 180 }}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search e.g. decision, unknown, king…"
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              />
-              <button onClick={handleSearch}>Search</button>
-              <button onClick={handleReconstruct}>Reconstruct</button>
-              <button onClick={handleReadAloud} disabled={!selectedNodeId}>
-                Read aloud
-              </button>
-              <button onClick={handleStore} disabled={!graphId || loading}>
-                Sign block
-              </button>
-            </div>
-          </div>
-          <Reconstruct
-            original={text}
-            reconstructed={reconstructed}
-            similarity={similarity}
-            reversible={reversible}
-            visible={showReconstruct}
+      {/* Zone de contenu principal avec scroll interne */}
+      <div style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        overflow: "auto",
+        minHeight: 0
+      }}>
+        <div className="panel" style={{ flexShrink: 0 }}>
+          <h2>1. Paste conversation or paragraph</h2>
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Paste text… (Wailly book excerpt loads by default)"
+            aria-label="Input text"
+            style={{ minHeight: "80px" }}
           />
+          <div className="toolbar">
+            <button className="primary" onClick={handleMemorize} disabled={loading}>
+              {loading ? "Memorizing…" : "Memorize"}
+            </button>
+            <button onClick={() => fetchWaillyExcerpt(3).then(setText)}>Load Wailly excerpt</button>
+          </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <AgentPanel messages={messages} />
-          <PolGauge pol={pol} />
+        <div className="demo-grid">
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", minHeight: 0 }}>
+            <div className="panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+              <h2>2–4. Graph · Explore · Search</h2>
+              <div style={{ flex: 1, minHeight: "300px", overflow: "hidden" }}>
+                <GraphViewer
+                  graph={graph}
+                  selectedNodeId={selectedNodeId}
+                  highlightIds={highlightIds}
+                  onSelectNode={setSelectedNodeId}
+                />
+              </div>
+              {nodeDetail && (
+                <div style={{ marginTop: "0.75rem", fontSize: "0.85rem", color: "var(--muted)" }}>
+                  <strong>Selected:</strong> {nodeDetail}
+                </div>
+              )}
+              <div className="toolbar">
+                <input
+                  style={{ flex: 1, minWidth: 180 }}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search e.g. decision, unknown, king…"
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                />
+                <button onClick={handleSearch}>Search</button>
+                <button onClick={handleReconstruct}>Reconstruct</button>
+                <button onClick={handleReadAloud} disabled={!selectedNodeId}>
+                  Read aloud
+                </button>
+                <button onClick={handleStore} disabled={!graphId || loading}>
+                  Sign block
+                </button>
+              </div>
+            </div>
+            <Reconstruct
+              original={text}
+              reconstructed={reconstructed}
+              similarity={similarity}
+              reversible={reversible}
+              visible={showReconstruct}
+            />
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", minHeight: 0 }}>
+            <AgentPanel messages={messages} />
+            <PolGauge pol={pol} />
+          </div>
         </div>
       </div>
 
+      {/* Footer fixe */}
       {chainBlock && (
-        <div className="chain-footer" role="status">
+        <div className="chain-footer" role="status" style={{ flexShrink: 0 }}>
           Block #{chainBlock.index} signed ✓ — hash {chainBlock.hash.slice(0, 16)}… · PoL{" "}
           {chainBlock.pol_score.toFixed(2)}
         </div>

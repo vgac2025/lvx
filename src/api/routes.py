@@ -240,6 +240,70 @@ def chain_verify(request: Request) -> dict:
 def pol_score(request: Request) -> dict:
     return _state(request).pol_state
 
+@router.get("/metrics")
+def system_metrics() -> dict:
+    """Métriques système temps réel (CPU, RAM, Disk, Network)."""
+    try:
+        import psutil
+        import platform
+        
+        # CPU
+        cpu_percent = psutil.cpu_percent(interval=0.1)
+        cpu_count = psutil.cpu_count()
+        cpu_freq = psutil.cpu_freq()
+        
+        # RAM
+        mem = psutil.virtual_memory()
+        
+        # Disk
+        disk = psutil.disk_usage('/')
+        
+        # Network
+        net_io = psutil.net_io_counters()
+        
+        # System info
+        sys_info = {
+            "platform": platform.system(),
+            "platform_release": platform.release(),
+            "platform_version": platform.version(),
+            "architecture": platform.machine(),
+            "hostname": platform.node(),
+            "processor": platform.processor(),
+        }
+        
+        return {
+            "cpu": {
+                "percent": cpu_percent,
+                "count": cpu_count,
+                "freq_mhz": cpu_freq.current if cpu_freq else 0,
+            },
+            "memory": {
+                "total_gb": round(mem.total / (1024**3), 2),
+                "used_gb": round(mem.used / (1024**3), 2),
+                "available_gb": round(mem.available / (1024**3), 2),
+                "percent": mem.percent,
+            },
+            "disk": {
+                "total_gb": round(disk.total / (1024**3), 2),
+                "used_gb": round(disk.used / (1024**3), 2),
+                "free_gb": round(disk.free / (1024**3), 2),
+                "percent": disk.percent,
+            },
+            "network": {
+                "bytes_sent_mb": round(net_io.bytes_sent / (1024**2), 2),
+                "bytes_recv_mb": round(net_io.bytes_recv / (1024**2), 2),
+                "packets_sent": net_io.packets_sent,
+                "packets_recv": net_io.packets_recv,
+            },
+            "system": sys_info,
+        }
+    except ImportError:
+        raise HTTPException(status_code=500, detail="psutil not installed")
+    except Exception as e:
+        logger.error(f"Error fetching system metrics: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 
 @router.post("/agents/run")
 def agents_run(body: AgentRunRequest, request: Request) -> dict:
