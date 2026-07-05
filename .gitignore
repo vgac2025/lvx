@@ -21,3 +21,4 @@ src/c/*.so
 src/c/test_chain
 frontend/node_modules/
 frontend/dist/
+.venv/
