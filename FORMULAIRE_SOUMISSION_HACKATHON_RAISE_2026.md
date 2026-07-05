@@ -58,16 +58,15 @@ Email     : Nadadebbi1@gmail.com
 
 **Réponse** :
 ```
-INFORMATION NON DISPONIBLE DANS LE CODE/RAPPORTS
+CURSOR
 ```
 
-**Note** : Les fichiers du projet ne mentionnent pas de circuit spécifique. Options possibles selon contexte hackathon :
-- Circuit IA/ML
-- Circuit Blockchain
-- Circuit Open Source
-- Circuit Infrastructure
-
-**Recommandation** : Sélectionner **"Circuit IA/ML"** ou **"Circuit Blockchain"** selon les catégories disponibles.
+**Justification** :
+- Développement complet effectué avec Cursor IDE
+- Utilisation intensive de l'assistance IA Cursor
+- 38 rapports d'audit générés avec Cursor
+- 13,773 lignes de code produites avec Cursor
+- Variable `BOB_API_KEY` dans `.env` (IBM Bob IDE intégré à Cursor)
 
 ---
 
