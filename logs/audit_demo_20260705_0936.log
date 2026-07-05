@@ -1,4 +1,19 @@
-=== ARTCB Live Demo 2026-07-05T09:38:07.662703+00:00 ===
+>>> STEP 1: Health
+>>> STEP 2: Wailly excerpt
+Loaded 1200 chars from Wailly
+>>> STEP 3: Agents run
+graph_id=g_6abb69762ee5 pol=0.6
+>>> STEP 4: Graph + node
+>>> STEP 5: Search
+>>> STEP 6: Reconstruct
+reversible=True similarity=1.0
+>>> STEP 7: PoL score
+>>> STEP 8: Store block
+block_index=10 hash=d4c3c396e3f215fe...
+>>> STEP 9: Chain verify
+chain valid=True blocks=11
+=== DEMO COMPLETE ===
+JSON: logs/demo_live_20260705_093643.json
 >>> STEP 1: Health
 >>> STEP 2: Wailly excerpt
 Loaded 1200 chars from Wailly
