@@ -11,7 +11,7 @@ Mesures implémentées :
 import hashlib
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -115,7 +115,7 @@ class AntiSybilValidator:
             return False, reason
         
         # Règle 3 : Vérifier chaque contributeur
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         for contributor in contributors:
             address = contributor.get("address", "")
             contrib_pol = contributor.get("pol_score", 0.0)
@@ -169,7 +169,7 @@ class AntiSybilValidator:
             pol_score: Score PoL global
             block_index: Index du bloc
         """
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         
         for contributor in contributors:
             address = contributor.get("address", "")

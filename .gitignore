@@ -14,7 +14,10 @@ data/*
 !data/fixtures/
 !data/fixtures/README.md
 !data/founders/
+# Clés privées founders (SENSIBLE - ne jamais commit)
 data/founders/founders_wallets.json
+data/founders/*.key
+data/founders/*_private.json
 *.pdf
 !data/fixtures/wailly_le_roi_de_l_inconnu.pdf
 *.faiss
