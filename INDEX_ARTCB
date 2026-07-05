@@ -2,7 +2,7 @@
 
 **Horodatage :** 2026-07-05T11:04:00+02:00
 **Statut dépôt :** **MVP 100% OPÉRATIONNEL — BENCHMARK EXHAUSTIF 16 CONCURRENTS 2026**
-**Commit main :** `c7fca71` → (à pousser) → https://github.com/vgac2025/lvx
+**Commit main :** `3bdd350` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -10,8 +10,7 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `c7fca71` | **MVP COMPLET + CLI Minage + Wallets Founders + FAQ** |
-| `local/main` | À pousser | **Benchmark exhaustif 16 concurrents 2026** |
+| `origin/main` | `3bdd350` | MVP complet + audit 039 |
 | **Branche active** | `main` | **BENCHMARK COMPLET + SYSTÈME 100% OPÉRATIONNEL** |
 
 **Dernières modifications** :

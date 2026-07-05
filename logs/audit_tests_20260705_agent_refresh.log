@@ -1,0 +1,123 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace
+configfile: pyproject.toml
+plugins: anyio-4.14.1, cov-7.1.0, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 96 items
+
+tests/test_api.py::test_health PASSED                                    [  1%]
+tests/test_api.py::test_encode_decode_roundtrip PASSED                   [  2%]
+tests/test_api.py::test_search_and_node PASSED                           [  3%]
+tests/test_api.py::test_agents_run_and_pol PASSED                        [  4%]
+tests/test_api.py::test_store_and_chain PASSED                           [  5%]
+tests/test_api.py::test_rtleg_events PASSED                              [  6%]
+tests/test_api.py::test_wailly_demo_excerpt PASSED                       [  7%]
+tests/test_book_wailly.py::test_book_file_readable PASSED                [  8%]
+tests/test_book_wailly.py::test_book_first_pages_reversibility PASSED    [  9%]
+tests/test_book_wailly.py::test_book_chunk_reversibility PASSED          [ 10%]
+tests/test_book_wailly.py::test_book_orig_symbols_minted PASSED          [ 11%]
+tests/test_book_wailly.py::test_book_node_count_scales PASSED            [ 12%]
+tests/test_chain.py::test_c_library_sha256 PASSED                        [ 13%]
+tests/test_chain.py::test_append_and_verify_chain PASSED                 [ 14%]
+tests/test_chain.py::test_chain_prev_hash_links PASSED                   [ 15%]
+tests/test_chain.py::test_tampered_chain_detected PASSED                 [ 16%]
+tests/test_grammar.py::test_detect_macros_empty_on_short_text PASSED     [ 17%]
+tests/test_grammar.py::test_symbols_assigned PASSED                      [ 18%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Nous avons d\xe9cid\xe9 d'utiliser FastAPI. Le probl\xe8me est la perte de contexte.] PASSED [ 19%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Observer le monde pour apprendre.] PASSED [ 20%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Regarder le probl\xe8me, cr\xe9er une solution et l'apprendre.] PASSED [ 21%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Si l'hypoth\xe8se est correcte, donc nous validons la solution.] PASSED [ 22%]
+tests/test_ir_reversibility.py::test_reversibility_exact[L'objectif est de m\xe9moriser chaque raisonnement sans perte.] PASSED [ 23%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Hier, nous avons discut\xe9 de l'architecture. Aujourd'hui, nous impl\xe9mentons l'IR Engine.] PASSED [ 25%]
+tests/test_ir_reversibility.py::test_reversibility_exact[La preuve est dans le checksum sha256.] PASSED [ 26%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Contexte: session hackathon RAISE Summit 2026.] PASSED [ 27%]
+tests/test_ir_reversibility.py::test_reversibility_exact[A\n\nB\n\nC] PASSED [ 28%]
+tests/test_ir_reversibility.py::test_reversibility_exact[Nous avons d\xe9cid\xe9 d'utiliser FastAPI pour le backend. Le probl\xe8me principal est la perte de contexte entre sessions. La solution ARTCB encode chaque raisonnement en graphe sign\xe9. Prochaine \xe9tape : impl\xe9menter l'IR Engine.] PASSED [ 29%]
+tests/test_ir_reversibility.py::test_graph_integrity PASSED              [ 30%]
+tests/test_ir_reversibility.py::test_json_roundtrip PASSED               [ 31%]
+tests/test_ir_reversibility.py::test_temporal_edges_chain PASSED         [ 32%]
+tests/test_ir_reversibility.py::test_node_classification PASSED          [ 33%]
+tests/test_ir_reversibility.py::test_compression_ratio_positive PASSED   [ 34%]
+tests/test_ir_reversibility.py::test_macro_detection_on_repeated_pattern PASSED [ 35%]
+tests/test_ir_reversibility.py::test_empty_text_raises PASSED            [ 36%]
+tests/test_ir_reversibility.py::test_decode_invalid_graph_raises PASSED  [ 37%]
+tests/test_optimizations.py::TestCacheOptimization::test_cache_enabled_by_default PASSED [ 38%]
+tests/test_optimizations.py::TestCacheOptimization::test_cache_can_be_disabled PASSED [ 39%]
+tests/test_optimizations.py::TestCacheOptimization::test_cache_hit_reuses_graph PASSED [ 40%]
+tests/test_optimizations.py::TestCacheOptimization::test_cache_performance_gain PASSED [ 41%]
+tests/test_optimizations.py::TestCacheOptimization::test_cache_different_texts PASSED [ 42%]
+tests/test_optimizations.py::TestParallelPDFProcessing::test_parallel_extraction_enabled PASSED [ 43%]
+tests/test_optimizations.py::TestParallelPDFProcessing::test_parallel_faster_for_large_pdfs PASSED [ 44%]
+tests/test_optimizations.py::TestParallelPDFProcessing::test_sequential_for_small_pdfs PASSED [ 45%]
+tests/test_optimizations.py::TestIntegrationOptimizations::test_cache_and_parallel_together PASSED [ 46%]
+tests/test_optimizations.py::TestIntegrationOptimizations::test_end_to_end_performance PASSED [ 47%]
+tests/test_optimizations_advanced.py::test_faiss_vector_store_cpu PASSED [ 48%]
+tests/test_optimizations_advanced.py::test_faiss_similarity_scores PASSED [ 50%]
+tests/test_optimizations_advanced.py::test_faiss_empty_query PASSED      [ 51%]
+tests/test_optimizations_advanced.py::test_async_pdf_extraction PASSED   [ 52%]
+tests/test_optimizations_advanced.py::test_async_pdf_fallback_sequential PASSED [ 53%]
+tests/test_optimizations_advanced.py::test_pool_manager_explore_batch PASSED [ 54%]
+tests/test_optimizations_advanced.py::test_pool_manager_validate_batch PASSED [ 55%]
+tests/test_optimizations_advanced.py::test_pool_manager_context_manager PASSED [ 56%]
+tests/test_optimizations_advanced.py::test_graph_compression PASSED      [ 57%]
+tests/test_optimizations_advanced.py::test_compression_ratio_estimation PASSED [ 58%]
+tests/test_optimizations_advanced.py::test_node_index_add_and_find PASSED [ 59%]
+tests/test_optimizations_advanced.py::test_node_index_by_type PASSED     [ 60%]
+tests/test_optimizations_advanced.py::test_node_index_text_prefix PASSED [ 61%]
+tests/test_optimizations_advanced.py::test_graph_store_lazy_loading PASSED [ 62%]
+tests/test_optimizations_advanced.py::test_graph_store_cache_hit PASSED  [ 63%]
+tests/test_optimizations_advanced.py::test_pol_scorer_numpy_batch PASSED [ 64%]
+tests/test_optimizations_advanced.py::test_pol_scorer_numpy_multiple_graphs PASSED [ 65%]
+tests/test_optimizations_advanced.py::test_integration_all_optimizations PASSED [ 66%]
+tests/test_optimizations_advanced.py::test_performance_comparison PASSED [ 67%]
+tests/test_pol.py::test_pol_score_high_for_valid_graph PASSED            [ 68%]
+tests/test_pol.py::test_collective_reward_split PASSED                   [ 69%]
+tests/test_pol.py::test_dual_agent_loop PASSED                           [ 70%]
+tests/test_symbols.py::test_mint_original_symbol_stable PASSED           [ 71%]
+tests/test_symbols.py::test_encoder_stores_orig_symbols PASSED           [ 72%]
+tests/test_symbols.py::test_original_symbol_in_node PASSED               [ 73%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_generate_address_from_pubkey PASSED [ 75%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_generate_address_from_signing_key PASSED [ 76%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_verify_address_valid PASSED [ 77%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_verify_address_invalid_prefix PASSED [ 78%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_verify_address_invalid_checksum PASSED [ 79%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_address_deterministic PASSED [ 80%]
+tests/test_wallet_rewards.py::TestWalletManager::test_create_wallet PASSED [ 81%]
+tests/test_wallet_rewards.py::TestWalletManager::test_create_wallet_duplicate_fails PASSED [ 82%]
+tests/test_wallet_rewards.py::TestWalletManager::test_load_wallet PASSED [ 83%]
+tests/test_wallet_rewards.py::TestWalletManager::test_load_wallet_not_found PASSED [ 84%]
+tests/test_wallet_rewards.py::TestWalletManager::test_list_wallets PASSED [ 85%]
+tests/test_wallet_rewards.py::TestWalletManager::test_wallet_sign_message PASSED [ 86%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_calculate_block_reward_genesis PASSED [ 87%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_calculate_block_reward_halving PASSED [ 88%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_calculate_block_reward_max_halvings PASSED [ 89%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_split_reward_collective PASSED [ 90%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_split_reward_single_contributor PASSED [ 91%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_split_reward_zero_scores PASSED [ 92%]
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_with_contributors PASSED [ 93%]
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_without_contributors PASSED [ 94%]
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_block_json_includes_rewards PASSED [ 95%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_empty_chain PASSED [ 96%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_single_block PASSED [ 97%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_multiple_blocks PASSED [ 98%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_rewards_history PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_with_contributors
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_block_json_includes_rewards
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_single_block
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_rewards_history
+  /workspace/src/artcb/security/anti_sybil.py:118: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_with_contributors
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_block_json_includes_rewards
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_single_block
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_rewards_history
+  /workspace/src/artcb/security/anti_sybil.py:172: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 96 passed, 8 warnings in 18.10s ========================

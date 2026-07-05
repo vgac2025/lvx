@@ -1,0 +1,115 @@
+==============================================
+ ARTCB — EXÉCUTION
+ Machine: cursor | User: ubuntu
+ Répertoire: /workspace
+ Environnement: CLOUD_AGENT
+ Horodatage: 2026-07-05T09:32:50Z
+==============================================
+
+⚠️  ATTENTION — Vous êtes sur la VM Cloud Agent (cursor /workspace).
+    Ce n'est PAS la machine de l'utilisateur final.
+    Pour exécuter chez VOUS : clonez le repo sur VOTRE PC et lancez
+    bash scripts/run_real_local.sh dans VOTRE terminal.
+    Voir EXECUTION_MACHINE_UTILISATEUR.md
+
+
+[1/4] Build lib C...
+make -C src/c all
+make[1]: Entering directory '/workspace/src/c'
+make[1]: Nothing to be done for 'all'.
+make[1]: Leaving directory '/workspace/src/c'
+
+[2/4] Tests pytest...
+........................................................................ [ 75%]
+........................                                                 [100%]
+=============================== warnings summary ===============================
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_with_contributors
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_block_json_includes_rewards
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_single_block
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_rewards_history
+  /workspace/src/artcb/security/anti_sybil.py:118: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_with_contributors
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_block_json_includes_rewards
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_single_block
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_rewards_history
+  /workspace/src/artcb/security/anti_sybil.py:172: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+96 passed, 8 warnings in 18.40s
+
+[2b] API déjà active sur :8000
+
+[3/4] Health (curl réel):
+{
+    "status": "ok",
+    "debug": true,
+    "llm_enabled": false,
+    "bob_configured": true,
+    "demo_book": "data/fixtures/wailly_le_roi_de_l_inconnu.pdf",
+    "chain": {
+        "available": true,
+        "valid": true,
+        "message": "",
+        "block_count": 9,
+        "public_key": "j9lWM/ltkcJIXfKdx22wxupcVslrX+MsfiQw6kwASPE="
+    }
+}
+
+[4/4] Démo 9 étapes (HTTP réel, pas de navigateur)...
+>>> STEP 1: Health
+>>> STEP 2: Wailly excerpt
+Loaded 1200 chars from Wailly
+>>> STEP 3: Agents run
+graph_id=g_b634a1e7f852 pol=0.6
+>>> STEP 4: Graph + node
+>>> STEP 5: Search
+>>> STEP 6: Reconstruct
+reversible=True similarity=1.0
+>>> STEP 7: PoL score
+>>> STEP 8: Store block
+block_index=9 hash=777fa622a624c85d...
+>>> STEP 9: Chain verify
+chain valid=True blocks=10
+=== DEMO COMPLETE ===
+JSON: logs/demo_live_20260705_093309.json
+
+=== LOGS GÉNÉRÉS ===
+-rw-r--r-- 1 ubuntu ubuntu 488 Jul  5 09:33 ./logs/demo_live_latest.txt
+-rw-r--r-- 1 ubuntu ubuntu 215 Jul  5 09:32 ./logs/machine_fingerprint.txt
+
+--- machine_fingerprint.txt (PREUVE machine) ---
+timestamp_utc=2026-07-05T09:32:50Z
+hostname=cursor
+user=ubuntu
+pwd=/workspace
+uname=Linux cursor 6.12.58+ #1 SMP PREEMPT_DYNAMIC Thu Jun 25 19:50:23 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+execution_env=CLOUD_AGENT
+
+--- demo_live_latest.txt ---
+=== ARTCB Live Demo 2026-07-05T09:33:09.428851+00:00 ===
+>>> STEP 1: Health
+>>> STEP 2: Wailly excerpt
+Loaded 1200 chars from Wailly
+>>> STEP 3: Agents run
+graph_id=g_b634a1e7f852 pol=0.6
+>>> STEP 4: Graph + node
+>>> STEP 5: Search
+>>> STEP 6: Reconstruct
+reversible=True similarity=1.0
+>>> STEP 7: PoL score
+>>> STEP 8: Store block
+block_index=9 hash=777fa622a624c85d...
+>>> STEP 9: Chain verify
+chain valid=True blocks=10
+=== DEMO COMPLETE ===
+JSON: logs/demo_live_20260705_093309.json
+
+--- Vérification chaîne C ---
+blocks.jsonl: /workspace/data/chain/blocks.jsonl
+valid: True msg: ''
+lignes: 10
+
+=== FIN — exécution Cloud Agent uniquement ; relancez sur VOTRE PC ===

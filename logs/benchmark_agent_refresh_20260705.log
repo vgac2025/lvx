@@ -1,0 +1,27 @@
+=== ARTCB Performance Benchmark ===
+
+1. IR Encoding
+   Texte: 540 chars
+   Temps: 0.01ms/op
+   Nœuds: 13, Liens: 18
+   Compression: -1062.8%
+   Taille JSON: 6279 bytes
+
+2. IR Decoding
+   Temps: 0.16ms/op
+   Réversible: True
+   Similarité: 100.00%
+
+3. Blockchain C (SHA-256)
+   Données: 500 bytes
+   Temps: 0.002ms/op
+   Digest: 64 chars
+
+4. PoL Scoring
+   Temps: 0.02ms/op
+   Score: 0.60
+   Bloc accepté: True
+
+=== Benchmark Complete ===
+✅ NF-01: Encodage 500 mots < 2s
+✅ NF-02: Reconstruction < 1s
