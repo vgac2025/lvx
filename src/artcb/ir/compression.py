@@ -98,4 +98,3 @@ class GraphCompressor:
         
         return round(estimated_ratio, 4)
 
-# Made with Bob

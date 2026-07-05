@@ -171,4 +171,3 @@ class NodeIndex:
         """Return total number of indexed nodes."""
         return self._total_nodes
 
-# Made with Bob

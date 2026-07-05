@@ -356,4 +356,3 @@ class TestWalletBalance:
         assert reward["reward_satoshi"] == 50 * 100_000_000
         assert reward["pol_score"] == 0.80
 
-# Made with Bob

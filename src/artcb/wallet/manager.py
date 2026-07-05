@@ -181,4 +181,3 @@ class WalletManager:
             "rewards": rewards,
         }
 
-# Made with Bob

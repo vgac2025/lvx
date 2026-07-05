@@ -226,4 +226,3 @@ class AntiSybilValidator:
             if rep.is_suspicious
         ]
 
-# Made with Bob

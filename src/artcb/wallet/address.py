@@ -135,4 +135,3 @@ def address_from_signing_key(signing_key: signing.SigningKey, *, prefix: str = "
     pubkey_bytes = signing_key.verify_key.encode()
     return generate_address(pubkey_bytes, prefix=prefix)
 
-# Made with Bob

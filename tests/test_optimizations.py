@@ -187,4 +187,3 @@ class TestIntegrationOptimizations:
         assert speedup > 1.5, f"Speedup cache {speedup:.2f}x insuffisant (attendu >1.5x)"
         print(f"\nCache speedup: {speedup:.2f}x (no_cache={time_no_cache:.3f}s, cache={time_cache:.3f}s)")
 
-# Made with Bob

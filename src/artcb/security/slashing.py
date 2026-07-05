@@ -338,4 +338,3 @@ class SlashingManager:
         except Exception as e:
             logger.error(f"Failed to save blacklist: {e}")
 
-# Made with Bob

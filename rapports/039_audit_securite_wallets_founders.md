@@ -458,4 +458,3 @@ wallet["private_key_encrypted"] = private_key_encrypted
 
 ---
 
-# Made with Bob

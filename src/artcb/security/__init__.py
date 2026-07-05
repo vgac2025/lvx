@@ -8,4 +8,3 @@ from .slashing import SlashingManager
 
 __all__ = ["AntiSybilValidator", "RateLimiter", "SlashingManager"]
 
-# Made with Bob

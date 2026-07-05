@@ -5,4 +5,3 @@ from artcb.wallet.address import generate_address, verify_address
 
 __all__ = ["WalletManager", "Wallet", "generate_address", "verify_address"]
 
-# Made with Bob

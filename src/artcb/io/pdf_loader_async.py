@@ -97,4 +97,3 @@ async def extract_pdf_chunks_async(
     
     return chunks
 
-# Made with Bob

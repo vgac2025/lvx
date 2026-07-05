@@ -169,4 +169,3 @@ class PolScorerNumPy:
         
         return results
 
-# Made with Bob

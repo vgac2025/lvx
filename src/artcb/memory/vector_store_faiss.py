@@ -183,4 +183,3 @@ class VectorStoreFAISS:
         """Whether GPU acceleration is active."""
         return self.use_gpu
 
-# Made with Bob
