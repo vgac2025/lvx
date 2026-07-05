@@ -104,3 +104,15 @@
 {"ts": "2026-07-05T07:19:32.102440+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
 {"ts": "2026-07-05T07:19:32.217986+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
 {"ts": "2026-07-05T07:19:32.317448+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:51.458351+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:52.141309+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:52.174177+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:52.198931+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:52.221318+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:52.245931+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:52.275186+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:09:52.296170+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:12:43.721033+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:12:59.834530+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T08:13:12.259222+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=demo_hackathon"}
+{"ts": "2026-07-05T08:13:12.273249+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}

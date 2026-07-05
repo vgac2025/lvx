@@ -7,9 +7,9 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.deps import build_app_state
-from api.routes import router as api_router
-from api.websocket import router as ws_router
+from src.api.deps import build_app_state
+from src.api.routes import router as api_router
+from src.api.websocket import router as ws_router
 from artcb.logging_config import setup_logging
 
 setup_logging("artcb.api")
