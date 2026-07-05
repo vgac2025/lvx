@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   decodeGraph,
   fetchGraph,
+  fetchPolScore,
   fetchWaillyExcerpt,
   runAgents,
   searchNodes,
@@ -132,6 +133,11 @@ export function Demo() {
         pol_score: block.pol_score,
         graph_id: graphId,
       });
+      
+      // Recharger les métriques PoL après stockage du bloc
+      const updatedPol = await fetchPolScore();
+      setPol(updatedPol);
+      
       pushMessage("critic", `Block #${block.block_index} signed on chain`);
     } catch (err) {
       pushMessage("critic", `Store failed: ${err instanceof Error ? err.message : String(err)}`);

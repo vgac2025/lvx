@@ -124,3 +124,10 @@
 {"ts": "2026-07-05T08:56:18.321582+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}
 {"ts": "2026-07-05T09:06:39.613185+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=demo_hackathon"}
 {"ts": "2026-07-05T09:06:39.657706+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}
+{"ts": "2026-07-05T12:13:46.210630+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T12:15:49.213660+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=demo_hackathon"}
+{"ts": "2026-07-05T12:15:49.955995+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}
+{"ts": "2026-07-05T12:27:36.282589+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T12:29:11.316364+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-05T12:30:33.368913+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=demo_hackathon"}
+{"ts": "2026-07-05T12:30:33.385134+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=demo_hackathon"}

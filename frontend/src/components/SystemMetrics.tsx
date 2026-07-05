@@ -39,7 +39,7 @@ export function SystemMetrics() {
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/v1/metrics");
+        const res = await fetch("/api/v1/metrics");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setMetrics(data);

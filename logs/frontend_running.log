@@ -1,21 +1,12 @@
 
 > artcb-frontend@0.4.0 dev
-> vite
+> vite --host 0.0.0.0 --port 5174
 
 
-  VITE v5.4.21  ready in 336 ms
+  VITE v5.4.21  ready in 1103 ms
 
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-8:55:45 AM [vite] http proxy error: /api/v1/demo/wailly-excerpt?max_pages=2
-Error: connect ECONNREFUSED 127.0.0.1:8000
-    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
-8:55:45 AM [vite] http proxy error: /api/v1/demo/wailly-excerpt?max_pages=2
-Error: connect ECONNREFUSED 127.0.0.1:8000
-    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
-8:55:48 AM [vite] ws proxy error:
-Error: connect ECONNREFUSED 127.0.0.1:8000
-    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
-8:59:12 AM [vite] ws proxy error:
-Error: connect ECONNREFUSED 127.0.0.1:8000
-    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: http://172.16.0.6:5174/
+2:37:02 PM [vite] hmr update /src/components/SystemMetrics.tsx
+2:37:28 PM [vite] hmr update /src/pages/Demo.tsx
+2:37:48 PM [vite] hmr update /src/pages/Demo.tsx
