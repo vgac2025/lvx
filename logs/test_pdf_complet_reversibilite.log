@@ -1,0 +1,21 @@
+Chargement PDF : /home/lvx/Downloads/wailly_le_roi_de_l_inconnu.pdf
+
+=== STATS PDF COMPLET ===
+Caractères: 654,767
+Lignes: 13,554
+Mots: 112,220
+
+=== TEST RÉVERSIBILITÉ 100% ===
+Encodage en cours...
+Graphe créé: 6,407 nœuds, 6,786 liens
+Décodage en cours...
+
+=== RÉSULTATS ===
+Réversibilité: True
+Similarité: 1.0000000000
+Caractères originaux: 654,767
+Caractères reconstruits: 654,767
+Match exact: True
+
+✅ RÉVERSIBILITÉ 100% CONFIRMÉE
+Tous les 654,767 caractères, 13,554 lignes, 112,220 mots reconstruits à l'identique
