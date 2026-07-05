@@ -1,0 +1,29 @@
+{
+  "miner_address": "data/fixtures/wailly_le_roi_de_l_inconnu.pdf",
+  "timestamp": "2026-07-05T13:19:58.352043",
+  "results": [
+    {
+      "pdf_path": "data/fixtures/wailly_le_roi_de_l_inconnu.pdf",
+      "graph_id": "g_2ad0d5ae2b38",
+      "block_index": 14,
+      "block_hash": "71660efdb130bcd42dbe311707df7bf8a0f2b083ac4a956eebe38f9e6a96bbb6",
+      "pol_score": 0.6,
+      "compression_ratio": -5.338616637674165,
+      "reversible": true,
+      "similarity": 1.0,
+      "reward_artcb": 50.0,
+      "reward_satoshi": 5000000000,
+      "balance_artcb": 150.0,
+      "total_time": 10.264349937438965,
+      "nodes_count": 6407,
+      "edges_count": 6786
+    }
+  ],
+  "summary": {
+    "total_blocks": 1,
+    "total_reward_artcb": 50.0,
+    "avg_pol_score": 0.6,
+    "avg_compression": -5.338616637674165,
+    "final_balance_artcb": 150.0
+  }
+}
