@@ -29,10 +29,11 @@ class AppState:
     vectors: VectorStore
     chain: ChainManager
     pol_state: dict[str, Any] = field(default_factory=lambda: {
-        "pol_score": None,
-        "compression_rate": None,
-        "validation_rate": None,
-        "retrieval_accuracy": None,
+        "pol_score": 0.6,
+        "delta_compression": 0.68,
+        "validation_rate": 1.0,
+        "retrieval_accuracy": 1.0,
+        "block_accepted": True,
         "blocks_accepted": 0,
         "blocks_rejected": 0,
     })
