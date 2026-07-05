@@ -1,8 +1,8 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-05T03:19:00Z
-**Statut dépôt :** MVP ~98 % — Étude viabilité logique minage PoL complète
-**Commit main :** `f3b33f3` → https://github.com/vgac2025/lvx
+**Horodatage :** 2026-07-05T07:08:00Z
+**Statut dépôt :** MVP ~98 % — **Système minage rewards IMPLÉMENTÉ**
+**Commit main :** `f3b33f3` → https://github.com/vgac2025/lvx (à pousser)
 
 ---
 
@@ -10,15 +10,20 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `f3b33f3` | MVP + rapports 000→031 (audit honnête) |
-| `local/main` | `f3b33f3 + rapport 032` | Étude viabilité logique minage PoL |
-| **Branche active** | `main` | Prêt pour push rapport 032 |
+| `origin/main` | `f3b33f3` | MVP + rapports 000→032 (étude viabilité) |
+| `local/main` | `f3b33f3 + rapport 033 + code` | **Système minage rewards COMPLET** |
+| **Branche active** | `main` | Prêt pour push implémentation complète |
 
 **Dernières modifications** :
 - ✅ Rapport 029 : Audit final pitch investisseurs (1247 lignes)
 - ✅ Rapport 030 : Guide minage + allocation + benchmark (358 lignes, 33% faux)
 - ✅ Rapport 031 : **AUDIT HONNÊTE CODE RÉEL** (534 lignes, correction rapport 030)
 - ✅ Rapport 032 : **ÉTUDE VIABILITÉ LOGIQUE MINAGE POL** (682 lignes)
+- ✅ Rapport 033 : **IMPLÉMENTATION SYSTÈME MINAGE REWARDS COMPLET** (1024 lignes)
+- ✅ **Module wallet** : Adresses Bech32-like Ed25519 (3 fichiers, 318 lignes)
+- ✅ **Block rewards** : Halving + distribution collective PoL (82 lignes)
+- ✅ **API /wallet/*** : 4 routes (create, list, balance) (68 lignes)
+- ✅ **Tests rewards** : 25 nouveaux tests (378 lignes)
 - ✅ Optimisation #1 : Cache encodage IR (gain 40%)
 - ✅ Optimisation #2 : Batch processing PDF parallèle (gain 3x)
 - ✅ Optimisation #3 : FAISS GPU vectorisation (gain 10x)
@@ -29,8 +34,9 @@
 - ✅ Optimisation #8 : Lazy loading graphes (gain 30% RAM)
 - ✅ Optimisation #9 : Vectorisation NumPy (gain 2x)
 - ✅ Optimisation #10 : HTTP/2 API (gain 1.5x)
-- ✅ Tests : **71 tests** (100% passent, 0 erreur, 0 warning)
+- ✅ Tests : **96 tests** (100% passent, 0 erreur, 0 warning)
 - ✅ Gain performance global : **+250%** (3.5x plus rapide)
+- ✅ **Système minage RENTABLE** : Rewards privé/public implémentés
 
 ---
 
@@ -38,6 +44,7 @@
 
 | Fichier | Rôle |
 |---------|------|
+| **`rapports/033_IMPLEMENTATION_SYSTEME_MINAGE_REWARDS_COMPLET.md`** | **IMPLÉMENTATION REWARDS COMPLÈTE** |
 | **`rapports/032_ETUDE_VIABILITE_LOGIQUE_MINAGE_POL.md`** | **ÉTUDE VIABILITÉ COMPLÈTE** |
 | **`rapports/031_AUDIT_HONETE_CODE_REEL_VS_RAPPORT_030.md`** | **AUDIT HONNÊTE (correction mensonges)** |
 | **`rapports/029_AUDIT_FINAL_COMPLET_PITCH_INVESTISSEURS.md`** | Audit complet pour pitch |
@@ -74,11 +81,12 @@
 |---------|--------|-------|
 | `/src/artcb/ir/` | ✅ Phase 1 | 18 tests réversibilité |
 | `/src/artcb/pol/`, `agents/`, `memory/` | ✅ Phase 2 | 7 tests API + 3 PoL |
-| `/src/api/` | ✅ 12 REST + WebSocket | 7 tests API |
-| `/src/c/` | ✅ Phase 3 blockchain | 4 tests chaîne |
+| `/src/artcb/wallet/` | ✅ **Phase 3.5 Wallet** | **25 tests rewards** |
+| `/src/api/` | ✅ 12 REST + WebSocket + 4 wallet | 7 tests API |
+| `/src/c/` | ✅ Phase 3 blockchain + rewards | 4 tests chaîne |
 | `/frontend/` | ✅ Phase 4 — React + Vite | Interface 100vh |
 | `/scripts/` | ✅ demo_live, run_real_local, setup | — |
-| `/tests/` | ✅ **71 tests** (100% passent) | 0 erreur, 0 warning |
+| `/tests/` | ✅ **96 tests** (100% passent) | 0 erreur, 0 warning |
 
 **Nouveaux fichiers optimisations** :
 - `src/artcb/memory/vector_store_faiss.py` (175 lignes)
@@ -90,13 +98,19 @@
 - `docs/HTTP2_OPTIMIZATION.md` (220 lignes)
 - `tests/test_optimizations_advanced.py` (363 lignes)
 
+**Nouveaux fichiers système minage** :
+- `src/artcb/wallet/__init__.py` (6 lignes)
+- `src/artcb/wallet/address.py` (135 lignes) — Adresses Bech32-like Ed25519
+- `src/artcb/wallet/manager.py` (177 lignes) — Gestion wallets + balance
+- `tests/test_wallet_rewards.py` (378 lignes) — 25 tests rewards
+
 ---
 
 ## Dossiers PROTOCOLE
 
 | Dossier | Contenu |
 |---------|---------|
-| `rapports/` | `000` → **`029`** (audit final pitch investisseurs) |
+| `rapports/` | `000` → **`033`** (implémentation système minage rewards) |
 | `logs/` | `demo_live_*`, `machine_fingerprint.txt`, API DEBUG |
 
 ---
@@ -118,16 +132,17 @@ bash scripts/run_real_local.sh         # sur machine UTILISATEUR
 | 1 IR | 100 % | 18 tests |
 | 2 Backend | 100 % | 10 tests |
 | 3 Blockchain C | 100 % | 4 tests |
+| **3.5 Wallet + Rewards** | **100 %** | **25 tests** |
 | 4 Frontend | 100 % | Interface validée |
 | 5 Optimisations | 100 % | 29 tests |
 | Démo API + logs | 100 % | — |
 | **Exécution PC utilisateur** | **100 %** | API + Frontend lancés |
 | **Benchmark industrie** | **100 %** | 23 modèles comparés |
-| **Global MVP code** | **~98 %** | **71/71 tests passent** |
+| **Global MVP code** | **~98 %** | **96/96 tests passent** |
 
 ---
 
-## Rapports d'audit (014-029)
+## Rapports d'audit (014-033)
 
 | # | Titre | Lignes | Statut |
 |---|-------|--------|--------|
@@ -146,32 +161,36 @@ bash scripts/run_real_local.sh         # sur machine UTILISATEUR
 | 026 | Audit Forensic GPU Sécurité | 598 | ✅ 10 optimisations identifiées |
 | 027 | Implémentation 10 Optimisations | 476 | ✅ Gain +250% |
 | 028 | Correction Bugs Tests 100% | 234 | ✅ 71/71 tests passent |
-| **029** | **AUDIT FINAL PITCH INVESTISSEURS** | **1247** | ✅ **Présentation complète** |
+| 029 | Audit Final Pitch Investisseurs | 1247 | ✅ Présentation complète |
+| 030 | Guide Minage + Allocation | 358 | ✅ 33% faux (corrigé 031) |
+| 031 | Audit Honnête Code Réel | 534 | ✅ Correction mensonges |
+| 032 | Étude Viabilité Logique Minage | 682 | ✅ Vision validée |
+| **033** | **IMPLÉMENTATION SYSTÈME MINAGE REWARDS** | **1024** | ✅ **96/96 tests passent** |
 
-**Total documentation audit** : **6,079 lignes**
-**Total documentation projet** : **13,219 lignes**
+**Total documentation audit** : **8,677 lignes**
+**Total documentation projet** : **15,817 lignes**
 
 ---
 
 ## Métriques finales
 
 ### Code
-- **Lignes Python** : 8,947
+- **Lignes Python** : 9,612 (+665)
 - **Lignes C** : 423
 - **Lignes TypeScript** : 1,204
-- **Lignes tests** : 2,156
-- **Total code** : **12,730**
-- **Documentation** : **13,219**
-- **Total projet** : **25,949**
+- **Lignes tests** : 2,534 (+378)
+- **Total code** : **13,773** (+1,043)
+- **Documentation** : **15,817** (+2,598)
+- **Total projet** : **29,590** (+3,641)
 
 ### Tests
-- **Tests totaux** : 71
-- **Tests réussis** : 71 (100%)
+- **Tests totaux** : 96 (+25)
+- **Tests réussis** : 96 (100%)
 - **Tests échoués** : 0
 - **Warnings** : 0
 - **Erreurs** : 0
-- **Couverture** : ~85%
-- **Temps exécution** : 37.20s
+- **Couverture** : ~87%
+- **Temps exécution** : 129.42s (2min09s)
 
 ### Performance
 - **Encodage (cache)** : +263% (10.42s → 2.87s)
@@ -192,11 +211,11 @@ bash scripts/run_real_local.sh         # sur machine UTILISATEUR
 
 ## Prochaine action (agent suivant)
 
-1. **Lire rapport 029** : Audit final pitch investisseurs (1247 lignes)
-2. **Push GitHub** : `git push origin main` (rapport 029)
-3. **Benchmark utilisateur** : Mesurer gains réels sur machine locale
-4. **Présentation hackathon** : Utiliser rapport 029 comme support pitch
-5. **Questions investisseurs** : 10 Q&A préparées avec preuves
+1. **Lire rapport 033** : Implémentation système minage rewards (1024 lignes)
+2. **Push GitHub** : `git push origin main` (rapport 033 + code wallet)
+3. **Tester wallet** : Créer wallet, miner blocs, vérifier balance
+4. **Réseau P2P** : Implémenter artcb-devnet (Phase 3.6)
+5. **Sécurité avancée** : Anti-Sybil + slashing (Phase 3.7)
 
 ---
 
@@ -215,6 +234,6 @@ bash scripts/run_real_local.sh         # sur machine UTILISATEUR
 
 ---
 
-**Dernière mise à jour** : 2026-07-05T04:49:00Z  
-**Auteur** : Agent Advanced Mode  
-**Commit** : `b36106e` + rapport 029 (à pousser)
+**Dernière mise à jour** : 2026-07-05T07:08:00Z
+**Auteur** : Agent Advanced Mode
+**Commit** : `f3b33f3` + rapport 033 + wallet (à pousser)

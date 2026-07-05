@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -12,6 +12,7 @@ from nacl import encoding, signing
 
 from artcb.chain import ffi
 from artcb.config import load_settings
+from artcb.pol.scorer import PolScorer
 
 logger = logging.getLogger("artcb.chain.manager")
 
@@ -28,6 +29,8 @@ class ChainBlock:
     signature: str
     graph_id: str
     visibility: str = "private"
+    block_reward: int = 0  # Reward in satoshi (1 ARTCB = 10^8 satoshi)
+    contributors: list[dict] = field(default_factory=list)  # [{"address": str, "pol_score": float, "reward_satoshi": int, "signature": str}]
 
     def to_json_line(self) -> str:
         payload = {
@@ -41,6 +44,8 @@ class ChainBlock:
             "signature": self.signature,
             "graph_id": self.graph_id,
             "visibility": self.visibility,
+            "block_reward": self.block_reward,
+            "contributors": self.contributors,
         }
         return json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
 
@@ -95,11 +100,34 @@ class ChainManager:
         pol_score: float,
         merkle_root: str | None = None,
         visibility: str = "private",
+        contributors: list[dict] | None = None,
+        block_reward: int | None = None,
     ) -> ChainBlock:
         index = len(self.list_blocks())
         timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         prev_hash = self.last_hash()
         merkle = merkle_root or graph_root
+        
+        # Calculate block reward (halving every 210,000 blocks)
+        if block_reward is None:
+            block_reward = self._calculate_block_reward(index)
+        
+        # Distribute rewards if contributors provided
+        final_contributors = []
+        if contributors:
+            # Use PolScorer.split_reward for collective distribution
+            contributor_scores = {c["address"]: c["pol_score"] for c in contributors}
+            rewards = PolScorer.split_reward(block_reward / 1e8, contributor_scores)  # Convert to ARTCB
+            
+            for contributor in contributors:
+                address = contributor["address"]
+                final_contributors.append({
+                    "address": address,
+                    "pol_score": contributor["pol_score"],
+                    "reward_satoshi": int(rewards[address] * 1e8),  # Convert back to satoshi
+                    "signature": contributor.get("signature", ""),
+                })
+        
         block_hash = ffi.build_block_hash(
             index, timestamp, prev_hash, graph_root, merkle, pol_score
         )
@@ -117,11 +145,39 @@ class ChainManager:
             signature=signature,
             graph_id=graph_id,
             visibility=visibility,
+            block_reward=block_reward,
+            contributors=final_contributors,
         )
         with self.blocks_path.open("a", encoding="utf-8") as handle:
             handle.write(block.to_json_line() + "\n")
-        logger.debug("Appended block index=%d hash=%s", index, block_hash)
+        logger.debug(
+            "Appended block index=%d hash=%s reward=%d contributors=%d",
+            index, block_hash, block_reward, len(final_contributors)
+        )
         return block
+    
+    def _calculate_block_reward(self, block_index: int) -> int:
+        """
+        Calculate block reward with halving (TOKENOMICS §4).
+        
+        Initial: 50 ARTCB = 5,000,000,000 satoshi
+        Halving every 210,000 blocks
+        
+        Args:
+            block_index: Current block index
+        
+        Returns:
+            Reward in satoshi
+        """
+        INITIAL_REWARD = 50 * 100_000_000  # 50 ARTCB in satoshi
+        HALVING_INTERVAL = 210_000
+        
+        halvings = block_index // HALVING_INTERVAL
+        if halvings >= 64:  # After 64 halvings, reward is 0
+            return 0
+        
+        reward = INITIAL_REWARD >> halvings  # Bitshift = divide by 2^halvings
+        return reward
 
     def verify(self) -> dict:
         try:

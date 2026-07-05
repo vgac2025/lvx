@@ -7,3 +7,15 @@
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
+8:55:45 AM [vite] http proxy error: /api/v1/demo/wailly-excerpt?max_pages=2
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+8:55:45 AM [vite] http proxy error: /api/v1/demo/wailly-excerpt?max_pages=2
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+8:55:48 AM [vite] ws proxy error:
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)
+8:59:12 AM [vite] ws proxy error:
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16)

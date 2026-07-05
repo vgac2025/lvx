@@ -1,0 +1,34 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/lvx/ARTCB/lvx
+configfile: pyproject.toml
+collecting ... collected 25 items
+
+tests/test_wallet_rewards.py::TestAddressGeneration::test_generate_address_from_pubkey PASSED [  4%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_generate_address_from_signing_key PASSED [  8%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_verify_address_valid PASSED [ 12%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_verify_address_invalid_prefix PASSED [ 16%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_verify_address_invalid_checksum PASSED [ 20%]
+tests/test_wallet_rewards.py::TestAddressGeneration::test_address_deterministic PASSED [ 24%]
+tests/test_wallet_rewards.py::TestWalletManager::test_create_wallet PASSED [ 28%]
+tests/test_wallet_rewards.py::TestWalletManager::test_create_wallet_duplicate_fails PASSED [ 32%]
+tests/test_wallet_rewards.py::TestWalletManager::test_load_wallet PASSED [ 36%]
+tests/test_wallet_rewards.py::TestWalletManager::test_load_wallet_not_found PASSED [ 40%]
+tests/test_wallet_rewards.py::TestWalletManager::test_list_wallets PASSED [ 44%]
+tests/test_wallet_rewards.py::TestWalletManager::test_wallet_sign_message PASSED [ 48%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_calculate_block_reward_genesis PASSED [ 52%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_calculate_block_reward_halving PASSED [ 56%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_calculate_block_reward_max_halvings PASSED [ 60%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_split_reward_collective PASSED [ 64%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_split_reward_single_contributor PASSED [ 68%]
+tests/test_wallet_rewards.py::TestBlockRewards::test_split_reward_zero_scores PASSED [ 72%]
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_with_contributors PASSED [ 76%]
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_append_block_without_contributors PASSED [ 80%]
+tests/test_wallet_rewards.py::TestBlockWithRewards::test_block_json_includes_rewards PASSED [ 84%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_empty_chain PASSED [ 88%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_single_block PASSED [ 92%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_multiple_blocks PASSED [ 96%]
+tests/test_wallet_rewards.py::TestWalletBalance::test_get_balance_rewards_history PASSED [100%]
+
+============================== 25 passed in 0.27s ==============================

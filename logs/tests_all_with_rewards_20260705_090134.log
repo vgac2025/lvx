@@ -1,0 +1,57 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/lvx/ARTCB/lvx
+configfile: pyproject.toml
+collecting ... collected 55 items / 4 errors
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting tests/test_api.py ______________________
+ImportError while importing test module '/home/lvx/ARTCB/lvx/tests/test_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_api.py:8: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+__________________ ERROR collecting tests/test_book_wailly.py __________________
+ImportError while importing test module '/home/lvx/ARTCB/lvx/tests/test_book_wailly.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_book_wailly.py:7: in <module>
+    from artcb.io.pdf_loader import extract_pdf_chunks, extract_pdf_text
+src/artcb/io/pdf_loader.py:9: in <module>
+    from pypdf import PdfReader
+E   ModuleNotFoundError: No module named 'pypdf'
+_________________ ERROR collecting tests/test_optimizations.py _________________
+ImportError while importing test module '/home/lvx/ARTCB/lvx/tests/test_optimizations.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_optimizations.py:10: in <module>
+    from artcb.io.pdf_loader import extract_pdf_text, resolve_book_path
+src/artcb/io/pdf_loader.py:9: in <module>
+    from pypdf import PdfReader
+E   ModuleNotFoundError: No module named 'pypdf'
+____________ ERROR collecting tests/test_optimizations_advanced.py _____________
+ImportError while importing test module '/home/lvx/ARTCB/lvx/tests/test_optimizations_advanced.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_optimizations_advanced.py:14: in <module>
+    from artcb.io.pdf_loader_async import extract_pdf_text_async
+src/artcb/io/pdf_loader_async.py:9: in <module>
+    import aiofiles
+E   ModuleNotFoundError: No module named 'aiofiles'
+=========================== short test summary info ============================
+ERROR tests/test_api.py
+ERROR tests/test_book_wailly.py
+ERROR tests/test_optimizations.py
+ERROR tests/test_optimizations_advanced.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 4 errors in 1.50s ===============================

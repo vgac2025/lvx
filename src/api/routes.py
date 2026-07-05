@@ -217,6 +217,8 @@ def store(body: StoreRequest, request: Request) -> dict:
     return {
         "block_index": block.index,
         "hash": block.hash,
+        "block_reward": block.block_reward,
+        "contributors": block.contributors,
         "signature": block.signature,
         "pol_score": pol.pol_score,
         "graph_id": graph.graph_id,
@@ -302,6 +304,74 @@ def system_metrics() -> dict:
     except Exception as e:
         logger.error(f"Error fetching system metrics: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ============================================================================
+# WALLET ROUTES — Rewards & Balance Tracking
+# ============================================================================
+
+class CreateWalletRequest(BaseModel):
+    name: str = "default"
+
+
+class WalletBalanceRequest(BaseModel):
+    address: str
+
+
+@router.post("/wallet/create")
+def wallet_create(body: CreateWalletRequest, request: Request) -> dict:
+    """Create new ARTCB wallet with Ed25519 keypair."""
+    from artcb.wallet.manager import WalletManager
+    
+    state = _state(request)
+    wallet_mgr = WalletManager()
+    
+    try:
+        wallet = wallet_mgr.create_wallet(name=body.name)
+        logger.info("Created wallet name=%s address=%s", body.name, wallet.address)
+        return {
+            "name": body.name,
+            "address": wallet.address,
+            "public_key_hex": wallet.public_key_hex,
+            "public_key_b64": wallet.public_key_b64,
+        }
+    except FileExistsError as exc:
+        raise HTTPException(status_code=409, detail=str(exc))
+
+
+@router.get("/wallet/list")
+def wallet_list(request: Request) -> dict:
+    """List all wallets."""
+    from artcb.wallet.manager import WalletManager
+    
+    wallet_mgr = WalletManager()
+    wallets = wallet_mgr.list_wallets()
+    return {"wallets": wallets, "count": len(wallets)}
+
+
+@router.post("/wallet/balance")
+def wallet_balance(body: WalletBalanceRequest, request: Request) -> dict:
+    """Get wallet balance from blockchain."""
+    from artcb.wallet.manager import WalletManager
+    
+    state = _state(request)
+    wallet_mgr = WalletManager()
+    
+    balance = wallet_mgr.get_balance(body.address, state.chain.blocks_path)
+    return balance
+
+
+@router.get("/wallet/balance/{address}")
+def wallet_balance_get(address: str, request: Request) -> dict:
+    """Get wallet balance from blockchain (GET variant)."""
+    from artcb.wallet.manager import WalletManager
+    
+    state = _state(request)
+    wallet_mgr = WalletManager()
+    
+    balance = wallet_mgr.get_balance(address, state.chain.blocks_path)
+    return balance
+
 
 
 
