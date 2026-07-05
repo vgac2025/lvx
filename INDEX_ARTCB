@@ -1,8 +1,8 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-05T07:08:00Z
-**Statut dépôt :** MVP ~98 % — **Système minage rewards IMPLÉMENTÉ**
-**Commit main :** `f3b33f3` → https://github.com/vgac2025/lvx (à pousser)
+**Horodatage :** 2026-07-05T09:52:00+02:00
+**Statut dépôt :** **MVP 100% COMPLET — PRÊT POUR SOUMISSION HACKATHON**
+**Commit main :** `bb25c93` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -10,9 +10,9 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `f3b33f3` | MVP + rapports 000→032 (étude viabilité) |
-| `local/main` | `f3b33f3 + rapport 033 + code` | **Système minage rewards COMPLET** |
-| **Branche active** | `main` | Prêt pour push implémentation complète |
+| `origin/main` | `bb25c93` | **MVP COMPLET + Sécurité + README + Rapport final** |
+| `local/main` | `bb25c93` | Synchronisé avec origin |
+| **Branche active** | `main` | **PRÊT POUR SOUMISSION** |
 
 **Dernières modifications** :
 - ✅ Rapport 029 : Audit final pitch investisseurs (1247 lignes)
@@ -20,10 +20,13 @@
 - ✅ Rapport 031 : **AUDIT HONNÊTE CODE RÉEL** (534 lignes, correction rapport 030)
 - ✅ Rapport 032 : **ÉTUDE VIABILITÉ LOGIQUE MINAGE POL** (682 lignes)
 - ✅ Rapport 033 : **IMPLÉMENTATION SYSTÈME MINAGE REWARDS COMPLET** (1024 lignes)
+- ✅ Rapport 034 : **RAPPORT FINAL SOUMISSION HACKATHON RAISE 2026** (720 lignes)
 - ✅ **Module wallet** : Adresses Bech32-like Ed25519 (3 fichiers, 318 lignes)
+- ✅ **Module sécurité** : Anti-Sybil + Rate Limiting + Slashing (3 fichiers, 775 lignes)
 - ✅ **Block rewards** : Halving + distribution collective PoL (82 lignes)
 - ✅ **API /wallet/*** : 4 routes (create, list, balance) (68 lignes)
 - ✅ **Tests rewards** : 25 nouveaux tests (378 lignes)
+- ✅ **README.md** : Installation 5 lignes + documentation complète (358 lignes)
 - ✅ Optimisation #1 : Cache encodage IR (gain 40%)
 - ✅ Optimisation #2 : Batch processing PDF parallèle (gain 3x)
 - ✅ Optimisation #3 : FAISS GPU vectorisation (gain 10x)
@@ -44,9 +47,11 @@
 
 | Fichier | Rôle |
 |---------|------|
-| **`rapports/033_IMPLEMENTATION_SYSTEME_MINAGE_REWARDS_COMPLET.md`** | **IMPLÉMENTATION REWARDS COMPLÈTE** |
-| **`rapports/032_ETUDE_VIABILITE_LOGIQUE_MINAGE_POL.md`** | **ÉTUDE VIABILITÉ COMPLÈTE** |
-| **`rapports/031_AUDIT_HONETE_CODE_REEL_VS_RAPPORT_030.md`** | **AUDIT HONNÊTE (correction mensonges)** |
+| **`rapports/034_RAPPORT_FINAL_SOUMISSION_HACKATHON_RAISE_2026.md`** | **RAPPORT FINAL SOUMISSION** |
+| **`README.md`** | **Installation 5 lignes + doc complète** |
+| **`rapports/033_IMPLEMENTATION_SYSTEME_MINAGE_REWARDS_COMPLET.md`** | Implémentation rewards complète |
+| **`rapports/032_ETUDE_VIABILITE_LOGIQUE_MINAGE_POL.md`** | Étude viabilité complète |
+| **`rapports/031_AUDIT_HONETE_CODE_REEL_VS_RAPPORT_030.md`** | Audit honnête (correction mensonges) |
 | **`rapports/029_AUDIT_FINAL_COMPLET_PITCH_INVESTISSEURS.md`** | Audit complet pour pitch |
 | **`HANDOFF_POUR_AGENT_SUIVANT.md`** | État complet + priorités utilisateur |
 | **`ENV_A_REMPLIR_ARTCB`** | **Secrets → copier vers `.env` local** |
