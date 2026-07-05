@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import io
 from pathlib import Path
 
 import aiofiles
@@ -28,8 +29,9 @@ async def extract_pdf_text_async(
     async with aiofiles.open(path, 'rb') as f:
         pdf_bytes = await f.read()
     
-    # Parse PDF (sync operation, but fast)
-    reader = PdfReader(pdf_bytes)
+    # Parse PDF (sync operation, but fast) - wrap bytes in BytesIO
+    pdf_stream = io.BytesIO(pdf_bytes)
+    reader = PdfReader(pdf_stream)
     total_pages = len(reader.pages)
     num_pages = min(max_pages, total_pages) if max_pages else total_pages
     

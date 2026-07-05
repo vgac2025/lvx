@@ -155,6 +155,7 @@ class VectorStoreFAISS:
                 "graph_id": gid,
                 "node_id": node.id,
                 "score": round(float(similarity), 4),
+                "similarity": round(float(similarity), 4),  # Ajout clé similarity
                 "text": node.txt,
                 "type": node.t,
                 "symbol": node.sym,

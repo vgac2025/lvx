@@ -85,18 +85,26 @@ class AgentPoolManager:
     def validate_batch(
         self,
         graphs: list[IRGraph],
-    ) -> list[CriticResult]:
+    ) -> list[dict]:
         """Validate multiple graphs in parallel.
         
         Args:
             graphs: List of IR graphs to validate
         
         Returns:
-            List of critic results in same order as input graphs
+            List of validation results (dicts) in same order as input graphs
         """
-        def validate_one(graph: IRGraph) -> CriticResult:
+        def validate_one(graph: IRGraph) -> dict:
             critic = CriticAgent()
-            return critic.validate(graph)
+            result = critic.validate(graph)
+            # Convert CriticResult to dict
+            return {
+                "valid": result.nodes_validated > 0,
+                "nodes_validated": result.nodes_validated,
+                "nodes_proposed": result.nodes_proposed,
+                "pol_score": result.pol.pol_score,
+                "graph_id": graph.graph_id
+            }
         
         # Submit all tasks
         futures = []

@@ -75,11 +75,19 @@ class NodeIndex:
         """
         self._ensure_sorted()
         
-        # Binary search
-        idx = bisect.bisect_left(self._index, (node_id, "", None), key=lambda x: x[0])
+        # Binary search - compare only node_id (first element of tuple)
+        # Find insertion point
+        left, right = 0, len(self._index)
+        while left < right:
+            mid = (left + right) // 2
+            if self._index[mid][0] < node_id:
+                left = mid + 1
+            else:
+                right = mid
         
-        if idx < len(self._index) and self._index[idx][0] == node_id:
-            _, graph_id, node = self._index[idx]
+        # Check if found
+        if left < len(self._index) and self._index[left][0] == node_id:
+            node_id_found, graph_id, node = self._index[left]
             return (graph_id, node)
         
         return None

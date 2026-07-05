@@ -1067,3 +1067,354 @@ INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'venv/lib/python3.12/site-packages/numpy/polynomial/polyutils.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_extended_precision.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/arrayprint.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/numeric.py', 'venv/lib/python3.12/site-packages/numpy/linalg/tests/test_regression.py', 'venv/lib/python3.12/site-packages/numpy/f2py/cb_rules.py', 'venv/lib/python3.12/site-packages/numpy/_core/shape_base.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_regression.py', 'venv/lib/python3.12/site-packages/numpy/fft/tests/test_helper.py', 'venv/lib/python3.12/site-packages/numpy/testing/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/records.py', 'venv/lib/python3.12/site-packages/numpy/lib/_arrayterator_impl.py', 'venv/lib/python3.12/site-packages/numpy/lib/_version.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_extras.py', 'venv/lib/python3.12/site-packages/numpy/_core/einsumfunc.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_index_tricks.py', 'venv/lib/python3.12/site-packages/numpy/__init__.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_string.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/ndarray_conversion.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_argparse.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/arrayterator.py', 'venv/lib/python3.12/site-packages/numpy/_core/_add_newdocs_scalars.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/warnings_and_errors.py', 'venv/lib/python3.12/site-packages/numpy/_core/numerictypes.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_multiprocessing.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_twodim_base.py', 'venv/lib/python3.12/site-packages/numpy/core/shape_base.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/multiarray.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_shape_base.py', 'venv/lib/python3.12/site-packages/numpy/_core/umath.py', 'venv/lib/python3.12/site-packages/numpy/lib/_arraypad_impl.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_extending.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/tests/test_multiarray.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_seed_sequence.py', 'venv/lib/python3.12/site-packages/numpy/_core/_dtype.py', 'venv/lib/python3.12/site-packages/numpy/core/numerictypes.py', 'venv/lib/python3.12/site-packages/numpy/char/__init__.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/tests/test_interaction.py', 'venv/lib/python3.12/site-packages/numpy/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/core/getlimits.py', 'venv/lib/python3.12/site-packages/numpy/lib/_nanfunctions_impl.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_array_from_pyobj.py', 'venv/lib/python3.12/site-packages/numpy/f2py/rules.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_custom_dtypes.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_casting_floatingpoint_errors.py', 'venv/lib/python3.12/site-packages/numpy/ctypeslib/_ctypeslib.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_multiarray.py', 'venv/lib/python3.12/site-packages/numpy/random/_examples/cffi/extending.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_histograms.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_pyf_src.py', 'venv/lib/python3.12/site-packages/numpy/_array_api_info.py', 'venv/lib/python3.12/site-packages/numpy/_core/printoptions.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/modules.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/_natype.py', 'venv/lib/python3.12/site-packages/numpy/lib/mixins.py', 'venv/lib/python3.12/site-packages/numpy/matlib.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_indexing.py', 'venv/lib/python3.12/site-packages/numpy/doc/ufuncs.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_kind.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_cython.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_half.py', 'venv/lib/python3.12/site-packages/numpy/_core/_asarray.py', 'venv/lib/python3.12/site-packages/numpy/f2py/crackfortran.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_errstate.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_mixed.py', 'venv/lib/python3.12/site-packages/numpy/lib/__init__.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_smoke.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_hashtable.py', 'venv/lib/python3.12/site-packages/numpy/_pytesttester.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/test_runtime.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_nested_sequence.py', 'venv/lib/python3.12/site-packages/numpy/_core/numeric.py', 'venv/lib/python3.12/site-packages/numpy/_pyinstaller/hook-numpy.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_semicolon_split.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_recfunctions.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_array_like.py', 'venv/lib/python3.12/site-packages/numpy/core/overrides.py', 'venv/lib/python3.12/site-packages/numpy/_utils/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_indexerrors.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_block_docstring.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_return_character.py', 'venv/lib/python3.12/site-packages/numpy/f2py/func2subr.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_generator_mt19937.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_finfo.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_inplace.py', 'venv/lib/python3.12/site-packages/numpy/core/_multiarray_umath.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/nditer.py', 'venv/lib/python3.12/site-packages/numpy/f2py/_backends/_meson.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/scalars.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/examples/cython/setup.py', 'venv/lib/python3.12/site-packages/numpy/f2py/symbolic.py', 'venv/lib/python3.12/site-packages/numpy/_configtool.py', 'venv/lib/python3.12/site-packages/numpy/lib/_datasource.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_cpu_dispatcher.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_numeric.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_scalarprint.py', 'venv/lib/python3.12/site-packages/numpy/lib/_scimath_impl.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_loadtxt.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_limited_api.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/chebyshev.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/flatiter.py', 'venv/lib/python3.12/site-packages/numpy/linalg/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/f2py/_isocbind.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_scalars.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/shape.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_ufunc.py', 'venv/lib/python3.12/site-packages/numpy/linalg/tests/test_linalg.py', 'venv/lib/python3.12/site-packages/numpy/ma/testutils.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_defchararray.py', 'venv/lib/python3.12/site-packages/numpy/core/arrayprint.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_numerictypes.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_arrayprint.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/ndarray_misc.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_parameter.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_chebyshev.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_mrecords.py', 'venv/lib/python3.12/site-packages/numpy/_core/_ufunc_config.py', 'venv/lib/python3.12/site-packages/numpy/f2py/capi_maps.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/index_tricks.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/test_isfile.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_scalarbuffer.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_cpu_features.py', 'venv/lib/python3.12/site-packages/numpy/f2py/use_rules.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/numerictypes.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_common.py', 'venv/lib/python3.12/site-packages/numpy/_pyinstaller/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_records.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/hermite_e.py', 'venv/lib/python3.12/site-packages/numpy/testing/overrides.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/array_constructors.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_stringdtype.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_assumed_shape.py', 'venv/lib/python3.12/site-packages/numpy/_core/_type_aliases.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_symbolic.py', 'venv/lib/python3.12/site-packages/numpy/lib/introspect.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_function_base.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_scalar_methods.py', 'venv/lib/python3.12/site-packages/numpy/_core/_exceptions.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_laguerre.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_return_logical.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_stride_tricks.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_conversion_utils.py', 'venv/lib/python3.12/site-packages/numpy/f2py/__version__.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/getlimits.py', 'venv/lib/python3.12/site-packages/numpy/lib/format.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_isoc.py', 'venv/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_getlimits.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_mem_overlap.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/examples/limited_api/setup.py', 'venv/lib/python3.12/site-packages/numpy/dtypes.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_hermite.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_shape.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_character.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_arrayobject.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/mod.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_strings.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_dtype_like.py', 'venv/lib/python3.12/site-packages/numpy/_typing/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_nbit.py', 'venv/lib/python3.12/site-packages/numpy/f2py/cfuncs.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_scalarinherit.py', 'venv/lib/python3.12/site-packages/numpy/testing/_private/utils.py', 'venv/lib/python3.12/site-packages/numpy/random/_examples/numba/extending_distributions.py', 'venv/lib/python3.12/site-packages/numpy/core/defchararray.py', 'venv/lib/python3.12/site-packages/numpy/lib/npyio.py', 'venv/lib/python3.12/site-packages/numpy/_core/overrides.py', 'venv/lib/python3.12/site-packages/numpy/f2py/__main__.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_return_complex.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_deprecations.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_array_interface.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_routines.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_casting_unittests.py', 'venv/lib/python3.12/site-packages/numpy/_globals.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_old_ma.py', 'venv/lib/python3.12/site-packages/numpy/lib/_user_array_impl.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_umath_accuracy.py', 'venv/lib/python3.12/site-packages/numpy/lib/_index_tricks_impl.py', 'venv/lib/python3.12/site-packages/numpy/random/_pickle.py', 'venv/lib/python3.12/site-packages/numpy/core/_dtype_ctypes.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_nbit_base.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_scalar_ctors.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_packbits.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test__exceptions.py', 'venv/lib/python3.12/site-packages/numpy/linalg/tests/test_deprecations.py', 'venv/lib/python3.12/site-packages/numpy/strings/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_print.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_ufunc.py', 'venv/lib/python3.12/site-packages/numpy/core/einsumfunc.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_capi_maps.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_nanfunctions.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test__datasource.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test__iotools.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_return_integer.py', 'venv/lib/python3.12/site-packages/numpy/_core/defchararray.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/lib_version.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_longdouble.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/laguerre.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/tests/test_regression.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_overrides.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_quoted_character.py', 'venv/lib/python3.12/site-packages/numpy/_core/multiarray.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_subclassing.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/ndarray_shape_manipulation.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_add_docstring.py', 'venv/lib/python3.12/site-packages/numpy/f2py/common_rules.py', 'venv/lib/python3.12/site-packages/numpy/testing/_private/__init__.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_arrayterator.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/util.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_data.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/fromnumeric.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_memmap.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_value_attrspec.py', 'venv/lib/python3.12/site-packages/numpy/lib/_iotools.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_array_coercion.py', 'venv/lib/python3.12/site-packages/numpy/lib/_format_impl.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/ufuncs.py', 'venv/lib/python3.12/site-packages/numpy/typing/__init__.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_warnings.py', 'venv/lib/python3.12/site-packages/numpy/ctypeslib/__init__.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_array_utils.py', 'venv/lib/python3.12/site-packages/numpy/lib/_array_utils_impl.py', 'venv/lib/python3.12/site-packages/numpy/lib/array_utils.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_protocols.py', 'venv/lib/python3.12/site-packages/numpy/core/umath.py', 'venv/lib/python3.12/site-packages/numpy/lib/_histograms_impl.py', 'venv/lib/python3.12/site-packages/numpy/fft/tests/test_pocketfft.py', 'venv/lib/python3.12/site-packages/numpy/random/__init__.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/comparisons.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_reloading.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/tests/test_masked_matrix.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_direct.py', 'venv/lib/python3.12/site-packages/numpy/f2py/f2py2e.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/_dtype_ctypes.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/recfunctions.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/bitwise_ops.py', 'venv/lib/python3.12/site-packages/numpy/ma/extras.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_generator_mt19937_regressions.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_shape_base.py', 'venv/lib/python3.12/site-packages/numpy/core/function_base.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/ma.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_array_api_info.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_nep50_promotions.py', 'venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_ufunclike.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/__init__.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_utils.py', 'venv/lib/python3.12/site-packages/numpy/version.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_scalarmath.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/tests/test_matrix_linalg.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/lib/_polynomial_impl.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_arraymethod.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_core.py', 'venv/lib/python3.12/site-packages/numpy/_utils/_pep440.py', 'venv/lib/python3.12/site-packages/numpy/lib/_shape_base_impl.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_numpy_config.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_multithreading.py', 'venv/lib/python3.12/site-packages/numpy/f2py/f90mod_rules.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/core/fromnumeric.py', 'venv/lib/python3.12/site-packages/numpy/random/_examples/numba/extending.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_classes.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_regression.py', 'venv/lib/python3.12/site-packages/numpy/core/_internal.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_docs.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_deprecations.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_api.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/simple.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/lib_utils.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_simd.py', 'venv/lib/python3.12/site-packages/numpy/f2py/_src_pyf.py', 'venv/lib/python3.12/site-packages/numpy/lib/_type_check_impl.py', 'venv/lib/python3.12/site-packages/numpy/lib/_twodim_base_impl.py', 'venv/lib/python3.12/site-packages/numpy/ma/mrecords.py', 'venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py', 'venv/lib/python3.12/site-packages/numpy/testing/tests/test_utils.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_function_base.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_dlpack.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_hermite_e.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_scripts.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/tests/test_numeric.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/hermite.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/test_typing.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/polynomial.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/random.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/literal.py', 'venv/lib/python3.12/site-packages/numpy/lib/stride_tricks.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_f2cmap.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_symbol.py', 'venv/lib/python3.12/site-packages/numpy/typing/mypy_plugin.py', 'venv/lib/python3.12/site-packages/numpy/core/records.py', 'venv/lib/python3.12/site-packages/numpy/testing/__init__.py', 'venv/lib/python3.12/site-packages/numpy/ma/core.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/array_like.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_arraysetops.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_umath_complex.py', 'venv/lib/python3.12/site-packages/numpy/_utils/_inspect.py', 'venv/lib/python3.12/site-packages/numpy/core/numeric.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_dtype.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_public_api.py', 'venv/lib/python3.12/site-packages/numpy/lib/_arraysetops_impl.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_type_check.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_f2py2e.py', 'venv/lib/python3.12/site-packages/numpy/linalg/_linalg.py', 'venv/lib/python3.12/site-packages/numpy/core/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/_string_helpers.py', 'venv/lib/python3.12/site-packages/numpy/fft/_pocketfft.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_abstract_interface.py', 'venv/lib/python3.12/site-packages/numpy/f2py/__init__.py', 'venv/lib/python3.12/site-packages/numpy/lib/user_array.py', 'venv/lib/python3.12/site-packages/numpy/_core/_internal.py', 'venv/lib/python3.12/site-packages/numpy/core/_dtype.py', 'venv/lib/python3.12/site-packages/numpy/_core/_methods.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_nditer.py', 'venv/lib/python3.12/site-packages/numpy/_core/_add_newdocs.py', 'venv/lib/python3.12/site-packages/numpy/lib/scimath.py', 'venv/lib/python3.12/site-packages/numpy/_pyinstaller/__init__.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/lib_user_array.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/data/__init__.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_io.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_arrayobject.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_size.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_umath.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/legendre.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_polyutils.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_return_real.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_arraypad.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/ufunc_config.py', 'venv/lib/python3.12/site-packages/numpy/core/_utils.py', 'venv/lib/python3.12/site-packages/numpy/ma/__init__.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_extint128.py', 'venv/lib/python3.12/site-packages/numpy/lib/_ufunclike_impl.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_simd_module.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_einsum.py', 'venv/lib/python3.12/site-packages/numpy/_utils/_conversions.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_callback.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_random.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_datetime.py', 'venv/lib/python3.12/site-packages/numpy/_core/function_base.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_lazyloading.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_ctypeslib.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test__version.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_format.py', 'venv/lib/python3.12/site-packages/numpy/exceptions.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/tests/test_defmatrix.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_configtool.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_regression.py', 'venv/lib/python3.12/site-packages/numpy/lib/recfunctions.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_polynomial.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/ufunclike.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_mem_policy.py', 'venv/lib/python3.12/site-packages/numpy/lib/_utils_impl.py', 'venv/lib/python3.12/site-packages/numpy/tests/test__all__.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/einsumfunc.py', 'venv/lib/python3.12/site-packages/numpy/_core/__init__.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_printing.py', 'venv/lib/python3.12/site-packages/numpy/lib/_stride_tricks_impl.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_polynomial.py', 'venv/lib/python3.12/site-packages/numpy/fft/_helper.py', 'venv/lib/python3.12/site-packages/numpy/ma/tests/test_regression.py', 'venv/lib/python3.12/site-packages/numpy/_pyinstaller/tests/test_pyinstaller.py', 'venv/lib/python3.12/site-packages/numpy/_typing/_char_codes.py', 'venv/lib/python3.12/site-packages/numpy/fft/__init__.py', 'venv/lib/python3.12/site-packages/numpy/random/_examples/cffi/parse.py', 'venv/lib/python3.12/site-packages/numpy/_expired_attrs_2_0.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/_locales.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_unicode.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_regression.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_abc.py', 'venv/lib/python3.12/site-packages/numpy/conftest.py', 'venv/lib/python3.12/site-packages/numpy/matrixlib/defmatrix.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_modules.py', 'venv/lib/python3.12/site-packages/numpy/_core/memmap.py', 'venv/lib/python3.12/site-packages/numpy/f2py/diagnose.py', 'venv/lib/python3.12/site-packages/numpy/_core/arrayprint.py', 'venv/lib/python3.12/site-packages/numpy/f2py/auxfuncs.py', 'venv/lib/python3.12/site-packages/numpy/_core/tests/test_item_selection.py', 'venv/lib/python3.12/site-packages/numpy/testing/_private/extbuild.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_numpy_version.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/arithmetic.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/_polybase.py', 'venv/lib/python3.12/site-packages/numpy/tests/test_matlib.py', 'venv/lib/python3.12/site-packages/numpy/_distributor_init.py', 'venv/lib/python3.12/site-packages/numpy/lib/tests/test_mixins.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/__init__.py', 'venv/lib/python3.12/site-packages/numpy/f2py/tests/test_crackfortran.py', 'venv/lib/python3.12/site-packages/numpy/polynomial/tests/test_legendre.py', 'venv/lib/python3.12/site-packages/numpy/_core/strings.py', 'venv/lib/python3.12/site-packages/numpy/_core/cversions.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_randomstate_regression.py', 'venv/lib/python3.12/site-packages/numpy/f2py/_backends/_backend.py', 'venv/lib/python3.12/site-packages/numpy/typing/tests/data/pass/dtype.py', 'venv/lib/python3.12/site-packages/numpy/testing/print_coercion_tables.py', 'venv/lib/python3.12/site-packages/numpy/_pyinstaller/tests/pyinstaller-smoke.py', 'venv/lib/python3.12/site-packages/numpy/random/tests/test_randomstate.py', 'venv/lib/python3.12/site-packages/numpy/core/multiarray.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [92794]
+WARNING:  WatchFiles detected changes in 'venv/lib/python3.12/site-packages/h2/exceptions.py', 'venv/lib/python3.12/site-packages/hpack/huffman_constants.py', 'venv/lib/python3.12/site-packages/h2/events.py', 'venv/lib/python3.12/site-packages/hpack/hpack.py', 'venv/lib/python3.12/site-packages/aiofiles/threadpool/binary.py', 'venv/lib/python3.12/site-packages/hpack/exceptions.py', 'venv/lib/python3.12/site-packages/aiofiles/tempfile/__init__.py', 'venv/lib/python3.12/site-packages/faiss/contrib/torch/clustering.py', 'venv/lib/python3.12/site-packages/hpack/table.py', 'venv/lib/python3.12/site-packages/faiss/extra_wrappers.py', 'venv/lib/python3.12/site-packages/hyperframe/exceptions.py', 'venv/lib/python3.12/site-packages/faiss/contrib/vecs_io.py', 'venv/lib/python3.12/site-packages/aiofiles/base.py', 'venv/lib/python3.12/site-packages/faiss/contrib/factory_tools.py', 'venv/lib/python3.12/site-packages/faiss/contrib/torch/quantization.py', 'venv/lib/python3.12/site-packages/faiss/contrib/client_server.py', 'venv/lib/python3.12/site-packages/faiss/contrib/rpc.py', 'venv/lib/python3.12/site-packages/faiss/contrib/ondisk.py', 'venv/lib/python3.12/site-packages/h2/settings.py', 'venv/lib/python3.12/site-packages/faiss/loader.py', 'venv/lib/python3.12/site-packages/h2/frame_buffer.py', 'venv/lib/python3.12/site-packages/faiss/array_conversions.py', 'venv/lib/python3.12/site-packages/h2/errors.py', 'venv/lib/python3.12/site-packages/aiofiles/threadpool/__init__.py', 'venv/lib/python3.12/site-packages/h2/config.py', 'venv/lib/python3.12/site-packages/h2/windows.py', 'venv/lib/python3.12/site-packages/aiofiles/ospath.py', 'venv/lib/python3.12/site-packages/faiss/gpu_wrappers.py', 'venv/lib/python3.12/site-packages/faiss/contrib/torch_utils.py', 'venv/lib/python3.12/site-packages/hyperframe/flags.py', 'venv/lib/python3.12/site-packages/aiofiles/tempfile/temptypes.py', 'venv/lib/python3.12/site-packages/faiss/contrib/datasets.py', 'venv/lib/python3.12/site-packages/faiss/contrib/evaluation.py', 'venv/lib/python3.12/site-packages/aiofiles/__init__.py', 'venv/lib/python3.12/site-packages/faiss/contrib/big_batch_search.py', 'venv/lib/python3.12/site-packages/h2/utilities.py', 'venv/lib/python3.12/site-packages/hpack/struct.py', 'venv/lib/python3.12/site-packages/faiss/contrib/ivf_tools.py', 'venv/lib/python3.12/site-packages/faiss/contrib/clustering.py', 'venv/lib/python3.12/site-packages/h2/connection.py', 'venv/lib/python3.12/site-packages/faiss/contrib/exhaustive_search.py', 'venv/lib/python3.12/site-packages/faiss/contrib/torch/__init__.py', 'venv/lib/python3.12/site-packages/faiss/contrib/__init__.py', 'venv/lib/python3.12/site-packages/aiofiles/os.py', 'venv/lib/python3.12/site-packages/hpack/__init__.py', 'venv/lib/python3.12/site-packages/hyperframe/frame.py', 'venv/lib/python3.12/site-packages/hpack/huffman.py', 'venv/lib/python3.12/site-packages/faiss/swigfaiss.py', 'venv/lib/python3.12/site-packages/hyperframe/__init__.py', 'venv/lib/python3.12/site-packages/aiofiles/threadpool/text.py', 'venv/lib/python3.12/site-packages/hpack/huffman_table.py', 'venv/lib/python3.12/site-packages/h2/stream.py', 'venv/lib/python3.12/site-packages/faiss/__init__.py', 'venv/lib/python3.12/site-packages/faiss/contrib/inspect_tools.py', 'venv/lib/python3.12/site-packages/aiofiles/threadpool/utils.py', 'venv/lib/python3.12/site-packages/h2/__init__.py', 'venv/lib/python3.12/site-packages/faiss/class_wrappers.py'. Reloading...
+2026-07-05T04:29:12 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93237]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93237]
+2026-07-05T04:29:15 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93239]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40452 - "GET /api/v1/demo/wailly-excerpt?max_pages=2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40462 - "GET /api/v1/demo/wailly-excerpt?max_pages=2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42544 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'venv/lib/python3.12/site-packages/pytest_asyncio/__init__.py', 'venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93239]
+2026-07-05T04:33:13 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93493]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51142 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'src/artcb/memory/vector_store_faiss.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93493]
+2026-07-05T04:33:31 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93570]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57062 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57062 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57062 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57062 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'src/artcb/memory/node_index.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93570]
+2026-07-05T04:33:40 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93635]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52396 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52396 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52396 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52396 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52396 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'src/artcb/agents/pool_manager.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93635]
+2026-07-05T04:33:50 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93695]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55786 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55786 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55786 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55786 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55786 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55786 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'src/artcb/agents/pool_manager.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93695]
+2026-07-05T04:34:02 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93769]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59904 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'src/artcb/io/pdf_loader_async.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93769]
+2026-07-05T04:34:31 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93871]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:43462 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43462 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43462 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43462 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43462 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'src/artcb/io/pdf_loader_async.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93871]
+2026-07-05T04:34:42 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [93937]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33308 - "GET /api/v1/metrics HTTP/1.1" 200 OK
