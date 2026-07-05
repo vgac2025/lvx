@@ -19,11 +19,24 @@ TEAM STATION F
 
 **Réponse** :
 ```
-Victor Gabriel Araujo Chaves
+FOUNDER 1 : Victor Gabriel Araujo Chaves
+Email     : vgacofficiel@gmail.com
 Identifiant : Vgactech
+
+FOUNDER 2 : Deyi ZHAO
+Email     : deyizhao92@gmail.com
+
+FOUNDER 3 : Mathieu Charles
+Email     : 1989.mathieu.charles@gmail.com
+
+FOUNDER 4 : Steven Malonga
+Email     : Bapstnz@gmail.com
+
+FOUNDER 5 : Nada Debbi
+Email     : Nadadebbi1@gmail.com
 ```
 
-**Note** : Un seul membre identifié dans les fichiers du projet.
+**Note** : 5 founders avec allocation 1% chacun (210,000 ARTCB par founder).
 
 ---
 
