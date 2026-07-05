@@ -199,7 +199,7 @@ def store(body: StoreRequest, request: Request) -> dict:
         visibility=body.visibility,
     )
     state.pol_state["pol_score"] = pol.pol_score
-    state.pol_state["compression_rate"] = pol.delta_compression
+    state.pol_state["delta_compression"] = pol.delta_compression
     state.pol_state["validation_rate"] = pol.validation_rate
     state.pol_state["retrieval_accuracy"] = pol.retrieval_accuracy
     state.pol_state["blocks_accepted"] += 1

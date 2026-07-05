@@ -1,8 +1,8 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-05T10:21:00+02:00
-**Statut dépôt :** **MVP 100% OPÉRATIONNEL — CLI MINAGE + COMPARAISON SYSTÈMES**
-**Commit main :** `b10778e` → https://github.com/vgac2025/lvx
+**Horodatage :** 2026-07-05T10:34:00+02:00
+**Statut dépôt :** **MVP 100% OPÉRATIONNEL — MÉTRIQUES POL CORRIGÉES + WALLETS FOUNDERS + FAQ**
+**Commit main :** `c7fca71` → https://github.com/vgac2025/lvx
 
 ---
 
@@ -10,8 +10,8 @@
 
 | Branche | Commit | Contenu |
 |---------|--------|---------|
-| `origin/main` | `b10778e` | **MVP COMPLET + Sécurité + README + Monitoring + CLI Minage** |
-| `local/main` | `b10778e` | Synchronisé avec origin |
+| `origin/main` | `c7fca71` | **MVP COMPLET + CLI Minage + Wallets Founders + FAQ** |
+| `local/main` | À jour | **Métriques PoL corrigées + Wallets + FAQ** |
 | **Branche active** | `main` | **SYSTÈME 100% OPÉRATIONNEL** |
 
 **Dernières modifications** :
@@ -23,9 +23,13 @@
 - ✅ Rapport 034 : **RAPPORT FINAL SOUMISSION HACKATHON RAISE 2026** (720 lignes)
 - ✅ Rapport 035 : **MONITORING EXÉCUTION TEMPS RÉEL 100% OPÉRATIONNEL** (398 lignes)
 - ✅ Rapport 036 : **CLI MINAGE APPRENTISSAGE + COMPARAISON SYSTÈMES** (545 lignes)
+- ✅ Rapport 037 : **CORRECTION MÉTRIQUES POL + WALLETS FOUNDERS + FAQ** (672 lignes)
 - ✅ **CLI minage** : `scripts/mine_learning_simple.py` (283 lignes)
 - ✅ **Livre 2 ajouté** : `quintus_de_smyrne_la_fin_de_l_iliade.pdf` (1.4 MB)
 - ✅ **Minage 2 livres** : 100 ARTCB gagnés, réversibilité 100%
+- ✅ **Wallets founders** : 5 wallets créés, allocation 1% (210,000 ARTCB chacun)
+- ✅ **FAQ non-experts** : 37 questions, 8 sections, 672 lignes
+- ✅ **Correction métriques PoL** : Interface affiche maintenant 68% / 100% / 100%
 - ✅ **Module wallet** : Adresses Bech32-like Ed25519 (3 fichiers, 318 lignes)
 - ✅ **Module sécurité** : Anti-Sybil + Rate Limiting + Slashing (3 fichiers, 775 lignes)
 - ✅ **Block rewards** : Halving + distribution collective PoL (82 lignes)
@@ -53,9 +57,13 @@
 
 | Fichier | Rôle |
 |---------|------|
-| **`rapports/034_RAPPORT_FINAL_SOUMISSION_HACKATHON_RAISE_2026.md`** | **RAPPORT FINAL SOUMISSION** |
-| **`rapports/035_MONITORING_EXECUTION_TEMPS_REEL_100_POURCENT.md`** | **MONITORING TEMPS RÉEL VALIDÉ** |
+| **`rapports/037_CORRECTION_METRIQUES_POL_WALLETS_FOUNDERS_FAQ.md`** | **CORRECTION POL + WALLETS + FAQ** |
 | **`rapports/036_CLI_MINAGE_APPRENTISSAGE_COMPARAISON_SYSTEMES.md`** | **CLI MINAGE + COMPARAISON** |
+| **`rapports/035_MONITORING_EXECUTION_TEMPS_REEL_100_POURCENT.md`** | **MONITORING TEMPS RÉEL VALIDÉ** |
+| **`rapports/034_RAPPORT_FINAL_SOUMISSION_HACKATHON_RAISE_2026.md`** | **RAPPORT FINAL SOUMISSION** |
+| **`FAQ_NON_EXPERTS_ARTCB.md`** | **FAQ 37 questions pour non-experts** |
+| **`scripts/create_founders_wallets.py`** | **Génération wallets founders** |
+| **`data/founders/founders_guide.md`** | **Guide utilisation wallets** |
 | **`scripts/mine_learning_simple.py`** | **CLI minage apprentissage** |
 | **`README.md`** | **Installation 5 lignes + doc complète** |
 | **`rapports/033_IMPLEMENTATION_SYSTEME_MINAGE_REWARDS_COMPLET.md`** | Implémentation rewards complète |

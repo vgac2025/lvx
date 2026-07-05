@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "created_at": "2026-07-05T08:30:43.689094+00:00",
+  "total_supply_artcb": 21000000,
+  "founders_total_artcb": 1050000,
+  "founders_total_satoshi": 105000000000000,
+  "founders_percentage": 5.0,
+  "balances": [
+    {
+      "founder_id": 1,
+      "name": "Founder 1",
+      "address": "Q4Rk+a9ojFUVAxGuyCHFb+MY9G/RbBKrMz6rIZv7HyA=",
+      "balance_artcb": 210000,
+      "balance_satoshi": 21000000000000
+    },
+    {
+      "founder_id": 2,
+      "name": "Founder 2",
+      "address": "ROn7LCuqt8Cv5onRr0RohH6OUwys3YMTH/5DLP1MBho=",
+      "balance_artcb": 210000,
+      "balance_satoshi": 21000000000000
+    },
+    {
+      "founder_id": 3,
+      "name": "Founder 3",
+      "address": "1+PcD+qWNlnrj0uZDzkqiJZOEns7C5iXPsgmHAUaDqk=",
+      "balance_artcb": 210000,
+      "balance_satoshi": 21000000000000
+    },
+    {
+      "founder_id": 4,
+      "name": "Founder 4",
+      "address": "+xIt2hLjocCT2ARyLQuhVJxHWouFjAlSMofC5qbnuoM=",
+      "balance_artcb": 210000,
+      "balance_satoshi": 21000000000000
+    },
+    {
+      "founder_id": 5,
+      "name": "Founder 5",
+      "address": "5eukDvrMQC+YGDUcLBuBq8MCiXt5mymOXKqHO9ebakU=",
+      "balance_artcb": 210000,
+      "balance_satoshi": 21000000000000
+    }
+  ]
+}

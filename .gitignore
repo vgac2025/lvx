@@ -13,6 +13,8 @@ htmlcov/
 data/*
 !data/fixtures/
 !data/fixtures/README.md
+!data/founders/
+data/founders/founders_wallets.json
 *.pdf
 !data/fixtures/wailly_le_roi_de_l_inconnu.pdf
 *.faiss
