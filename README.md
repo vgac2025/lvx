@@ -344,7 +344,6 @@ MIT License — voir [LICENSE](LICENSE)
 
 ## 🙏 Remerciements
 
-- **IBM Bob** : LLM signed inference
 - **Gradium** : TTS/STT API (partenaire hackathon)
 - **Cursor** : IDE IA (piste hackathon)
 - **Cerebral Valley** : Organisation RAISE Summit
