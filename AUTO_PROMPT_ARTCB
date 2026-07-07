@@ -46,7 +46,14 @@ Règles ajoutées :
 - Attendre 50+ captures + 2 dashboards référence avant tout code
 - Remplacer `Demo.tsx` seulement après validation explicite
 
-## [2026-07-04T23:42:00Z] Correction — Cloud ≠ machine utilisateur
+## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
+
+- **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`
+- Source unique : `src/artcb/tokenomics.py`
+- **65 captures** (Supermemory + Cursor + Mempool) — branche `cursor/dashboard-captures-1fce`
+- **Wireframes ASCII** : `DASHBOARD_WIREFRAMES_ASCII.md` — 9 vues dont **V9 Console CLI**
+- Toujours **PAS de code dashboard** sans GO explicite utilisateur
+
 
 - Rapport `012` : rapports 011 exécutés sur VM cursor, pas sur PC utilisateur
 - `EXECUTION_MACHINE_UTILISATEUR.md` + `setup_machine_locale.sh`

@@ -1,10 +1,11 @@
-# CAHIER DES CHARGES — Dashboard ARTCB v1.3
+# CAHIER DES CHARGES — Dashboard ARTCB v1.4
 
-**Horodatage :** 2026-07-07T04:10:00Z  
-**Statut :** **EN ATTENTE VALIDATION** — 65 captures analysées (3 références), pas de code sans GO  
-**Branche spec :** `cursor/dashboard-spec-1fce` (≠ `main`, **pas de merge sans ordre**)  
-**Branche captures :** `cursor/dashboard-captures-1fce` — `f37c11b` — **65 PNG** ✅  
-**Références :** Supermemory.ai + Cursor.com + **Mempool.space** (nouveau lot +15)
+**Horodatage :** 2026-07-07T04:30:00Z  
+**Statut :** **EN ATTENTE VALIDATION** — wireframes ASCII complets, pas de code sans GO  
+**Branche spec :** `cursor/dashboard-spec-1fce`  
+**Branche captures :** `cursor/dashboard-captures-1fce` — **65 PNG**  
+**Branche tokenomics :** `cursor/block-reward-1artcb-1fce` — reward **1 ARTCB**  
+**Wireframes :** `DASHBOARD_WIREFRAMES_ASCII.md` — **9 vues + sous-pages + Console CLI**
 
 ---
 
@@ -317,7 +318,20 @@ flowchart TB
     REST --> DATA
 ```
 
-### 4.1 Wireframe ASCII (inspiré Supermemory + Cursor)
+### 4.1 Wireframe shell — voir `DASHBOARD_WIREFRAMES_ASCII.md`
+
+Document dédié avec **ASCII de chaque page et sous-page** :
+- V1 Accueil (+ alertes DEBUG)
+- V2 Mémoriser (+ empty, session)
+- V3 Graphe (+ search, reconstruct, nœud)
+- V4 Chaîne (+ détail bloc, verify) — reward **1 ARTCB/bloc**
+- V5 Wallets (+ créer, rewards history)
+- V6 Minage (+ historique) — style Mempool mining
+- V7 Système (+ métriques détaillées)
+- V8 Logs (+ demo_live JSON)
+- **V9 Console CLI** (+ minage, split preview)
+
+Résumé shell :
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
@@ -409,7 +423,7 @@ flowchart TB
 | **6** | Suppression `Demo.tsx` legacy | 95 % | Votre OK |
 | **7** | Rapport + tests + PR | 100 % | **Pas merge main sans vous** |
 
-**Avancement dashboard actuel : 45 %** (spec v1.3 + 65 captures, 0 % code)
+**Avancement dashboard actuel : 50 %** (spec + captures + wireframes ASCII, 0 % code)
 
 ---
 
@@ -531,4 +545,4 @@ Répondez **OUI/NON** ou commentez :
 
 ---
 
-**Document v1.3 — 3 références analysées, aucun code produit.**
+**Document v1.4 — wireframes ASCII complets + ref block reward 1 ARTCB.**
