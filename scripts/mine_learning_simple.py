@@ -198,7 +198,9 @@ def mine_book(pdf_path: Path, wallet_name: str = "miner_demo"):
     print(f"\n[6/6] Distribution rewards collectifs...")
     
     # Calcul reward avec halving
-    block_reward_satoshi = 50_00000000 >> (block.index // 210000)
+    from artcb.tokenomics import INITIAL_BLOCK_REWARD_SATOSHI, HALVING_INTERVAL
+
+    block_reward_satoshi = INITIAL_BLOCK_REWARD_SATOSHI >> (block.index // HALVING_INTERVAL)
     block_reward_artcb = block_reward_satoshi / 100_000_000
     
     # Un seul contributeur dans ce cas

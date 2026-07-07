@@ -13,6 +13,11 @@ from nacl import encoding, signing
 from artcb.chain import ffi
 from artcb.config import load_settings
 from artcb.pol.scorer import PolScorer
+from artcb.tokenomics import (
+    HALVING_INTERVAL,
+    INITIAL_BLOCK_REWARD_SATOSHI,
+    MAX_HALVINGS,
+)
 from artcb.security.anti_sybil import AntiSybilValidator
 from artcb.security.slashing import SlashingManager
 
@@ -207,25 +212,21 @@ class ChainManager:
     def _calculate_block_reward(self, block_index: int) -> int:
         """
         Calculate block reward with halving (TOKENOMICS §4).
-        
-        Initial: 50 ARTCB = 5,000,000,000 satoshi
+
+        Initial: 1 ARTCB = 100_000_000 satoshi
         Halving every 210,000 blocks
-        
+
         Args:
             block_index: Current block index
-        
+
         Returns:
             Reward in satoshi
         """
-        INITIAL_REWARD = 50 * 100_000_000  # 50 ARTCB in satoshi
-        HALVING_INTERVAL = 210_000
-        
         halvings = block_index // HALVING_INTERVAL
-        if halvings >= 64:  # After 64 halvings, reward is 0
+        if halvings >= MAX_HALVINGS:
             return 0
-        
-        reward = INITIAL_REWARD >> halvings  # Bitshift = divide by 2^halvings
-        return reward
+
+        return INITIAL_BLOCK_REWARD_SATOSHI >> halvings
 
     def verify(self) -> dict:
         try:
