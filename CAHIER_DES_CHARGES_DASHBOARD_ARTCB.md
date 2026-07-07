@@ -470,7 +470,7 @@ flowchart LR
 | **4** | V4–V6 chain/wallet/minage | 70 % | API réelle |
 | **5** | V7–V8 système + logs | 85 % | PROTOCOLE |
 | **6** | Suppression `Demo.tsx` legacy | 95 % | Votre OK |
-| **7** | Rapport + tests + PR | 100 % | **Pas merge main sans vous** |
+| **7** | Rapport + tests + PR | **100 %** | ✅ rapport 048 |
 
 **Avancement dashboard actuel : 100 %** (implémenté branche `cursor/dashboard-dev-1fce`, rapports 047–048)
 
