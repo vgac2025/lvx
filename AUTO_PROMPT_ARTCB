@@ -46,6 +46,13 @@ Règles ajoutées :
 - Attendre 50+ captures + 2 dashboards référence avant tout code
 - Remplacer `Demo.tsx` seulement après validation explicite
 
+## [2026-07-07T04:45:00Z] Groupes/réseaux — spec v1.5 (PAS de dev)
+
+- `GROUPES_RESEAUX_ARTCB.md` — modèle Public / Privé / Groupe
+- **Backend absent** — seul `visibility: private` stocké sans ACL
+- Dashboard V10 Groupes + sélecteur réseau header
+- Intégration bout en bout **après validation** — avant ou avec dashboard selon GO
+
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 
 - **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`

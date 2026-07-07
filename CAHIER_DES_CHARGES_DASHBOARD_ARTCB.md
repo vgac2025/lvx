@@ -1,11 +1,12 @@
-# CAHIER DES CHARGES — Dashboard ARTCB v1.4
+# CAHIER DES CHARGES — Dashboard ARTCB v1.5
 
-**Horodatage :** 2026-07-07T04:30:00Z  
-**Statut :** **EN ATTENTE VALIDATION** — wireframes ASCII complets, pas de code sans GO  
+**Horodatage :** 2026-07-07T04:45:00Z  
+**Statut :** **EN ATTENTE VALIDATION** — groupes/réseaux spec ajoutée, pas de code sans GO  
 **Branche spec :** `cursor/dashboard-spec-1fce`  
 **Branche captures :** `cursor/dashboard-captures-1fce` — **65 PNG**  
 **Branche tokenomics :** `cursor/block-reward-1artcb-1fce` — reward **1 ARTCB**  
-**Wireframes :** `DASHBOARD_WIREFRAMES_ASCII.md` — **9 vues + sous-pages + Console CLI**
+**Wireframes :** `DASHBOARD_WIREFRAMES_ASCII.md` — **10 vues** (+ V10 Groupes)  
+**Groupes :** `GROUPES_RESEAUX_ARTCB.md` — **Public / Privé / Groupe** (non implémenté backend)
 
 ---
 
@@ -28,6 +29,7 @@ Remplacer la démo hackathon actuelle (`frontend/src/pages/Demo.tsx`) par un **d
 2. S’inspire de **3 dashboards de référence** (65 captures analysées — §3).
 3. Reste en **mode DEBUG** (PROTOCOLE) tant que l’utilisateur ne demande pas autrement.
 4. Conserve le parcours cœur (mémoriser → graphe → PoL → blockchain) dans une vue dédiée.
+5. Supporte **trois réseaux** : **privé**, **groupe** (collaboratif), **public** — voir `GROUPES_RESEAUX_ARTCB.md`.
 
 ---
 
@@ -393,6 +395,49 @@ Résumé shell :
 - Lecture tail `logs/demo_live_latest.txt`, API JSON logs
 - **Lecture seule** — pas de mock
 
+### V10 — Groupes & Réseaux (NOUVEAU — à valider)
+
+**Expertise :** architecture multi-tenant + ACL wallet-native.
+
+| Fonction | Détail |
+|----------|--------|
+| Créer groupe | Nom projet, owner = wallet connecté |
+| Inviter membres | Par adresse `artcb1…` (signature join) |
+| Contexte réseau | Header : `Privé` / `Groupe: …` / `Public` |
+| Données filtrées | Graphes, blocs, wallets scoped au réseau actif |
+| Inspiration | Cursor Members + Supermemory Organization |
+
+**Backend requis (absent aujourd’hui) :** `GROUPES_RESEAUX_ARTCB.md` §4–6.
+
+```mermaid
+flowchart LR
+    subgraph HEADER["Sélecteur réseau"]
+        PR[Privé]
+        GR[Groupe Projet LVX]
+        PU[Public]
+    end
+    subgraph VUES["Toutes vues V1-V8"]
+        DATA[Données filtrées]
+    end
+    PR & GR & PU --> DATA
+```
+
+---
+
+## 5bis. Audit groupes — existe-t-il en backend ?
+
+| Capacité | Existe ? | Détail |
+|----------|----------|--------|
+| Créer un groupe | ❌ | Aucun endpoint `/groups` |
+| Inviter utilisateurs | ❌ | Aucun modèle invitation |
+| Comptes reliés dans groupe | ❌ | Pas de `GROUP_MEMBER` |
+| Partage fonctionnalités dans groupe | ❌ | Pas d’ACL |
+| `visibility: private` sur blocs | ⚠️ | Champ stocké, **pas de filtrage** |
+| `visibility: public` | ⚠️ | Accepté API, fédération non codée |
+| `visibility: shared/group` | ❌ | FAQ seulement |
+
+**Réponse : NON** — intégration **bout en bout** requise avant dashboard groupe complet.
+
 ---
 
 ## 6. Ce qui manque (gap analysis)
@@ -406,7 +451,8 @@ Résumé shell :
 | G5 | API minage (wrapper script) | P2 | Endpoint ou job status |
 | G6 | PDF Quintus dans repo | P2 | Asset manquant |
 | G7 | Tests E2E Playwright dashboard | P2 | Post-MVP |
-| G8 | Résolution conflit CDC §9.3 | **P0** | Validation utilisateur |
+| G9 | **Groupes multi-utilisateurs** | **P0** | Spec v1.5 — **backend absent** |
+| G10 | Résolution conflit CDC §9.3 | **P0** | Validation utilisateur |
 
 ---
 
@@ -414,8 +460,9 @@ Résumé shell :
 
 | Phase | Contenu | % estimé | Gate |
 |-------|---------|----------|------|
-| **0** | Réception 50+ captures + analyse 2 refs | **40 %** | ✅ Fait |
-| **1** | Maquettes figées + design tokens | 40 % | **Validation plan** |
+| **0** | Spec groupes + validation | **5 %** | **VOUS** — GROUPES_RESEAUX |
+| **0b** | Backend groupes G1–G3 | 25 % | Avant dashboard groupe |
+| **1** | Maquettes + design tokens | 50 % | Validation plan |
 | **2** | Layout shell (sidebar, routing) | 25 % | — |
 | **3** | Migration Demo → vues V2–V3 | 45 % | Tests manuels |
 | **4** | V4–V6 chain/wallet/minage | 70 % | API réelle |
@@ -423,7 +470,7 @@ Résumé shell :
 | **6** | Suppression `Demo.tsx` legacy | 95 % | Votre OK |
 | **7** | Rapport + tests + PR | 100 % | **Pas merge main sans vous** |
 
-**Avancement dashboard actuel : 50 %** (spec + captures + wireframes ASCII, 0 % code)
+**Avancement dashboard actuel : 50 %** (spec v1.5 + captures + wireframes ; groupes **0 %** code)
 
 ---
 
@@ -526,23 +573,29 @@ sequenceDiagram
 Répondez **OUI/NON** ou commentez :
 
 1. [ ] Pivot dashboard validé (remplace démo) malgré CDC §9.3 ?
-2. [ ] Architecture 8 vues (§5) OK ou à réduire ?
+2. [ ] Architecture 10 vues (V1–V9 + **V10 Groupes**) OK ?
 3. [ ] Branche séparée sans merge — OK ?
-4. [x] Push captures OK — `cursor/dashboard-captures-1fce` sur GitHub ✅
-5. [ ] Design tokens §3.4 + matrice §3.3 validés ?
-6. [ ] **GO code dashboard** — uniquement après 1–5
+4. [x] Push captures OK — 65 PNG ✅
+5. [ ] Block reward 1 ARTCB — branche `cursor/block-reward-1artcb-1fce` ?
+6. [ ] **Groupes/réseaux** (privé/groupe/public) — `GROUPES_RESEAUX_ARTCB.md` ?
+7. [ ] Backend groupes (G1–G3) **avant** dashboard groupe ?
+8. [ ] **GO implémentation groupes** : OUI / NON
+9. [ ] **GO code dashboard** — uniquement après 1–8
 
 ### Réponses attendues (copier-coller)
 
 ```
 1. Pivot dashboard : OUI / NON
-2. Architecture 8 vues : OUI / NON / MODIFIER (préciser)
-3. Branche isolée sans merge : OUI / NON
-4. Push captures : FAIT
-5. Design tokens + matrice : OUI / NON / MODIFIER
-6. GO code dashboard : OUI / NON
+2. Architecture 10 vues (+ V10 Groupes) : OUI / NON / MODIFIER
+3. Branche isolée : OUI / NON
+4. Captures : FAIT (65)
+5. Block reward 1 ARTCB : OUI / NON
+6. Groupes privé/groupe/public : OUI / NON / MODIFIER
+7. Backend groupes avant UI : OUI / NON
+8. GO groupes backend : OUI / NON
+9. GO code dashboard : OUI / NON
 ```
 
 ---
 
-**Document v1.4 — wireframes ASCII complets + ref block reward 1 ARTCB.**
+**Document v1.5 — groupes/réseaux spec + wireframes 10 vues.**

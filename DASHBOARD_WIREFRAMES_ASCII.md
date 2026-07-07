@@ -464,6 +464,93 @@
 
 ---
 
+## V10 — Groupes & Réseaux (NOUVEAU v1.5)
+
+**Expertise :** multi-tenant + ACL wallet-native (inspiré Cursor Teams + Supermemory Organization).
+
+### V10.0 — Sélecteur réseau (header global — toutes vues)
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ◆ ARTCB   [ Mon espace ▼ ]  PoL 0.60  [DEBUG]                              │
+│           ┌─────────────────────┐                                          │
+│           │ ● Privé (moi seul)  │  ← graphes/blocs personnels              │
+│           │ ○ Groupe: Projet LVX│  ← espace collaboratif                   │
+│           │ ○ Public            │  ← chaîne publique                       │
+│           │ + Créer un groupe   │                                          │
+│           └─────────────────────┘                                          │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+### V10.1 — Liste des groupes
+
+```
+┌─ Groupes ──────────────────────────────────────────────────────────────────┐
+│ [+ Créer un groupe]                                                         │
+│ ┌────────────────────────────────────────────────────────────────────────┐ │
+│ │ Nom           │ Rôle     │ Membres │ Blocs │ Graphes │ Actions         │ │
+│ │ Projet LVX    │ owner    │    4    │   12  │    8    │ [Ouvrir][Gérer] │ │
+│ │ Équipe RAISE  │ contrib. │   12    │    3  │    2    │ [Ouvrir]        │ │
+│ └────────────────────────────────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+### V10.2 — Créer un groupe
+
+```
+┌─ Groupes › Créer ──────────────────────────────────────────────────────────┐
+│ Nom du projet: [ Projet LVX_________________________ ]                       │
+│ Description:   [ Mémoire IR partagée hackathon_____ ]                       │
+│ Votre wallet:  artcb1q7x… (owner automatique)                              │
+│                              [Créer] [Annuler]                             │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+### V10.3 — Inviter des membres (style Cursor « Créer une équipe »)
+
+```
+┌─ Groupe: Projet LVX › Membres ──────────────────────────────────────────────┐
+│ Membres (4)                                    [+ Inviter]                 │
+│ ┌────────────────────────────────────────────────────────────────────────┐ │
+│ │ Adresse wallet      │ Rôle        │ PoL moy │ Actions                  │ │
+│ │ artcb1q7x… (vous)   │ owner       │  0.72   │ —                        │ │
+│ │ artcb1bob…          │ contributor │  0.65   │ [Rôle ▼] [Retirer]       │ │
+│ │ artcb1car…          │ viewer      │  —      │ [Rôle ▼] [Retirer]       │ │
+│ └────────────────────────────────────────────────────────────────────────┘ │
+│                                                                            │
+│ Inviter par adresse wallet:                                                │
+│ [ artcb1________________________________ ] [Envoyer invitation]            │
+│ Lien signé (optionnel): https://lvx.local/join/g_abc123?sig=…  [Copier]    │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+### V10.4 — Espace groupe actif (filtre toutes vues)
+
+```
+┌─ Projet LVX › Accueil (contexte GROUPE) ───────────────────────────────────┐
+│ Réseau: GROUPE — visible uniquement par les 4 membres                      │
+│ ┌──────────┐ ┌──────────┐ ┌──────────┐                                     │
+│ │ Graphes  │ │ Blocs    │ │ Rewards  │  ← agrégés groupe, pas perso        │
+│ │    8     │ │   12     │ │  8.5 ₳   │                                     │
+│ └──────────┘ └──────────┘ └──────────┘                                     │
+│ [Mémoriser dans le groupe] [Voir graphe partagé] [Chaîne groupe]           │
+│ ⚠ Les données privées (hors groupe) ne sont PAS visibles ici               │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+### V10.5 — Signer un bloc en mode groupe
+
+```
+┌─ Graphe › Signer bloc ─────────────────────────────────────────────────────┐
+│ Visibilité:  ( ) Privé   (●) Groupe: Projet LVX   ( ) Public              │
+│ Contributors groupe (PoL collectif):                                        │
+│   Alice 0.80 · Bob 0.70 → reward 1 ARTCB split proportionnel              │
+│                              [Signer bloc] [Annuler]                       │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## Matrice pages / sous-pages / API
 
 | Vue | Sous-pages | Endpoints / scripts |
