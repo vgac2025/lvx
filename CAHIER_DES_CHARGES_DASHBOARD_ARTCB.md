@@ -1,9 +1,10 @@
-# CAHIER DES CHARGES — Dashboard ARTCB v1.0
+# CAHIER DES CHARGES — Dashboard ARTCB v1.1
 
-**Horodatage :** 2026-07-07T01:30:00Z  
-**Statut :** **EN ATTENTE VALIDATION UTILISATEUR** — pas de développement avant captures + accord explicite  
-**Branche cible dev :** `cursor/dashboard-spec-1fce` (≠ `main`, **pas de merge sans ordre**)  
-**Références :** PROTOCOLE_ARTCB, AUTO_PROMPT_ARTCB, CAHIER_DES_CHARGES_ARTCB v1.2, 2 dashboards inspirants (à recevoir)
+**Horodatage :** 2026-07-07T02:15:00Z  
+**Statut :** **EN ATTENTE VALIDATION UTILISATEUR** — pas de développement avant push captures + accord explicite  
+**Branche spec :** `cursor/dashboard-spec-1fce` (≠ `main`, **pas de merge sans ordre**)  
+**Branche captures :** `cursor/dashboard-captures-1fce` — commit local `8edfa3b` (50 PNG), **push GitHub en attente**  
+**Références :** PROTOCOLE_ARTCB, AUTO_PROMPT_ARTCB, CAHIER_DES_CHARGES_ARTCB v1.2, 2 dashboards inspirants (captures locales)
 
 ---
 
@@ -80,7 +81,32 @@ Remplacer la démo hackathon actuelle (`frontend/src/pages/Demo.tsx`) par un **d
 
 ## 3. Inspiration — 2 dashboards de référence
 
-**⏸ BLOQUÉ** — en attente des **50+ captures** et de la **branche** contenant les 2 exemples.
+**⏸ Analyse visuelle bloquée** — 50 PNG commités sur votre machine (`captures_dashboard_reference/`), **0 sur GitHub** tant que le push SSH n’est pas corrigé (`vgacgit00` → `vgac2025`). Voir `INSTRUCTIONS_PUSH_CAPTURES_SSH.md`.
+
+### 3.0 Hypothèse de lecture des 50 captures (à confirmer après pull)
+
+Les horodatages (01:33 → 02:07) forment une **séquence continue** — probablement **un produit parcouru en profondeur**, ou **deux dashboards enchaînés**. Après réception sur Cloud Agent :
+
+| Lot | Plage horaire estimée | Analyse prévue |
+|-----|----------------------|----------------|
+| Lot A | 01:33 – 01:52 | Layout, navigation, palette |
+| Lot B | 01:57 – 02:07 | Vues secondaires, tables, monitoring |
+
+```mermaid
+flowchart LR
+    subgraph REFS["2 dashboards référence"]
+        A[Captures lot A]
+        B[Captures lot B]
+    end
+    subgraph SYNTH["Synthèse ARTCB"]
+        L[Layout shell]
+        T[Design tokens]
+        V[8 vues fonctionnelles]
+    end
+    A --> L
+    B --> L
+    L --> T --> V
+```
 
 ### 3.1 Ce que nous analyserons sur chaque référence
 
@@ -232,7 +258,80 @@ flowchart TB
 | **6** | Suppression `Demo.tsx` legacy | 95 % | Votre OK |
 | **7** | Rapport + tests + PR | 100 % | **Pas merge main sans vous** |
 
-**Avancement dashboard actuel : 5 %** (spec seulement)
+**Avancement dashboard actuel : 15 %** (spec + 50 captures côté vous, 0 analysées côté agent)
+
+---
+
+## 7bis. Migration Demo.tsx → Dashboard (cartographie détaillée)
+
+**Expertise mobilisée :** architecture frontend React + mapping API.
+
+```mermaid
+flowchart TB
+    subgraph DEMO["Demo.tsx actuel (à remplacer)"]
+        D1[Textarea + Wailly]
+        D2[GraphViewer]
+        D3[AgentPanel]
+        D4[PolGauge]
+        D5[Reconstruct]
+        D6[SystemMetrics]
+        D7[Footer bloc signé]
+    end
+
+    subgraph DASH["Dashboard cible"]
+        V2[Vue Mémoriser]
+        V3[Vue Graphe]
+        V3A[Agents + PoL intégrés]
+        V3B[Reconstruct]
+        V7[Vue Système]
+        V4[Vue Chaîne]
+        V1[Vue Accueil KPI]
+    end
+
+    D1 --> V2
+    D2 --> V3
+    D3 --> V3A
+    D4 --> V3A
+    D4 --> V1
+    D5 --> V3B
+    D6 --> V7
+    D7 --> V4
+```
+
+| Bloc Demo actuel | Lignes / comportement | Destination dashboard | Réutilisation |
+|------------------|----------------------|----------------------|---------------|
+| Header titre hackathon | `Demo.tsx` L179–184 | Header global + breadcrumb | **Refonte** |
+| SystemMetrics | L186–189 | Vue Système + mini-widget header | **Réutiliser** |
+| Textarea + Mémoriser | L200–215 | Vue Mémoriser | **Migrer** |
+| WebSocket encode | L53–75 | Vue Mémoriser (animation) | **Migrer** |
+| GraphViewer + search | L217–251 | Vue Graphe | **Migrer** |
+| AgentPanel | L262 | Panneau droit Graphe / Mémoriser | **Migrer** |
+| PolGauge | L263 | Accueil KPI + détail Graphe | **Migrer** |
+| Reconstruct | L252–258 | Modal / split Vue Graphe | **Migrer** |
+| Footer chain | L269–274 | Vue Chaîne + badge header | **Enrichir** |
+| `fetchChain()` | `client.ts` L55–58 | Vue Chaîne (non utilisé aujourd’hui) | **Brancher** |
+| Wallets API | backend seul | Vue Wallets | **Nouveau** |
+| Logs fichiers | `logs/` | Vue Logs DEBUG | **Nouveau** |
+
+### Flux utilisateur cible (parcours CDC §9.2 conservé)
+
+```mermaid
+sequenceDiagram
+    participant U as Utilisateur
+    participant M as Vue Mémoriser
+    participant G as Vue Graphe
+    participant API as FastAPI
+    participant C as Vue Chaîne
+
+    U->>M: Coller texte + Mémoriser
+    M->>API: WS encode + POST /agents/run
+    API-->>G: graph_id + PoL
+    U->>G: Explorer, Search, Reconstruct
+    U->>G: Sign block
+    G->>API: POST /store
+    API-->>C: Nouveau bloc
+    C-->>U: Table blocs + verify
+```
 
 ---
 
@@ -264,8 +363,19 @@ Répondez **OUI/NON** ou commentez :
 1. [ ] Pivot dashboard validé (remplace démo) malgré CDC §9.3 ?
 2. [ ] Architecture 8 vues (§5) OK ou à réduire ?
 3. [ ] Branche séparée sans merge — OK ?
-4. [ ] Envoi des 50+ captures + branche références — **quand prêt, dites « captures envoyées »**
+4. [ ] Push captures OK (`cursor/dashboard-captures-1fce` sur GitHub) ?
+5. [ ] Envoi complet — **quand push OK, dites « captures envoyées »**
+
+### Réponses attendues (copier-coller)
+
+```
+1. Pivot dashboard : OUI / NON
+2. Architecture 8 vues : OUI / NON / MODIFIER (préciser)
+3. Branche isolée sans merge : OUI / NON
+4. Push captures : FAIT / EN COURS
+5. GO code dashboard : OUI / NON (uniquement après 1–4)
+```
 
 ---
 
-**Document créé pour validation — aucun code produit.**
+**Document v1.1 — validation uniquement, aucun code produit.**
