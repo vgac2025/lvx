@@ -430,15 +430,15 @@ flowchart LR
 
 | Capacité | Existe ? | Détail |
 |----------|----------|--------|
-| Créer un groupe | ❌ | Aucun endpoint `/groups` |
-| Inviter utilisateurs | ❌ | Aucun modèle invitation |
-| Comptes reliés dans groupe | ❌ | Pas de `GROUP_MEMBER` |
-| Partage fonctionnalités dans groupe | ❌ | Pas d’ACL |
-| `visibility: private` sur blocs | ⚠️ | Champ stocké, **pas de filtrage** |
-| `visibility: public` | ⚠️ | Accepté API, fédération non codée |
-| `visibility: shared/group` | ❌ | FAQ seulement |
+| Créer un groupe | ✅ | `POST /api/v1/groups` |
+| Inviter utilisateurs | ✅ | `POST /api/v1/groups/{id}/members` |
+| Comptes reliés dans groupe | ✅ | `GroupManager` JSON |
+| Partage fonctionnalités dans groupe | ✅ | `visibility=group` + filtre chain |
+| `visibility: private` sur blocs | ✅ | stocké + filtré |
+| `visibility: public` | ✅ | API + filtre |
+| `visibility: shared/group` | ✅ | store + chain filter |
 
-**Réponse : NON** — intégration **bout en bout** requise avant dashboard groupe complet.
+**Réponse : OUI** — intégration bout en bout implémentée (rapport 048).
 
 ---
 
