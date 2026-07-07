@@ -26,36 +26,37 @@ export function GraphViewer({ graph, selectedNodeId, highlightIds = [], onSelect
               "text-wrap": "wrap",
               "text-max-width": "80px",
               "font-size": "10px",
-              color: "#e8eef7",
-              "background-color": "#334155",
-              "border-width": "2px",
-              "border-color": "#64748b",
-              width: "36px",
-              height: "36px",
+              color: "#ffffff",
+              "background-color": "#7f7f7f",
+              "border-width": "3px",
+              "border-color": "#b0b0b0",
+              width: "40px",
+              height: "40px",
+              shape: "rectangle",
             },
           },
           {
             selector: "node.selected",
             style: {
-              "background-color": "#7c3aed",
-              "border-color": "#c4b5fd",
-              width: "44px",
-              height: "44px",
+              "background-color": "#5d9b3a",
+              "border-color": "#ffcc00",
+              width: "48px",
+              height: "48px",
             },
           },
           {
             selector: "node.highlight",
             style: {
-              "background-color": "#2563eb",
-              "border-color": "#93c5fd",
+              "background-color": "#4aedd9",
+              "border-color": "#ffffff",
             },
           },
           {
             selector: "edge",
             style: {
-              width: "2px",
-              "line-color": "#475569",
-              "target-arrow-color": "#475569",
+              width: "3px",
+              "line-color": "#8b6914",
+              "target-arrow-color": "#8b6914",
               "target-arrow-shape": "triangle",
               "curve-style": "bezier",
             },
@@ -113,7 +114,7 @@ export function GraphViewer({ graph, selectedNodeId, highlightIds = [], onSelect
   return (
     <div
       ref={containerRef}
-      style={{ width: "100%", height: 420, borderRadius: 8, border: "1px solid #1e2a3a" }}
+      style={{ width: "100%", height: "100%", borderRadius: 0 }}
       aria-label="Knowledge graph viewer"
     />
   );

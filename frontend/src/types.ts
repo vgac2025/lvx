@@ -25,6 +25,8 @@ export interface PolMetrics {
   validation_rate: number;
   retrieval_accuracy: number;
   block_accepted: boolean;
+  blocks_accepted?: number;
+  blocks_rejected?: number;
 }
 
 export interface AgentMessage {
@@ -40,4 +42,15 @@ export interface ChainBlock {
   signature: string;
   pol_score: number;
   graph_id: string;
+  block_reward?: number;
+  visibility?: string;
+  group_id?: string | null;
 }
+
+export interface WalletInfo {
+  address: string;
+  name: string;
+  balance_satoshi?: number;
+}
+
+export type NetworkVisibility = "private" | "group" | "public";

@@ -1,13 +1,32 @@
+/* ARTCB Dashboard — Retro 2D × Minecraft design tokens */
+
 :root {
-  --bg: #0b0f14;
-  --panel: #121820;
-  --border: #1e2a3a;
-  --text: #e8eef7;
-  --muted: #8fa3bf;
-  --explorer: #3b82f6;
-  --critic: #22c55e;
-  --accent: #a78bfa;
-  --danger: #f87171;
+  --mc-bedrock: #2d2d2d;
+  --mc-deepslate: #505050;
+  --mc-stone: #7f7f7f;
+  --mc-dirt: #8b6914;
+  --mc-grass: #5d9b3a;
+  --mc-sky: #6ba3d6;
+  --mc-diamond: #4aedd9;
+  --mc-gold: #ffcc00;
+  --mc-redstone: #ff3333;
+  --mc-obsidian: #1a0a2e;
+
+  --bg: var(--mc-bedrock);
+  --panel: var(--mc-stone);
+  --border-light: #b0b0b0;
+  --border-dark: #3a3a3a;
+  --text: #ffffff;
+  --muted: #c6c6c6;
+  --explorer: var(--mc-sky);
+  --critic: var(--mc-grass);
+  --accent: var(--mc-diamond);
+  --danger: var(--mc-redstone);
+  --warning: var(--mc-gold);
+
+  --font-hud: "Press Start 2P", monospace;
+  --font-body: "VT323", monospace;
+  --grid: 16px;
 }
 
 * {
@@ -16,26 +35,55 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 20px;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  image-rendering: pixelated;
 }
 
+h1,
+h2,
+h3,
+.dashboard-title {
+  font-family: var(--font-hud);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+h2 {
+  font-size: 0.65rem;
+  margin: 0 0 0.75rem;
+}
+
+a {
+  color: var(--mc-diamond);
+}
+
+/* Minecraft bevel button */
 button {
   cursor: pointer;
-  border: 1px solid var(--border);
-  background: var(--panel);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  border: 4px solid;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  background: var(--mc-deepslate);
   color: var(--text);
-  border-radius: 8px;
-  padding: 0.55rem 1rem;
-  font-size: 0.9rem;
+  border-radius: 0;
+  padding: 0.4rem 0.85rem;
+  text-transform: uppercase;
+}
+
+button:active {
+  border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+  transform: translate(1px, 1px);
 }
 
 button.primary {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
-  border-color: transparent;
-  font-weight: 600;
+  background: var(--mc-grass);
+  border-color: #8fd45a #3d6b24 #3d6b24 #8fd45a;
 }
 
 button:disabled {
@@ -44,13 +92,15 @@ button:disabled {
 }
 
 input,
-textarea {
-  background: var(--panel);
-  border: 1px solid var(--border);
+textarea,
+select {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  background: var(--mc-obsidian);
+  border: 4px solid var(--border-dark);
   color: var(--text);
-  border-radius: 8px;
-  padding: 0.65rem 0.75rem;
-  font: inherit;
+  border-radius: 0;
+  padding: 0.5rem 0.65rem;
 }
 
 textarea {
@@ -59,52 +109,595 @@ textarea {
   resize: vertical;
 }
 
-.app-shell {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem;
+.panel,
+.mc-slot {
+  background: var(--panel);
+  border: 4px solid;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  border-radius: 0;
+  padding: calc(var(--grid) * 0.75);
+}
+
+.mc-slot-gold {
+  border-color: var(--mc-gold) var(--mc-dirt) var(--mc-dirt) var(--mc-gold);
+}
+
+.mc-block {
+  display: inline-block;
+  min-width: 52px;
+  padding: 4px 6px;
+  text-align: center;
+  font-family: var(--font-hud);
+  font-size: 0.45rem;
+  border: 3px solid;
+  border-radius: 0;
+}
+
+.mc-block-pending {
+  background: var(--mc-grass);
+  border-color: #8fd45a #3d6b24 #3d6b24 #8fd45a;
+}
+
+.mc-block-mined {
+  background: #7b5ea7;
+  border-color: #b08fe0 #4a3568 #4a3568 #b08fe0;
+}
+
+.mc-block-reward {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--mc-gold);
+}
+
+.mc-block-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge-debug {
+  font-family: var(--font-hud);
+  font-size: 0.5rem;
+  color: var(--mc-redstone);
+  animation: pixel-blink 1.2s step-end infinite;
+}
+
+@keyframes pixel-blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Dashboard shell */
+.mc-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.mc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem var(--grid);
+  background: var(--mc-dirt);
+  border-bottom: 4px solid var(--border-dark);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.mc-header-left,
+.mc-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mc-logo {
+  font-family: var(--font-hud);
+  font-size: 0.55rem;
+}
+
+.mc-api-badge {
+  color: var(--mc-grass);
+}
+
+.mc-api-down {
+  color: var(--mc-redstone);
+}
+
+.mc-header-kpi {
+  color: var(--muted);
+}
+
+.mc-console-link {
+  font-family: var(--font-hud);
+  font-size: 0.45rem;
+  text-decoration: none;
+  padding: 0.35rem 0.5rem;
+  border: 3px solid var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  background: var(--mc-deepslate);
+  color: var(--text);
+}
+
+.mc-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.mc-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: var(--mc-deepslate);
+  border-right: 4px solid var(--border-dark);
+  padding: 0.5rem 0;
+  overflow-y: auto;
+}
+
+.mc-nav-section {
+  font-family: var(--font-hud);
+  font-size: 0.4rem;
+  color: var(--muted);
+  padding: 0.75rem 0.75rem 0.35rem;
+}
+
+.mc-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.05rem;
+  border-left: 4px solid transparent;
+}
+
+.mc-nav-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mc-nav-active {
+  background: var(--mc-grass);
+  border-left-color: var(--mc-gold);
+  color: #fff;
+}
+
+.mc-nav-icon {
+  font-family: var(--font-hud);
+  font-size: 0.45rem;
+  width: 1rem;
+}
+
+.mc-main {
+  flex: 1;
+  overflow: auto;
+  padding: var(--grid);
+  background: var(--bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+}
+
+.mc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mc-network-select {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.mc-network-select select {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.95rem;
+}
+
+.chain-footer {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.5rem var(--grid);
+  background: var(--mc-deepslate);
+  border-top: 4px solid var(--border-dark);
+}
+
+/* Page layout */
+.mc-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid);
+}
+
+.mc-hotbar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem;
+}
+
+.mc-kpi-slot {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  min-height: 72px;
+}
+
+.mc-kpi-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.mc-kpi-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.mc-kpi-value {
+  font-family: var(--font-hud);
+  font-size: 0.55rem;
+  margin-top: 0.25rem;
+}
+
+.mc-kpi-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.mc-hp-bar {
+  margin-top: 0.35rem;
+  height: 8px;
+  background: var(--mc-bedrock);
+  border: 2px solid var(--border-dark);
+}
+
+.mc-hp-fill {
+  height: 100%;
+  background: var(--mc-grass);
+}
+
+.mc-muted {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.mc-gold-text {
+  color: var(--mc-gold);
+}
+
+.mc-mono {
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+}
+
+.mc-link-pill {
+  font-size: 0.9rem;
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+  border: 2px solid var(--mc-diamond);
+}
+
+.mc-checklist-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mc-checklist-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 2px dashed var(--border-dark);
+}
+
+.mc-check-box {
+  font-family: var(--font-hud);
+  font-size: 0.45rem;
+}
+
+.mc-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .demo-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 1rem;
+  grid-template-columns: 1fr 300px;
+  gap: var(--grid);
 }
 
 @media (max-width: 960px) {
+  .mc-sidebar {
+    width: 160px;
+  }
   .demo-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1rem;
+.mc-side-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid);
 }
 
-.panel h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1rem;
+.mc-graph-viewport {
+  min-height: 280px;
+  height: 280px;
+  border: 4px solid var(--border-dark);
+  background: var(--mc-bedrock);
+}
+
+.mc-graph-viewport-tall {
+  min-height: 360px;
+  height: 360px;
+}
+
+.mc-crafting-area {
+  min-height: 100px;
+}
+
+.mc-node-detail {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+}
+
+.mc-search-input {
+  flex: 1;
+  min-width: 160px;
 }
 
 .toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  align-items: center;
   margin-top: 0.75rem;
 }
 
-.chain-footer {
+/* F3 debug */
+.mc-f3 {
+  font-family: var(--font-body);
+  color: var(--mc-grass);
+  background: rgba(0, 0, 0, 0.85);
+  padding: var(--grid);
+  border: 4px solid var(--border-dark);
+}
+
+.mc-f3-title {
+  font-family: var(--font-hud);
+  font-size: 0.5rem;
+  margin: 0 0 1rem;
+}
+
+/* Table */
+.mc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.mc-table th,
+.mc-table td {
+  border: 2px solid var(--border-dark);
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+}
+
+.mc-table th {
+  background: var(--mc-deepslate);
+  font-family: var(--font-hud);
+  font-size: 0.4rem;
+}
+
+/* Chest / wallets */
+.mc-chest-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+}
+
+.mc-chest-slot {
+  aspect-ratio: 1;
+  background: var(--mc-bedrock);
+  border: 3px solid;
+  border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+  padding: 4px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.mc-chest-filled {
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  background: var(--mc-deepslate);
+}
+
+.mc-chest-icon {
+  font-size: 1rem;
+}
+
+.mc-chest-name {
+  font-weight: bold;
+  font-size: 0.7rem;
+}
+
+.mc-chest-addr {
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+/* Mining */
+.mc-mining-hero {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.mc-pickaxe {
+  font-size: 2.5rem;
+}
+
+/* Chat logs */
+.mc-chat-log {
+  max-height: 60vh;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.mc-chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mc-chat-list li {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mc-chat-ts {
+  color: var(--mc-gold);
+}
+
+.mc-chat-event {
+  color: var(--mc-diamond);
+}
+
+.mc-error {
+  color: var(--mc-redstone);
+}
+
+/* Console */
+.mc-console-page {
+  height: calc(100vh - 140px);
+}
+
+.mc-console {
+  flex: 1;
+  min-height: 300px;
+  background: var(--mc-obsidian);
+  border: 4px solid var(--border-dark);
+  padding: var(--grid);
+  overflow-y: auto;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: #7cfc00;
+}
+
+.mc-console-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.mc-console-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.mc-console-input {
+  flex: 1;
+  color: #7cfc00;
+  background: #000;
+}
+
+/* Groups */
+.mc-player-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 2px dashed var(--border-dark);
+}
+
+.mc-player-head {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.mc-groups-note {
   margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  background: #0f172a;
-  border: 1px solid var(--border);
+}
+
+/* Empty states */
+.mc-empty-panel {
+  text-align: center;
+  padding: 2rem;
+}
+
+.mc-empty-icon {
+  font-size: 2.5rem;
+}
+
+/* Agent messages MC style */
+.mc-agent-msg {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border: 3px solid var(--border-dark);
+  background: var(--mc-bedrock);
+}
+
+.mc-agent-explorer {
+  border-left: 4px solid var(--explorer);
+}
+
+.mc-agent-critic {
+  border-left: 4px solid var(--critic);
+}
+
+/* PoL bar MC */
+.mc-pol-bar-wrap {
+  margin-top: 0.5rem;
+}
+
+.mc-pol-bar {
+  height: 12px;
+  background: var(--mc-bedrock);
+  border: 2px solid var(--border-dark);
+}
+
+.mc-pol-bar-fill {
+  height: 100%;
+  background: var(--mc-grass);
+}
+
+.mc-pol-bar-fill-warn {
+  background: var(--mc-gold);
+}
+
+/* Reconstruct */
+.mc-pre {
+  white-space: pre-wrap;
   font-size: 0.85rem;
-  color: var(--critic);
+  background: var(--mc-bedrock);
+  padding: 0.75rem;
+  border: 3px solid var(--border-dark);
+  max-height: 200px;
+  overflow: auto;
+  border-radius: 0;
+}
+
+.mc-pre-ok {
+  border-color: var(--mc-grass);
+  background: #1a3d1a;
+}
+
+.mc-f3-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }

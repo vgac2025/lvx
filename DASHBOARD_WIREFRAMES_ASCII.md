@@ -1,8 +1,8 @@
 # Dashboard ARTCB — Wireframes ASCII (toutes pages + CLI)
 
 **Horodatage :** 2026-07-07T04:30:00Z  
-**CDC parent :** `CAHIER_DES_CHARGES_DASHBOARD_ARTCB.md` v1.4  
-**Références :** Supermemory + Cursor + Mempool  
+**CDC parent :** `CAHIER_DES_CHARGES_DASHBOARD_ARTCB.md` v1.6  
+**Design :** `DESIGN_RETRO_2D_MINECRAFT_ARTCB.md` — pixel + blocs MC  
 **Tokenomics :** block reward **1 ARTCB** (halving 210k blocs)  
 **PROTOCOLE :** données réelles API, badge DEBUG, pas de mock
 

@@ -47,9 +47,45 @@ export async function decodeGraph(graphId: string) {
   return data as { original_text: string; similarity: number; reversible: boolean };
 }
 
-export async function storeGraph(graphId: string, sessionId: string) {
-  const { data } = await api.post("/store", { graph_id: graphId, session_id: sessionId });
-  return data as { block_index: number; hash: string; signature: string; pol_score: number };
+export async function storeGraph(
+  graphId: string,
+  sessionId: string,
+  visibility: "private" | "group" | "public" = "private",
+) {
+  const { data } = await api.post("/store", {
+    graph_id: graphId,
+    session_id: sessionId,
+    visibility,
+  });
+  return data as {
+    block_index: number;
+    hash: string;
+    signature: string;
+    pol_score: number;
+    block_reward?: number;
+  };
+}
+
+export async function fetchWallets() {
+  const { data } = await api.get("/wallet/list");
+  return data.wallets as Array<{ address: string; name: string }>;
+}
+
+export async function fetchWalletBalance(address: string) {
+  const { data } = await api.get(`/wallet/balance/${address}`);
+  return data as { balance_satoshi: number; balance_artcb: number };
+}
+
+export async function fetchRtlegEvents() {
+  const { data } = await api.get("/rtleg/events");
+  return data.events as Array<{
+    event_id: string;
+    timestamp: string;
+    session_id: string;
+    agent: string;
+    event_type: string;
+    payload?: Record<string, unknown>;
+  }>;
 }
 
 export async function fetchChain(): Promise<ChainBlock[]> {

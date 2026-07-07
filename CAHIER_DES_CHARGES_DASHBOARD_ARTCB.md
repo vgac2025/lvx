@@ -1,12 +1,8 @@
-# CAHIER DES CHARGES — Dashboard ARTCB v1.5
+# CAHIER DES CHARGES — Dashboard ARTCB v1.6
 
-**Horodatage :** 2026-07-07T04:45:00Z  
-**Statut :** **EN ATTENTE VALIDATION** — groupes/réseaux spec ajoutée, pas de code sans GO  
-**Branche spec :** `cursor/dashboard-spec-1fce`  
-**Branche captures :** `cursor/dashboard-captures-1fce` — **65 PNG**  
-**Branche tokenomics :** `cursor/block-reward-1artcb-1fce` — reward **1 ARTCB**  
-**Wireframes :** `DASHBOARD_WIREFRAMES_ASCII.md` — **10 vues** (+ V10 Groupes)  
-**Groupes :** `GROUPES_RESEAUX_ARTCB.md` — **Public / Privé / Groupe** (non implémenté backend)
+**Horodatage :** 2026-07-07T05:30:00Z  
+**Design :** **Rétro 2D jeu vidéo × Minecraft** — `DESIGN_RETRO_2D_MINECRAFT_ARTCB.md`  
+**Branche dev :** `cursor/dashboard-dev-1fce`
 
 ---
 
@@ -193,19 +189,25 @@ flowchart TB
 
 ---
 
-### 3.4 Design tokens proposés (à valider)
+### 3.4 Design tokens — **Rétro 2D × Minecraft** (v1.6)
 
-| Token | Valeur | Source |
-|-------|--------|--------|
-| `--bg-app` | `#0a0a0a` | Supermemory |
-| `--bg-card` | `#141414` | Supermemory cartes |
-| `--border` | `#2a2a2a` | Cursor |
-| `--accent` | `#3b82f6` | Supermemory boutons |
-| `--success` | `#22c55e` | Badges 200 / PoL OK |
-| `--warning` | `#f97316` | Métriques usage |
-| `--sidebar-width` | `240px` | Les deux refs |
-| `--radius` | `8px` | Cartes arrondies |
-| Font | `system-ui, sans-serif` | Les deux refs |
+**Expertise :** UI pixel art + game HUD. Détail complet : `DESIGN_RETRO_2D_MINECRAFT_ARTCB.md`.
+
+| Token | Valeur | Rôle |
+|-------|--------|------|
+| `--mc-bedrock` | `#2D2D2D` | Fond app |
+| `--mc-deepslate` | `#505050` | Sidebar |
+| `--mc-stone` | `#7F7F7F` | Cartes / slots |
+| `--mc-grass` | `#5D9B3A` | Succès, blocs mempool |
+| `--mc-diamond` | `#4AEDD9` | Accent, liens |
+| `--mc-gold` | `#FFCC00` | Rewards 1 ARTCB |
+| `--mc-redstone` | `#FF3333` | DEBUG, erreurs |
+| `--font-hud` | `Press Start 2P` | Titres |
+| `--font-body` | `VT323` | Corps, tables |
+| `--grid` | `16px` | Grille pixel |
+| `--radius` | `0` | Coins carrés (style bloc) |
+
+**Hybride :** layout Supermemory/Cursor + **peau** Minecraft (blocs chaîne, slots inventaire, boutons bevel).
 
 ### 3.5 Mapping captures → vues ARTCB
 

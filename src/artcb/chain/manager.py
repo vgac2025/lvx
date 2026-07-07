@@ -36,6 +36,7 @@ class ChainBlock:
     signature: str
     graph_id: str
     visibility: str = "private"
+    group_id: str | None = None
     block_reward: int = 0  # Reward in satoshi (1 ARTCB = 10^8 satoshi)
     contributors: list[dict] = field(default_factory=list)  # [{"address": str, "pol_score": float, "reward_satoshi": int, "signature": str}]
 
@@ -51,6 +52,7 @@ class ChainBlock:
             "signature": self.signature,
             "graph_id": self.graph_id,
             "visibility": self.visibility,
+            "group_id": self.group_id,
             "block_reward": self.block_reward,
             "contributors": self.contributors,
         }
@@ -98,7 +100,20 @@ class ChainManager:
     def public_key_b64(self) -> str:
         return self._signing_key.verify_key.encode(encoder=encoding.Base64Encoder).decode("ascii")
 
-    def list_blocks(self) -> list[dict]:
+    def list_blocks(
+        self,
+        *,
+        visibility: str | None = None,
+        group_id: str | None = None,
+    ) -> list[dict]:
+        blocks = self._read_all_blocks()
+        if visibility:
+            blocks = [b for b in blocks if b.get("visibility") == visibility]
+        if group_id:
+            blocks = [b for b in blocks if b.get("group_id") == group_id]
+        return blocks
+
+    def _read_all_blocks(self) -> list[dict]:
         if not self.blocks_path.exists():
             return []
         blocks: list[dict] = []
@@ -108,6 +123,9 @@ class ChainManager:
                 if line:
                     blocks.append(json.loads(line))
         return blocks
+
+    def list_blocks_legacy(self) -> list[dict]:
+        return self._read_all_blocks()
 
     def last_hash(self) -> str:
         blocks = self.list_blocks()

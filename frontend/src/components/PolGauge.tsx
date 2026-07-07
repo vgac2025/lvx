@@ -12,30 +12,23 @@ export function PolGauge({ pol }: Props) {
   return (
     <div className="panel">
       <h2>Proof-of-Learning</h2>
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <svg width="100" height="100" viewBox="0 0 100 100" aria-label={`PoL score ${pct}%`}>
-          <circle cx="50" cy="50" r="42" fill="none" stroke="#1e293b" strokeWidth="10" />
-          <circle
-            cx="50"
-            cy="50"
-            r="42"
-            fill="none"
-            stroke={accepted ? "#22c55e" : "#f59e0b"}
-            strokeWidth="10"
-            strokeDasharray={`${pct * 2.64} 264`}
-            transform="rotate(-90 50 50)"
+      <div className="mc-kpi-value" style={{ marginBottom: "0.5rem" }}>
+        {score.toFixed(2)}
+      </div>
+      <div className="mc-pol-bar-wrap">
+        <div className="mc-pol-bar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+          <div
+            className={`mc-pol-bar-fill${accepted ? "" : " mc-pol-bar-fill-warn"}`}
+            style={{ width: `${pct}%` }}
           />
-          <text x="50" y="54" textAnchor="middle" fill="#e8eef7" fontSize="16" fontWeight="bold">
-            {score.toFixed(2)}
-          </text>
-        </svg>
-        <div style={{ fontSize: "0.85rem", color: "var(--muted)" }}>
-          <div>Compression: {((pol?.delta_compression ?? 0) * 100).toFixed(0)}%</div>
-          <div>Validation: {((pol?.validation_rate ?? 0) * 100).toFixed(0)}%</div>
-          <div>Retrieval: {((pol?.retrieval_accuracy ?? 0) * 100).toFixed(0)}%</div>
-          <div style={{ marginTop: 6, color: accepted ? "var(--critic)" : "var(--danger)" }}>
-            {accepted ? "Block accepted ✓" : "Below threshold"}
-          </div>
+        </div>
+      </div>
+      <div className="mc-muted" style={{ marginTop: "0.75rem", fontSize: "0.95rem" }}>
+        <div>Compression: {((pol?.delta_compression ?? 0) * 100).toFixed(0)}%</div>
+        <div>Validation: {((pol?.validation_rate ?? 0) * 100).toFixed(0)}%</div>
+        <div>Retrieval: {((pol?.retrieval_accuracy ?? 0) * 100).toFixed(0)}%</div>
+        <div style={{ marginTop: 6, color: accepted ? "var(--critic)" : "var(--danger)" }}>
+          {accepted ? "Bloc accepté ✓" : "Sous le seuil"}
         </div>
       </div>
     </div>
