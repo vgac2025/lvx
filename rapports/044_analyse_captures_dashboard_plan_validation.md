@@ -1,163 +1,104 @@
-# Rapport 044 — Analyse 50 captures + plan validation dashboard
+# Rapport 044 — Analyse 65 captures + plan validation dashboard
 
-**Horodatage :** 2026-07-07T03:55:00Z  
-**CDC :** `CAHIER_DES_CHARGES_DASHBOARD_ARTCB.md` **v1.2**  
-**Branche captures :** `cursor/dashboard-captures-1fce` (`8edfa3b`) — **50 PNG sur GitHub** ✅  
+**Horodatage :** 2026-07-07T04:10:00Z  
+**CDC :** `CAHIER_DES_CHARGES_DASHBOARD_ARTCB.md` **v1.3**  
+**Branche captures :** `cursor/dashboard-captures-1fce` (`f37c11b`) — **65 PNG** ✅  
 **Branche spec :** `cursor/dashboard-spec-1fce`
 
 ---
 
 ## 1. État captures
 
-| Source | Nombre | Statut |
-|--------|--------|--------|
-| GitHub `origin/cursor/dashboard-captures-1fce` | **50** | ✅ |
-| Agent Cloud `/workspace` | **50** | ✅ analysés |
-| Dossier | `captures_dashboard_reference/` | PNG 01:33 → 02:07 |
+| Commit | Fichiers | Contenu |
+|--------|----------|---------|
+| `8edfa3b` | 50 | Supermemory + Cursor |
+| `f37c11b` | +15 | **Mempool.space** (nouveau) |
+| **Total** | **65** | 3 références |
 
 ---
 
-## 2. Expertises mobilisées
+## 2. Les 3 références
 
-| Expertise | Rôle |
-|-----------|------|
-| **UX / Product Design** | Analyse Supermemory + Cursor, matrice synthèse |
-| **Architecture frontend** | Mapping 8 vues ARTCB, design tokens |
-| **Mapping API** | Branchement données réelles |
-| **PROTOCOLE** | Pas de mock, DEBUG, pas de merge `main` |
+| Réf. | Produit | Captures | Rôle ARTCB |
+|------|---------|----------|------------|
+| **A** | Supermemory.ai | 19 | Cœur IR : KPI, graphe, requêtes |
+| **B** | Cursor.com | 31 | Ops : config, checklist, intégrations |
+| **C** | Mempool.space | 15 | **Blockchain** : blocs, minage, tables tx |
 
----
+### Lot C — Mempool (nouveau)
 
-## 3. Les 2 références identifiées
+Vues capturées :
+- Enterprise (REST API, Electrum, Websockets, Accelerator, Mining Data)
+- Homepage / graphs mempool (area + line charts live)
+- Mining (pools donut, hashrate, table blocs, difficulty)
+- Lightning (carte monde, rankings)
+- Acceleration (stats + table historique)
+- Dashboard principal (fee estimates, mempool goggles, RBF, tx récentes)
 
-### Référence A — Supermemory.ai (~19 captures)
-
-**URL :** `console.supermemory.ai`  
-**Rôle :** cœur produit — mémoire, graphe, requêtes, documents.
-
-**Vues capturées :**
-- Overview (5 KPI + 4 cartes onboarding)
-- Memory Graph (empty state + légende)
-- Requests (donut + table TYPE/STATUS/DURATION)
-- Documents (empty state + CTA import)
-- Integrations / Plugins (grille MCP)
-- Billing (barre usage + graphique daily spend)
-- Setup Codex (modale API key + hooks)
-
-### Référence B — Cursor.com Dashboard (~31 captures)
-
-**URL :** `cursor.com/dashboard`  
-**Rôle :** console ops — config, usage, intégrations, agents.
-
-**Vues capturées :**
-- Overview (crédits, checklist 2/4, plans Pro/Ultra, heatmap activité)
-- Cloud Agents (`vgac2025/lvx`, préfixe `cursor/`)
-- Plugins marketplace
-- Bugbot / Repository rules
-- Integrations (GitHub connecté)
-- Members / Teams upsell
-- Agents UI (`cursor.com/agents`)
+**Impact :** comble le gap **V4 Chaîne** et **V6 Minage** que Supermemory/Cursor ne couvraient pas.
 
 ---
 
-## 4. Synthèse design pour ARTCB
+## 3. Synthèse design ARTCB v1.3
 
 ```mermaid
 flowchart TB
-    subgraph SM["Supermemory → Core"]
-        KPI[5 cartes KPI]
-        GRAPH[Graphe plein écran]
-        TABLE[Table requêtes]
-        EMPTY[Empty states]
-    end
-    subgraph CU["Cursor → Ops"]
-        CHECK[Checklist parcours]
-        HEAT[Heatmap activité]
-        STATUS[Status intégrations]
-        CONFIG[Config système]
-    end
-    subgraph ARTCB["Dashboard ARTCB"]
-        V1[V1 Accueil]
-        V2[V2 Mémoriser]
-        V3[V3 Graphe]
-        V4[V4 Chaîne]
-        V7[V7 Système]
-        V8[V8 Logs]
-    end
-    KPI --> V1
-    CHECK --> V1
-    GRAPH --> V3
-    TABLE --> V8
-    HEAT --> V4
-    STATUS --> V7
-    CONFIG --> V7
+    SM[Supermemory] --> V1[Accueil] & V2[Mémoriser] & V3[Graphe]
+    CU[Cursor] --> V7[Système] & V8[Logs]
+    MP[Mempool] --> V4[Chaîne] & V6[Minage] & V5[Wallets ranking]
 ```
 
-**Décision clé :** hybride A+B — Supermemory pour le workflow IR, Cursor pour le monitoring chain/system.
+---
+
+## 4. Captures potentiellement encore manquantes
+
+| ID | Vue | Priorité |
+|----|-----|----------|
+| M1 | Détail bloc (click) | P1 |
+| M7 | Screenshot Demo ARTCB actuelle | P1 |
+| M3 | Supermemory Playground | P2 |
+| M5 | Cursor Usage détail | P2 |
+| M8 | Wallet / adresse Mempool | P2 |
+
+Détail : CDC §3.8.
 
 ---
 
-## 5. Matrice inspiration (complétée)
+## 5. Avancement
 
-| Zone UI | Supermemory | Cursor | Choix ARTCB |
-|---------|-------------|--------|-------------|
-| Navigation | Sidebar sections | Sidebar groupée | Sidebar style A |
-| Header | Org + docs | Crédits | DEBUG + PoL + API ● |
-| Accueil | 5 KPI | Checklist + heatmap | Hybride |
-| Graphe | Memory Graph | — | Cytoscape existant |
-| Tables | Requests | — | Chaîne + Logs |
-| Monitoring | Billing bars | Usage heatmap | SystemMetrics + heatmap blocs |
-| Intégrations | Plugin grid | Connect list | Status services |
+| Phase | % |
+|-------|---|
+| Analyse 65 captures | **45 %** ✅ |
+| Validation CDC | En attente |
+| Code dashboard | 0 % |
 
 ---
 
-## 6. Design tokens proposés
+## 6. Commandes ajout futures captures
 
-| Token | Valeur |
-|-------|--------|
-| Fond app | `#0a0a0a` |
-| Cartes | `#141414` |
-| Accent | `#3b82f6` |
-| Succès | `#22c55e` |
-| Sidebar | `240px` |
+```bash
+cd ~/ARTCB/lvx
+git checkout cursor/dashboard-captures-1fce
+# copier PNG dans captures_dashboard_reference/
+git add captures_dashboard_reference/
+git commit -m "docs: captures dashboard complementaires"
+git push origin cursor/dashboard-captures-1fce
+```
 
-Détail : CDC §3.4.
-
----
-
-## 7. Plan phases
-
-| Phase | % | Gate |
-|-------|---|------|
-| Analyse captures | **40 %** | ✅ Fait |
-| Validation CDC v1.2 | 40 % | **Votre OUI** |
-| Layout shell + routing | 55 % | GO code |
-| Migration Demo → vues | 75 % | Tests |
-| Chain / wallet / minage | 90 % | API réelle |
-| Suppression Demo.tsx | 95 % | Votre OK |
-| Merge `main` | — | **Jamais sans vous** |
+**Branche :** `cursor/dashboard-captures-1fce` (sans `-2`).
 
 ---
 
-## 8. Ce que je NE fais PAS encore
-
-- ❌ Modifier `Demo.tsx`
-- ❌ Coder le dashboard
-- ❌ Merger `main`
-
----
-
-## 9. Validation attendue
+## 7. Validation
 
 ```
 1. Pivot dashboard : OUI / NON
-2. Architecture 8 vues : OUI / NON / MODIFIER
-3. Branche isolée : OUI / NON
-4. Push captures : FAIT ✅
-5. Design tokens + matrice : OUI / NON / MODIFIER
-6. GO code dashboard : OUI / NON
+2. Architecture 8 vues : OUI / NON
+3. 3 références A+B+C : OUI / NON
+4. Checklist §3.8 — ajouter encore ? OUI / NON / captures complètes
+5. GO code dashboard : OUI / NON
 ```
 
 ---
 
-**Documents liés :** `CAHIER_DES_CHARGES_DASHBOARD_ARTCB.md` v1.2 · `captures_dashboard_reference/` (50 PNG)
+**Pas de code · pas de merge main sans vous.**

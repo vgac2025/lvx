@@ -1,10 +1,10 @@
-# CAHIER DES CHARGES — Dashboard ARTCB v1.2
+# CAHIER DES CHARGES — Dashboard ARTCB v1.3
 
-**Horodatage :** 2026-07-07T03:55:00Z  
-**Statut :** **EN ATTENTE VALIDATION UTILISATEUR** — analyse 50 captures faite, pas de code sans GO explicite  
+**Horodatage :** 2026-07-07T04:10:00Z  
+**Statut :** **EN ATTENTE VALIDATION** — 65 captures analysées (3 références), pas de code sans GO  
 **Branche spec :** `cursor/dashboard-spec-1fce` (≠ `main`, **pas de merge sans ordre**)  
-**Branche captures :** `cursor/dashboard-captures-1fce` — `8edfa3b` — **50 PNG sur GitHub** ✅  
-**Références analysées :** Supermemory.ai (`console.supermemory.ai`) + Cursor.com (`cursor.com/dashboard`)
+**Branche captures :** `cursor/dashboard-captures-1fce` — `f37c11b` — **65 PNG** ✅  
+**Références :** Supermemory.ai + Cursor.com + **Mempool.space** (nouveau lot +15)
 
 ---
 
@@ -24,7 +24,7 @@
 Remplacer la démo hackathon actuelle (`frontend/src/pages/Demo.tsx`) par un **dashboard ARTCB** professionnel qui :
 
 1. Expose **toutes** les capacités backend déjà codées (API réelle, pas mock).
-2. S’inspire de **2 dashboards de référence** (50 captures analysées — §3).
+2. S’inspire de **3 dashboards de référence** (65 captures analysées — §3).
 3. Reste en **mode DEBUG** (PROTOCOLE) tant que l’utilisateur ne demande pas autrement.
 4. Conserve le parcours cœur (mémoriser → graphe → PoL → blockchain) dans une vue dédiée.
 
@@ -83,39 +83,45 @@ Remplacer la démo hackathon actuelle (`frontend/src/pages/Demo.tsx`) par un **d
 
 **Expertise mobilisée :** UX / Product Design + analyse comparative SaaS.
 
-### 3.0 Répartition des 2 références
+### 3.0 Répartition des 3 références (65 captures)
 
 | Lot | Produit | URL | Captures | Plage horaire |
 |-----|---------|-----|----------|---------------|
-| **A** | **Supermemory** | `console.supermemory.ai` | ~19 | 01:33 – 01:52 |
-| **B** | **Cursor Dashboard** | `cursor.com/dashboard` | ~31 | 01:57 – 02:07 |
+| **A** | **Supermemory** | `console.supermemory.ai` | 19 | 01:33 – 01:52 |
+| **B** | **Cursor Dashboard** | `cursor.com/dashboard` | 31 | 01:57 – 02:07 |
+| **C** | **Mempool.space** | `mempool.space` | **15** | 03:56 – 03:59 |
 
 ```mermaid
-flowchart LR
-    subgraph A["Réf. A — Supermemory"]
+flowchart TB
+    subgraph A["A — Supermemory"]
         A1[Overview KPI]
         A2[Memory Graph]
-        A3[Requests table]
-        A4[Documents]
-        A5[Integrations grid]
-        A6[Billing charts]
+        A3[Requests / Documents]
     end
-    subgraph B["Réf. B — Cursor"]
+    subgraph B["B — Cursor"]
         B1[Overview checklist]
-        B2[Usage heatmap]
-        B3[Cloud Agents config]
-        B4[Plugins marketplace]
-        B5[Integrations GitHub]
+        B2[Cloud Agents]
+        B3[Plugins / Integrations]
+    end
+    subgraph C["C — Mempool"]
+        C1[Blocs mempool + minés]
+        C2[Mining pools + hashrate]
+        C3[Tables tx / RBF]
+        C4[Graphiques temps réel]
     end
     subgraph ARTCB["Dashboard ARTCB"]
-        C1[Core IR — style A]
-        C2[Ops / chain — style B]
+        V1[Accueil]
+        V3[Graphe]
+        V4[Chaîne]
+        V6[Minage]
+        V7[Système]
     end
-    A --> C1
-    B --> C2
+    A --> V1 & V3
+    B --> V7
+    C --> V4 & V6
 ```
 
-**Synthèse :** Supermemory = **cœur produit** (mémoire, graphe, requêtes). Cursor = **console ops** (usage, config, intégrations). ARTCB combine les deux.
+**Synthèse v1.3 :** Supermemory = cœur IR. Cursor = ops/config. **Mempool = blockchain + minage + explorateur** (manquait avant le lot C).
 
 ---
 
@@ -217,6 +223,64 @@ flowchart LR
 | Usage / Spending | **V6 Minage** + **V7 Système** |
 | Bugbot rules | **V8 Logs** (audit) |
 | Members | **V5 Wallets** (founders team) |
+
+---
+
+### 3.6 Référence C — Mempool.space (lot +15, nouveau)
+
+**Rôle pour ARTCB :** explorateur blockchain, minage, graphiques temps réel, tables transactions — **directement applicable** à V4 Chaîne et V6 Minage.
+
+| Élément UI | Détail observé | → ARTCB |
+|------------|----------------|---------|
+| **Bandeau blocs** | Cubes verts (mempool) + violets (blocs minés), hauteur, pool, fees | **V4 Chaîne** — timeline blocs ARTCB |
+| **Fee estimates** | 4 niveaux priorité (sat/vB + USD) | **V6 Minage** — équivalent rewards PoL |
+| **Difficulty adjustment** | Barre progression + % changement + date | **V6 Minage** — métrique difficulté PoL |
+| **Mempool Goggles** | Grille heatmap transactions | **V3 Graphe** — densité nœuds IR |
+| **Graphiques** | Area chart mempool + line chart vB/s, sélecteur 2H live | **V7 Système** + **V8 Logs** |
+| **Mining dashboard** | Donut pools, hashrate 920 EH/s, table blocs récents | **V6 Minage** — pools contributeurs PoL |
+| **Tables** | RBF replacements, transactions récentes, badges statut verts | **V4 Chaîne** + **V8 Logs** |
+| **Lightning** | Carte monde, rankings liquidité/connectivité | Inspiration **V5 Wallets** (ranking founders) |
+| **Acceleration** | Stats actives + historique + table offres | **V6 Minage** — rewards en attente |
+| **Enterprise** | 5 services (REST, RPC, WS, Accelerator, Mining Data) | Inspiration footer status API |
+
+**Palette Mempool :**
+- Fond noir `#000`
+- Blocs mempool **vert/jaune**, blocs minés **violet/bleu**
+- Accents orange/rose pour graphiques
+- Tables denses, monospace pour hash
+
+---
+
+### 3.7 Matrice 3 références → ARTCB (mise à jour)
+
+| Zone UI | Supermemory | Cursor | Mempool | **Choix ARTCB** |
+|---------|-------------|--------|---------|-----------------|
+| **Navigation** | Sidebar sections | Sidebar groupée | Top icons + search | **A** sidebar + **C** search bar |
+| **Blocs / chain** | — | — | Cubes + table hauteur | **C** — **V4 Chaîne** |
+| **Minage** | Billing bars | Usage heatmap | Pools + hashrate | **C** — **V6 Minage** |
+| **Graphe** | Memory Graph | — | Mempool goggles heatmap | **A** Cytoscape + **C** heatmap option |
+| **Tables tx** | Requests | — | RBF + recent tx | **C** — **V4/V8** |
+| **KPI Accueil** | 5 cartes | Checklist | Fee + difficulty widgets | **Hybride A+B+C** |
+| **Config** | API Keys | Cloud Agents | Network selector | **B+C** — **V7** |
+
+---
+
+### 3.8 Checklist — ce qui pourrait encore manquer (captures)
+
+À compléter **avant GO code** si vous voulez une couverture maximale :
+
+| # | Vue manquante | Référence | Priorité | Capturé ? |
+|---|---------------|-----------|----------|-----------|
+| M1 | Détail d’un bloc (click bloc) | Mempool | P1 | ❌ |
+| M2 | Page d’accueil mempool (homepage complète) | Mempool | P2 | ⚠️ partiel (03-59-28) |
+| M3 | Playground API interactif | Supermemory | P2 | ❌ |
+| M4 | API Keys / Agents config | Supermemory | P2 | ❌ |
+| M5 | Usage / Spending détail | Cursor | P2 | ❌ |
+| M6 | Settings complets | Cursor | P3 | ⚠️ partiel |
+| M7 | **Demo ARTCB actuelle** (`Demo.tsx`) | ARTCB | P1 | ❌ — utile avant/après |
+| M8 | Vue wallet / adresse | Mempool | P2 | ❌ |
+
+**Dites « captures complètes »** quand vous n’ajoutez plus d’images — je fige la spec.
 
 ---
 
@@ -345,7 +409,7 @@ flowchart TB
 | **6** | Suppression `Demo.tsx` legacy | 95 % | Votre OK |
 | **7** | Rapport + tests + PR | 100 % | **Pas merge main sans vous** |
 
-**Avancement dashboard actuel : 40 %** (spec v1.2 + analyse 50 captures, 0 % code)
+**Avancement dashboard actuel : 45 %** (spec v1.3 + 65 captures, 0 % code)
 
 ---
 
@@ -467,4 +531,4 @@ Répondez **OUI/NON** ou commentez :
 
 ---
 
-**Document v1.2 — analyse captures complète, aucun code produit.**
+**Document v1.3 — 3 références analysées, aucun code produit.**
