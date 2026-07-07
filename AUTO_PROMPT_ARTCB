@@ -46,6 +46,12 @@ Règles ajoutées :
 - Attendre 50+ captures + 2 dashboards référence avant tout code
 - Remplacer `Demo.tsx` seulement après validation explicite
 
+## [2026-07-07T05:00:00Z] Groupes v1.1 — fondateur immuable + admin
+
+- Fondateur d'origine : non supprimable/rétrogradable par admins
+- Seul fondateur : promouvoir admin, dissoudre, auto-suppression
+- Audit code total : rapport 046 (73 fichiers, ~8497 lignes)
+
 ## [2026-07-07T04:45:00Z] Groupes/réseaux — spec v1.5 (PAS de dev)
 
 - `GROUPES_RESEAUX_ARTCB.md` — modèle Public / Privé / Groupe

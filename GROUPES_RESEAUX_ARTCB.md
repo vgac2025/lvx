@@ -1,8 +1,8 @@
-# Groupes & Réseaux ARTCB — Spécification v1.0
+# Groupes & Réseaux ARTCB — Spécification v1.1
 
-**Horodatage :** 2026-07-07T04:45:00Z  
-**Statut :** **EN ATTENTE VALIDATION** — non implémenté backend  
-**Branche spec :** `cursor/dashboard-spec-1fce` (pas merge `main` sans accord)
+**Horodatage :** 2026-07-07T05:00:00Z  
+**Statut :** **EN ATTENTE VALIDATION** — règles fondateur/admin ajoutées  
+**Audit code :** `rapports/046_audit_code_total_groupes_fondateur_admin.md` (73 fichiers, ~8497 lignes)
 
 ---
 
@@ -93,7 +93,7 @@ erDiagram
     GROUP {
         string group_id PK
         string name
-        string owner_address
+        string founder_address
         datetime created_at
     }
     GROUP_MEMBER {
@@ -109,14 +109,99 @@ erDiagram
     }
 ```
 
-### 4.2 Rôles groupe
+### 4.2 Hiérarchie des rôles (v1.1 — fondateur protégé)
 
-| Rôle | Lire graphes | Mémoriser | Signer bloc | Inviter | Gérer groupe |
-|------|--------------|-----------|-------------|---------|--------------|
-| **owner** | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **admin** | ✓ | ✓ | ✓ | ✓ | — |
-| **contributor** | ✓ | ✓ | ✓ | — | — |
-| **viewer** | ✓ | — | — | — | — |
+```mermaid
+flowchart TB
+    F[founder — créateur d'origine]
+    A[admin — nommé par fondateur]
+    C[contributor]
+    V[viewer]
+
+    F -->|peut promouvoir| A
+    F -->|peut rétrograder| A
+    A -->|gère| C
+    A -->|gère| V
+    F -.->|INTOUCHABLE par admin| X[❌ remove/demote]
+```
+
+| Rôle | Lire | Mémoriser | Signer | Inviter | Retirer membres | Promouvoir admin | Dissoudre groupe |
+|------|------|-----------|--------|---------|-----------------|------------------|------------------|
+| **founder** | ✓ | ✓ | ✓ | ✓ | ✓ (sauf soi via règles) | ✓ **seul** | ✓ **seul** |
+| **admin** | ✓ | ✓ | ✓ | ✓ | ✓ sauf **founder** | ❌ | ❌ |
+| **contributor** | ✓ | ✓ | ✓ | ❌ | ❌ | ❌ | ❌ |
+| **viewer** | ✓ | — | — | ❌ | ❌ | ❌ | ❌ |
+
+**Note :** `founder` = `founder_address` fixé à la création, **jamais modifiable**.
+
+---
+
+### 4.6 Sécurité du créateur d'origine (INVARIANTS — PROTOCOLE)
+
+**Expertise :** sécurité ACL + gouvernance multi-tenant.
+
+| Règle | Détail | Code futur |
+|-------|--------|------------|
+| **F1** | `founder_address` immuable dès `POST /groups` | champ read-only JSON |
+| **F2** | Aucun admin/membre ne peut **retirer** le fondateur | `403 FOUNDER_IMMUTABLE` |
+| **F3** | Aucun admin ne peut **rétrograder** le fondateur | `403 FOUNDER_IMMUTABLE` |
+| **F4** | Aucun admin ne peut **promouvoir** quelqu'un admin | seul fondateur |
+| **F5** | Seul le fondateur peut **promouvoir/rétrograder** les admins | signature wallet requise |
+| **F6** | Seul le fondateur peut **se retirer** lui-même | via dissolve OU leave après transfert |
+| **F7** | Auto-suppression fondateur = **dissolve** groupe | double confirmation + signature |
+| **F8** | Transfert fondateur (optionnel P2) | fondateur signe `POST /groups/{id}/transfer-founder` |
+
+#### F6/F7 — Auto-suppression fondateur (flux)
+
+```mermaid
+sequenceDiagram
+    participant F as Fondateur
+    participant API as API
+    participant M as Membres
+
+    alt Dissoudre le groupe
+        F->>API: POST /groups/{id}/dissolve {confirm: "DISSOLVE", signature}
+        API-->>M: groupe archivé, données group → export optionnel
+    else Quitter (avec transfert P2)
+        F->>API: POST /groups/{id}/transfer-founder {new_founder, signature}
+        F->>API: POST /groups/{id}/leave {signature}
+        Note over F: Ancien fondateur devient contributor ou quitte
+    end
+```
+
+**PROTOCOLE :**
+- Pas de suppression silencieuse — log `logs/groups_audit.jsonl`
+- Rapport `rapports/` après chaque dissolve
+- Mode DEBUG : tracer toute tentative `FOUNDER_IMMUTABLE` bloquée
+
+---
+
+### 4.7 Gestion admin — nommer un membre admin
+
+| Action | Qui | Endpoint proposé |
+|--------|-----|------------------|
+| Promouvoir `contributor` → `admin` | **Fondateur** | `POST /groups/{id}/members/{addr}/role {role: "admin"}` |
+| Rétrograder `admin` → `contributor` | **Fondateur** | même endpoint `{role: "contributor"}` |
+| Lister admins | Tous membres | `GET /groups/{id}` → section `admins[]` |
+| Admin retire un contributor | Admin+ | `DELETE /groups/{id}/members/{addr}` + check ≠ founder |
+
+**UI dashboard (V10.3) :** bouton « Nommer admin » visible **uniquement** pour le fondateur.
+
+---
+
+### 4.8 Matrice refus ACL (tests obligatoires)
+
+| Tentative | Acteur | Résultat |
+|-----------|--------|----------|
+| Retirer fondateur | admin | **403** |
+| Rétrograder fondateur | admin | **403** |
+| Promouvoir admin | admin | **403** |
+| Promouvoir admin | fondateur | **200** |
+| Dissoudre groupe | admin | **403** |
+| Dissoudre groupe | fondateur | **200** + audit log |
+| Modifier `founder_address` | quiconque | **403** |
+
+---
 
 ### 4.3 Flux — créer un groupe et inviter
 
@@ -145,7 +230,9 @@ sequenceDiagram
 | GET | `/groups/{id}` | Détail + membres |
 | POST | `/groups/{id}/invites` | Inviter par adresse wallet |
 | POST | `/groups/{id}/join` | Accepter invitation (signature) |
-| DELETE | `/groups/{id}/members/{addr}` | Retirer membre (admin+) |
+| POST | `/groups/{id}/members/{addr}/role` | **Fondateur** : promouvoir/rétrograder admin |
+| POST | `/groups/{id}/dissolve` | **Fondateur** : dissoudre (confirm + signature) |
+| POST | `/groups/{id}/transfer-founder` | **Fondateur** : transfert (P2 optionnel) |
 | GET | `/groups/{id}/graphs` | Graphes du groupe |
 | GET | `/groups/{id}/chain` | Blocs filtrés `visibility=group` |
 | POST | `/store` | **étendu** : `visibility` = `private\|group\|public`, `group_id?` |
@@ -154,9 +241,20 @@ sequenceDiagram
 
 ```
 data/groups/
-  g_abc123.json          # métadonnées groupe
-  g_abc123_members.jsonl # membres + rôles
-  g_abc123_invites.jsonl # invitations pending
+  g_abc123.json          # founder_address immuable, name, created_at
+  g_abc123_members.jsonl # rôles: founder|admin|contributor|viewer
+  g_abc123_invites.jsonl
+  g_abc123_audit.jsonl   # dissolve, FOUNDER_IMMUTABLE blocks
+```
+
+Exemple `g_abc123.json` :
+```json
+{
+  "group_id": "g_abc123",
+  "name": "Projet LVX",
+  "founder_address": "artcb1q…",
+  "created_at": "2026-07-07T05:00:00Z"
+}
 ```
 
 Extension bloc JSONL :
@@ -202,11 +300,11 @@ Toutes les vues V1–V8 **filtrent les données** selon le contexte réseau acti
 ## 7. Validation attendue
 
 ```
-1. Modèle 3 réseaux (privé / groupe / public) : OUI / NON
-2. Identité = wallet (pas email) pour MVP : OUI / NON
-3. Rôles owner/admin/contributor/viewer : OUI / MODIFIER
-4. Invitations par adresse wallet : OUI / AUTRE (lien, QR…)
-5. Intégrer G1–G3 backend AVANT dashboard : OUI / NON
+1. Modèle 3 réseaux : OUI / NON
+2. Fondateur immuable + admin nommé par fondateur : OUI / NON
+3. Auto-suppression fondateur = dissolve uniquement : OUI / MODIFIER
+4. Identité wallet pour MVP : OUI / NON
+5. Backend G1–G3 avant dashboard : OUI / NON
 6. GO implémentation groupes : OUI / NON
 ```
 

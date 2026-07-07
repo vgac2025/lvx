@@ -506,21 +506,19 @@
 └────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### V10.3 — Inviter des membres (style Cursor « Créer une équipe »)
+### V10.3 — Membres & admins (fondateur protégé)
 
 ```
 ┌─ Groupe: Projet LVX › Membres ──────────────────────────────────────────────┐
-│ Membres (4)                                    [+ Inviter]                 │
+│ Fondateur: artcb1alice…  🔒 PROTÉGÉ — non supprimable par les admins       │
+│ Membres (4)                    [+ Inviter]  [Nommer admin] (fondateur seul) │
 │ ┌────────────────────────────────────────────────────────────────────────┐ │
-│ │ Adresse wallet      │ Rôle        │ PoL moy │ Actions                  │ │
-│ │ artcb1q7x… (vous)   │ owner       │  0.72   │ —                        │ │
-│ │ artcb1bob…          │ contributor │  0.65   │ [Rôle ▼] [Retirer]       │ │
-│ │ artcb1car…          │ viewer      │  —      │ [Rôle ▼] [Retirer]       │ │
+│ │ Adresse             │ Rôle        │ Actions                          │ │
+│ │ artcb1alice (vous)  │ 🔒 founder  │ [Dissoudre groupe] [Transférer]│ │
+│ │ artcb1bob           │ admin       │ [Rétrograder] (fondateur)        │ │
+│ │ artcb1car           │ contributor │ [Retirer] (admin+)               │ │
 │ └────────────────────────────────────────────────────────────────────────┘ │
-│                                                                            │
-│ Inviter par adresse wallet:                                                │
-│ [ artcb1________________________________ ] [Envoyer invitation]            │
-│ Lien signé (optionnel): https://lvx.local/join/g_abc123?sig=…  [Copier]    │
+│ ⚠ Un admin NE PEUT PAS retirer ou rétrograder le fondateur                │
 └────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -564,12 +562,15 @@
 | V7 Système | Métriques | `/metrics`, fingerprint |
 | V8 Logs | demo_live JSON | `logs/*` |
 | V9 Console | demo_live, minage, split | scripts réels PROTOCOLE |
+| V10 Groupes | Créer, Inviter, Espace groupe | `/groups/*` (**à créer**) |
 
 ---
 
 ## Checklist avant GO code
 
-- [ ] Block reward **1 ARTCB** validé (branche `cursor/block-reward-1artcb-1fce`)
+- [ ] Block reward **1 ARTCB** validé
+- [ ] **Groupes/réseaux** validés (`GROUPES_RESEAUX_ARTCB.md`)
+- [ ] Wireframes V10 Groupes OK
 - [ ] Wireframes ASCII validés (ce document)
 - [ ] 65 captures références OK
 - [ ] Pivot dashboard vs CDC §9.3 : OUI/NON
