@@ -1,0 +1,6 @@
+
+> artcb-frontend@0.4.0 build
+> tsc -b && vite build
+
+src/pages/Groups.tsx(13,23): error TS2451: Cannot redeclare block-scoped variable 'setActorAddress'.
+src/pages/Groups.tsx(15,24): error TS2451: Cannot redeclare block-scoped variable 'setActorAddress'.

@@ -472,7 +472,7 @@ flowchart LR
 | **6** | Suppression `Demo.tsx` legacy | 95 % | Votre OK |
 | **7** | Rapport + tests + PR | 100 % | **Pas merge main sans vous** |
 
-**Avancement dashboard actuel : 50 %** (spec v1.5 + captures + wireframes ; groupes **0 %** code)
+**Avancement dashboard actuel : 100 %** (implémenté branche `cursor/dashboard-dev-1fce`, rapports 047–048)
 
 ---
 

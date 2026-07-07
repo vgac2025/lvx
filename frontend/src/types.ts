@@ -45,6 +45,12 @@ export interface ChainBlock {
   block_reward?: number;
   visibility?: string;
   group_id?: string | null;
+  timestamp?: string;
+  contributors?: Array<{
+    address: string;
+    pol_score: number;
+    reward_satoshi: number;
+  }>;
 }
 
 export interface WalletInfo {

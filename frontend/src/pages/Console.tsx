@@ -1,25 +1,26 @@
 import { useState } from "react";
 
-const HELP = `ARTCB Console — commandes disponibles:
-  help          — cette aide
-  health        — GET /api/v1/health
-  chain         — GET /api/v1/chain
-  pol           — GET /api/v1/pol/score
-  verify        — GET /api/v1/chain/verify
-  wallets       — GET /api/v1/wallet/list
-  clear         — effacer l'écran`;
+const HELP = `ARTCB Console — commandes:
+  help            — cette aide
+  health          — GET /api/v1/health
+  chain           — GET /api/v1/chain
+  chain verify    — GET /api/v1/chain/verify
+  pol             — GET /api/v1/pol/score
+  wallets         — GET /api/v1/wallet/list
+  groups          — GET /api/v1/groups?address=...
+  founders        — GET /api/v1/dashboard/founders/allocation
+  mining status   — GET /api/v1/dashboard/mining/status
+  mining latest   — GET /api/v1/dashboard/logs/mining-latest
+  demo log        — GET /api/v1/dashboard/logs/demo-live
+  clear           — effacer`;
 
 export function Console() {
-  const [lines, setLines] = useState<string[]>([
-    "ARTCB Pixel Console v0.4 — tapez help",
-    "> ",
-  ]);
+  const [lines, setLines] = useState<string[]>(["ARTCB Pixel Console v0.4 — tapez help", "> "]);
   const [input, setInput] = useState("");
 
   const runCommand = async (cmd: string) => {
     const trimmed = cmd.trim();
     if (!trimmed) return;
-
     const out: string[] = [`> ${trimmed}`];
 
     try {
@@ -30,20 +31,32 @@ export function Console() {
         setInput("");
         return;
       } else if (trimmed === "health") {
-        const r = await fetch("/api/v1/health");
-        out.push(JSON.stringify(await r.json(), null, 2));
+        out.push(JSON.stringify(await (await fetch("/api/v1/health")).json(), null, 2));
       } else if (trimmed === "chain") {
-        const r = await fetch("/api/v1/chain");
-        out.push(JSON.stringify(await r.json(), null, 2));
+        out.push(JSON.stringify(await (await fetch("/api/v1/chain")).json(), null, 2));
+      } else if (trimmed === "chain verify") {
+        out.push(JSON.stringify(await (await fetch("/api/v1/chain/verify")).json(), null, 2));
       } else if (trimmed === "pol") {
-        const r = await fetch("/api/v1/pol/score");
-        out.push(JSON.stringify(await r.json(), null, 2));
-      } else if (trimmed === "verify") {
-        const r = await fetch("/api/v1/chain/verify");
-        out.push(JSON.stringify(await r.json(), null, 2));
+        out.push(JSON.stringify(await (await fetch("/api/v1/pol/score")).json(), null, 2));
       } else if (trimmed === "wallets") {
-        const r = await fetch("/api/v1/wallet/list");
-        out.push(JSON.stringify(await r.json(), null, 2));
+        out.push(JSON.stringify(await (await fetch("/api/v1/wallet/list")).json(), null, 2));
+      } else if (trimmed.startsWith("groups ")) {
+        const addr = trimmed.slice(7).trim();
+        out.push(
+          JSON.stringify(
+            await (await fetch(`/api/v1/groups?address=${encodeURIComponent(addr)}`)).json(),
+            null,
+            2,
+          ),
+        );
+      } else if (trimmed === "founders") {
+        out.push(JSON.stringify(await (await fetch("/api/v1/dashboard/founders/allocation")).json(), null, 2));
+      } else if (trimmed === "mining status") {
+        out.push(JSON.stringify(await (await fetch("/api/v1/dashboard/mining/status")).json(), null, 2));
+      } else if (trimmed === "mining latest") {
+        out.push(JSON.stringify(await (await fetch("/api/v1/dashboard/logs/mining-latest")).json(), null, 2));
+      } else if (trimmed === "demo log") {
+        out.push(JSON.stringify(await (await fetch("/api/v1/dashboard/logs/demo-live")).json(), null, 2));
       } else {
         out.push(`Commande inconnue: ${trimmed}`);
       }
@@ -76,7 +89,7 @@ export function Console() {
           className="mc-console-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="help | health | chain | pol | verify | wallets"
+          placeholder="help | health | chain | mining status | demo log"
           aria-label="Commande console"
           autoFocus
         />

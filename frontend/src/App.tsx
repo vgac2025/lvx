@@ -22,6 +22,7 @@ export default function App() {
             <Route path="memorize" element={<Memorize />} />
             <Route path="graph" element={<GraphPage />} />
             <Route path="chain" element={<ChainPage />} />
+            <Route path="chain/block/:blockIndex" element={<ChainPage />} />
             <Route path="wallets" element={<Wallets />} />
             <Route path="mining" element={<Mining />} />
             <Route path="system" element={<SystemPage />} />

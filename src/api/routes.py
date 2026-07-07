@@ -254,6 +254,16 @@ def chain_list(
     return {"blocks": blocks, "count": len(blocks)}
 
 
+@router.get("/chain/block/{block_index}")
+def chain_block_detail(block_index: int, request: Request) -> dict:
+    state = _state(request)
+    blocks = state.chain._read_all_blocks()
+    for block in blocks:
+        if block.get("index") == block_index:
+            return {"block": block}
+    raise HTTPException(status_code=404, detail="block not found")
+
+
 @router.get("/chain/verify")
 def chain_verify(request: Request) -> dict:
     state = _state(request)

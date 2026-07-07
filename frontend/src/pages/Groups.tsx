@@ -10,9 +10,8 @@ import type { GroupData } from "../api/client";
 import { useDashboard } from "../context/DashboardContext";
 
 export function Groups() {
-  const { setGroupId } = useDashboard();
+  const { actorAddress, setActorAddress, setGroupId } = useDashboard();
   const [wallets, setWallets] = useState<Array<{ address: string; name: string }>>([]);
-  const [actorAddress, setActorAddress] = useState("");
   const [groups, setGroups] = useState<GroupData[]>([]);
   const [newName, setNewName] = useState("");
   const [inviteAddr, setInviteAddr] = useState("");
@@ -108,7 +107,12 @@ export function Groups() {
       <div className="panel">
         <h2>Wallet actif</h2>
         {wallets.length ? (
-          <select value={actorAddress} onChange={(e) => setActorAddress(e.target.value)}>
+          <select
+            value={actorAddress}
+            onChange={(e) => {
+              setActorAddress(e.target.value);
+            }}
+          >
             {wallets.map((w) => (
               <option key={w.address} value={w.address}>
                 {w.name} — {w.address.slice(0, 12)}…

@@ -68,8 +68,18 @@ Règles ajoutées :
 - Tests `tests/test_groups.py` — 7/7 passés, total 103 pytest
 - Frontend V10 Groupes branché API (créer, inviter, promote admin)
 - Rapport `rapports/047_api_groupes_filtre_chaine_tests.md`
-- Avancement dashboard : **62 %**
+- Avancement dashboard : **100 %**
 - `main` : **pas de merge** sans accord utilisateur
+
+## [2026-07-07T07:00:00Z] Dashboard CDC 100 % — finalisation
+
+- Toutes vues V1–V10 branchées API réelle (design rétro MC)
+- `dashboard_routes.py` : logs demo_live, mining, founders, status
+- `GET /chain/block/{index}` détail contributors
+- Checklist parcours dynamique, filtre réseau global
+- Tests : **132 pytest** + **29/29 LISTE_TESTS** + demo_live 9/9
+- Rapport `rapports/048_dashboard_cdc_100_tests_complets.md`
+- CDC `CAHIER_DES_CHARGES_DASHBOARD_ARTCB.md` mis à jour 100 %
 
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 

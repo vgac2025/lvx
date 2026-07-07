@@ -6,25 +6,32 @@ import {
   searchNodes,
   storeGraph,
 } from "../api/client";
+import { AgentPanel } from "../components/AgentPanel";
 import { GraphViewer } from "../components/GraphViewer";
+import { PolGauge } from "../components/PolGauge";
 import { Reconstruct } from "../components/Reconstruct";
 import { useDashboard } from "../context/DashboardContext";
 
 export function GraphPage() {
   const {
     sessionId,
+    actorAddress,
     graph,
     setGraph,
     graphId,
     text,
+    pol,
     selectedNodeId,
     setSelectedNodeId,
     pushMessage,
     setChainBlock,
     visibility,
     groupId,
+    markChecklist,
+    messages,
   } = useDashboard();
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<Array<{ node_id: string; score: number; text: string }>>([]);
   const [highlightIds, setHighlightIds] = useState<string[]>([]);
   const [showReconstruct, setShowReconstruct] = useState(false);
   const [reconstructed, setReconstructed] = useState("");
@@ -40,6 +47,10 @@ export function GraphPage() {
   }, [graphId, graph, setGraph]);
 
   useEffect(() => {
+    if (graphId && graph) markChecklist("explored");
+  }, [graphId, graph, markChecklist]);
+
+  useEffect(() => {
     if (!selectedNodeId || !graph) {
       setNodeDetail("");
       return;
@@ -51,9 +62,11 @@ export function GraphPage() {
   const handleSearch = async () => {
     if (!graphId || !searchQuery.trim()) return;
     const results = await searchNodes(searchQuery, graphId);
+    setSearchResults(results);
     if (results.length) {
       setHighlightIds(results.map((r) => r.node_id));
       setSelectedNodeId(results[0].node_id);
+      markChecklist("searched");
       pushMessage("explorer", `Trouvé: "${results[0].text.slice(0, 80)}…"`);
     }
   };
@@ -71,26 +84,22 @@ export function GraphPage() {
     if (!graphId) return;
     setLoading(true);
     try {
-      let actorAddress: string | undefined;
+      let actor = actorAddress;
       if (visibility === "group") {
         if (!groupId) {
           pushMessage("critic", "Sélectionnez un groupe (V10)");
           return;
         }
-        const wallets = await fetchWallets();
-        actorAddress = wallets[0]?.address;
-        if (!actorAddress) {
-          pushMessage("critic", "Wallet requis pour mode groupe");
+        if (!actor) {
+          const wallets = await fetchWallets();
+          actor = wallets[0]?.address;
+        }
+        if (!actor) {
+          pushMessage("critic", "Wallet requis");
           return;
         }
       }
-      const block = await storeGraph(
-        graphId,
-        sessionId,
-        visibility,
-        visibility === "group" ? groupId : null,
-        actorAddress,
-      );
+      const block = await storeGraph(graphId, sessionId, visibility, groupId, actor);
       setChainBlock({
         index: block.block_index,
         hash: block.hash,
@@ -99,6 +108,7 @@ export function GraphPage() {
         graph_id: graphId,
         block_reward: block.block_reward,
       });
+      markChecklist("signed");
       pushMessage("critic", `Bloc #${block.block_index} signé`);
     } catch (err) {
       pushMessage("critic", `Erreur: ${err instanceof Error ? err.message : String(err)}`);
@@ -107,20 +117,13 @@ export function GraphPage() {
     }
   };
 
-  const handleReadAloud = () => {
-    if (!nodeDetail || !("speechSynthesis" in window)) return;
-    const utter = new SpeechSynthesisUtterance(nodeDetail);
-    utter.lang = "fr-FR";
-    window.speechSynthesis.speak(utter);
-  };
-
   if (!graphId) {
     return (
       <div className="mc-page mc-empty">
         <h1 className="dashboard-title">Graphe</h1>
         <div className="panel mc-empty-panel">
           <p className="mc-empty-icon">📄</p>
-          <p>Aucun graphe encore — allez sur Mémoriser.</p>
+          <p>Aucun graphe — allez sur Mémoriser.</p>
         </div>
       </div>
     );
@@ -128,37 +131,61 @@ export function GraphPage() {
 
   return (
     <div className="mc-page">
-      <h1 className="dashboard-title">Graphe · chunks 2D</h1>
-      <div className="panel mc-graph-panel">
-        <div className="mc-graph-viewport mc-graph-viewport-tall">
-          <GraphViewer
-            graph={graph}
-            selectedNodeId={selectedNodeId}
-            highlightIds={highlightIds}
-            onSelectNode={setSelectedNodeId}
-          />
-        </div>
-        {nodeDetail && (
-          <div className="mc-node-detail">
-            <strong>Sélectionné:</strong> {nodeDetail}
+      <h1 className="dashboard-title">Graphe · {graphId.slice(0, 12)}…</h1>
+      <div className="demo-grid">
+        <div className="panel mc-graph-panel">
+          <div className="mc-graph-viewport mc-graph-viewport-tall">
+            <GraphViewer
+              graph={graph}
+              selectedNodeId={selectedNodeId}
+              highlightIds={highlightIds}
+              onSelectNode={setSelectedNodeId}
+            />
           </div>
-        )}
-        <div className="toolbar">
-          <input
-            className="mc-search-input"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Rechercher decision, king…"
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
-          <button onClick={handleSearch}>Search</button>
-          <button onClick={handleReconstruct}>Reconstruire</button>
-          <button onClick={handleReadAloud} disabled={!selectedNodeId}>
-            Lire
-          </button>
-          <button className="primary" onClick={handleStore} disabled={loading}>
-            Signer bloc
-          </button>
+          {nodeDetail && (
+            <div className="mc-node-detail">
+              <strong>Sélectionné:</strong> {nodeDetail}
+            </div>
+          )}
+          <div className="toolbar">
+            <input
+              className="mc-search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Rechercher…"
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            />
+            <button onClick={handleSearch}>Search</button>
+            <button onClick={handleReconstruct}>Reconstruire</button>
+            <button
+              onClick={() => {
+                if (nodeDetail && "speechSynthesis" in window) {
+                  const u = new SpeechSynthesisUtterance(nodeDetail);
+                  u.lang = "fr-FR";
+                  window.speechSynthesis.speak(u);
+                }
+              }}
+              disabled={!selectedNodeId}
+            >
+              Lire
+            </button>
+            <button className="primary" onClick={handleStore} disabled={loading}>
+              Signer bloc
+            </button>
+          </div>
+          {searchResults.length > 0 && (
+            <ul className="mc-search-results">
+              {searchResults.map((r) => (
+                <li key={r.node_id}>
+                  {r.node_id} score {r.score.toFixed(2)} — {r.text.slice(0, 60)}…
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="mc-side-stack">
+          <AgentPanel messages={messages} />
+          <PolGauge pol={pol} />
         </div>
       </div>
       <Reconstruct

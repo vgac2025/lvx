@@ -151,6 +151,69 @@ export async function fetchChain(params?: {
   return data.blocks as ChainBlock[];
 }
 
+export async function createWallet(name: string) {
+  const { data } = await api.post("/wallet/create", { name });
+  return data as { name: string; address: string; public_key_hex: string };
+}
+
+export async function fetchBlockDetail(index: number) {
+  const { data } = await api.get(`/chain/block/${index}`);
+  return data.block as ChainBlock;
+}
+
+export async function fetchChainVerify() {
+  const { data } = await api.get("/chain/verify");
+  return data as { valid: boolean; message: string; block_count: number };
+}
+
+export async function fetchDemoLiveLog() {
+  const { data } = await api.get("/dashboard/logs/demo-live");
+  return data as { content: string; lines: string[]; line_count: number };
+}
+
+export async function fetchMiningLatest() {
+  const { data } = await api.get("/dashboard/logs/mining-latest");
+  return data as { path: string; data: Record<string, unknown> };
+}
+
+export async function fetchMiningStatus() {
+  const { data } = await api.get("/dashboard/mining/status");
+  return data as {
+    block_count: number;
+    current_reward_artcb: number;
+    blocks_until_halving: number;
+    total_rewards_artcb: number;
+    pol_score: number;
+  };
+}
+
+export async function fetchFoundersAllocation() {
+  const { data } = await api.get("/dashboard/founders/allocation");
+  return data as {
+    founders_total_artcb: number;
+    balances: Array<{ founder_id: number; name: string; balance_artcb: number }>;
+  };
+}
+
+export async function fetchWalletRewards(address: string) {
+  const { data } = await api.get(`/dashboard/wallet/${encodeURIComponent(address)}/rewards`);
+  return data as {
+    rewards: Array<{ block_index: number; reward_artcb: number; pol_score: number; timestamp: string }>;
+    total_artcb: number;
+  };
+}
+
+export async function fetchHealth() {
+  const { data } = await api.get("/health");
+  return data as { status: string; chain?: { valid?: boolean } };
+}
+
+export function chainQueryParams(visibility: string, groupId: string | null) {
+  if (visibility === "group" && groupId) return { groupId };
+  if (visibility !== "private") return { visibility };
+  return {};
+}
+
 export async function fetchPolScore() {
   const { data } = await api.get("/pol/score");
   return data;

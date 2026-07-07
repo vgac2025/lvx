@@ -1,36 +1,100 @@
 import { useEffect, useState } from "react";
-import { fetchWalletBalance, fetchWallets } from "../api/client";
+import {
+  createWallet,
+  fetchFoundersAllocation,
+  fetchWalletBalance,
+  fetchWalletRewards,
+  fetchWallets,
+} from "../api/client";
+import { useDashboard } from "../context/DashboardContext";
 
 export function Wallets() {
-  const [wallets, setWallets] = useState<Array<{ address: string; name: string; balance?: number }>>([]);
+  const { setActorAddress } = useDashboard();
+  const [wallets, setWallets] = useState<
+    Array<{ address: string; name: string; balance?: number; rewards?: number }>
+  >([]);
+  const [founders, setFounders] = useState<Array<{ founder_id: number; name: string; balance_artcb: number }>>([]);
+  const [newName, setNewName] = useState("");
+  const [selected, setSelected] = useState<string | null>(null);
+  const [rewardHistory, setRewardHistory] = useState<
+    Array<{ block_index: number; reward_artcb: number; pol_score: number; timestamp: string }>
+  >([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const reload = async () => {
+    const list = await fetchWallets();
+    const withBal = await Promise.all(
+      list.map(async (w) => {
+        try {
+          const b = await fetchWalletBalance(w.address);
+          const r = await fetchWalletRewards(w.address);
+          return { ...w, balance: b.balance_artcb, rewards: r.total_artcb };
+        } catch {
+          return { ...w, balance: 0, rewards: 0 };
+        }
+      }),
+    );
+    setWallets(withBal);
+  };
 
   useEffect(() => {
-    fetchWallets()
-      .then(async (list) => {
-        const withBal = await Promise.all(
-          list.map(async (w) => {
-            try {
-              const b = await fetchWalletBalance(w.address);
-              return { ...w, balance: b.balance_artcb };
-            } catch {
-              return { ...w, balance: 0 };
-            }
-          }),
-        );
-        setWallets(withBal);
-      })
-      .catch(() => setWallets([]));
+    reload().catch(() => setWallets([]));
+    fetchFoundersAllocation()
+      .then((f) => setFounders(f.balances ?? []))
+      .catch(() => {});
   }, []);
+
+  const handleCreate = async () => {
+    if (!newName.trim()) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const w = await createWallet(newName.trim());
+      setActorAddress(w.address);
+      setNewName("");
+      await reload();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const showRewards = async (address: string) => {
+    setSelected(address);
+    const r = await fetchWalletRewards(address);
+    setRewardHistory(r.rewards);
+  };
 
   const slots = Array.from({ length: 27 }, (_, i) => wallets[i] ?? null);
 
   return (
     <div className="mc-page">
       <h1 className="dashboard-title">Wallets · coffre</h1>
+
+      <div className="panel">
+        <h2>Créer wallet</h2>
+        <div className="toolbar">
+          <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Nom wallet" />
+          <button className="primary" onClick={handleCreate} disabled={loading}>
+            Générer
+          </button>
+        </div>
+        {error && <p className="mc-error">{error}</p>}
+      </div>
+
       <div className="panel mc-chest">
         <div className="mc-chest-grid">
           {slots.map((w, i) => (
-            <div key={i} className={`mc-chest-slot${w ? " mc-chest-filled" : ""}`}>
+            <div
+              key={i}
+              className={`mc-chest-slot${w ? " mc-chest-filled" : ""}`}
+              onClick={() => w && showRewards(w.address)}
+              onKeyDown={(e) => e.key === "Enter" && w && showRewards(w.address)}
+              role={w ? "button" : undefined}
+              tabIndex={w ? 0 : undefined}
+            >
               {w ? (
                 <>
                   <div className="mc-chest-icon">◇</div>
@@ -42,8 +106,47 @@ export function Wallets() {
             </div>
           ))}
         </div>
-        <p className="mc-muted">{wallets.length} wallet(s) — reward 1 ARTCB / bloc (epoch genesis)</p>
       </div>
+
+      {founders.length > 0 && (
+        <div className="panel">
+          <h2>Founders allocation</h2>
+          <div className="mc-hotbar">
+            {founders.map((f) => (
+              <div key={f.founder_id} className="mc-slot mc-slot-gold">
+                <div className="mc-kpi-label">{f.name}</div>
+                <div className="mc-kpi-value">{f.balance_artcb.toLocaleString()} ₳</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {selected && (
+        <div className="panel">
+          <h2>Rewards — {selected.slice(0, 16)}…</h2>
+          <table className="mc-table">
+            <thead>
+              <tr>
+                <th>Bloc</th>
+                <th>Reward ₳</th>
+                <th>PoL</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rewardHistory.map((r) => (
+                <tr key={r.block_index}>
+                  <td>#{r.block_index}</td>
+                  <td>{r.reward_artcb}</td>
+                  <td>{r.pol_score?.toFixed(2)}</td>
+                  <td>{r.timestamp}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

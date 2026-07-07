@@ -701,3 +701,30 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
+
+.mc-heatmap {
+  font-family: var(--font-hud);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: var(--mc-grass);
+}
+
+.mc-debug-alerts {
+  border-color: var(--mc-redstone) var(--mc-dirt) var(--mc-dirt) var(--mc-redstone);
+}
+
+.mc-search-results {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.mc-chest-slot[role="button"] {
+  cursor: pointer;
+}
+
+.mc-chest-slot[role="button"]:hover {
+  outline: 2px solid var(--mc-diamond);
+}

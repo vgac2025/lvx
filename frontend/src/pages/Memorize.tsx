@@ -15,6 +15,11 @@ import { useDashboard } from "../context/DashboardContext";
 export function Memorize() {
   const {
     sessionId,
+    setSessionId,
+    useLlm,
+    setUseLlm,
+    actorAddress,
+    setActorAddress,
     text,
     setText,
     graph,
@@ -29,6 +34,7 @@ export function Memorize() {
     setChainBlock,
     visibility,
     groupId,
+    markChecklist,
   } = useDashboard();
   const [loading, setLoading] = useState(false);
 
@@ -38,6 +44,14 @@ export function Memorize() {
       .then(setText)
       .catch(() => setText("Collez votre texte ici — extrait Wailly indisponible."));
   }, [text, setText]);
+
+  useEffect(() => {
+    fetchWallets()
+      .then((w) => {
+        if (w.length && !actorAddress) setActorAddress(w[0].address);
+      })
+      .catch(() => {});
+  }, [actorAddress, setActorAddress]);
 
   const animateViaWebSocket = (inputText: string): Promise<void> =>
     new Promise((resolve, reject) => {
@@ -70,11 +84,12 @@ export function Memorize() {
       pushMessage("explorer", "Décomposition IR en cours…");
       await animateViaWebSocket(text);
       pushMessage("critic", "Validation PoL…");
-      const result = await runAgents(text, sessionId);
+      const result = await runAgents(text, sessionId, useLlm);
       setGraphId(result.graph_id);
       setPol(result.pol);
       const fullGraph = await fetchGraph(result.graph_id);
       setGraph(fullGraph);
+      markChecklist("memorized");
       pushMessage("critic", `PoL ${result.pol.pol_score.toFixed(2)} — ${result.node_count} nœuds validés`);
     } catch (err) {
       pushMessage("critic", `Erreur: ${err instanceof Error ? err.message : String(err)}`);
@@ -87,16 +102,13 @@ export function Memorize() {
     if (!graphId) return;
     setLoading(true);
     try {
-      let actorAddress: string | undefined;
       if (visibility === "group") {
         if (!groupId) {
-          pushMessage("critic", "Sélectionnez un groupe (V10) pour visibility=group");
+          pushMessage("critic", "Sélectionnez un groupe (V10)");
           return;
         }
-        const wallets = await fetchWallets();
-        actorAddress = wallets[0]?.address;
         if (!actorAddress) {
-          pushMessage("critic", "Wallet requis pour signer en mode groupe");
+          pushMessage("critic", "Wallet requis");
           return;
         }
       }
@@ -105,7 +117,7 @@ export function Memorize() {
         sessionId,
         visibility,
         visibility === "group" ? groupId : null,
-        actorAddress,
+        visibility === "group" ? actorAddress : undefined,
       );
       setChainBlock({
         index: block.block_index,
@@ -115,7 +127,8 @@ export function Memorize() {
         graph_id: graphId,
         block_reward: block.block_reward,
       });
-      pushMessage("critic", `Bloc #${block.block_index} signé sur chaîne (${visibility})`);
+      markChecklist("signed");
+      pushMessage("critic", `Bloc #${block.block_index} signé (${visibility})`);
     } catch (err) {
       pushMessage("critic", `Store failed: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
@@ -126,6 +139,19 @@ export function Memorize() {
   return (
     <div className="mc-page">
       <h1 className="dashboard-title">Mémoriser</h1>
+
+      <div className="panel">
+        <h2>Session</h2>
+        <div className="toolbar">
+          <label>
+            session_id:
+            <input value={sessionId} onChange={(e) => setSessionId(e.target.value)} />
+          </label>
+          <label>
+            <input type="checkbox" checked={useLlm} onChange={(e) => setUseLlm(e.target.checked)} /> use_llm
+          </label>
+        </div>
+      </div>
 
       <div className="panel mc-crafting">
         <h2>Source — grille crafting</h2>

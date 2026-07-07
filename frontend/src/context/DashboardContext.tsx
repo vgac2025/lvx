@@ -1,8 +1,17 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { AgentMessage, ChainBlock, IRGraph, NetworkVisibility, PolMetrics } from "../types";
+
+export interface ChecklistState {
+  memorized: boolean;
+  explored: boolean;
+  searched: boolean;
+  signed: boolean;
+}
 
 interface DashboardState {
   sessionId: string;
+  useLlm: boolean;
+  actorAddress: string;
   visibility: NetworkVisibility;
   groupId: string | null;
   text: string;
@@ -12,6 +21,10 @@ interface DashboardState {
   messages: AgentMessage[];
   selectedNodeId: string | null;
   chainBlock: ChainBlock | null;
+  checklist: ChecklistState;
+  setSessionId: (s: string) => void;
+  setUseLlm: (v: boolean) => void;
+  setActorAddress: (a: string) => void;
   setVisibility: (v: NetworkVisibility) => void;
   setGroupId: (id: string | null) => void;
   setText: (t: string) => void;
@@ -22,11 +35,25 @@ interface DashboardState {
   clearMessages: () => void;
   setSelectedNodeId: (id: string | null) => void;
   setChainBlock: (b: ChainBlock | null) => void;
+  markChecklist: (key: keyof ChecklistState) => void;
 }
+
+const CHECKLIST_KEY = "artcb_dashboard_checklist";
 
 const DashboardContext = createContext<DashboardState | null>(null);
 
+function loadChecklist(): ChecklistState {
+  try {
+    const raw = localStorage.getItem(CHECKLIST_KEY);
+    if (raw) return JSON.parse(raw) as ChecklistState;
+  } catch { /* ignore */ }
+  return { memorized: false, explored: false, searched: false, signed: false };
+}
+
 export function DashboardProvider({ children }: { children: ReactNode }) {
+  const [sessionId, setSessionId] = useState("demo_hackathon");
+  const [useLlm, setUseLlm] = useState(false);
+  const [actorAddress, setActorAddress] = useState("");
   const [visibility, setVisibility] = useState<NetworkVisibility>("private");
   const [groupId, setGroupId] = useState<string | null>(null);
   const [text, setText] = useState("");
@@ -36,6 +63,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<AgentMessage[]>([]);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [chainBlock, setChainBlock] = useState<ChainBlock | null>(null);
+  const [checklist, setChecklist] = useState<ChecklistState>(loadChecklist);
+
+  useEffect(() => {
+    localStorage.setItem(CHECKLIST_KEY, JSON.stringify(checklist));
+  }, [checklist]);
+
+  const markChecklist = useCallback((key: keyof ChecklistState) => {
+    setChecklist((prev) => ({ ...prev, [key]: true }));
+  }, []);
 
   const pushMessage = useCallback((agent: "explorer" | "critic", msgText: string) => {
     setMessages((prev) => [
@@ -48,7 +84,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      sessionId: "demo_hackathon",
+      sessionId,
+      useLlm,
+      actorAddress,
       visibility,
       groupId,
       text,
@@ -58,6 +96,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       messages,
       selectedNodeId,
       chainBlock,
+      checklist,
+      setSessionId,
+      setUseLlm,
+      setActorAddress,
       setVisibility,
       setGroupId,
       setText,
@@ -68,8 +110,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       clearMessages,
       setSelectedNodeId,
       setChainBlock,
+      markChecklist,
     }),
     [
+      sessionId,
+      useLlm,
+      actorAddress,
       visibility,
       groupId,
       text,
@@ -79,8 +125,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       messages,
       selectedNodeId,
       chainBlock,
+      checklist,
       pushMessage,
       clearMessages,
+      markChecklist,
     ],
   );
 

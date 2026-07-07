@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
-import { fetchChain, fetchPolScore } from "../api/client";
+import { Link } from "react-router-dom";
+import { chainQueryParams, fetchChain, fetchMiningLatest, fetchMiningStatus } from "../api/client";
 import { McBlockRow } from "../components/McBlockRow";
+import { McKpiSlot } from "../components/McKpiSlot";
+import { useDashboard } from "../context/DashboardContext";
 import type { ChainBlock } from "../types";
 
 export function Mining() {
+  const { visibility, groupId } = useDashboard();
   const [blocks, setBlocks] = useState<ChainBlock[]>([]);
-  const [pol, setPol] = useState<number | null>(null);
+  const [status, setStatus] = useState<{
+    current_reward_artcb: number;
+    blocks_until_halving: number;
+    total_rewards_artcb: number;
+    pol_score: number;
+  } | null>(null);
+  const [miningLog, setMiningLog] = useState<Record<string, unknown> | null>(null);
 
   useEffect(() => {
-    fetchChain().then(setBlocks).catch(() => {});
-    fetchPolScore().then((p) => setPol(p.pol_score)).catch(() => {});
-  }, []);
+    const q = chainQueryParams(visibility, groupId);
+    fetchChain(q).then(setBlocks).catch(() => {});
+    fetchMiningStatus().then(setStatus).catch(() => {});
+    fetchMiningLatest()
+      .then((m) => setMiningLog(m.data))
+      .catch(() => setMiningLog(null));
+  }, [visibility, groupId]);
 
-  const lastReward = blocks.length
-    ? (blocks[blocks.length - 1].block_reward ?? 100_000_000) / 1e8
-    : 1;
+  const summary = miningLog?.summary as Record<string, unknown> | undefined;
+  const lastResult = (miningLog?.results as Array<Record<string, unknown>> | undefined)?.[0];
 
   return (
     <div className="mc-page">
@@ -22,32 +35,54 @@ export function Mining() {
 
       <div className="panel mc-mining-panel">
         <div className="mc-mining-hero">
-          <span className="mc-pickaxe" aria-hidden>⛏</span>
+          <span className="mc-pickaxe" aria-hidden>
+            ⛏
+          </span>
           <div>
             <h2>Proof-of-Learning Mining</h2>
-            <p className="mc-muted">
-              Un bloc est miné quand PoL ≥ seuil et le graphe est signé sur chaîne.
-            </p>
+            <p className="mc-muted">Epoch : {status?.current_reward_artcb ?? 1} ARTCB/bloc — pas de PoW</p>
           </div>
         </div>
 
         <div className="mc-hotbar">
-          <div className="mc-slot mc-slot-gold">
-            <div className="mc-kpi-label">Reward actuel</div>
-            <div className="mc-kpi-value mc-gold-text">{lastReward} ARTCB</div>
-          </div>
-          <div className="mc-slot">
-            <div className="mc-kpi-label">PoL session</div>
-            <div className="mc-kpi-value">{pol?.toFixed(2) ?? "—"}</div>
-          </div>
-          <div className="mc-slot">
-            <div className="mc-kpi-label">Blocs minés</div>
-            <div className="mc-kpi-value">{blocks.length}</div>
-          </div>
+          <McKpiSlot
+            icon="💎"
+            label="PoL session"
+            value={status?.pol_score?.toFixed(2) ?? "—"}
+            gold
+          />
+          <McKpiSlot icon="▣" label="Blocs minés" value={String(blocks.length)} />
+          <McKpiSlot
+            icon="₳"
+            label="Rewards total"
+            value={`${status?.total_rewards_artcb?.toFixed(1) ?? "0"} ₳`}
+          />
+          <McKpiSlot
+            icon="◷"
+            label="Halving dans"
+            value={String(status?.blocks_until_halving ?? "—")}
+            sub="blocs"
+          />
         </div>
 
-        <h3>Derniers blocs minés</h3>
+        {lastResult && (
+          <div className="panel">
+            <h3>Dernier mining_results (fichier réel)</h3>
+            <p className="mc-muted">
+              pol: {String(lastResult.pol_score)} · reversible: {String(lastResult.reversible)} · nodes:{" "}
+              {String(lastResult.nodes_count)}
+            </p>
+            {summary && (
+              <p className="mc-gold-text">total_reward_artcb: {String(summary.total_reward_artcb)}</p>
+            )}
+          </div>
+        )}
+
+        <h3>Blocs minés</h3>
         <McBlockRow blocks={blocks} limit={10} />
+        <p className="mc-muted">
+          Lancer minage via <Link to="/console">Console</Link> — scripts réels sur machine utilisateur
+        </p>
       </div>
     </div>
   );

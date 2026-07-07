@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import axios from "axios";
-import { fetchChain, fetchPolScore } from "../api/client";
+import { chainQueryParams, fetchChain, fetchPolScore } from "../api/client";
 import { useDashboard } from "../context/DashboardContext";
 import type { ChainBlock } from "../types";
 
@@ -25,7 +25,7 @@ const NAV = [
 ];
 
 export function DashboardLayout() {
-  const { visibility, setVisibility, chainBlock } = useDashboard();
+  const { visibility, setVisibility, groupId, chainBlock } = useDashboard();
   const [apiOk, setApiOk] = useState<boolean | null>(null);
   const [polScore, setPolScore] = useState<number | null>(null);
   const [blocks, setBlocks] = useState<ChainBlock[]>([]);
@@ -44,7 +44,8 @@ export function DashboardLayout() {
         setPolScore(pol.pol_score);
       } catch { /* keep last */ }
       try {
-        const chain = await fetchChain();
+        const q = chainQueryParams(visibility, groupId);
+        const chain = await fetchChain(q);
         setBlocks(chain);
       } catch { /* keep last */ }
       try {
@@ -57,7 +58,7 @@ export function DashboardLayout() {
     tick();
     const id = setInterval(tick, 5000);
     return () => clearInterval(id);
-  }, []);
+  }, [visibility, groupId]);
 
   const lastBlock = chainBlock ?? blocks[blocks.length - 1] ?? null;
 
@@ -120,7 +121,7 @@ export function DashboardLayout() {
             onChange={(e) => setVisibility(e.target.value as "private" | "group" | "public")}
           >
             <option value="private">PRIVÉ</option>
-            <option value="group">GROUPE</option>
+            <option value="group">GROUPE{groupId ? ` (${groupId.slice(0, 8)}…)` : ""}</option>
             <option value="public">PUBLIC</option>
           </select>
         </label>
