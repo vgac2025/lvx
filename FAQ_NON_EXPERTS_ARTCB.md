@@ -68,7 +68,7 @@
 - Livre : 654,767 caractères
 - Compression : 6,407 nœuds
 - Réversibilité : 100% (texte identique)
-- Récompense : 50 ARTCB
+- Récompense : 1 ARTCB (genesis, puis halving)
 
 ### Q2.2 : Qu'est-ce qu'un "nœud" ?
 
@@ -118,7 +118,7 @@ Décompression → "Le roi était sage." (identique à 100%)
 
 **R :** Ça dépend de votre **score PoL** (Proof-of-Learning) :
 
-| Score PoL | Qualité | Reward (bloc 50 ARTCB) |
+| Score PoL | Qualité | Reward (bloc 1 ARTCB) |
 |-----------|---------|------------------------|
 | 0.8 | Excellent | ~40 ARTCB (80%) |
 | 0.6 | Bon (seuil) | ~30 ARTCB (60%) |
@@ -207,7 +207,7 @@ Profit net : ~49.90 USD/minute
 
 **Séquence :**
 ```
-Blocs 0-209,999      : 50 ARTCB/bloc
+Blocs 0-209,999      : 1 ARTCB/bloc
 Blocs 210,000-419,999: 25 ARTCB/bloc
 Blocs 420,000-629,999: 12.5 ARTCB/bloc
 ...
@@ -371,7 +371,7 @@ cat logs/mining_results_*.json
 - Alice : PoL 0.8 → 40% du reward (20 ARTCB)
 - Bob : PoL 0.7 → 35% du reward (17.5 ARTCB)
 - Carol : PoL 0.5 → 25% du reward (12.5 ARTCB)
-Total : 50 ARTCB distribués proportionnellement
+Total : 1 ARTCB distribué proportionnellement
 ```
 
 **Avantage :** Partage du travail + validation croisée

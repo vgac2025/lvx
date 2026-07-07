@@ -232,7 +232,7 @@ print(f"Balance: {balance['balance_artcb']} ARTCB")
 | Paramètre | Valeur |
 |-----------|--------|
 | **Supply max** | 21,000,000 ARTCB |
-| **Block reward initial** | 50 ARTCB |
+| **Block reward initial** | 1 ARTCB |
 | **Halving** | Tous les 210,000 blocs |
 | **Distribution** | Collective proportionnelle au PoL |
 | **Seuil bloc** | PoL ≥ 0.6 + signature Critique |
