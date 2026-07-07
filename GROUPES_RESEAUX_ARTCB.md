@@ -203,48 +203,57 @@ sequenceDiagram
 
 ---
 
-### 4.3 Flux — créer un groupe et inviter
+### 4.3 Flux — créer un groupe et rejoindre (Solution 2 — request-to-join)
+
+**Sécurité :** le fondateur ne connaît **jamais** la clé privée des invités. Il partage uniquement un `join_code` public (8 caractères). L'adresse wallet de l'invité n'apparaît qu'au moment où l'invité soumet une **demande signée** (Ed25519). L'invite directe par adresse (`POST /members`) est **désactivée** en production (`ARTCB_DEBUG_DIRECT_MEMBER=false`).
 
 ```mermaid
 sequenceDiagram
-    participant A as Alice (owner)
+    participant A as Alice (fondateur)
     participant API as FastAPI
     participant B as Bob (invité)
 
     A->>API: POST /groups {name: "Projet LVX"}
-    API-->>A: group_id=g_abc, invite_link
-    A->>API: POST /groups/g_abc/invites {address: bob…}
-    API-->>B: notification / lien invite
-    B->>API: POST /groups/g_abc/join {signature}
-    API-->>B: member role=contributor
+    API-->>A: group_id, join_code (8 car.)
+    Note over A: Partage join_code uniquement — pas d'adresse Bob
+    B->>API: GET /groups/by-code/{join_code}
+    API-->>B: nom groupe, member_count (sans membres)
+    B->>B: Signe localement ARTCB-JOIN-REQUEST|...
+    B->>API: POST /groups/join-requests {signature, pubkey, address}
+    API-->>A: Demande pending (adresse visible admin)
+    A->>API: POST /groups/{id}/join-requests/{rid}/approve
+    API-->>B: Membre role=contributor
     A->>API: POST /store {visibility: group, group_id}
     Note over A,B: Graphe + bloc visibles dans espace groupe uniquement
 ```
 
-### 4.4 API proposée (nouveau — P1)
+### 4.4 API implémentée (dashboard-dev)
 
 | Méthode | Endpoint | Action |
 |---------|----------|--------|
-| POST | `/groups` | Créer groupe (wallet signataire = owner) |
-| GET | `/groups` | Lister mes groupes |
+| POST | `/groups` | Créer groupe (fondateur = wallet connecté) |
+| GET | `/groups` | Lister mes groupes (`?address=`) |
+| GET | `/groups/by-code/{join_code}` | Info publique (sans adresses membres) |
+| POST | `/groups/join-requests` | Soumettre demande signée |
+| POST | `/groups/join-requests/sign-with-wallet` | Devnet : signer avec wallet local serveur |
+| GET | `/groups/{id}/join-requests` | Lister demandes (fondateur/admin) |
+| POST | `/groups/{id}/join-requests/{rid}/approve` | Approuver adhésion |
+| POST | `/groups/{id}/join-requests/{rid}/reject` | Refuser adhésion |
 | GET | `/groups/{id}` | Détail + membres |
-| POST | `/groups/{id}/invites` | Inviter par adresse wallet |
-| POST | `/groups/{id}/join` | Accepter invitation (signature) |
+| POST | `/groups/{id}/members` | **DEBUG seulement** — invite directe désactivée |
 | POST | `/groups/{id}/members/{addr}/role` | **Fondateur** : promouvoir/rétrograder admin |
-| POST | `/groups/{id}/dissolve` | **Fondateur** : dissoudre (confirm + signature) |
-| POST | `/groups/{id}/transfer-founder` | **Fondateur** : transfert (P2 optionnel) |
-| GET | `/groups/{id}/graphs` | Graphes du groupe |
-| GET | `/groups/{id}/chain` | Blocs filtrés `visibility=group` |
+| DELETE | `/groups/{id}/members/{addr}` | Retirer membre (≠ fondateur) |
+| POST | `/groups/{id}/dissolve` | **Fondateur** : dissoudre (confirm `DISSOLVE`) |
 | POST | `/store` | **étendu** : `visibility` = `private\|group\|public`, `group_id?` |
+| GET | `/chain?group_id=` | Blocs filtrés par groupe |
 
 ### 4.5 Stockage (MVP fichier)
 
 ```
 data/groups/
-  g_abc123.json          # founder_address immuable, name, created_at
-  g_abc123_members.jsonl # rôles: founder|admin|contributor|viewer
-  g_abc123_invites.jsonl
-  g_abc123_audit.jsonl   # dissolve, FOUNDER_IMMUTABLE blocks
+  g_abc123.json                    # founder_address immuable, join_code, members[]
+  g_abc123_join_requests.jsonl     # demandes signées pending/approved/rejected
+  groups_audit.jsonl               # dissolve, FOUNDER_IMMUTABLE, join_request_*
 ```
 
 Exemple `g_abc123.json` :
@@ -253,7 +262,9 @@ Exemple `g_abc123.json` :
   "group_id": "g_abc123",
   "name": "Projet LVX",
   "founder_address": "artcb1q…",
-  "created_at": "2026-07-07T05:00:00Z"
+  "join_code": "A1B2C3D4",
+  "created_at": "2026-07-07T05:00:00Z",
+  "members": [{"address": "artcb1q…", "role": "founder", "joined_at": "…"}]
 }
 ```
 

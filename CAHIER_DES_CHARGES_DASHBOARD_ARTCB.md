@@ -404,12 +404,13 @@ Résumé shell :
 | Fonction | Détail |
 |----------|--------|
 | Créer groupe | Nom projet, owner = wallet connecté |
-| Inviter membres | Par adresse `artcb1…` (signature join) |
+| Rejoindre groupe | Code `join_code` + demande signée (Solution 2) — **pas** d'invite par adresse |
+| Approuver adhésions | Fondateur/admin voit l'adresse seulement après demande signée |
 | Contexte réseau | Header : `Privé` / `Groupe: …` / `Public` |
 | Données filtrées | Graphes, blocs, wallets scoped au réseau actif |
 | Inspiration | Cursor Members + Supermemory Organization |
 
-**Backend requis (absent aujourd’hui) :** `GROUPES_RESEAUX_ARTCB.md` §4–6.
+**Backend requis :** `GROUPES_RESEAUX_ARTCB.md` §4 — **implémenté** (request-to-join Solution 2).
 
 ```mermaid
 flowchart LR
@@ -431,14 +432,16 @@ flowchart LR
 | Capacité | Existe ? | Détail |
 |----------|----------|--------|
 | Créer un groupe | ✅ | `POST /api/v1/groups` |
-| Inviter utilisateurs | ✅ | `POST /api/v1/groups/{id}/members` |
+| Rejoindre (Solution 2) | ✅ | `join_code` + `POST /join-requests` signé |
+| Invite directe par adresse | ⚠️ DEBUG | `POST /members` bloqué sauf `ARTCB_DEBUG_DIRECT_MEMBER=true` |
+| Approuver / refuser demandes | ✅ | `POST /join-requests/{id}/approve\|reject` |
 | Comptes reliés dans groupe | ✅ | `GroupManager` JSON |
 | Partage fonctionnalités dans groupe | ✅ | `visibility=group` + filtre chain |
 | `visibility: private` sur blocs | ✅ | stocké + filtré |
 | `visibility: public` | ✅ | API + filtre |
 | `visibility: shared/group` | ✅ | store + chain filter |
 
-**Réponse : OUI** — intégration bout en bout implémentée (rapport 048).
+**Réponse : OUI** — intégration bout en bout implémentée (rapports 048 + 049). Invitations sécurisées via request-to-join (Solution 2).
 
 ---
 

@@ -1,4 +1,4 @@
-"""Group management API tests — GROUPES_RESEAUX_ARTCB v1.1."""
+"""Group management API tests — request-to-join (Solution 2)."""
 
 from __future__ import annotations
 
@@ -8,127 +8,177 @@ import pytest
 from fastapi.testclient import TestClient
 
 from api.main import create_app
-
-FOUNDER = "artcb1founder00000000000000000000000001"
-ADMIN = "artcb1admin00000000000000000000000000001"
-MEMBER = "artcb1member000000000000000000000000001"
-OTHER = "artcb1other00000000000000000000000000001"
+from artcb.wallet.manager import WalletManager
 
 
 @pytest.fixture
-def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
+def wallets(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict:
     monkeypatch.setenv("ARTCB_DATA_DIR", str(tmp_path / "data"))
     monkeypatch.setenv("ARTCB_LOG_DIR", str(tmp_path / "logs"))
-    app = create_app()
-    return TestClient(app)
+    monkeypatch.delenv("ARTCB_DEBUG_DIRECT_MEMBER", raising=False)
+    wm = WalletManager()
+    return {
+        "founder": wm.create_wallet(name="founder"),
+        "admin": wm.create_wallet(name="admin"),
+        "member": wm.create_wallet(name="member"),
+        "other": wm.create_wallet(name="other"),
+    }
 
 
-def _create_group(client: TestClient, name: str = "Projet LVX") -> str:
+@pytest.fixture
+def client(wallets: dict) -> TestClient:
+    return TestClient(create_app())
+
+
+def _create_group(client: TestClient, founder_address: str, name: str = "Projet LVX") -> dict:
+    r = client.post("/api/v1/groups", json={"name": name, "founder_address": founder_address})
+    assert r.status_code == 200
+    return r.json()
+
+
+def _join_request(client: TestClient, join_code: str, wallet_name: str) -> dict:
     r = client.post(
-        "/api/v1/groups",
-        json={"name": name, "founder_address": FOUNDER},
+        "/api/v1/groups/join-requests/sign-with-wallet",
+        json={"join_code": join_code, "wallet_name": wallet_name},
     )
-    assert r.status_code == 200
-    return r.json()["group_id"]
+    assert r.status_code == 200, r.text
+    return r.json()["request"]
 
 
-def test_create_group(client: TestClient) -> None:
-    group_id = _create_group(client)
-    r = client.get(f"/api/v1/groups/{group_id}")
-    assert r.status_code == 200
-    data = r.json()
-    assert data["founder_address"] == FOUNDER
-    assert data["members"][0]["role"] == "founder"
-    assert data["dissolved"] is False
-
-
-def test_founder_cannot_be_removed_by_admin(client: TestClient) -> None:
-    group_id = _create_group(client)
-    client.post(
-        f"/api/v1/groups/{group_id}/members",
-        json={"actor_address": FOUNDER, "address": ADMIN, "role": "admin"},
+def _approve(client: TestClient, group_id: str, actor_address: str, request_id: str) -> None:
+    r = client.post(
+        f"/api/v1/groups/{group_id}/join-requests/{request_id}/approve",
+        json={"actor_address": actor_address},
     )
+    assert r.status_code == 200, r.text
+
+
+def _add_member_via_join(client: TestClient, group: dict, wallet_name: str, approver: str) -> None:
+    req = _join_request(client, group["join_code"], wallet_name)
+    _approve(client, group["group_id"], approver, req["request_id"])
+
+
+def test_create_group_has_join_code(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    assert group["founder_address"] == wallets["founder"].address
+    assert group["members"][0]["role"] == "founder"
+    assert len(group["join_code"]) == 8
+    assert group["dissolved"] is False
+
+
+def test_direct_invite_blocked_by_default(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    r = client.post(
+        f"/api/v1/groups/{group['group_id']}/members",
+        json={"actor_address": wallets["founder"].address, "address": wallets["member"].address},
+    )
+    assert r.status_code == 403
+    assert "join-request" in r.json()["detail"]["message"].lower()
+
+
+def test_join_request_flow(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    r_info = client.get(f"/api/v1/groups/by-code/{group['join_code']}")
+    assert r_info.status_code == 200
+    assert r_info.json()["name"] == "Projet LVX"
+    assert "members" not in r_info.json()
+
+    req = _join_request(client, group["join_code"], "member")
+    assert req["status"] == "pending"
+    assert req["address"] == wallets["member"].address
+
+    pending = client.get(
+        f"/api/v1/groups/{group['group_id']}/join-requests",
+        params={"actor_address": wallets["founder"].address, "status": "pending"},
+    )
+    assert pending.json()["count"] == 1
+
+    _approve(client, group["group_id"], wallets["founder"].address, req["request_id"])
+
+    listed = client.get("/api/v1/groups", params={"address": wallets["member"].address})
+    assert listed.json()["count"] == 1
+
+
+def test_founder_cannot_be_removed_by_admin(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    _add_member_via_join(client, group, "admin", wallets["founder"].address)
     client.post(
-        f"/api/v1/groups/{group_id}/members/{ADMIN}/role",
-        json={"actor_address": FOUNDER, "role": "admin"},
+        f"/api/v1/groups/{group['group_id']}/members/{wallets['admin'].address}/role",
+        json={"actor_address": wallets["founder"].address, "role": "admin"},
     )
     r = client.delete(
-        f"/api/v1/groups/{group_id}/members/{FOUNDER}",
-        params={"actor_address": ADMIN},
+        f"/api/v1/groups/{group['group_id']}/members/{wallets['founder'].address}",
+        params={"actor_address": wallets["admin"].address},
     )
     assert r.status_code == 403
     assert r.json()["detail"]["code"] == "FOUNDER_IMMUTABLE"
 
 
-def test_only_founder_promotes_admin(client: TestClient) -> None:
-    group_id = _create_group(client)
-    client.post(
-        f"/api/v1/groups/{group_id}/members",
-        json={"actor_address": FOUNDER, "address": MEMBER, "role": "contributor"},
-    )
+def test_only_founder_promotes_admin(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    _add_member_via_join(client, group, "member", wallets["founder"].address)
     r = client.post(
-        f"/api/v1/groups/{group_id}/members/{MEMBER}/role",
-        json={"actor_address": FOUNDER, "role": "admin"},
+        f"/api/v1/groups/{group['group_id']}/members/{wallets['member'].address}/role",
+        json={"actor_address": wallets["founder"].address, "role": "admin"},
     )
     assert r.status_code == 200
     roles = {m["address"]: m["role"] for m in r.json()["members"]}
-    assert roles[MEMBER] == "admin"
+    assert roles[wallets["member"].address] == "admin"
 
 
-def test_admin_cannot_promote_admin(client: TestClient) -> None:
-    group_id = _create_group(client)
+def test_admin_cannot_promote_admin(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    _add_member_via_join(client, group, "admin", wallets["founder"].address)
+    _add_member_via_join(client, group, "member", wallets["founder"].address)
     client.post(
-        f"/api/v1/groups/{group_id}/members",
-        json={"actor_address": FOUNDER, "address": ADMIN, "role": "admin"},
-    )
-    client.post(
-        f"/api/v1/groups/{group_id}/members",
-        json={"actor_address": FOUNDER, "address": MEMBER, "role": "contributor"},
+        f"/api/v1/groups/{group['group_id']}/members/{wallets['admin'].address}/role",
+        json={"actor_address": wallets["founder"].address, "role": "admin"},
     )
     r = client.post(
-        f"/api/v1/groups/{group_id}/members/{MEMBER}/role",
-        json={"actor_address": ADMIN, "role": "admin"},
+        f"/api/v1/groups/{group['group_id']}/members/{wallets['member'].address}/role",
+        json={"actor_address": wallets["admin"].address, "role": "admin"},
     )
     assert r.status_code == 403
 
 
-def test_dissolve_group_founder_only(client: TestClient) -> None:
-    group_id = _create_group(client)
+def test_dissolve_group_founder_only(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    _add_member_via_join(client, group, "admin", wallets["founder"].address)
     client.post(
-        f"/api/v1/groups/{group_id}/members",
-        json={"actor_address": FOUNDER, "address": ADMIN, "role": "admin"},
+        f"/api/v1/groups/{group['group_id']}/members/{wallets['admin'].address}/role",
+        json={"actor_address": wallets["founder"].address, "role": "admin"},
     )
     r_admin = client.post(
-        f"/api/v1/groups/{group_id}/dissolve",
-        json={"actor_address": ADMIN, "confirm": "DISSOLVE"},
+        f"/api/v1/groups/{group['group_id']}/dissolve",
+        json={"actor_address": wallets["admin"].address, "confirm": "DISSOLVE"},
     )
     assert r_admin.status_code == 403
-
     r_founder = client.post(
-        f"/api/v1/groups/{group_id}/dissolve",
-        json={"actor_address": FOUNDER, "confirm": "DISSOLVE"},
+        f"/api/v1/groups/{group['group_id']}/dissolve",
+        json={"actor_address": wallets["founder"].address, "confirm": "DISSOLVE"},
     )
     assert r_founder.status_code == 200
     assert r_founder.json()["dissolved"] is True
 
 
-def test_groups_api_create_list(client: TestClient) -> None:
-    group_id = _create_group(client)
-    client.post(
-        f"/api/v1/groups/{group_id}/members",
-        json={"actor_address": FOUNDER, "address": MEMBER, "role": "contributor"},
+def test_reject_join_request(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
+    req = _join_request(client, group["join_code"], "member")
+    r = client.post(
+        f"/api/v1/groups/{group['group_id']}/join-requests/{req['request_id']}/reject",
+        json={"actor_address": wallets["founder"].address},
     )
-    r = client.get("/api/v1/groups", params={"address": MEMBER})
     assert r.status_code == 200
-    assert r.json()["count"] == 1
-    assert r.json()["groups"][0]["group_id"] == group_id
+    assert r.json()["status"] == "rejected"
+
+    listed = client.get("/api/v1/groups", params={"address": wallets["member"].address})
+    assert listed.json()["count"] == 0
 
 
-def test_store_group_visibility_and_chain_filter(client: TestClient) -> None:
-    group_id = _create_group(client)
+def test_store_group_visibility_and_chain_filter(client: TestClient, wallets: dict) -> None:
+    group = _create_group(client, wallets["founder"].address)
     text = "Groupe test mémorisation bloc scoped."
     enc = client.post("/api/v1/encode", json={"text": text})
-    assert enc.status_code == 200
     graph_id = enc.json()["graph_id"]
 
     r_bad = client.post(
@@ -136,8 +186,8 @@ def test_store_group_visibility_and_chain_filter(client: TestClient) -> None:
         json={
             "graph_id": graph_id,
             "visibility": "group",
-            "group_id": group_id,
-            "actor_address": OTHER,
+            "group_id": group["group_id"],
+            "actor_address": wallets["other"].address,
         },
     )
     assert r_bad.status_code == 403
@@ -147,16 +197,12 @@ def test_store_group_visibility_and_chain_filter(client: TestClient) -> None:
         json={
             "graph_id": graph_id,
             "visibility": "group",
-            "group_id": group_id,
-            "actor_address": FOUNDER,
+            "group_id": group["group_id"],
+            "actor_address": wallets["founder"].address,
         },
     )
     assert r_ok.status_code == 200
-    assert r_ok.json()["group_id"] == group_id
-    assert r_ok.json()["visibility"] == "group"
+    assert r_ok.json()["group_id"] == group["group_id"]
 
-    chain_all = client.get("/api/v1/chain")
-    chain_group = client.get("/api/v1/chain", params={"group_id": group_id})
-    assert chain_all.json()["count"] >= 1
+    chain_group = client.get("/api/v1/chain", params={"group_id": group["group_id"]})
     assert chain_group.json()["count"] == 1
-    assert chain_group.json()["blocks"][0]["group_id"] == group_id

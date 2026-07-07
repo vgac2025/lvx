@@ -14,6 +14,7 @@ from artcb.ir.models import IRGraph
 from artcb.memory.graph_store import GraphStore
 from artcb.memory.vector_store import VectorStore
 from artcb.pol.scorer import PolScorer
+from artcb.groups.join_requests import JoinRequestManager
 from artcb.groups.manager import GroupManager
 from artcb.rtleg.timeline import RTLEGTimeline
 
@@ -30,6 +31,7 @@ class AppState:
     vectors: VectorStore
     chain: ChainManager
     groups: GroupManager
+    join_requests: JoinRequestManager
     pol_state: dict[str, Any] = field(default_factory=lambda: {
         "pol_score": 0.6,
         "delta_compression": 0.68,
@@ -56,6 +58,8 @@ class AppState:
 def build_app_state() -> AppState:
     settings = load_settings()
     graphs = GraphStore(settings.data_dir / "graphs")
+    groups_dir = settings.data_dir / "groups"
+    groups = GroupManager(groups_dir)
     state = AppState(
         settings=settings,
         encoder=IREncoder(),
@@ -66,7 +70,8 @@ def build_app_state() -> AppState:
         graphs=graphs,
         vectors=VectorStore(),
         chain=ChainManager(settings.data_dir / "chain" / "blocks.jsonl"),
-        groups=GroupManager(settings.data_dir / "groups"),
+        groups=groups,
+        join_requests=JoinRequestManager(groups_dir, groups),
     )
     for graph in graphs.load_all():
         state.register_graph(graph)

@@ -4,16 +4,23 @@ from __future__ import annotations
 
 import json
 import logging
+import secrets
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
 
+from artcb.groups.policy import direct_member_invite_allowed
+
 logger = logging.getLogger("artcb.groups")
 
 GroupRole = Literal["founder", "admin", "contributor", "viewer"]
 VALID_ROLES: set[str] = {"founder", "admin", "contributor", "viewer"}
+
+
+def generate_join_code() -> str:
+    return secrets.token_hex(4).upper()
 
 
 class GroupError(Exception):
@@ -46,6 +53,7 @@ class Group:
     name: str
     founder_address: str
     created_at: str
+    join_code: str = ""
     dissolved: bool = False
     members: list[GroupMember] = field(default_factory=list)
 
@@ -55,6 +63,7 @@ class Group:
             "name": self.name,
             "founder_address": self.founder_address,
             "created_at": self.created_at,
+            "join_code": self.join_code,
             "dissolved": self.dissolved,
             "members": [m.to_dict() for m in self.members],
         }
@@ -84,11 +93,13 @@ class GroupManager:
     def create_group(self, name: str, founder_address: str) -> Group:
         group_id = f"g_{uuid.uuid4().hex[:12]}"
         now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        join_code = generate_join_code()
         group = Group(
             group_id=group_id,
             name=name,
             founder_address=founder_address,
             created_at=now,
+            join_code=join_code,
             members=[
                 GroupMember(address=founder_address, role="founder", joined_at=now),
             ],
@@ -108,6 +119,7 @@ class GroupManager:
             name=data["name"],
             founder_address=data["founder_address"],
             created_at=data["created_at"],
+            join_code=data.get("join_code", ""),
             dissolved=data.get("dissolved", False),
             members=members,
         )
@@ -147,6 +159,19 @@ class GroupManager:
             raise FounderImmutableError("Cannot modify founder membership")
 
     def add_member(
+        self,
+        group_id: str,
+        actor: str,
+        new_address: str,
+        role: GroupRole = "contributor",
+    ) -> Group:
+        if not direct_member_invite_allowed():
+            raise ForbiddenGroupAction(
+                "Direct member add disabled — use join-request flow (POST /groups/join-requests)"
+            )
+        return self.add_member_approved(group_id, actor, new_address, role)
+
+    def add_member_approved(
         self,
         group_id: str,
         actor: str,

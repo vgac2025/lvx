@@ -120,6 +120,7 @@ class WalletManager:
         for meta_path in self.wallet_dir.glob("*.json"):
             try:
                 metadata = json.loads(meta_path.read_text())
+                metadata["name"] = meta_path.stem
                 wallets.append(metadata)
             except (json.JSONDecodeError, OSError) as exc:
                 logger.warning("Failed to load wallet metadata path=%s error=%s", meta_path, exc)

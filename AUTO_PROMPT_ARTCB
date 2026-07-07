@@ -81,6 +81,19 @@ Règles ajoutées :
 - Rapport `rapports/048_dashboard_cdc_100_tests_complets.md`
 - CDC `CAHIER_DES_CHARGES_DASHBOARD_ARTCB.md` mis à jour 100 %
 
+## [2026-07-07T08:00:00Z] Solution 2 — request-to-join (sécurité invitations)
+
+- **Le fondateur ne connaît jamais la clé privée des invités** — seulement `join_code` public
+- Adresse invité visible **uniquement** après demande signée Ed25519 (`ARTCB-JOIN-REQUEST|…`)
+- `POST /groups/{id}/members` **bloqué** sauf `ARTCB_DEBUG_DIRECT_MEMBER=true`
+- Nouveaux modules : `signing.py`, `join_requests.py`, `policy.py`
+- Endpoints : `/by-code/{join_code}`, `/join-requests`, approve/reject
+- Frontend : `/groups/join` (JoinGroup.tsx), pending dans Groups.tsx
+- Tests : **134 pytest**, T-G09–G12, T-F15
+- Rapport `rapports/049_join_request_solution2.md`
+- Docs : `GROUPES_RESEAUX_ARTCB.md` §4.3 réécrit, CDC §5bis corrigé
+- Rapport 048 : invitations par adresse **surévaluées** — corrigé en 049
+
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 
 - **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`

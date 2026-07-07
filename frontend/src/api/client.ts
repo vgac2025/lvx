@@ -85,6 +85,7 @@ export interface GroupData {
   name: string;
   founder_address: string;
   created_at: string;
+  join_code?: string;
   dissolved: boolean;
   members: Array<{ address: string; role: string; joined_at: string }>;
 }
@@ -97,6 +98,51 @@ export async function createGroup(name: string, founderAddress: string) {
 export async function fetchGroupsForAddress(address: string) {
   const { data } = await api.get("/groups", { params: { address } });
   return data as { groups: GroupData[]; count: number };
+}
+
+export async function fetchGroupByJoinCode(joinCode: string) {
+  const { data } = await api.get(`/groups/by-code/${joinCode}`);
+  return data as { group_id: string; name: string; join_code: string; member_count: number };
+}
+
+export async function signJoinWithWallet(walletName: string, joinCode: string) {
+  const { data } = await api.post("/groups/join-requests/sign-with-wallet", {
+    wallet_name: walletName,
+    join_code: joinCode,
+  });
+  return data as {
+    message: string;
+    request: { request_id: string; address: string; status: string };
+  };
+}
+
+export async function fetchJoinRequests(groupId: string, actorAddress: string, status?: string) {
+  const { data } = await api.get(`/groups/${groupId}/join-requests`, {
+    params: { actor_address: actorAddress, status },
+  });
+  return data as {
+    requests: Array<{
+      request_id: string;
+      address: string;
+      status: string;
+      created_at: string;
+    }>;
+    count: number;
+  };
+}
+
+export async function approveJoinRequest(groupId: string, actorAddress: string, requestId: string) {
+  const { data } = await api.post(`/groups/${groupId}/join-requests/${requestId}/approve`, {
+    actor_address: actorAddress,
+  });
+  return data;
+}
+
+export async function rejectJoinRequest(groupId: string, actorAddress: string, requestId: string) {
+  const { data } = await api.post(`/groups/${groupId}/join-requests/${requestId}/reject`, {
+    actor_address: actorAddress,
+  });
+  return data;
 }
 
 export async function inviteGroupMember(

@@ -135,3 +135,12 @@ def address_from_signing_key(signing_key: signing.SigningKey, *, prefix: str = "
     pubkey_bytes = signing_key.verify_key.encode()
     return generate_address(pubkey_bytes, prefix=prefix)
 
+
+def address_from_public_key_bytes(pubkey_bytes: bytes, *, prefix: str = "artcb") -> str:
+    """Derive ARTCB address from raw Ed25519 public key bytes."""
+    return generate_address(pubkey_bytes, prefix=prefix)
+
+
+def address_from_public_key_hex(public_key_hex: str, *, prefix: str = "artcb") -> str:
+    return address_from_public_key_bytes(bytes.fromhex(public_key_hex), prefix=prefix)
+

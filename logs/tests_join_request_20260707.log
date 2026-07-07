@@ -1,0 +1,62 @@
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting tests/test_api.py ______________________
+ImportError while importing test module '/workspace/tests/test_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_api.py:10: in <module>
+    from api.main import create_app
+src/api/main.py:10: in <module>
+    from src.api.deps import build_app_state
+src/api/deps.py:17: in <module>
+    from artcb.groups.join_requests import JoinRequestManager
+src/artcb/groups/join_requests.py:14: in <module>
+    from artcb.groups.signing import build_join_challenge, timestamp_fresh, verify_join_signature
+src/artcb/groups/signing.py:8: in <module>
+    from nacl.exceptions import BadSignature
+E   ImportError: cannot import name 'BadSignature' from 'nacl.exceptions' (/home/ubuntu/.local/lib/python3.12/site-packages/nacl/exceptions.py)
+_________________ ERROR collecting tests/test_dashboard_api.py _________________
+ImportError while importing test module '/workspace/tests/test_dashboard_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_dashboard_api.py:12: in <module>
+    from api.main import create_app
+src/api/main.py:10: in <module>
+    from src.api.deps import build_app_state
+src/api/deps.py:17: in <module>
+    from artcb.groups.join_requests import JoinRequestManager
+src/artcb/groups/join_requests.py:14: in <module>
+    from artcb.groups.signing import build_join_challenge, timestamp_fresh, verify_join_signature
+src/artcb/groups/signing.py:8: in <module>
+    from nacl.exceptions import BadSignature
+E   ImportError: cannot import name 'BadSignature' from 'nacl.exceptions' (/home/ubuntu/.local/lib/python3.12/site-packages/nacl/exceptions.py)
+____________________ ERROR collecting tests/test_groups.py _____________________
+ImportError while importing test module '/workspace/tests/test_groups.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_groups.py:10: in <module>
+    from api.main import create_app
+src/api/main.py:10: in <module>
+    from src.api.deps import build_app_state
+src/api/deps.py:17: in <module>
+    from artcb.groups.join_requests import JoinRequestManager
+src/artcb/groups/join_requests.py:14: in <module>
+    from artcb.groups.signing import build_join_challenge, timestamp_fresh, verify_join_signature
+src/artcb/groups/signing.py:8: in <module>
+    from nacl.exceptions import BadSignature
+E   ImportError: cannot import name 'BadSignature' from 'nacl.exceptions' (/home/ubuntu/.local/lib/python3.12/site-packages/nacl/exceptions.py)
+=========================== short test summary info ============================
+ERROR tests/test_api.py
+ERROR tests/test_dashboard_api.py
+ERROR tests/test_groups.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+3 errors in 0.50s
