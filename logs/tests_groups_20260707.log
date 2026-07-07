@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace
+configfile: pyproject.toml
+plugins: anyio-4.14.1, cov-7.1.0, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 7 items
+
+tests/test_groups.py::test_create_group PASSED                           [ 14%]
+tests/test_groups.py::test_founder_cannot_be_removed_by_admin PASSED     [ 28%]
+tests/test_groups.py::test_only_founder_promotes_admin PASSED            [ 42%]
+tests/test_groups.py::test_admin_cannot_promote_admin PASSED             [ 57%]
+tests/test_groups.py::test_dissolve_group_founder_only PASSED            [ 71%]
+tests/test_groups.py::test_groups_api_create_list PASSED                 [ 85%]
+tests/test_groups.py::test_store_group_visibility_and_chain_filter PASSED [100%]
+
+============================== 7 passed in 3.23s ===============================

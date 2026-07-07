@@ -37,6 +37,8 @@ class StoreRequest(BaseModel):
     graph_id: str
     session_id: str = "sess_default"
     visibility: str = "private"
+    group_id: str | None = None
+    actor_address: str | None = None
 
 
 class AgentRunRequest(BaseModel):
@@ -182,6 +184,19 @@ def store(body: StoreRequest, request: Request) -> dict:
     if not graph:
         raise HTTPException(status_code=404, detail="graph not found")
 
+    if body.visibility not in ("private", "group", "public"):
+        raise HTTPException(status_code=422, detail="visibility must be private, group, or public")
+
+    group_id: str | None = None
+    if body.visibility == "group":
+        if not body.group_id:
+            raise HTTPException(status_code=422, detail="group_id required for visibility=group")
+        if not body.actor_address:
+            raise HTTPException(status_code=422, detail="actor_address required for visibility=group")
+        if not state.groups.is_member(body.group_id, body.actor_address):
+            raise HTTPException(status_code=403, detail="not a group member")
+        group_id = body.group_id
+
     result = state.dual.critic.validate(graph)
     pol = result.pol
     if not pol.block_accepted:
@@ -197,6 +212,7 @@ def store(body: StoreRequest, request: Request) -> dict:
         graph_root=graph_root.replace("sha256:", ""),
         pol_score=pol.pol_score,
         visibility=body.visibility,
+        group_id=group_id,
     )
     state.pol_state["pol_score"] = pol.pol_score
     state.pol_state["delta_compression"] = pol.delta_compression
@@ -222,13 +238,19 @@ def store(body: StoreRequest, request: Request) -> dict:
         "signature": block.signature,
         "pol_score": pol.pol_score,
         "graph_id": graph.graph_id,
+        "visibility": block.visibility,
+        "group_id": block.group_id,
     }
 
 
 @router.get("/chain")
-def chain_list(request: Request) -> dict:
+def chain_list(
+    request: Request,
+    visibility: str | None = Query(None),
+    group_id: str | None = Query(None),
+) -> dict:
     state = _state(request)
-    blocks = state.chain.list_blocks()
+    blocks = state.chain.list_blocks(visibility=visibility, group_id=group_id)
     return {"blocks": blocks, "count": len(blocks)}
 
 

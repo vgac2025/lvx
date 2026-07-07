@@ -51,11 +51,15 @@ export async function storeGraph(
   graphId: string,
   sessionId: string,
   visibility: "private" | "group" | "public" = "private",
+  groupId?: string | null,
+  actorAddress?: string | null,
 ) {
   const { data } = await api.post("/store", {
     graph_id: graphId,
     session_id: sessionId,
     visibility,
+    group_id: groupId ?? undefined,
+    actor_address: actorAddress ?? undefined,
   });
   return data as {
     block_index: number;
@@ -76,6 +80,52 @@ export async function fetchWalletBalance(address: string) {
   return data as { balance_satoshi: number; balance_artcb: number };
 }
 
+export interface GroupData {
+  group_id: string;
+  name: string;
+  founder_address: string;
+  created_at: string;
+  dissolved: boolean;
+  members: Array<{ address: string; role: string; joined_at: string }>;
+}
+
+export async function createGroup(name: string, founderAddress: string) {
+  const { data } = await api.post("/groups", { name, founder_address: founderAddress });
+  return data as GroupData;
+}
+
+export async function fetchGroupsForAddress(address: string) {
+  const { data } = await api.get("/groups", { params: { address } });
+  return data as { groups: GroupData[]; count: number };
+}
+
+export async function inviteGroupMember(
+  groupId: string,
+  actorAddress: string,
+  address: string,
+  role: string = "contributor",
+) {
+  const { data } = await api.post(`/groups/${groupId}/members`, {
+    actor_address: actorAddress,
+    address,
+    role,
+  });
+  return data as GroupData;
+}
+
+export async function promoteGroupMember(
+  groupId: string,
+  actorAddress: string,
+  targetAddress: string,
+  role: string,
+) {
+  const { data } = await api.post(`/groups/${groupId}/members/${targetAddress}/role`, {
+    actor_address: actorAddress,
+    role,
+  });
+  return data as GroupData;
+}
+
 export async function fetchRtlegEvents() {
   const { data } = await api.get("/rtleg/events");
   return data.events as Array<{
@@ -88,8 +138,16 @@ export async function fetchRtlegEvents() {
   }>;
 }
 
-export async function fetchChain(): Promise<ChainBlock[]> {
-  const { data } = await api.get("/chain");
+export async function fetchChain(params?: {
+  visibility?: string;
+  groupId?: string;
+}): Promise<ChainBlock[]> {
+  const { data } = await api.get("/chain", {
+    params: {
+      visibility: params?.visibility,
+      group_id: params?.groupId,
+    },
+  });
   return data.blocks as ChainBlock[];
 }
 

@@ -59,6 +59,18 @@ Règles ajoutées :
 - Dashboard V10 Groupes + sélecteur réseau header
 - Intégration bout en bout **après validation** — avant ou avec dashboard selon GO
 
+## [2026-07-07T06:30:00Z] API Groupes v1 — implémentée (dashboard-dev)
+
+- `src/api/groups_routes.py` — CRUD groupes réel (JSON + audit jsonl)
+- `GroupManager` dans `deps.py` — fondateur immuable F1–F7
+- `POST /store` visibility=group + `GET /chain?group_id=` filtre
+- Fix `chain/manager.py` : `_read_all_blocks()` pour index/hash
+- Tests `tests/test_groups.py` — 7/7 passés, total 103 pytest
+- Frontend V10 Groupes branché API (créer, inviter, promote admin)
+- Rapport `rapports/047_api_groupes_filtre_chaine_tests.md`
+- Avancement dashboard : **62 %**
+- `main` : **pas de merge** sans accord utilisateur
+
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 
 - **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`

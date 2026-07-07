@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.deps import build_app_state
+from src.api.groups_routes import router as groups_router
 from src.api.routes import router as api_router
 from src.api.websocket import router as ws_router
 from artcb.logging_config import setup_logging
@@ -31,6 +32,7 @@ def create_app() -> FastAPI:
     )
     app.state.artcb = build_app_state()
     app.include_router(api_router)
+    app.include_router(groups_router)
     app.include_router(ws_router)
     logger.debug("ARTCB API started debug=%s", app.state.artcb.settings.debug)
     return app

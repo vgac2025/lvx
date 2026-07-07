@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   decodeGraph,
   fetchGraph,
+  fetchWallets,
   searchNodes,
   storeGraph,
 } from "../api/client";
@@ -21,6 +22,7 @@ export function GraphPage() {
     pushMessage,
     setChainBlock,
     visibility,
+    groupId,
   } = useDashboard();
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightIds, setHighlightIds] = useState<string[]>([]);
@@ -69,7 +71,26 @@ export function GraphPage() {
     if (!graphId) return;
     setLoading(true);
     try {
-      const block = await storeGraph(graphId, sessionId, visibility);
+      let actorAddress: string | undefined;
+      if (visibility === "group") {
+        if (!groupId) {
+          pushMessage("critic", "Sélectionnez un groupe (V10)");
+          return;
+        }
+        const wallets = await fetchWallets();
+        actorAddress = wallets[0]?.address;
+        if (!actorAddress) {
+          pushMessage("critic", "Wallet requis pour mode groupe");
+          return;
+        }
+      }
+      const block = await storeGraph(
+        graphId,
+        sessionId,
+        visibility,
+        visibility === "group" ? groupId : null,
+        actorAddress,
+      );
       setChainBlock({
         index: block.block_index,
         hash: block.hash,

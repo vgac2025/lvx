@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   fetchGraph,
   fetchWaillyExcerpt,
+  fetchWallets,
   runAgents,
   storeGraph,
   wsUrl,
@@ -27,6 +28,7 @@ export function Memorize() {
     clearMessages,
     setChainBlock,
     visibility,
+    groupId,
   } = useDashboard();
   const [loading, setLoading] = useState(false);
 
@@ -85,7 +87,26 @@ export function Memorize() {
     if (!graphId) return;
     setLoading(true);
     try {
-      const block = await storeGraph(graphId, sessionId, visibility);
+      let actorAddress: string | undefined;
+      if (visibility === "group") {
+        if (!groupId) {
+          pushMessage("critic", "Sélectionnez un groupe (V10) pour visibility=group");
+          return;
+        }
+        const wallets = await fetchWallets();
+        actorAddress = wallets[0]?.address;
+        if (!actorAddress) {
+          pushMessage("critic", "Wallet requis pour signer en mode groupe");
+          return;
+        }
+      }
+      const block = await storeGraph(
+        graphId,
+        sessionId,
+        visibility,
+        visibility === "group" ? groupId : null,
+        actorAddress,
+      );
       setChainBlock({
         index: block.block_index,
         hash: block.hash,

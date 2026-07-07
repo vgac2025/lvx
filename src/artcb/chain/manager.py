@@ -128,7 +128,7 @@ class ChainManager:
         return self._read_all_blocks()
 
     def last_hash(self) -> str:
-        blocks = self.list_blocks()
+        blocks = self._read_all_blocks()
         if not blocks:
             return GENESIS_PREV_HASH
         return blocks[-1]["hash"]
@@ -141,10 +141,12 @@ class ChainManager:
         pol_score: float,
         merkle_root: str | None = None,
         visibility: str = "private",
+        group_id: str | None = None,
         contributors: list[dict] | None = None,
         block_reward: int | None = None,
     ) -> ChainBlock:
-        index = len(self.list_blocks())
+        all_blocks = self._read_all_blocks()
+        index = len(all_blocks)
         timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         prev_hash = self.last_hash()
         merkle = merkle_root or graph_root
@@ -211,6 +213,7 @@ class ChainManager:
             signature=signature,
             graph_id=graph_id,
             visibility=visibility,
+            group_id=group_id,
             block_reward=block_reward,
             contributors=final_contributors,
         )
@@ -254,6 +257,6 @@ class ChainManager:
         return {
             "valid": valid,
             "message": message,
-            "block_count": len(self.list_blocks()),
+            "block_count": len(self._read_all_blocks()),
             "public_key": self.public_key_b64,
         }
