@@ -1,10 +1,10 @@
-# CAHIER DES CHARGES — Dashboard ARTCB v1.1
+# CAHIER DES CHARGES — Dashboard ARTCB v1.2
 
-**Horodatage :** 2026-07-07T02:15:00Z  
-**Statut :** **EN ATTENTE VALIDATION UTILISATEUR** — pas de développement avant push captures + accord explicite  
+**Horodatage :** 2026-07-07T03:55:00Z  
+**Statut :** **EN ATTENTE VALIDATION UTILISATEUR** — analyse 50 captures faite, pas de code sans GO explicite  
 **Branche spec :** `cursor/dashboard-spec-1fce` (≠ `main`, **pas de merge sans ordre**)  
-**Branche captures :** `cursor/dashboard-captures-1fce` — commit local `8edfa3b` (50 PNG), **push GitHub en attente**  
-**Références :** PROTOCOLE_ARTCB, AUTO_PROMPT_ARTCB, CAHIER_DES_CHARGES_ARTCB v1.2, 2 dashboards inspirants (captures locales)
+**Branche captures :** `cursor/dashboard-captures-1fce` — `8edfa3b` — **50 PNG sur GitHub** ✅  
+**Références analysées :** Supermemory.ai (`console.supermemory.ai`) + Cursor.com (`cursor.com/dashboard`)
 
 ---
 
@@ -24,7 +24,7 @@
 Remplacer la démo hackathon actuelle (`frontend/src/pages/Demo.tsx`) par un **dashboard ARTCB** professionnel qui :
 
 1. Expose **toutes** les capacités backend déjà codées (API réelle, pas mock).
-2. S’inspire de **2 dashboards de référence** (captures utilisateur — **50+ écrans à recevoir**).
+2. S’inspire de **2 dashboards de référence** (50 captures analysées — §3).
 3. Reste en **mode DEBUG** (PROTOCOLE) tant que l’utilisateur ne demande pas autrement.
 4. Conserve le parcours cœur (mémoriser → graphe → PoL → blockchain) dans une vue dédiée.
 
@@ -79,57 +79,144 @@ Remplacer la démo hackathon actuelle (`frontend/src/pages/Demo.tsx`) par un **d
 
 ---
 
-## 3. Inspiration — 2 dashboards de référence
+## 3. Inspiration — analyse des 50 captures
 
-**⏸ Analyse visuelle bloquée** — 50 PNG commités sur votre machine (`captures_dashboard_reference/`), **0 sur GitHub** tant que le push SSH n’est pas corrigé (`vgacgit00` → `vgac2025`). Voir `INSTRUCTIONS_PUSH_CAPTURES_SSH.md`.
+**Expertise mobilisée :** UX / Product Design + analyse comparative SaaS.
 
-### 3.0 Hypothèse de lecture des 50 captures (à confirmer après pull)
+### 3.0 Répartition des 2 références
 
-Les horodatages (01:33 → 02:07) forment une **séquence continue** — probablement **un produit parcouru en profondeur**, ou **deux dashboards enchaînés**. Après réception sur Cloud Agent :
-
-| Lot | Plage horaire estimée | Analyse prévue |
-|-----|----------------------|----------------|
-| Lot A | 01:33 – 01:52 | Layout, navigation, palette |
-| Lot B | 01:57 – 02:07 | Vues secondaires, tables, monitoring |
+| Lot | Produit | URL | Captures | Plage horaire |
+|-----|---------|-----|----------|---------------|
+| **A** | **Supermemory** | `console.supermemory.ai` | ~19 | 01:33 – 01:52 |
+| **B** | **Cursor Dashboard** | `cursor.com/dashboard` | ~31 | 01:57 – 02:07 |
 
 ```mermaid
 flowchart LR
-    subgraph REFS["2 dashboards référence"]
-        A[Captures lot A]
-        B[Captures lot B]
+    subgraph A["Réf. A — Supermemory"]
+        A1[Overview KPI]
+        A2[Memory Graph]
+        A3[Requests table]
+        A4[Documents]
+        A5[Integrations grid]
+        A6[Billing charts]
     end
-    subgraph SYNTH["Synthèse ARTCB"]
-        L[Layout shell]
-        T[Design tokens]
-        V[8 vues fonctionnelles]
+    subgraph B["Réf. B — Cursor"]
+        B1[Overview checklist]
+        B2[Usage heatmap]
+        B3[Cloud Agents config]
+        B4[Plugins marketplace]
+        B5[Integrations GitHub]
     end
-    A --> L
-    B --> L
-    L --> T --> V
+    subgraph ARTCB["Dashboard ARTCB"]
+        C1[Core IR — style A]
+        C2[Ops / chain — style B]
+    end
+    A --> C1
+    B --> C2
 ```
 
-### 3.1 Ce que nous analyserons sur chaque référence
+**Synthèse :** Supermemory = **cœur produit** (mémoire, graphe, requêtes). Cursor = **console ops** (usage, config, intégrations). ARTCB combine les deux.
 
-| Critère | Questions |
-|---------|-----------|
-| Layout | Sidebar ? Top nav ? Grille ? |
-| Palette | Sombre / clair ? Couleurs accent ? |
-| KPI cards | Quels chiffres en hero ? |
-| Graphes | Charts temps réel ? |
-| Tables | Chain, wallets, logs ? |
-| Actions | Boutons primaires où ? |
-| Responsive | Mobile / desktop ? |
+---
 
-### 3.2 Matrice de synthèse (à remplir après captures)
+### 3.1 Référence A — Supermemory.ai
 
-| Zone | Dashboard réf. A | Dashboard réf. B | **Notre choix ARTCB** |
-|------|------------------|------------------|------------------------|
-| Navigation | ? | ? | À définir |
-| Vue principale | ? | ? | Graphe + agents |
-| Blockchain | ? | ? | Explorateur blocs |
-| Wallets | ? | ? | Balances + founders |
-| Monitoring | ? | ? | SystemMetrics étendu |
-| Minage | ? | ? | Statut PoL + rewards |
+**Rôle pour ARTCB :** navigation, KPI, graphe, tables de requêtes, empty states.
+
+| Élément UI | Détail observé | → ARTCB |
+|------------|----------------|---------|
+| **Sidebar** | ~240 px, sections MAIN / ANALYTICS / DATA / DEVELOPER / ORGANIZATION | Sidebar ARTCB avec groupes CORE / CHAIN / SYSTEM |
+| **Header** | Badge org « TECH FREE », DOCS, SUPPORT, filtre temps `1d/7d/30d/All` | Badge `DEBUG`, statut API, filtre temps sur Logs |
+| **Overview** | 5 cartes KPI (Documents, Memories, Search Requests, Tags, Connectors) | 5 cartes : PoL, Blocs, Wallets, Graphes IR, Agents actifs |
+| **Onboarding** | 4 cartes « Explore the platform » (Quick setup, Live demo, Playground, Docs) | 4 cartes : Mémoriser Wailly, Démo live, Playground API, Docs PROTOCOLE |
+| **Memory Graph** | Zone graphe plein écran, empty state centré, légende | Vue Graphe Cytoscape (existant) |
+| **Requests** | Donut chart + table TYPE / STATUS / DURATION / TIME, badges verts `200` | Vue Logs API (style table) + historique requêtes |
+| **Documents** | Empty state + CTA « IMPORT DATA » / « DOCS » | Vue Mémoriser — import texte / PDF |
+| **Integrations** | Grille plugins (Cursor, Codex, Claude…), badges PRO, filtres MCP | Future : connecteurs wallet / agents (P2) |
+| **Billing** | Barre usage %, graphique barres daily spend, plan Free/Pro | Vue Minage : rewards, historique PoL (pas billing SaaS) |
+| **Modales** | Setup Codex : code blocks + copy, étapes numérotées | Modales « Signer bloc », « Créer wallet » |
+
+**Palette Supermemory :**
+- Fond `#000000` / cartes `#1a1a1a`
+- Accent primaire **bleu** (boutons, onglet actif)
+- Succès **vert** (badges +100 %, status 200)
+- Alerte **orange** (métriques usage)
+
+---
+
+### 3.2 Référence B — Cursor.com Dashboard
+
+**Rôle pour ARTCB :** overview ops, checklist, heatmap activité, config agents, intégrations.
+
+| Élément UI | Détail observé | → ARTCB |
+|------------|----------------|---------|
+| **Sidebar** | Groupes Settings / Cloud Agents / Plugins / Members / Usage / Billing | Groupe SYSTEM : Système, Logs, Minage |
+| **Overview** | Crédits, checklist 2/4, cartes plans Pro/Ultra, heatmap activité annuelle | Accueil : checklist parcours §9.2 + heatmap blocs minés |
+| **Cloud Agents** | Env `vgac2025/lvx`, préfixe branche `cursor/`, toggles PR/secrets | Vue Système : config session, fingerprint machine |
+| **Plugins** | Marketplace cartes horizontales, search, empty state | Non prioritaire (P3) |
+| **Bugbot / Rules** | Table règles dépôt, modale génération | Inspiration pour vue Logs / audit PROTOCOLE |
+| **Integrations** | Liste GitHub connecté + boutons Connect (Slack, Linear…) | Footer status : API, chain, wallet connectés |
+| **Members / Teams** | Grille 2×2 features + CTA | Inspiration empty states wallets/founders |
+| **Agents UI** | Prompt central, cartes tâches récentes (`lvx`) | Carte « Dernière session demo_live » sur Accueil |
+
+**Palette Cursor :**
+- Fond charcoal `#0b0b0b`
+- Texte blanc / gris clair
+- Heatmap **vert** (activité)
+- Cartes plans avec bordures subtiles
+
+---
+
+### 3.3 Matrice de synthèse ARTCB (décisions proposées)
+
+| Zone UI | Supermemory (A) | Cursor (B) | **Choix ARTCB v1** |
+|---------|-----------------|------------|-------------------|
+| **Navigation** | Sidebar sections détaillées | Sidebar groupée | **A** — structure par domaine |
+| **Header global** | Org badge + docs | Crédits + statut | **Hybride** — `DEBUG` + PoL + blocs + API ● |
+| **Vue Accueil** | 5 KPI + onboarding 4 cartes | Checklist + heatmap | **Hybride** — KPI (A) + checklist parcours (B) |
+| **Graphe IR** | Memory Graph plein écran | — | **A** — Cytoscape existant |
+| **Agents dual** | Panneau latéral implicite | Cloud agents config | **A** — AgentPanel existant |
+| **Tables données** | Requests (badges status) | — | **A** — Chaîne + Logs |
+| **Monitoring** | Billing bar charts | Usage heatmap | **B** — heatmap blocs + SystemMetrics |
+| **Intégrations** | Grille plugins | Liste connect/disconnect | **B** — status services (API, chain) |
+| **Empty states** | Documents, Graph | Plugins | **A** — chaque vue sans données |
+| **Modales setup** | Codex API key + hooks | Generate rules | **A** — wallet create, sign block |
+
+---
+
+### 3.4 Design tokens proposés (à valider)
+
+| Token | Valeur | Source |
+|-------|--------|--------|
+| `--bg-app` | `#0a0a0a` | Supermemory |
+| `--bg-card` | `#141414` | Supermemory cartes |
+| `--border` | `#2a2a2a` | Cursor |
+| `--accent` | `#3b82f6` | Supermemory boutons |
+| `--success` | `#22c55e` | Badges 200 / PoL OK |
+| `--warning` | `#f97316` | Métriques usage |
+| `--sidebar-width` | `240px` | Les deux refs |
+| `--radius` | `8px` | Cartes arrondies |
+| Font | `system-ui, sans-serif` | Les deux refs |
+
+### 3.5 Mapping captures → vues ARTCB
+
+| Captures Supermemory | Vue ARTCB |
+|---------------------|-----------|
+| Overview KPI | **V1 Accueil** |
+| Playground | **V2 Mémoriser** (mode test API) |
+| Memory Graph | **V3 Graphe** |
+| Requests table | **V8 Logs** |
+| Documents empty | **V2 Mémoriser** |
+| Billing charts | **V6 Minage** |
+
+| Captures Cursor | Vue ARTCB |
+|-----------------|-----------|
+| Overview checklist + heatmap | **V1 Accueil** |
+| Cloud Agents config | **V7 Système** |
+| Integrations GitHub | **V7 Système** (status) |
+| Usage / Spending | **V6 Minage** + **V7 Système** |
+| Bugbot rules | **V8 Logs** (audit) |
+| Members | **V5 Wallets** (founders team) |
 
 ---
 
@@ -166,7 +253,7 @@ flowchart TB
     REST --> DATA
 ```
 
-### 4.1 Wireframe ASCII (proposition avant captures)
+### 4.1 Wireframe ASCII (inspiré Supermemory + Cursor)
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
@@ -234,8 +321,8 @@ flowchart TB
 
 | # | Manque | Priorité | Action |
 |---|--------|----------|--------|
-| G1 | Captures 2 dashboards réf. | **P0** | Attendre utilisateur |
-| G2 | Branche exemples dashboard | **P0** | Checkout quand poussée |
+| G1 | Captures 2 dashboards réf. | ~~P0~~ | ✅ 50 PNG analysés |
+| G2 | Branche exemples dashboard | ~~P0~~ | ✅ `cursor/dashboard-captures-1fce` |
 | G3 | React Router multi-pages | P1 | Dev après validation |
 | G4 | API `GET /chain` liste enrichie contributors | P1 | Backend si besoin |
 | G5 | API minage (wrapper script) | P2 | Endpoint ou job status |
@@ -249,8 +336,8 @@ flowchart TB
 
 | Phase | Contenu | % estimé | Gate |
 |-------|---------|----------|------|
-| **0** | Réception 50+ captures + analyse 2 refs | 0 % | **VOUS** |
-| **1** | Maquettes figées + design tokens | 10 % | Validation plan |
+| **0** | Réception 50+ captures + analyse 2 refs | **40 %** | ✅ Fait |
+| **1** | Maquettes figées + design tokens | 40 % | **Validation plan** |
 | **2** | Layout shell (sidebar, routing) | 25 % | — |
 | **3** | Migration Demo → vues V2–V3 | 45 % | Tests manuels |
 | **4** | V4–V6 chain/wallet/minage | 70 % | API réelle |
@@ -258,7 +345,7 @@ flowchart TB
 | **6** | Suppression `Demo.tsx` legacy | 95 % | Votre OK |
 | **7** | Rapport + tests + PR | 100 % | **Pas merge main sans vous** |
 
-**Avancement dashboard actuel : 15 %** (spec + 50 captures côté vous, 0 analysées côté agent)
+**Avancement dashboard actuel : 40 %** (spec v1.2 + analyse 50 captures, 0 % code)
 
 ---
 
@@ -352,7 +439,7 @@ sequenceDiagram
 - ❌ Modifier `Demo.tsx`
 - ❌ Fusionner vers `main`
 - ❌ Coder le dashboard
-- ❌ Deviner le design des 2 références sans captures
+- ❌ Coder sans votre **« GO code dashboard »**
 
 ---
 
@@ -363,8 +450,9 @@ Répondez **OUI/NON** ou commentez :
 1. [ ] Pivot dashboard validé (remplace démo) malgré CDC §9.3 ?
 2. [ ] Architecture 8 vues (§5) OK ou à réduire ?
 3. [ ] Branche séparée sans merge — OK ?
-4. [ ] Push captures OK (`cursor/dashboard-captures-1fce` sur GitHub) ?
-5. [ ] Envoi complet — **quand push OK, dites « captures envoyées »**
+4. [x] Push captures OK — `cursor/dashboard-captures-1fce` sur GitHub ✅
+5. [ ] Design tokens §3.4 + matrice §3.3 validés ?
+6. [ ] **GO code dashboard** — uniquement après 1–5
 
 ### Réponses attendues (copier-coller)
 
@@ -372,10 +460,11 @@ Répondez **OUI/NON** ou commentez :
 1. Pivot dashboard : OUI / NON
 2. Architecture 8 vues : OUI / NON / MODIFIER (préciser)
 3. Branche isolée sans merge : OUI / NON
-4. Push captures : FAIT / EN COURS
-5. GO code dashboard : OUI / NON (uniquement après 1–4)
+4. Push captures : FAIT
+5. Design tokens + matrice : OUI / NON / MODIFIER
+6. GO code dashboard : OUI / NON
 ```
 
 ---
 
-**Document v1.1 — validation uniquement, aucun code produit.**
+**Document v1.2 — analyse captures complète, aucun code produit.**
