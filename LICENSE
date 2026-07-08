@@ -1,0 +1,34 @@
+ARTCB — Licence propriétaire VGACTech (défaut)
+Copyright (c) 2026 VGACTech. Tous droits réservés.
+
+Ce dépôt et l'ensemble du logiciel ARTCB (sauf composants explicitement
+régis par LICENSE-PUBLIC-BSL.md) sont la propriété exclusive de VGACTech.
+
+INTERDIT sans autorisation écrite préalable de VGACTech :
+  - copie, modification, distribution, sous-licence ou vente ;
+  - usage commercial ou production des modules PRIVÉ et GROUPE ;
+  - ingénierie inverse des composants propriétaires.
+
+Les composants du réseau PUBLIC sont régis par LICENSE-PUBLIC-BSL.md.
+Voir LICENCE_ARTCB.md pour le détail par réseau (privé / groupe / public).
+
+Décision du titulaire : VGACTech — modifiable uniquement par décision
+écrite du représentant légal de VGACTech.
+
+Contact : legal@vgactech.com (à remplacer si autre adresse officielle)
+
+ARTCB — Proprietary License VGACTech (default)
+Copyright (c) 2026 VGACTech. All Rights Reserved.
+
+This repository and all ARTCB software (except components explicitly
+governed by LICENSE-PUBLIC-BSL.md) are the exclusive property of VGACTech.
+
+Without prior written authorization from VGACTech, you may NOT :
+  - copy, modify, distribute, sublicense, or sell ;
+  - use commercially or in production the PRIVATE and GROUP modules ;
+  - reverse engineer proprietary components.
+
+PUBLIC network components are governed by LICENSE-PUBLIC-BSL.md.
+See LICENCE_ARTCB.md for per-network terms (private / group / public).
+
+Licensor decision authority : VGACTech only.

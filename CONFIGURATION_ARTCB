@@ -209,7 +209,7 @@ Les clés ci-dessous sont **optionnelles**, pour services **externes** uniquemen
 lvx/
 ├── .env              ← TON fichier local (gitignoré)
 ├── .env.example      ← Modèle sans secrets (dans le repo)
-├── data/chain/       ← Blockchain C (open source, pas de clés)
+├── data/chain/       ← Blockchain C (propriétaire VGACTech — voir LICENCE_ARTCB.md)
 └── src/c/            ← Core blockchain C
 ```
 

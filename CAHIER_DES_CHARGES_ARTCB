@@ -349,7 +349,7 @@ Tous les contributeurs PoL signataires d'un bloc validé reçoivent une part pro
 | NF-06 | Observabilité | Logs structurés JSON, dossier `rapports/` |
 | NF-07 | Qualité | Mode DEBUG actif, zéro mock/stub (PROTOCOLE) |
 | NF-08 | Portabilité | Linux + macOS, Python 3.11+ |
-| NF-09 | Licence | Open source, repo public |
+| NF-09 | Licence | **Propriétaire VGACTech** (privé/groupe) ; **BSL 1.1** (public) — voir `LICENCE_ARTCB.md` |
 | NF-10 | Langue UI | Français par défaut, EN optionnel |
 
 ---

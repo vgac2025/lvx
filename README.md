@@ -4,7 +4,7 @@
 
 [![Tests](https://img.shields.io/badge/tests-96%2F96%20passing-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://python.org)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![License](https://img.shields.io/badge/license-Proprietary-red)](LICENSE)
 
 ---
 
@@ -329,7 +329,17 @@ Ce projet est développé pour le **RAISE Summit Hackathon 2026** (Cerebral Vall
 
 ## 📄 Licence
 
-MIT License — voir [LICENSE](LICENSE)
+**Titulaire : VGACTech (Société)** — hackathon RAISE terminé.
+
+| Réseau | Licence |
+|--------|---------|
+| **Privé** + **Groupe** | [Propriétaire](LICENSE-PROPRIETAIRE.md) — tous droits réservés |
+| **Public** | [BSL 1.1](LICENSE-PUBLIC-BSL.md) — usage non-production / R&D ; SSPL possible sur décision VGACTech |
+| **Dépôt (défaut)** | [LICENSE](LICENSE) |
+
+Politique complète : [LICENCE_ARTCB.md](LICENCE_ARTCB.md)
+
+Modification des licences : **uniquement par décision écrite de VGACTech**.
 
 ---
 

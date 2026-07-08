@@ -310,13 +310,15 @@ Alice crée 1000 comptes → mine avec tous → prend 99% des rewards
 
 ### Q5.5 : Qui contrôle ARTCB ?
 
-**R :** **Personne** (décentralisé) et **tout le monde** (open source).
+**R :** **VGACTech** détient le logiciel (licence propriétaire pour privé/groupe).  
+Le réseau **public** est en BSL 1.1 (voir `LICENCE_ARTCB.md`).  
+Les **données** restent contrôlées par chaque détenteur de wallet.
 
 **Gouvernance :**
-- Code open source sur GitHub (tout le monde peut vérifier)
-- Pas de serveur central (blockchain distribuée)
-- Décisions par consensus communautaire
-- Founders ont un rôle initial, puis décentralisation progressive
+- Code : **VGACTech** — modification des licences par décision écrite uniquement
+- Données privées/groupe : contrôle utilisateur (wallet, clés locales)
+- Blockchain MVP : single-node local ; décentralisation P2P = objectif futur
+- Pas de vote communautaire sur le dépôt GitHub
 
 ---
 

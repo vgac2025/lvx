@@ -94,6 +94,16 @@ Règles ajoutées :
 - Docs : `GROUPES_RESEAUX_ARTCB.md` §4.3 réécrit, CDC §5bis corrigé
 - Rapport 048 : invitations par adresse **surévaluées** — corrigé en 049
 
+## [2026-07-08T21:45:00Z] Licences VGACTech — propriétaire + BSL public
+
+- **Titulaire :** VGACTech (Société) — hackathon RAISE **terminé**
+- **Privé + Groupe :** `LICENSE-PROPRIETAIRE.md` (tous droits réservés)
+- **Public :** `LICENSE-PUBLIC-BSL.md` (BSL 1.1 ; SSPL sur décision VGACTech uniquement)
+- **Dépôt défaut :** `LICENSE` (propriétaire)
+- **Politique :** `LICENCE_ARTCB.md` + `NOTICE`
+- **Changement licences :** décision écrite VGACTech seule — pas vote blockchain
+- Rapport `rapports/052_licence_vgactech_proprietaire_bsl.md`
+
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 
 - **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`
