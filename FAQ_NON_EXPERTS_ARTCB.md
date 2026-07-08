@@ -315,10 +315,9 @@ Le réseau **public** est en BSL 1.1 (voir `LICENCE_ARTCB.md`).
 Les **données** restent contrôlées par chaque détenteur de wallet.
 
 **Gouvernance :**
-- Code : **VGACTech** — modification des licences par décision écrite uniquement
-- Données privées/groupe : contrôle utilisateur (wallet, clés locales)
-- Blockchain MVP : single-node local ; décentralisation P2P = objectif futur
-- Pas de vote communautaire sur le dépôt GitHub
+- Code : **VGACTech** modifie à tout moment — voir `GOUVERNANCE_ARTCB.md`
+- Rollback si **majorité rejette** une mise à jour majeure (vote à implémenter)
+- Contact : vgacofficiel@gmail.com
 
 ---
 

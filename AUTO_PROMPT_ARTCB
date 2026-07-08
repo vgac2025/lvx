@@ -104,6 +104,14 @@ Règles ajoutées :
 - **Changement licences :** décision écrite VGACTech seule — pas vote blockchain
 - Rapport `rapports/052_licence_vgactech_proprietaire_bsl.md`
 
+## [2026-07-08T22:00:00Z] Gouvernance code + contact officiel
+
+- Contact : **vgacofficiel@gmail.com** (tous fichiers licence)
+- `GOUVERNANCE_ARTCB.md` : VGACTech modifie le code **à tout moment**
+- Engagement : **rollback/correctif** si **majorité** des votants **rejette** une MAJ majeure
+- Vote on-chain/API : **pas encore codé** — règle documentée
+- Rapport `rapports/053_gouvernance_vote_majorite.md`
+
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 
 - **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`

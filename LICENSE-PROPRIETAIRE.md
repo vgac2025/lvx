@@ -50,7 +50,7 @@ Le hackathon RAISE Summit 2026 est **terminé** — l'obligation « open source 
 
 ## 5. Contact
 
-VGACTech — `legal@vgactech.com` (mettre à jour si besoin)
+VGACTech — vgacofficiel@gmail.com
 
 ---
 

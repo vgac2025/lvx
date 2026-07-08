@@ -337,9 +337,13 @@ Ce projet est développé pour le **RAISE Summit Hackathon 2026** (Cerebral Vall
 | **Public** | [BSL 1.1](LICENSE-PUBLIC-BSL.md) — usage non-production / R&D ; SSPL possible sur décision VGACTech |
 | **Dépôt (défaut)** | [LICENSE](LICENSE) |
 
-Politique complète : [LICENCE_ARTCB.md](LICENCE_ARTCB.md)
+Politique complète : [LICENCE_ARTCB.md](LICENCE_ARTCB.md)  
+Gouvernance code (modif libre + vote majorité) : [GOUVERNANCE_ARTCB.md](GOUVERNANCE_ARTCB.md)
 
-Modification des licences : **uniquement par décision écrite de VGACTech**.
+Contact : **vgacofficiel@gmail.com**
+
+Modification des licences : **uniquement par décision écrite de VGACTech**.  
+Modification du code : **VGACTech à tout moment** — rollback si **majorité rejette** une mise à jour majeure.
 
 ---
 

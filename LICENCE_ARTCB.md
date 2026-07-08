@@ -1,9 +1,11 @@
 # LICENCE ARTCB — Politique VGACTech (privé / groupe / public)
 
 **Titulaire :** VGACTech (Société)  
-**Horodatage :** 2026-07-08T21:45:00Z  
+**Contact :** vgacofficiel@gmail.com  
+**Horodatage :** 2026-07-08T22:00:00Z  
 **Décision :** ordre utilisateur — hackathon RAISE terminé, passage licences fermées  
-**Autorité de changement :** **VGACTech uniquement**, par décision écrite du représentant légal
+**Autorité licence :** **VGACTech uniquement**, par décision écrite  
+**Autorité code :** VGACTech modifie à tout moment — **rollback si majorité rejette** une MAJ majeure (voir `GOUVERNANCE_ARTCB.md`)
 
 ---
 
@@ -28,18 +30,30 @@ Seul le volet **réseau public** a une licence plus permissive (BSL) pour consul
 | `LICENSE-PROPRIETAIRE.md` | Détail réseaux **privé** et **groupe** |
 | `LICENSE-PUBLIC-BSL.md` | Réseau **public** — Business Source License 1.1 |
 | `LICENCE_ARTCB.md` | Ce document — politique globale |
+| `GOUVERNANCE_ARTCB.md` | Modifications code + vote majorité + rollback |
 | `NOTICE` | Copyright et marques |
 
 ---
 
-## 3. Qui peut changer ces règles ?
+## 3. Qui peut changer les licences ? Qui peut changer le code ?
 
-**Uniquement VGACTech** — pas un vote des utilisateurs de la blockchain.
+### Licences (copier, utiliser, vendre le logiciel)
+
+**Uniquement VGACTech** — pas un vote des utilisateurs. Voir sections 1–2 et `LICENSE-*.md`.
+
+### Code (mises à jour du programme)
+
+| Règle | Détail |
+|-------|--------|
+| VGACTech modifie le code | **À tout moment**, sans vote préalable |
+| Engagement rollback | Si **majorité des utilisateurs votants** **rejette** une mise à jour **majeure**, VGACTech **corrige** (revient en arrière ou publie un correctif) |
+| Vote automatique | **Pas encore codé** — règle actée dans `GOUVERNANCE_ARTCB.md` |
+| Contact | vgacofficiel@gmail.com |
 
 Les utilisateurs :
 - gardent le contrôle de **leurs données** (wallet, clés privées) ;
-- **ne décident pas** de la licence du code source ;
-- **ne votent pas** sur les mises à jour du dépôt.
+- **ne décident pas** de la licence ;
+- **peuvent voter** pour valider ou **rejeter** une mise à jour majeure (quand le mécanisme sera en place).
 
 ---
 
@@ -83,7 +97,8 @@ Tant qu'aucun fichier `LICENSE-PUBLIC-SSPL.md` n'est publié, **BSL seul** régi
 |------|-----------|
 | 2026-07-04 | CDC NF-09 : intention « open source » (hackathon) |
 | 2026-07-08 | Hackathon terminé — VGACTech : **propriétaire** (privé+groupe) + **BSL** (public) |
+| 2026-07-08 | Gouvernance : modif code libre + rollback si majorité rejette — `GOUVERNANCE_ARTCB.md` |
 
 ---
 
-**© 2026 VGACTech — Tous droits réservés**
+**© 2026 VGACTech — vgacofficiel@gmail.com**
