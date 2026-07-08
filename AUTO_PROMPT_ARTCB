@@ -112,6 +112,14 @@ Règles ajoutées :
 - Vote on-chain/API : **pas encore codé** — règle documentée
 - Rapport `rapports/053_gouvernance_vote_majorite.md`
 
+## [2026-07-08T22:10:00Z] Fusion main ← dashboard-dev + audit post-quantique
+
+- **Merge fast-forward** : `main` ← `dashboard-dev` + `licence-vgactech` (aucun conflit)
+- Tests post-merge : **134 pytest** + **frontend build OK**
+- **Post-quantique : NON** — Ed25519/SHA-256 classiques uniquement ; PQC = future (Dilithium/Kyber)
+- AES-256 clés wallet : **TODO** (pas encore codé)
+- Rapport `rapports/054_merge_main_post_quantique_audit.md`
+
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 
 - **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`
