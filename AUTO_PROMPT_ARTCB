@@ -120,6 +120,15 @@ Règles ajoutées :
 - AES-256 clés wallet : **TODO** (pas encore codé)
 - Rapport `rapports/054_merge_main_post_quantique_audit.md`
 
+## [2026-07-08T22:35:00Z] AES-256-GCM chiffrement clés wallet
+
+- `src/artcb/wallet/encryption.py` — ARTCBENC1, scrypt + AES-256-GCM
+- `ARTCB_WALLET_PASSPHRASE` obligatoire (.env min 12 car.)
+- Migration auto anciens .key 32 octets → chiffré
+- Tests : **141 pytest** (+7 encryption) — métriques `logs/metrics_pre_aes.json` vs `post_aes.json`
+- Rapport `rapports/055_aes_wallet_encryption_avant_apres.md`
+- Post-quantique ML-DSA : **phase 2** (pas cette session)
+
 ## [2026-07-07T04:30:00Z] Dashboard v1.4 — wireframes + block reward 1 ARTCB
 
 - **Block reward initial : 1 ARTCB** (ex-50) — branche `cursor/block-reward-1artcb-1fce`, rapport `045`

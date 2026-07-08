@@ -42,6 +42,13 @@ ARTCB_DEMO_BOOK_PDF=data/fixtures/wailly_le_roi_de_l_inconnu.pdf
 # Réseau local (devnet P2P = Phase 3, pas encore codé)
 ARTCB_NETWORK=local
 
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ WALLET — chiffrement AES-256-GCM des clés privées (.key)        │
+# │ OBLIGATOIRE pour créer/charger des wallets (min 12 caractères)    │
+# │ Ne jamais commiter cette phrase — coffre-fort des clés wallet     │
+# └─────────────────────────────────────────────────────────────────┘
+ARTCB_WALLET_PASSPHRASE=COLLEZ_ICI_PHRASE_SECRETE_MIN_12_CARACTERES
+
 # ── SECRETS OPTIONNELS — décommentez et collez vos clés ───────────
 
 # ┌─────────────────────────────────────────────────────────────────┐

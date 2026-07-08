@@ -79,6 +79,9 @@ class TestWalletManager:
         # Check files created
         assert (tmp_path / "test_wallet.key").exists()
         assert (tmp_path / "test_wallet.json").exists()
+        key_bytes = (tmp_path / "test_wallet.key").read_bytes()
+        assert key_bytes.startswith(b"ARTCBENC1")
+        assert len(key_bytes) > 32
 
     def test_create_wallet_duplicate_fails(self, tmp_path):
         """Cannot create duplicate wallet."""

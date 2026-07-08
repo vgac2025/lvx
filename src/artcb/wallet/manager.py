@@ -11,6 +11,13 @@ from nacl import encoding, signing
 
 from artcb.config import load_settings
 from artcb.wallet.address import address_from_signing_key, generate_address
+from artcb.wallet.encryption import (
+    decrypt_private_key,
+    encrypt_legacy_key_file,
+    encrypt_private_key,
+    is_encrypted_key_blob,
+    is_plain_ed25519_seed,
+)
 
 logger = logging.getLogger("artcb.wallet.manager")
 
@@ -67,16 +74,21 @@ class WalletManager:
         signing_key = signing.SigningKey.generate()
         address = address_from_signing_key(signing_key)
         
-        # Save private key (encrypted in production)
-        key_path.write_bytes(signing_key.encode())
+        # Save private key encrypted AES-256-GCM (ARTCBENC1)
+        seed = signing_key.encode()
+        key_path.write_bytes(encrypt_private_key(seed))
         key_path.chmod(0o600)  # Owner read/write only
-        
+
         # Save metadata
         meta_path = self.wallet_dir / f"{name}.json"
+        from datetime import datetime, timezone
+
         metadata = {
             "address": address,
             "public_key_hex": signing_key.verify_key.encode().hex(),
-            "created_at": "2026-07-05T03:25:00Z",  # TODO: use datetime.now()
+            "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "key_encryption": "AES-256-GCM",
+            "key_format": "ARTCBENC1",
         }
         meta_path.write_text(json.dumps(metadata, indent=2))
         
@@ -102,8 +114,19 @@ class WalletManager:
         if not key_path.exists():
             raise FileNotFoundError(f"Wallet {name} not found at {key_path}")
         
-        # Load private key
-        signing_key = signing.SigningKey(key_path.read_bytes())
+        raw = key_path.read_bytes()
+        seed = decrypt_private_key(raw)
+        signing_key = signing.SigningKey(seed)
+
+        # Auto-migrate legacy plain keys on load
+        if is_plain_ed25519_seed(raw):
+            encrypt_legacy_key_file(key_path)
+            meta_path = self.wallet_dir / f"{name}.json"
+            if meta_path.is_file():
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                meta["key_encryption"] = "AES-256-GCM"
+                meta["key_format"] = "ARTCBENC1"
+                meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
         address = address_from_signing_key(signing_key)
         
         logger.debug("Loaded wallet name=%s address=%s", name, address)

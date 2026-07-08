@@ -1,0 +1,35 @@
+{
+  "label": "post_aes",
+  "timestamp_utc": "2026-07-08T22:33:09Z",
+  "pytest": {
+    "exit_code": 0,
+    "passed": 141,
+    "failed": 0,
+    "duration_seconds": 22.024,
+    "summary_line": "141 passed in 21.34s"
+  },
+  "wallet_key": {
+    "key_file_bytes": 85,
+    "key_starts_with_artcbenc": true,
+    "key_is_plain_32_bytes": false,
+    "key_encryption": "AES-256-GCM",
+    "permissions_octal": "0o600",
+    "address_prefix": "artcb1",
+    "sign_works": true
+  },
+  "chain": {
+    "chain_path": "/workspace/data/chain/blocks.jsonl",
+    "valid": false,
+    "message": "no chain file",
+    "block_count": 0
+  },
+  "security_modules": {
+    "artcb.security.anti_sybil": true,
+    "artcb.security.slashing": true,
+    "artcb.security.rate_limiter": true,
+    "artcb.wallet.encryption": true
+  },
+  "env": {
+    "ARTCB_WALLET_PASSPHRASE_set": true
+  }
+}
