@@ -1,4 +1,4 @@
-"""Blockchain manager — persistence + Ed25519 signatures (Python) + C hash chain."""
+"""Blockchain manager — persistence + hybrid signatures + SHA-3 audit hash."""
 
 from __future__ import annotations
 
@@ -12,14 +12,13 @@ from nacl import encoding, signing
 
 from artcb.chain import ffi
 from artcb.config import load_settings
+from artcb.crypto.hashing import sha3_256_hex
+from artcb.crypto.hybrid import sign_hybrid, verify_hybrid
+from artcb.crypto.pqc import PQC_SIG_ALGORITHM, generate_keypair, pack_keypair, pqc_enabled, unpack_keypair
 from artcb.pol.scorer import PolScorer
-from artcb.tokenomics import (
-    HALVING_INTERVAL,
-    INITIAL_BLOCK_REWARD_SATOSHI,
-    MAX_HALVINGS,
-)
 from artcb.security.anti_sybil import AntiSybilValidator
 from artcb.security.slashing import SlashingManager
+from artcb.wallet.encryption import decrypt_private_key, decrypt_secret_blob, encrypt_private_key, encrypt_secret_blob, is_encrypted_key_blob, is_plain_ed25519_seed
 
 logger = logging.getLogger("artcb.chain.manager")
 
@@ -37,8 +36,9 @@ class ChainBlock:
     graph_id: str
     visibility: str = "private"
     group_id: str | None = None
-    block_reward: int = 0  # Reward in satoshi (1 ARTCB = 10^8 satoshi)
-    contributors: list[dict] = field(default_factory=list)  # [{"address": str, "pol_score": float, "reward_satoshi": int, "signature": str}]
+    block_reward: int = 0
+    contributors: list[dict] = field(default_factory=list)
+    hash_sha3: str | None = None
 
     def to_json_line(self) -> str:
         payload = {
@@ -56,6 +56,8 @@ class ChainBlock:
             "block_reward": self.block_reward,
             "contributors": self.contributors,
         }
+        if self.hash_sha3:
+            payload["hash_sha3"] = self.hash_sha3
         return json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
 
 
@@ -67,15 +69,15 @@ class ChainManager:
         self,
         blocks_path: Path,
         key_path: Path | None = None,
-        enable_security: bool = True
+        enable_security: bool = True,
     ) -> None:
         settings = load_settings()
         self.blocks_path = blocks_path
         self.blocks_path.parent.mkdir(parents=True, exist_ok=True)
         self.key_path = key_path or (settings.data_dir / "chain.key")
-        self._signing_key = self._load_or_create_key()
-        
-        # Security modules
+        self._pqc_key_path = self.key_path.with_suffix(".pqc")
+        self._signing_key, self._pqc_secret_key, self._pqc_public_key = self._load_or_create_keys()
+
         self.enable_security = enable_security
         if enable_security:
             self.anti_sybil = AntiSybilValidator()
@@ -86,19 +88,75 @@ class ChainManager:
             self.slashing = None
             logger.warning("Security modules DISABLED")
 
-    def _load_or_create_key(self) -> signing.SigningKey:
+    def _load_or_create_keys(self) -> tuple[signing.SigningKey, bytes | None, bytes | None]:
         if self.key_path.exists():
             raw = self.key_path.read_bytes()
-            return signing.SigningKey(raw)
-        key = signing.SigningKey.generate()
-        self.key_path.parent.mkdir(parents=True, exist_ok=True)
-        self.key_path.write_bytes(key.encode())
-        logger.debug("Generated new Ed25519 chain key path=%s", self.key_path)
-        return key
+            if is_encrypted_key_blob(raw):
+                seed = decrypt_private_key(raw)
+            elif is_plain_ed25519_seed(raw):
+                seed = raw
+            else:
+                seed = raw[:32]
+            signing_key = signing.SigningKey(seed)
+        else:
+            signing_key = signing.SigningKey.generate()
+            self.key_path.parent.mkdir(parents=True, exist_ok=True)
+            if pqc_enabled():
+                try:
+                    self.key_path.write_bytes(encrypt_private_key(signing_key.encode()))
+                except Exception:
+                    self.key_path.write_bytes(signing_key.encode())
+            else:
+                self.key_path.write_bytes(signing_key.encode())
+            logger.debug("Generated new Ed25519 chain key path=%s", self.key_path)
+
+        pqc_secret: bytes | None = None
+        pqc_public: bytes | None = None
+        if self._pqc_key_path.is_file():
+            raw_pqc = self._pqc_key_path.read_bytes()
+            try:
+                packed = decrypt_secret_blob(raw_pqc) if is_encrypted_key_blob(raw_pqc) else raw_pqc
+                pqc_secret, pqc_public = unpack_keypair(packed)
+            except Exception as exc:
+                logger.warning("Chain PQC key invalid or undecryptable, regenerating: %s", exc)
+                pqc_secret = None
+        if pqc_secret is None and pqc_enabled():
+            try:
+                pqc_secret, pqc_public = generate_keypair()
+                self._pqc_key_path.write_bytes(encrypt_secret_blob(pack_keypair(pqc_secret, pqc_public)))
+                logger.info("Generated chain hybrid key %s", PQC_SIG_ALGORITHM)
+            except Exception as exc:
+                logger.warning("Chain PQC key generation skipped: %s", exc)
+
+        return signing_key, pqc_secret, pqc_public
 
     @property
     def public_key_b64(self) -> str:
         return self._signing_key.verify_key.encode(encoder=encoding.Base64Encoder).decode("ascii")
+
+    @property
+    def is_hybrid(self) -> bool:
+        return self._pqc_secret_key is not None and self._pqc_public_key is not None
+
+    def _sign_block(self, block_hash: str) -> str:
+        message = block_hash.encode("utf-8")
+        if self.is_hybrid and self._pqc_secret_key is not None:
+            return sign_hybrid(
+                ed25519_key=self._signing_key,
+                pqc_secret_key=self._pqc_secret_key,
+                message=message,
+            )
+        signed = self._signing_key.sign(message)
+        return f"ed25519:{signed.signature.hex()}"
+
+    def verify_block_signature(self, block_hash: str, signature: str) -> bool:
+        message = block_hash.encode("utf-8")
+        return verify_hybrid(
+            message=message,
+            signature_value=signature,
+            ed25519_public_key=self._signing_key.verify_key.encode(),
+            pqc_public_key=self._pqc_public_key or b"",
+        )
 
     def list_blocks(
         self,
@@ -150,13 +208,11 @@ class ChainManager:
         timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         prev_hash = self.last_hash()
         merkle = merkle_root or graph_root
-        
-        # Security validation (Anti-Sybil)
+
         if self.enable_security and self.anti_sybil and contributors:
             valid, reason = self.anti_sybil.validate_block(contributors, pol_score, index)
             if not valid:
-                logger.error(f"Block {index} rejected by Anti-Sybil: {reason}")
-                # Slash contributors
+                logger.error("Block %d rejected by Anti-Sybil: %s", index, reason)
                 if self.slashing:
                     for contributor in contributors:
                         self.slashing.slash(
@@ -164,43 +220,39 @@ class ChainManager:
                             reason=reason or "Anti-Sybil validation failed",
                             severity="minor",
                             reward_satoshi=0,
-                            block_index=index
+                            block_index=index,
                         )
                 raise ValueError(f"Block rejected: {reason}")
-            
-            # Check slashing status for each contributor
+
             if self.slashing:
                 for contributor in contributors:
                     allowed, reason = self.slashing.is_allowed(contributor["address"])
                     if not allowed:
-                        logger.error(f"Contributor {contributor['address'][:12]}... not allowed: {reason}")
+                        logger.error("Contributor %s... not allowed: %s", contributor["address"][:12], reason)
                         raise ValueError(f"Contributor blocked: {reason}")
-        
-        # Calculate block reward (halving every 210,000 blocks)
+
         if block_reward is None:
             block_reward = self._calculate_block_reward(index)
-        
-        # Distribute rewards if contributors provided
+
         final_contributors = []
         if contributors:
-            # Use PolScorer.split_reward for collective distribution
             contributor_scores = {c["address"]: c["pol_score"] for c in contributors}
-            rewards = PolScorer.split_reward(block_reward / 1e8, contributor_scores)  # Convert to ARTCB
-            
+            rewards = PolScorer.split_reward(block_reward / 1e8, contributor_scores)
+
             for contributor in contributors:
                 address = contributor["address"]
                 final_contributors.append({
                     "address": address,
                     "pol_score": contributor["pol_score"],
-                    "reward_satoshi": int(rewards[address] * 1e8),  # Convert back to satoshi
+                    "reward_satoshi": int(rewards[address] * 1e8),
                     "signature": contributor.get("signature", ""),
                 })
-        
+
         block_hash = ffi.build_block_hash(
             index, timestamp, prev_hash, graph_root, merkle, pol_score
         )
-        signed = self._signing_key.sign(block_hash.encode("utf-8"))
-        signature = f"ed25519:{signed.signature.hex()}"
+        hash_sha3 = sha3_256_hex(block_hash)
+        signature = self._sign_block(block_hash)
 
         block = ChainBlock(
             index=index,
@@ -210,6 +262,7 @@ class ChainManager:
             merkle_root=merkle,
             pol_score=pol_score,
             hash=block_hash,
+            hash_sha3=hash_sha3,
             signature=signature,
             graph_id=graph_id,
             visibility=visibility,
@@ -219,34 +272,22 @@ class ChainManager:
         )
         with self.blocks_path.open("a", encoding="utf-8") as handle:
             handle.write(block.to_json_line() + "\n")
-        
-        # Record valid block in reputation
+
         if self.enable_security and self.anti_sybil and contributors:
             self.anti_sybil.record_valid_block(contributors, pol_score, index)
-        
+
         logger.debug(
-            "Appended block index=%d hash=%s reward=%d contributors=%d",
-            index, block_hash, block_reward, len(final_contributors)
+            "Appended block index=%d hash=%s sha3=%s reward=%d contributors=%d hybrid=%s",
+            index, block_hash, hash_sha3[:16], block_reward, len(final_contributors), self.is_hybrid,
         )
         return block
-    
+
     def _calculate_block_reward(self, block_index: int) -> int:
-        """
-        Calculate block reward with halving (TOKENOMICS §4).
+        from artcb.tokenomics import HALVING_INTERVAL, INITIAL_BLOCK_REWARD_SATOSHI, MAX_HALVINGS
 
-        Initial: 1 ARTCB = 100_000_000 satoshi
-        Halving every 210,000 blocks
-
-        Args:
-            block_index: Current block index
-
-        Returns:
-            Reward in satoshi
-        """
         halvings = block_index // HALVING_INTERVAL
         if halvings >= MAX_HALVINGS:
             return 0
-
         return INITIAL_BLOCK_REWARD_SATOSHI >> halvings
 
     def verify(self) -> dict:
@@ -259,4 +300,6 @@ class ChainManager:
             "message": message,
             "block_count": len(self._read_all_blocks()),
             "public_key": self.public_key_b64,
+            "hybrid_signatures": self.is_hybrid,
+            "pqc_algorithm": PQC_SIG_ALGORITHM if self.is_hybrid else None,
         }

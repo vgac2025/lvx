@@ -49,6 +49,7 @@ class SubmitJoinRequest(BaseModel):
     public_key_hex: str = Field(min_length=32)
     signature: str = Field(min_length=32)
     timestamp: str
+    pqc_public_key_hex: str | None = None
 
 
 class WalletJoinRequest(BaseModel):
@@ -121,6 +122,7 @@ def submit_join_request(body: SubmitJoinRequest, request: Request) -> dict:
             public_key_hex=body.public_key_hex,
             signature=body.signature,
             timestamp=body.timestamp,
+            pqc_public_key_hex=body.pqc_public_key_hex,
         )
         return req.to_dict()
     except GroupError as exc:
@@ -158,6 +160,7 @@ def sign_join_with_wallet(body: WalletJoinRequest, request: Request) -> dict:
         public_key_hex=wallet.public_key_hex,
         signature=signature,
         timestamp=timestamp,
+        pqc_public_key_hex=wallet.pqc_public_key_hex,
     )
     return {"request": req.to_dict(), "message": "Join request submitted — awaiting admin approval"}
 

@@ -127,8 +127,12 @@ class TestWalletManager:
         
         message = b"test message"
         signature = wallet.sign(message)
-        
-        assert len(signature) == 128  # 64 bytes hex
+
+        if wallet.is_hybrid:
+            assert signature.startswith("hybrid:")
+            assert len(signature) > 128
+        else:
+            assert len(signature) == 128  # 64 bytes hex
 
 
 class TestBlockRewards:

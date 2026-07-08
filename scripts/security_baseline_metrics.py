@@ -41,6 +41,23 @@ def _run_pytest() -> dict:
     }
 
 
+def _pqc_metrics() -> dict:
+    from artcb.crypto.pqc import PQC_SIG_ALGORITHM, pqc_enabled
+
+    result = {"pqc_enabled": pqc_enabled(), "algorithm": PQC_SIG_ALGORITHM}
+    try:
+        from artcb.crypto.pqc import generate_keypair
+
+        sk, pk = generate_keypair()
+        result["keygen_ok"] = True
+        result["secret_key_bytes"] = len(sk)
+        result["public_key_bytes"] = len(pk)
+    except Exception as exc:
+        result["keygen_ok"] = False
+        result["error"] = str(exc)
+    return result
+
+
 def _wallet_key_metrics() -> dict:
     from artcb.wallet.manager import WalletManager
     import os
@@ -53,6 +70,7 @@ def _wallet_key_metrics() -> dict:
         w = wm.create_wallet(name="metrics_probe")
         key_path = tmp_path / "metrics_probe.key"
         raw = key_path.read_bytes()
+        sig = w.sign(b"probe")
         return {
             "key_file_bytes": len(raw),
             "key_starts_with_artcbenc": raw.startswith(b"ARTCBENC1"),
@@ -60,7 +78,10 @@ def _wallet_key_metrics() -> dict:
             "key_encryption": "AES-256-GCM" if raw.startswith(b"ARTCBENC1") else "none/plain",
             "permissions_octal": oct(key_path.stat().st_mode & 0o777),
             "address_prefix": w.address[:6],
-            "sign_works": len(w.sign(b"probe")) == 128,
+            "hybrid_wallet": w.is_hybrid,
+            "pqc_key_file_exists": (tmp_path / "metrics_probe.pqc").exists(),
+            "sign_works": len(sig) > 64,
+            "signature_is_hybrid": sig.startswith("hybrid:"),
         }
 
 
@@ -82,6 +103,9 @@ def _security_modules() -> dict:
         "artcb.security.slashing",
         "artcb.security.rate_limiter",
         "artcb.wallet.encryption",
+        "artcb.crypto.pqc",
+        "artcb.crypto.hybrid",
+        "artcb.governance.manager",
     ]
     loaded = {}
     for m in mods:
@@ -99,6 +123,7 @@ def collect(label: str) -> dict:
         "timestamp_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pytest": _run_pytest(),
         "wallet_key": _wallet_key_metrics(),
+        "pqc": _pqc_metrics(),
         "chain": _chain_metrics(),
         "security_modules": _security_modules(),
         "env": {

@@ -1,4 +1,4 @@
-"""Join-request message signing — Ed25519, clé privée jamais transmise."""
+"""Join-request message signing — Ed25519 + optional ML-DSA hybrid."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from nacl.exceptions import BadSignatureError
 from nacl.signing import VerifyKey
 
+from artcb.crypto.hybrid import verify_hybrid
 from artcb.wallet.address import address_from_public_key_bytes, verify_address
 
 logger = logging.getLogger("artcb.groups.signing")
@@ -26,18 +27,32 @@ def verify_join_signature(
     address: str,
     signature_hex: str,
     message: bytes,
+    pqc_public_key_hex: str | None = None,
 ) -> bool:
-    """Verify Ed25519 signature and that pubkey matches claimed address."""
+    """Verify Ed25519 or hybrid signature; pubkey must match claimed address."""
     if not verify_address(address):
         logger.debug("Invalid address format: %s", address[:16])
         return False
     try:
-        verify_key = VerifyKey(bytes.fromhex(public_key_hex))
-        verify_key.verify(message, bytes.fromhex(signature_hex))
-        derived = address_from_public_key_bytes(verify_key.encode())
+        ed_pubkey = bytes.fromhex(public_key_hex)
+        derived = address_from_public_key_bytes(ed_pubkey)
         if derived != address:
             logger.debug("Address mismatch: claimed=%s derived=%s", address[:12], derived[:12])
             return False
+
+        if signature_hex.startswith("hybrid:"):
+            if not pqc_public_key_hex:
+                logger.debug("Hybrid signature requires pqc_public_key_hex")
+                return False
+            return verify_hybrid(
+                message=message,
+                signature_value=signature_hex,
+                ed25519_public_key=ed_pubkey,
+                pqc_public_key=bytes.fromhex(pqc_public_key_hex),
+            )
+
+        verify_key = VerifyKey(ed_pubkey)
+        verify_key.verify(message, bytes.fromhex(signature_hex))
         return True
     except (BadSignatureError, ValueError) as exc:
         logger.debug("Signature verification failed: %s", exc)

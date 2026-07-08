@@ -49,6 +49,9 @@ ARTCB_NETWORK=local
 # └─────────────────────────────────────────────────────────────────┘
 ARTCB_WALLET_PASSPHRASE=COLLEZ_ICI_PHRASE_SECRETE_MIN_12_CARACTERES
 
+# Post-quantique ML-DSA-65 (signatures hybrides Ed25519+PQC) — défaut: true
+ARTCB_PQC_ENABLED=true
+
 # ── SECRETS OPTIONNELS — décommentez et collez vos clés ───────────
 
 # ┌─────────────────────────────────────────────────────────────────┐

@@ -31,6 +31,7 @@ class JoinRequest:
     created_at: str
     resolved_at: str | None = None
     resolved_by: str | None = None
+    pqc_public_key_hex: str | None = None
 
     def to_dict(self) -> dict:
         return {
@@ -41,6 +42,7 @@ class JoinRequest:
             "public_key_hex": self.public_key_hex,
             "signature": self.signature,
             "timestamp": self.timestamp,
+            "pqc_public_key_hex": self.pqc_public_key_hex,
             "status": self.status,
             "created_at": self.created_at,
             "resolved_at": self.resolved_at,
@@ -63,7 +65,9 @@ class JoinRequestManager:
         items: list[JoinRequest] = []
         for line in path.read_text(encoding="utf-8").splitlines():
             if line.strip():
-                items.append(JoinRequest(**json.loads(line)))
+                data = json.loads(line)
+                data.setdefault("pqc_public_key_hex", None)
+                items.append(JoinRequest(**data))
         return items
 
     def _append_request(self, request: JoinRequest) -> None:
@@ -110,6 +114,7 @@ class JoinRequestManager:
         public_key_hex: str,
         signature: str,
         timestamp: str,
+        pqc_public_key_hex: str | None = None,
     ) -> JoinRequest:
         group = self.get_group_by_join_code(join_code)
         if not group:
@@ -126,6 +131,7 @@ class JoinRequestManager:
             address=address,
             signature_hex=signature,
             message=message,
+            pqc_public_key_hex=pqc_public_key_hex,
         ):
             raise GroupError("Invalid signature")
 
@@ -143,6 +149,7 @@ class JoinRequestManager:
             public_key_hex=public_key_hex,
             signature=signature,
             timestamp=timestamp,
+            pqc_public_key_hex=pqc_public_key_hex,
             status="pending",
             created_at=now,
         )

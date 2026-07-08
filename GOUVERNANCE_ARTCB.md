@@ -74,9 +74,10 @@ VGACTech (vous) pouvez à **n’importe quel moment** :
 | Composant | Statut |
 |-----------|--------|
 | Règle écrite (ce document) | ✅ Actée |
-| API `POST /governance/vote` | ❌ **Pas encore codée** — à implémenter |
-| Interface dashboard « Voter » | ❌ **Pas encore codée** |
-| En attendant | Votes par procédure manuelle documentée (issue GitHub + wallets listés) ou attente implémentation |
+| API `POST /governance/vote` | ✅ **Codée** — `POST /api/v1/governance/vote` |
+| API propositions | ✅ `GET/POST /api/v1/governance/proposals` |
+| Interface dashboard « Voter » | ❌ **Pas encore codée** (API prête) |
+| En attendant | API REST utilisable ; UI dashboard à brancher |
 
 **Important :** L’**engagement moral et contractuel** de VGACTech existe dès maintenant. Le **mécanisme automatique** viendra en phase suivante.
 

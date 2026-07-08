@@ -144,3 +144,22 @@ def address_from_public_key_bytes(pubkey_bytes: bytes, *, prefix: str = "artcb")
 def address_from_public_key_hex(public_key_hex: str, *, prefix: str = "artcb") -> str:
     return address_from_public_key_bytes(bytes.fromhex(public_key_hex), prefix=prefix)
 
+
+def hybrid_address_v2(ed25519_public_key: bytes, pqc_public_key: bytes) -> str:
+    """
+    Hybrid post-quantum address (artcb2) — hash of Ed25519 + ML-DSA public keys.
+    """
+    if len(ed25519_public_key) != 32:
+        raise ValueError("Ed25519 public key must be 32 bytes")
+    if not pqc_public_key:
+        raise ValueError("PQC public key required for artcb2 address")
+    combined = hashlib.sha256(ed25519_public_key + pqc_public_key).digest()
+    ripemd160_hash = hashlib.new("ripemd160", combined).digest()
+    data = _convertbits(ripemd160_hash, 8, 5)
+    return _bech32_encode("artcb2", data)
+
+
+def verify_address_v2(address: str) -> bool:
+    """Verify artcb2 hybrid address format and checksum."""
+    return verify_address(address, prefix="artcb2")
+

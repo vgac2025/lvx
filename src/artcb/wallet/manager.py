@@ -10,11 +10,18 @@ from pathlib import Path
 from nacl import encoding, signing
 
 from artcb.config import load_settings
-from artcb.wallet.address import address_from_signing_key, generate_address
+from artcb.crypto.hybrid import sign_hybrid
+from artcb.crypto.pqc import PQC_SIG_ALGORITHM, generate_keypair, pack_keypair, pqc_enabled, unpack_keypair
+from artcb.wallet.address import (
+    address_from_signing_key,
+    hybrid_address_v2,
+)
 from artcb.wallet.encryption import (
     decrypt_private_key,
+    decrypt_secret_blob,
     encrypt_legacy_key_file,
     encrypt_private_key,
+    encrypt_secret_blob,
     is_encrypted_key_blob,
     is_plain_ed25519_seed,
 )
@@ -24,101 +31,150 @@ logger = logging.getLogger("artcb.wallet.manager")
 
 @dataclass
 class Wallet:
-    """ARTCB wallet with Ed25519 keypair."""
-    
+    """ARTCB wallet with Ed25519 keypair and optional ML-DSA hybrid keys."""
+
     address: str
     signing_key: signing.SigningKey
     public_key_hex: str
-    
+    pqc_secret_key: bytes | None = None
+    pqc_public_key: bytes | None = None
+    address_v2: str | None = None
+
     @property
     def public_key_b64(self) -> str:
         return self.signing_key.verify_key.encode(encoder=encoding.Base64Encoder).decode("ascii")
-    
+
+    @property
+    def pqc_public_key_hex(self) -> str | None:
+        return self.pqc_public_key.hex() if self.pqc_public_key else None
+
+    @property
+    def is_hybrid(self) -> bool:
+        return self.pqc_secret_key is not None and self.pqc_public_key is not None
+
     def sign(self, message: bytes) -> str:
-        """Sign message, return hex signature."""
+        """Sign message — hybrid Ed25519+ML-DSA when PQC keys present, else Ed25519 hex."""
+        if self.is_hybrid and self.pqc_secret_key is not None:
+            return sign_hybrid(
+                ed25519_key=self.signing_key,
+                pqc_secret_key=self.pqc_secret_key,
+                message=message,
+            )
         signed = self.signing_key.sign(message)
         return signed.signature.hex()
-    
+
     def to_dict(self) -> dict:
-        return {
+        payload = {
             "address": self.address,
             "public_key_hex": self.public_key_hex,
             "public_key_b64": self.public_key_b64,
+            "hybrid": self.is_hybrid,
         }
+        if self.address_v2:
+            payload["address_v2"] = self.address_v2
+        if self.pqc_public_key_hex:
+            payload["pqc_public_key_hex"] = self.pqc_public_key_hex
+        return payload
 
 
 class WalletManager:
     """Manages ARTCB wallets — creation, loading, balance tracking."""
-    
+
     def __init__(self, wallet_dir: Path | None = None) -> None:
         settings = load_settings()
         self.wallet_dir = wallet_dir or (settings.data_dir / "wallets")
         self.wallet_dir.mkdir(parents=True, exist_ok=True)
         logger.debug("WalletManager initialized wallet_dir=%s", self.wallet_dir)
-    
+
+    def _pqc_key_path(self, name: str) -> Path:
+        return self.wallet_dir / f"{name}.pqc"
+
+    def _load_pqc_keys(self, name: str) -> tuple[bytes, bytes] | None:
+        pqc_path = self._pqc_key_path(name)
+        if not pqc_path.is_file():
+            return None
+        raw = pqc_path.read_bytes()
+        if is_encrypted_key_blob(raw):
+            packed = decrypt_secret_blob(raw)
+        else:
+            packed = raw
+        try:
+            secret, public = unpack_keypair(packed)
+        except Exception as exc:
+            logger.warning("Invalid PQC key file for wallet %s: %s", name, exc)
+            return None
+        return secret, public
+
+    def _save_pqc_keys(self, name: str, secret_key: bytes, public_key: bytes) -> bytes:
+        pqc_path = self._pqc_key_path(name)
+        pqc_path.write_bytes(encrypt_secret_blob(pack_keypair(secret_key, public_key)))
+        pqc_path.chmod(0o600)
+        return public_key
+
     def create_wallet(self, *, name: str = "default") -> Wallet:
-        """
-        Create new wallet with Ed25519 keypair.
-        
-        Args:
-            name: Wallet name (default: "default")
-        
-        Returns:
-            Wallet instance
-        """
+        """Create new wallet with Ed25519 keypair and optional ML-DSA hybrid keys."""
         key_path = self.wallet_dir / f"{name}.key"
         if key_path.exists():
             raise FileExistsError(f"Wallet {name} already exists at {key_path}")
-        
-        # Generate Ed25519 keypair
+
         signing_key = signing.SigningKey.generate()
         address = address_from_signing_key(signing_key)
-        
-        # Save private key encrypted AES-256-GCM (ARTCBENC1)
+
         seed = signing_key.encode()
         key_path.write_bytes(encrypt_private_key(seed))
-        key_path.chmod(0o600)  # Owner read/write only
+        key_path.chmod(0o600)
 
-        # Save metadata
-        meta_path = self.wallet_dir / f"{name}.json"
+        pqc_secret: bytes | None = None
+        pqc_public: bytes | None = None
+        address_v2: str | None = None
+        if pqc_enabled():
+            try:
+                pqc_secret, pqc_public = generate_keypair()
+                pqc_public = self._save_pqc_keys(name, pqc_secret, pqc_public)
+                address_v2 = hybrid_address_v2(signing_key.verify_key.encode(), pqc_public)
+                logger.info("Created hybrid wallet PQC=%s address_v2=%s", PQC_SIG_ALGORITHM, address_v2[:16])
+            except Exception as exc:
+                logger.warning("PQC key generation skipped: %s", exc)
+
         from datetime import datetime, timezone
 
-        metadata = {
+        meta_path = self.wallet_dir / f"{name}.json"
+        metadata: dict = {
             "address": address,
             "public_key_hex": signing_key.verify_key.encode().hex(),
             "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "key_encryption": "AES-256-GCM",
             "key_format": "ARTCBENC1",
+            "hybrid": pqc_public is not None,
         }
+        if pqc_public is not None:
+            metadata["pqc_algorithm"] = PQC_SIG_ALGORITHM
+            metadata["pqc_public_key_hex"] = pqc_public.hex()
+            metadata["address_v2"] = address_v2
+            metadata["signature_algorithm"] = f"Ed25519+{PQC_SIG_ALGORITHM}"
         meta_path.write_text(json.dumps(metadata, indent=2))
-        
-        logger.info("Created wallet name=%s address=%s", name, address)
-        
+
+        logger.info("Created wallet name=%s address=%s hybrid=%s", name, address, pqc_public is not None)
+
         return Wallet(
             address=address,
             signing_key=signing_key,
             public_key_hex=metadata["public_key_hex"],
+            pqc_secret_key=pqc_secret,
+            pqc_public_key=pqc_public,
+            address_v2=address_v2,
         )
-    
+
     def load_wallet(self, *, name: str = "default") -> Wallet:
-        """
-        Load existing wallet.
-        
-        Args:
-            name: Wallet name
-        
-        Returns:
-            Wallet instance
-        """
+        """Load existing wallet."""
         key_path = self.wallet_dir / f"{name}.key"
         if not key_path.exists():
             raise FileNotFoundError(f"Wallet {name} not found at {key_path}")
-        
+
         raw = key_path.read_bytes()
         seed = decrypt_private_key(raw)
         signing_key = signing.SigningKey(seed)
 
-        # Auto-migrate legacy plain keys on load
         if is_plain_ed25519_seed(raw):
             encrypt_legacy_key_file(key_path)
             meta_path = self.wallet_dir / f"{name}.json"
@@ -127,16 +183,27 @@ class WalletManager:
                 meta["key_encryption"] = "AES-256-GCM"
                 meta["key_format"] = "ARTCBENC1"
                 meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+        pqc_secret: bytes | None = None
+        pqc_public: bytes | None = None
+        address_v2: str | None = None
+        pqc_loaded = self._load_pqc_keys(name)
+        if pqc_loaded:
+            pqc_secret, pqc_public = pqc_loaded
+            address_v2 = hybrid_address_v2(signing_key.verify_key.encode(), pqc_public)
+
         address = address_from_signing_key(signing_key)
-        
-        logger.debug("Loaded wallet name=%s address=%s", name, address)
-        
+        logger.debug("Loaded wallet name=%s address=%s hybrid=%s", name, address, pqc_public is not None)
+
         return Wallet(
             address=address,
             signing_key=signing_key,
             public_key_hex=signing_key.verify_key.encode().hex(),
+            pqc_secret_key=pqc_secret,
+            pqc_public_key=pqc_public,
+            address_v2=address_v2,
         )
-    
+
     def list_wallets(self) -> list[dict]:
         """List all wallets with metadata."""
         wallets = []
@@ -148,24 +215,9 @@ class WalletManager:
             except (json.JSONDecodeError, OSError) as exc:
                 logger.warning("Failed to load wallet metadata path=%s error=%s", meta_path, exc)
         return wallets
-    
+
     def get_balance(self, address: str, blocks_path: Path) -> dict:
-        """
-        Calculate balance from blockchain.
-        
-        Args:
-            address: ARTCB address
-            blocks_path: Path to blocks.jsonl
-        
-        Returns:
-            {
-                "address": str,
-                "balance_satoshi": int,
-                "balance_artcb": float,
-                "block_count": int,
-                "rewards": [{"block_index": int, "reward_satoshi": int, "pol_score": float}]
-            }
-        """
+        """Calculate balance from blockchain."""
         if not blocks_path.exists():
             return {
                 "address": address,
@@ -174,19 +226,19 @@ class WalletManager:
                 "block_count": 0,
                 "rewards": [],
             }
-        
+
         total_satoshi = 0
         rewards = []
-        
+
         with blocks_path.open(encoding="utf-8") as handle:
             for line in handle:
                 line = line.strip()
                 if not line:
                     continue
-                
+
                 block = json.loads(line)
                 contributors = block.get("contributors", [])
-                
+
                 for contributor in contributors:
                     if contributor.get("address") == address:
                         reward_satoshi = contributor.get("reward_satoshi", 0)
@@ -196,7 +248,7 @@ class WalletManager:
                             "reward_satoshi": reward_satoshi,
                             "pol_score": contributor.get("pol_score", 0.0),
                         })
-        
+
         return {
             "address": address,
             "balance_satoshi": total_satoshi,
@@ -204,4 +256,3 @@ class WalletManager:
             "block_count": len(rewards),
             "rewards": rewards,
         }
-

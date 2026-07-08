@@ -59,18 +59,40 @@ def _derive_key(passphrase: str, salt: bytes) -> bytes:
     return kdf.derive(passphrase.encode("utf-8"))
 
 
-def encrypt_private_key(seed: bytes, passphrase: str | None = None) -> bytes:
-    """Encrypt 32-byte Ed25519 seed → ARTCBENC1 | salt(16) | nonce(12) | ciphertext+tag."""
-    if len(seed) != 32:
-        raise WalletEncryptionError(f"Expected 32-byte seed, got {len(seed)}")
+def encrypt_secret_blob(data: bytes, passphrase: str | None = None) -> bytes:
+    """Encrypt arbitrary secret bytes → ARTCBENC1 | salt(16) | nonce(12) | ciphertext+tag."""
+    if not data:
+        raise WalletEncryptionError("Cannot encrypt empty secret blob")
     phrase = passphrase or get_wallet_passphrase()
     salt = secrets.token_bytes(16)
     nonce = secrets.token_bytes(NONCE_LEN)
     key = _derive_key(phrase, salt)
-    ciphertext = AESGCM(key).encrypt(nonce, seed, MAGIC)
+    ciphertext = AESGCM(key).encrypt(nonce, data, MAGIC)
     blob = MAGIC + salt + nonce + ciphertext
-    logger.debug("Encrypted wallet seed (%d bytes → %d bytes)", len(seed), len(blob))
+    logger.debug("Encrypted secret blob (%d bytes → %d bytes)", len(data), len(blob))
     return blob
+
+
+def decrypt_secret_blob(blob: bytes, passphrase: str | None = None) -> bytes:
+    """Decrypt ARTCBENC1 blob."""
+    if not is_encrypted_key_blob(blob):
+        raise WalletEncryptionError("Invalid encrypted secret blob format")
+    phrase = passphrase or get_wallet_passphrase()
+    salt = blob[len(MAGIC) : len(MAGIC) + 16]
+    nonce = blob[len(MAGIC) + 16 : len(MAGIC) + 16 + NONCE_LEN]
+    ciphertext = blob[len(MAGIC) + 16 + NONCE_LEN :]
+    key = _derive_key(phrase, salt)
+    try:
+        return AESGCM(key).decrypt(nonce, ciphertext, MAGIC)
+    except Exception as exc:
+        raise WalletEncryptionError("Decryption failed — wrong passphrase or corrupted file") from exc
+
+
+def encrypt_private_key(seed: bytes, passphrase: str | None = None) -> bytes:
+    """Encrypt 32-byte Ed25519 seed → ARTCBENC1 | salt(16) | nonce(12) | ciphertext+tag."""
+    if len(seed) != 32:
+        raise WalletEncryptionError(f"Expected 32-byte seed, got {len(seed)}")
+    return encrypt_secret_blob(seed, passphrase)
 
 
 def decrypt_private_key(blob: bytes, passphrase: str | None = None) -> bytes:
@@ -81,17 +103,7 @@ def decrypt_private_key(blob: bytes, passphrase: str | None = None) -> bytes:
             "Re-save wallet to encrypt with AES-256-GCM."
         )
         return blob
-    if not is_encrypted_key_blob(blob):
-        raise WalletEncryptionError("Invalid wallet key file format")
-    phrase = passphrase or get_wallet_passphrase()
-    salt = blob[len(MAGIC) : len(MAGIC) + 16]
-    nonce = blob[len(MAGIC) + 16 : len(MAGIC) + 16 + NONCE_LEN]
-    ciphertext = blob[len(MAGIC) + 16 + NONCE_LEN :]
-    key = _derive_key(phrase, salt)
-    try:
-        seed = AESGCM(key).decrypt(nonce, ciphertext, MAGIC)
-    except Exception as exc:
-        raise WalletEncryptionError("Decryption failed — wrong passphrase or corrupted file") from exc
+    seed = decrypt_secret_blob(blob, passphrase)
     if len(seed) != 32:
         raise WalletEncryptionError("Decrypted seed has invalid length")
     return seed
