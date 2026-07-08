@@ -205,3 +205,14 @@ Décisions documentées : D-014 → D-018 dans `DECISIONS_UTILISATEUR_ARTCB`.
 Règles inchangées :
 - Rapport `rapports/005_tokenomics_pol_collectif.md` après cette session.
 - CDC v1.2 §27-28 intègre tokenomics et réseau.
+
+## [2026-07-08T23:55:00Z] Minage privé — mineurs, push main, validation sécurité
+
+- **Push `origin/main` confirmé** — HEAD `605fbd4` (sync local = distant)
+- **Réponse utilisateur :** autres mineurs **ne participent pas** au calcul privé (single-node, 0 % P2P)
+- « Collectif » = split reward `contributors[]` PoL, **pas** pool de calcul distribué
+- Blocs `private` = fichier local `blocks.jsonl` — invisibles aux autres nœuds
+- OpenRouter / Ollama / pool P2P = **pas codé** — attendre GO explicite §9 rapport 060
+- Rapports : `rapports/059_minage_prive_multi_mineurs_securite.md`, `rapports/060_validation_minage_prive_git_et_securite.md`
+- Tests : **165 pytest**
+- **Pas de dev** sans validation cases §9 rapport 060
