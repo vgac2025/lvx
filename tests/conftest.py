@@ -16,6 +16,7 @@ def _wallet_passphrase_env(monkeypatch: pytest.MonkeyPatch) -> None:
     """All tests use encrypted wallets — ARTCB_WALLET_PASSPHRASE required."""
     monkeypatch.setenv("ARTCB_WALLET_PASSPHRASE", TEST_WALLET_PASSPHRASE)
     monkeypatch.setenv("ARTCB_PQC_ENABLED", "true")
+    monkeypatch.setenv("ARTCB_MIN_BLOCK_INTERVAL_SEC", "0")
 
 
 @pytest.fixture

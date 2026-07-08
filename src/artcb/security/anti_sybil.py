@@ -10,6 +10,7 @@ Mesures implémentées :
 
 import hashlib
 import logging
+import os
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -68,9 +69,11 @@ class AntiSybilValidator:
         self,
         min_pol_score: float = 0.6,
         max_contributors_per_block: int = 10,
-        min_block_interval_seconds: int = 60,
+        min_block_interval_seconds: int | None = None,
         reputation_file: Optional[Path] = None
     ):
+        if min_block_interval_seconds is None:
+            min_block_interval_seconds = int(os.getenv("ARTCB_MIN_BLOCK_INTERVAL_SEC", "60"))
         self.min_pol_score = min_pol_score
         self.max_contributors_per_block = max_contributors_per_block
         self.min_block_interval = timedelta(seconds=min_block_interval_seconds)

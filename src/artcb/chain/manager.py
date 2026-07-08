@@ -246,6 +246,7 @@ class ChainManager:
                     "pol_score": contributor["pol_score"],
                     "reward_satoshi": int(rewards[address] * 1e8),
                     "signature": contributor.get("signature", ""),
+                    "role": contributor.get("role", "contributor"),
                 })
 
         block_hash = ffi.build_block_hash(

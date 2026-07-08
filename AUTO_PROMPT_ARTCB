@@ -112,7 +112,14 @@ Règles ajoutées :
 - Vote on-chain/API : **pas encore codé** — règle documentée
 - Rapport `rapports/053_gouvernance_vote_majorite.md`
 
-## [2026-07-08T23:20:00Z] Connecteurs API apprentissage — IA + sources client
+## [2026-07-08T23:30:00Z] Pipeline minage apprentissage + raisonnement unifié
+
+- Bug corrigé : `POST /store` sans `contributors[]` → rewards ARTCB absents
+- `src/artcb/mining/pipeline.py` — 3 phases connectées (source → dual-agent → bloc)
+- `POST /api/v1/mining/pipeline` et `/mining/bulk` (banque, lots paginés)
+- CDC v1.3 §31–35, ROADMAP Phase 7 ✅
+- Rapport `rapports/058_minage_apprentissage_raisonnement_pipeline.md`
+- 165 tests pytest
 
 - `src/artcb/connectors/` — clés OpenAI, Anthropic, Bob, Supabase, SQLite, Postgres, MySQL
 - Stockage **local chiffré** `data/connectors/` — jamais cloud ARTCB

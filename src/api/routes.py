@@ -39,6 +39,7 @@ class StoreRequest(BaseModel):
     visibility: str = "private"
     group_id: str | None = None
     actor_address: str | None = None
+    wallet_name: str | None = Field(default=None, description="Wallet pour signature minage raisonnement")
 
 
 class AgentRunRequest(BaseModel):
@@ -210,13 +211,37 @@ def store(body: StoreRequest, request: Request) -> dict:
             detail={"message": "PoL below threshold", "pol": pol.to_dict()},
         )
 
-    graph_root = sha256_text(graph.checksum)
+    graph_root = sha256_text(graph.checksum).replace("sha256:", "")
+
+    contributors = None
+    actor = body.actor_address
+    wallet = None
+    if body.wallet_name:
+        from artcb.wallet.manager import WalletManager
+
+        try:
+            wallet = WalletManager().load_wallet(name=body.wallet_name)
+            actor = actor or wallet.address
+        except FileNotFoundError as exc:
+            raise HTTPException(status_code=404, detail=f"wallet not found: {body.wallet_name}") from exc
+
+    if actor:
+        from artcb.mining.pipeline import build_contributors
+
+        contributors = build_contributors(
+            actor_address=actor,
+            pol_score=pol.pol_score,
+            wallet=wallet,
+            graph_root=graph_root,
+        )
+
     block = state.chain.append_block(
         graph_id=graph.graph_id,
-        graph_root=graph_root.replace("sha256:", ""),
+        graph_root=graph_root,
         pol_score=pol.pol_score,
         visibility=body.visibility,
         group_id=group_id,
+        contributors=contributors,
     )
     state.pol_state["pol_score"] = pol.pol_score
     state.pol_state["delta_compression"] = pol.delta_compression

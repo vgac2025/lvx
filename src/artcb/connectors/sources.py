@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import sqlite3
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -20,54 +21,78 @@ class DataSourceError(Exception):
     """Failed to read external data source."""
 
 
+@dataclass
+class LearningBatch:
+    text: str
+    row_count: int
+    offset: int
+    limit: int
+    has_more: bool
+
+
 def fetch_learning_text(
     record: ConnectorRecord,
     *,
     limit: int = 50,
+    offset: int = 0,
 ) -> str:
-    """
-    Récupère du texte depuis la source connectée par l'utilisateur.
-    Lecture seule — ne modifie jamais la base du client.
-    """
-    if not record._api_key:
+    batch = fetch_learning_text_batched(record, limit=limit, offset=offset)
+    return batch.text
+
+
+def fetch_learning_text_batched(
+    record: ConnectorRecord,
+    *,
+    limit: int = 50,
+    offset: int = 0,
+) -> LearningBatch:
+    """Lecture paginée — banque / grosses bases (batch par batch)."""
+    if not record._api_key and record.provider not in ("sqlite",):
         raise DataSourceError("Connector has no API key / secret")
 
     if record.provider == "supabase":
-        return _fetch_supabase(record, limit=limit)
-    if record.provider == "sqlite":
-        return _fetch_sqlite(record, limit=limit)
-    if record.provider == "postgres":
-        return _fetch_postgres(record, limit=limit)
-    if record.provider == "mysql":
-        return _fetch_mysql(record, limit=limit)
-    raise DataSourceError(f"Unsupported data source: {record.provider}")
+        text, count, has_more = _fetch_supabase_batch(record, limit=limit, offset=offset)
+    elif record.provider == "sqlite":
+        text, count, has_more = _fetch_sqlite_batch(record, limit=limit, offset=offset)
+    elif record.provider == "postgres":
+        text, count, has_more = _fetch_postgres_batch(record, limit=limit, offset=offset)
+    elif record.provider == "mysql":
+        text, count, has_more = _fetch_mysql_batch(record, limit=limit, offset=offset)
+    else:
+        raise DataSourceError(f"Unsupported data source: {record.provider}")
+
+    return LearningBatch(text=text, row_count=count, offset=offset, limit=limit, has_more=has_more)
 
 
-def _fetch_supabase(record: ConnectorRecord, *, limit: int) -> str:
+def _fetch_supabase_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
     base_url = record.config.get("project_url", "").rstrip("/")
     table = record.config.get("table", "")
     if not base_url or not table:
         raise DataSourceError("supabase requires config.project_url and config.table")
     api_key = record._api_key or ""
-    url = f"{base_url}/rest/v1/{table}?select=*&limit={limit}"
-    with httpx.Client(timeout=30.0) as client:
+    url = f"{base_url}/rest/v1/{table}?select=*&limit={limit}&offset={offset}"
+    with httpx.Client(timeout=60.0) as client:
         r = client.get(
             url,
             headers={
                 "apikey": api_key,
                 "Authorization": f"Bearer {api_key}",
                 "Accept": "application/json",
+                "Prefer": "count=exact",
             },
         )
         r.raise_for_status()
         rows = r.json()
-    return _rows_to_text(rows, source_label=f"Supabase:{table}")
+    text = _rows_to_text(rows, source_label=f"Supabase:{table}@{offset}")
+    has_more = len(rows) >= limit
+    return text, len(rows), has_more
 
 
-def _fetch_sqlite(record: ConnectorRecord, *, limit: int) -> str:
+def _fetch_sqlite_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
     db_path = record.config.get("database_path") or record.config.get("path", "")
     table = record.config.get("table", "")
     text_column = record.config.get("text_column", "content")
+    order_by = record.config.get("order_by", "rowid")
     if not db_path or not table:
         raise DataSourceError("sqlite requires config.database_path and config.table")
     path = Path(db_path)
@@ -76,8 +101,8 @@ def _fetch_sqlite(record: ConnectorRecord, *, limit: int) -> str:
     conn = sqlite3.connect(str(path))
     try:
         cur = conn.execute(
-            f"SELECT * FROM {table} LIMIT ?",  # noqa: S608 — table from user config
-            (limit,),
+            f"SELECT * FROM {table} ORDER BY {order_by} LIMIT ? OFFSET ?",
+            (limit, offset),
         )
         cols = [d[0] for d in cur.description or []]
         rows = [dict(zip(cols, row)) for row in cur.fetchall()]
@@ -85,11 +110,13 @@ def _fetch_sqlite(record: ConnectorRecord, *, limit: int) -> str:
         conn.close()
     if text_column in cols:
         texts = [str(row.get(text_column, "")) for row in rows if row.get(text_column)]
-        return "\n\n".join(texts)
-    return _rows_to_text(rows, source_label=f"SQLite:{table}")
+        text = "\n\n".join(texts)
+    else:
+        text = _rows_to_text(rows, source_label=f"SQLite:{table}@{offset}")
+    return text, len(rows), len(rows) >= limit
 
 
-def _fetch_postgres(record: ConnectorRecord, *, limit: int) -> str:
+def _fetch_postgres_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
     try:
         import psycopg2
         from psycopg2.extras import RealDictCursor
@@ -99,21 +126,27 @@ def _fetch_postgres(record: ConnectorRecord, *, limit: int) -> str:
     dsn = record._api_key or record.config.get("connection_string", "")
     table = record.config.get("table", "")
     text_column = record.config.get("text_column", "content")
+    order_by = record.config.get("order_by", "1")
     if not dsn or not table:
         raise DataSourceError("postgres requires api_key=connection_string and config.table")
     conn = psycopg2.connect(dsn)
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
-            cur.execute(f"SELECT * FROM {table} LIMIT %s", (limit,))  # noqa: S608
+            cur.execute(
+                f"SELECT * FROM {table} ORDER BY {order_by} LIMIT %s OFFSET %s",
+                (limit, offset),
+            )
             rows = [dict(row) for row in cur.fetchall()]
     finally:
         conn.close()
     if rows and text_column in rows[0]:
-        return "\n\n".join(str(r.get(text_column, "")) for r in rows if r.get(text_column))
-    return _rows_to_text(rows, source_label=f"Postgres:{table}")
+        text = "\n\n".join(str(r.get(text_column, "")) for r in rows if r.get(text_column))
+    else:
+        text = _rows_to_text(rows, source_label=f"Postgres:{table}@{offset}")
+    return text, len(rows), len(rows) >= limit
 
 
-def _fetch_mysql(record: ConnectorRecord, *, limit: int) -> str:
+def _fetch_mysql_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
     try:
         import pymysql
         from pymysql.cursors import DictCursor
@@ -123,6 +156,7 @@ def _fetch_mysql(record: ConnectorRecord, *, limit: int) -> str:
     dsn = record._api_key or ""
     table = record.config.get("table", "")
     text_column = record.config.get("text_column", "content")
+    order_by = record.config.get("order_by", "1")
     if not dsn or not table:
         raise DataSourceError("mysql requires api_key=connection_string and config.table")
     parsed = urlparse(dsn)
@@ -136,13 +170,15 @@ def _fetch_mysql(record: ConnectorRecord, *, limit: int) -> str:
     )
     try:
         with conn.cursor() as cur:
-            cur.execute(f"SELECT * FROM `{table}` LIMIT %s", (limit,))  # noqa: S608
+            cur.execute(f"SELECT * FROM `{table}` ORDER BY {order_by} LIMIT %s OFFSET %s", (limit, offset))
             rows = list(cur.fetchall())
     finally:
         conn.close()
     if rows and text_column in rows[0]:
-        return "\n\n".join(str(r.get(text_column, "")) for r in rows if r.get(text_column))
-    return _rows_to_text(rows, source_label=f"MySQL:{table}")
+        text = "\n\n".join(str(r.get(text_column, "")) for r in rows if r.get(text_column))
+    else:
+        text = _rows_to_text(rows, source_label=f"MySQL:{table}@{offset}")
+    return text, len(rows), len(rows) >= limit
 
 
 def _rows_to_text(rows: list[Any], *, source_label: str) -> str:

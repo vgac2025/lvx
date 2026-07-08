@@ -862,3 +862,113 @@ export.artcb (ZIP)
 ---
 
 **Fin du cahier des charges — ARTCB MVP Avancé v1.2**
+
+---
+
+# MISE À JOUR v1.3 — Juillet 2026 (post-hackathon)
+
+**Horodatage :** 2026-07-08T23:30:00Z  
+**Statut implémentation globale :** ~**78 %** du périmètre v1.3
+
+---
+
+## 31. Deux types de minage — CONNECTÉS dans un seul pipeline
+
+| Phase | Nom projet | Ce que ça fait | Statut code |
+|-------|------------|----------------|-------------|
+| **A** | **Minage d'apprentissage** | Lire la source client (DB, fichier, Supabase…) → texte → nœuds IR | ✅ `connectors/` + pagination |
+| **B** | **Minage de raisonnement** | Explorateur décompose + Critique valide → score PoL | ✅ `dual-agent` |
+| **C** | **Minage PoL collectif** | Bloc signé + `contributors[]` + reward ARTCB split | ✅ `mining/pipeline.py` |
+
+**Les trois phases sont enchaînées** — pas deux systèmes séparés :
+
+```
+Source client → [Apprentissage] → Graphe IR → [Raisonnement dual-agent] → PoL ≥ 0.6 → [Bloc + rewards]
+```
+
+**API unifiée :** `POST /api/v1/mining/pipeline`  
+**Bulk banque :** `POST /api/v1/mining/bulk` (lots paginés `limit` + `offset`)
+
+**Correction bug v1.2 :** `POST /store` n'enregistrait pas les `contributors[]` → **corrigé** (v1.3).
+
+---
+
+## 32. Connecteurs utilisateur — sources d'apprentissage (PAS stockage ARTCB)
+
+| Provider | Rôle | Clé utilisateur | Statut |
+|----------|------|-----------------|--------|
+| `openai` | IA ChatGPT | `sk-…` | ✅ |
+| `anthropic` | IA Claude | `sk-ant-…` | ✅ |
+| `bob` | IA IBM Bob | clé Bob | ✅ |
+| `supabase` | **Lecture** table client | URL + clé API | ✅ |
+| `postgres` | **Lecture** DB (banque…) | connection string | ✅ |
+| `mysql` | **Lecture** DB | connection string | ✅ |
+| `sqlite` | Fichier local | chemin `.db` | ✅ |
+
+- Clés stockées **chiffrées localement** : `data/connectors/connectors.json`
+- **Jamais** sur cloud ARTCB ni en remplacement du JSON blockchain
+- UI : Dashboard → **Intégrations** (`/integrations`)
+- Cas banque : `POST /mining/bulk` avec `batch_size` + `max_batches`, `visibility=private`
+
+---
+
+## 33. Exigences v1.3 — réalisé / reste à faire
+
+### ✅ Réalisé
+
+| ID | Exigence | Fichiers / API |
+|----|----------|----------------|
+| F-25 | Connecteurs IA (OpenAI, Claude, Bob) | `connectors/llm_router.py` |
+| F-26 | Connecteurs sources DB client | `connectors/sources.py` |
+| F-27 | UI saisie clés API | `Integrations.tsx` |
+| F-28 | Pipeline minage unifié | `mining/pipeline.py` |
+| F-29 | Store avec contributors + signature wallet | `routes.py` `/store` |
+| F-30 | Minage bulk paginé (grosses bases) | `/mining/bulk` |
+| F-31 | Groupes request-to-join | `groups/join_requests.py` |
+| F-32 | PQC hybride ML-DSA-65 | `crypto/` |
+| F-33 | Gouvernance vote API | `governance/` |
+| F-34 | Dashboard V1–V10 | `frontend/` |
+| F-35 | 165 tests pytest | `tests/` |
+
+### ❌ Reste à faire
+
+| ID | Exigence | Priorité | Raison |
+|----|----------|----------|--------|
+| F-36 | P2P `artcb-devnet` multi-nœuds | P0 réseau | 0 % code libp2p |
+| F-37 | ML-KEM transport inter-nœuds | P1 | Dépend P2P |
+| F-38 | Notifications Telegram / mail | P1 | Module `notifiers/` absent |
+| F-39 | UI Gouvernance « Voter » | P2 | API seule |
+| F-40 | Faucet tARTCB devnet | P2 | Script absent |
+| F-41 | Export `.artcb` portable | P2 | Non codé |
+| F-42 | Auth HTTP clé API distante | P2 | API locale ouverte |
+| F-43 | UI Mémoriser — sélecteur IA connectée | P2 | API prête |
+
+---
+
+## 34. Questions que vous devriez poser (checklist)
+
+1. **Mes clés restent-elles chez moi ?** → Oui, chiffrées `data/connectors/`.
+2. **La blockchain remplace-t-elle ma base ?** → Non, lecture seule pour apprendre.
+3. **Apprentissage et raisonnement sont-ils liés ?** → Oui, pipeline unique `/mining/pipeline`.
+4. **Je reçois des ARTCB quand ?** → Quand `contributors[]` est sur le bloc (store ou pipeline avec `actor_address`).
+5. **Banque — toute la DB ?** → `/mining/bulk` par lots ; ajuster `batch_size` / `max_batches`.
+6. **Réseau privé banque ?** → `visibility=private` sur pipeline/store.
+7. **Plusieurs mineurs sur un bloc ?** → Oui, split PoL collectif si plusieurs `contributors`.
+8. **P2P décentralisé ?** → Pas encore — single-node local.
+9. **Quel IA sans cloud ?** → Rule-based seul, sans connecteur.
+10. **Intervalle anti-Sybil en bulk ?** → `ARTCB_MIN_BLOCK_INTERVAL_SEC=0` en dev ; 60s en prod.
+
+---
+
+## 35. Références v1.3
+
+| Document | Rôle |
+|----------|------|
+| `rapports/057_connexions_api_apprentissage.md` | Connecteurs IA + DB |
+| `rapports/058_minage_apprentissage_raisonnement_pipeline.md` | Ce pipeline |
+| `TOKENOMICS_ARTCB` | Rewards collectifs |
+| `GOUVERNANCE_ARTCB.md` | Vote majorité |
+
+---
+
+**Fin du cahier des charges — ARTCB MVP Avancé v1.3**

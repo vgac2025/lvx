@@ -239,6 +239,35 @@ export function Integrations() {
                     <button type="button" className="mc-btn-sm" onClick={() => handleLearn(c.connector_id)}>
                       Apprendre cette source
                     </button>
+                    <button
+                      type="button"
+                      className="mc-btn-sm"
+                      onClick={async () => {
+                        setLoading(true);
+                        try {
+                          const r = await fetch("/api/v1/mining/bulk", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              connector_id: c.connector_id,
+                              max_batches: 10,
+                              batch_size: 50,
+                              use_llm: !!learnLlm,
+                              llm_provider: learnLlm || undefined,
+                            }),
+                          });
+                          const data = await r.json();
+                          if (!r.ok) throw new Error(data.detail || r.statusText);
+                          setSuccess(`Minage bulk : ${data.batches_processed} lots (apprentissage + raisonnement + blocs)`);
+                        } catch (e) {
+                          setError(String(e));
+                        } finally {
+                          setLoading(false);
+                        }
+                      }}
+                    >
+                      Minage bulk (banque)
+                    </button>
                   </>
                 )}
                 <button type="button" className="mc-btn-sm mc-btn-danger" onClick={() => handleDelete(c.connector_id)}>
