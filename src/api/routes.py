@@ -45,6 +45,10 @@ class AgentRunRequest(BaseModel):
     text: str = Field(min_length=1)
     session_id: str = "sess_default"
     use_llm: bool = False
+    llm_provider: str | None = Field(
+        default=None,
+        description="openai | anthropic | bob — utilise le connecteur utilisateur",
+    )
 
 
 def _state(request: Request):
@@ -411,8 +415,11 @@ def wallet_balance_get(address: str, request: Request) -> dict:
 def agents_run(body: AgentRunRequest, request: Request) -> dict:
     state = _state(request)
     if body.use_llm:
-        graph = LLMEncoder(encoder=state.encoder).encode(
-            body.text, use_llm=True, session_id=f"g_{uuid.uuid4().hex[:12]}"
+        graph = LLMEncoder(encoder=state.encoder, connectors=state.connectors).encode(
+            body.text,
+            use_llm=True,
+            session_id=f"g_{uuid.uuid4().hex[:12]}",
+            llm_provider=body.llm_provider,
         )
         result = state.dual.critic.validate(graph)
     else:

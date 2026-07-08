@@ -52,6 +52,13 @@ ARTCB_WALLET_PASSPHRASE=COLLEZ_ICI_PHRASE_SECRETE_MIN_12_CARACTERES
 # Post-quantique ML-DSA-65 (signatures hybrides Ed25519+PQC) — défaut: true
 ARTCB_PQC_ENABLED=true
 
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ CONNECTEURS — clés API IA / sources apprentissage (dashboard)   │
+# │ Stockage LOCAL chiffré data/connectors/ — PAS sur cloud ARTCB │
+# │ Configurez via Dashboard → Intégrations ou API /connectors      │
+# └─────────────────────────────────────────────────────────────────┘
+# (Les clés OpenAI, Claude, Supabase client se saisissent dans l'UI)
+
 # ── SECRETS OPTIONNELS — décommentez et collez vos clés ───────────
 
 # ┌─────────────────────────────────────────────────────────────────┐

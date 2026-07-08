@@ -112,7 +112,15 @@ Règles ajoutées :
 - Vote on-chain/API : **pas encore codé** — règle documentée
 - Rapport `rapports/053_gouvernance_vote_majorite.md`
 
-## [2026-07-08T22:10:00Z] Fusion main ← dashboard-dev + audit post-quantique
+## [2026-07-08T23:20:00Z] Connecteurs API apprentissage — IA + sources client
+
+- `src/artcb/connectors/` — clés OpenAI, Anthropic, Bob, Supabase, SQLite, Postgres, MySQL
+- Stockage **local chiffré** `data/connectors/` — jamais cloud ARTCB
+- Dashboard `/integrations` — saisie clés API utilisateur
+- `POST /api/v1/connectors/{id}/learn` — apprendre depuis DB client
+- `llm_provider` sur `POST /agents/run`
+- Rapport `rapports/057_connexions_api_apprentissage.md`
+- Tests : **161 pytest**
 
 - **Merge fast-forward** : `main` ← `dashboard-dev` + `licence-vgactech` (aucun conflit)
 - Tests post-merge : **134 pytest** + **frontend build OK**

@@ -5,6 +5,7 @@ import { ChainPage } from "./pages/ChainPage";
 import { Console } from "./pages/Console";
 import { GraphPage } from "./pages/GraphPage";
 import { Groups } from "./pages/Groups";
+import { Integrations } from "./pages/Integrations";
 import { JoinGroup } from "./pages/JoinGroup";
 import { Home } from "./pages/Home";
 import { Logs } from "./pages/Logs";
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="console" element={<Console />} />
             <Route path="groups/join" element={<JoinGroup />} />
             <Route path="groups" element={<Groups />} />
+            <Route path="integrations" element={<Integrations />} />
             <Route path="demo" element={<Navigate to="/memorize" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

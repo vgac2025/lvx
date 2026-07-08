@@ -34,6 +34,10 @@ dev = [
     "ruff>=0.4.0",
     "httpx2>=2.5.0",
 ]
+connectors = [
+    "psycopg2-binary>=2.9.0",
+    "pymysql>=1.1.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

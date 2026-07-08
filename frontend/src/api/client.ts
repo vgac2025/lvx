@@ -10,11 +10,17 @@ export async function fetchWaillyExcerpt(maxPages = 3): Promise<string> {
   return data.text;
 }
 
-export async function runAgents(text: string, sessionId: string, useLlm = false) {
+export async function runAgents(
+  text: string,
+  sessionId: string,
+  useLlm = false,
+  llmProvider?: string,
+) {
   const { data } = await api.post("/agents/run", {
     text,
     session_id: sessionId,
     use_llm: useLlm,
+    llm_provider: llmProvider,
   });
   return data as {
     graph_id: string;
@@ -252,6 +258,61 @@ export async function fetchWalletRewards(address: string) {
 export async function fetchHealth() {
   const { data } = await api.get("/health");
   return data as { status: string; chain?: { valid?: boolean } };
+}
+
+export async function fetchConnectors() {
+  const { data } = await api.get("/connectors");
+  return data as {
+    connectors: Array<{
+      connector_id: string;
+      provider: string;
+      label: string;
+      config: Record<string, string>;
+      api_key_masked?: string;
+      kind: string;
+      last_test_ok?: boolean | null;
+      last_test_message?: string | null;
+    }>;
+    llm_providers: string[];
+    data_source_providers: string[];
+    storage: string;
+  };
+}
+
+export async function saveConnector(body: {
+  provider: string;
+  label: string;
+  api_key: string;
+  config?: Record<string, string>;
+}) {
+  const { data } = await api.post("/connectors", body);
+  return data;
+}
+
+export async function deleteConnector(connectorId: string) {
+  const { data } = await api.delete(`/connectors/${connectorId}`);
+  return data;
+}
+
+export async function testConnector(connectorId: string) {
+  const { data } = await api.post(`/connectors/${connectorId}/test`);
+  return data as { ok: boolean; message: string };
+}
+
+export async function learnFromSource(
+  connectorId: string,
+  opts: { use_llm?: boolean; llm_provider?: string; limit?: number } = {},
+) {
+  const { data } = await api.post(`/connectors/${connectorId}/learn`, {
+    connector_id: connectorId,
+    ...opts,
+  });
+  return data as {
+    graph_id: string;
+    node_count: number;
+    chars_ingested: number;
+    message: string;
+  };
 }
 
 export function chainQueryParams(visibility: string, groupId: string | null) {

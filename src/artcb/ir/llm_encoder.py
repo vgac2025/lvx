@@ -1,35 +1,48 @@
-"""LLM enrichment path B — Bob client + rule-based fallback (D-008)."""
+"""LLM enrichment — rule-based + connecteurs utilisateur (OpenAI, Claude, Bob)."""
 
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
 from artcb.ir.bob_client import BobClient
 from artcb.ir.encoder import IREncoder
 from artcb.ir.grammar import NodeType
 from artcb.ir.models import IRGraph
 
+if TYPE_CHECKING:
+    from artcb.connectors.manager import ConnectorManager
+
 logger = logging.getLogger("artcb.ir.llm_encoder")
 
 
 class LLMEncoder:
-    """Wraps rule-based encoder; optionally enriches node types via Bob HTTP."""
+    """Wraps rule-based encoder; enrichit via LLM connecté par l'utilisateur."""
 
     def __init__(
         self,
         encoder: IREncoder | None = None,
         bob: BobClient | None = None,
+        connectors: ConnectorManager | None = None,
     ) -> None:
         self.encoder = encoder or IREncoder()
         self.bob = bob or BobClient()
+        self.connectors = connectors
 
-    def encode(self, text: str, *, use_llm: bool = False, session_id: str | None = None) -> IRGraph:
+    def encode(
+        self,
+        text: str,
+        *,
+        use_llm: bool = False,
+        session_id: str | None = None,
+        llm_provider: str | None = None,
+    ) -> IRGraph:
         graph = self.encoder.encode(text, session_id=session_id)
         if not use_llm:
             return graph
 
         sentences = [node.txt for node in graph.nodes]
-        classifications = self.bob.classify_sentences(sentences)
+        classifications = self._classify(sentences, llm_provider=llm_provider)
         if not classifications:
             logger.debug("LLM enrichment skipped — rule-based graph returned")
             return graph
@@ -49,5 +62,17 @@ class LLMEncoder:
             nodes[idx] = node.model_copy(update={"t": node_type.value, "sym": symbol})
 
         enriched = graph.model_copy(update={"nodes": nodes})
-        logger.debug("LLM enrichment applied nodes=%d", len(nodes))
+        logger.debug("LLM enrichment applied nodes=%d provider=%s", len(nodes), llm_provider)
         return enriched
+
+    def _classify(self, sentences: list[str], *, llm_provider: str | None) -> list[dict[str, str]] | None:
+        if llm_provider and self.connectors:
+            from artcb.connectors.llm_router import LLMRouter
+
+            active = self.connectors.get_active_llm_key(llm_provider)
+            if active:
+                record, api_key = active
+                return LLMRouter().classify_sentences(sentences, record=record, api_key=api_key)
+            logger.warning("No connector for provider %s — fallback Bob/.env", llm_provider)
+
+        return self.bob.classify_sentences(sentences)

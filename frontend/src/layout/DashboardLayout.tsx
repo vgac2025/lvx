@@ -20,6 +20,7 @@ const NAV = [
     { to: "/system", label: "Système", icon: "⚙" },
     { to: "/logs", label: "Logs", icon: "📜" },
     { to: "/console", label: "Console", icon: "⌨" },
+    { to: "/integrations", label: "Intégrations", icon: "🔌" },
     { to: "/groups", label: "Groupes", icon: "👥" },
   ]},
 ];

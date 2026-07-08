@@ -17,6 +17,7 @@ from artcb.pol.scorer import PolScorer
 from artcb.groups.join_requests import JoinRequestManager
 from artcb.groups.manager import GroupManager
 from artcb.governance.manager import GovernanceManager
+from artcb.connectors.manager import ConnectorManager
 from artcb.rtleg.timeline import RTLEGTimeline
 
 
@@ -34,6 +35,7 @@ class AppState:
     groups: GroupManager
     join_requests: JoinRequestManager
     governance: GovernanceManager
+    connectors: ConnectorManager
     pol_state: dict[str, Any] = field(default_factory=lambda: {
         "pol_score": 0.6,
         "delta_compression": 0.68,
@@ -63,6 +65,7 @@ def build_app_state() -> AppState:
     groups_dir = settings.data_dir / "groups"
     groups = GroupManager(groups_dir)
     governance = GovernanceManager(settings.data_dir)
+    connectors = ConnectorManager(settings.data_dir)
     state = AppState(
         settings=settings,
         encoder=IREncoder(),
@@ -76,6 +79,7 @@ def build_app_state() -> AppState:
         groups=groups,
         join_requests=JoinRequestManager(groups_dir, groups),
         governance=governance,
+        connectors=connectors,
     )
     for graph in graphs.load_all():
         state.register_graph(graph)
