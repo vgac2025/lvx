@@ -216,3 +216,13 @@ Règles inchangées :
 - Rapports : `rapports/059_minage_prive_multi_mineurs_securite.md`, `rapports/060_validation_minage_prive_git_et_securite.md`
 - Tests : **165 pytest**
 - **Pas de dev** sans validation cases §9 rapport 060
+
+## [2026-07-09T00:05:00Z] Sources multimodales — images, audio, vidéo, formats
+
+- Rapports **059** et **060** confirmés sur `origin/main` — dossier `rapports/` (utilisateur : `git pull`)
+- Apprentissage actuel = **texte uniquement** (`IREncoder.encode(text: str)`)
+- DB connecteurs : Supabase/SQLite/Postgres/MySQL — colonnes texte ; **pas** images/audio/vidéo
+- PDF : `pdf_loader.py` existe — **pas** branché UI Intégrations
+- Images/audio/vidéo : **non implémentés** — couche `media_ingest` proposée rapport 061
+- Rapport : `rapports/061_sources_multimodales_apprentissage_formats.md`
+- Validation GO §8 rapport 061 avant tout dev multimédia
