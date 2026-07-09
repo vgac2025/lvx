@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -58,6 +59,13 @@ def _spawn_servers() -> subprocess.Popen:
 
     NODE_A_DIR.mkdir(parents=True, exist_ok=True)
     NODE_B_DIR.mkdir(parents=True, exist_ok=True)
+    for d in (NODE_A_DIR, NODE_B_DIR):
+        data = d / "data"
+        if data.exists():
+            shutil.rmtree(data)
+        logs = d / "logs"
+        if logs.exists():
+            shutil.rmtree(logs)
 
     procs = []
     for port, data_dir in ((PORT_A, NODE_A_DIR), (PORT_B, NODE_B_DIR)):
@@ -209,14 +217,103 @@ def run_validation() -> dict:
         "message": "Blocs PRIVATE jamais synchronisés",
     })
 
+    # --- POOL E2E : calcul distribué chiffré ML-KEM ---
+    status_b = client_b.get("/api/v1/p2p/status").json()
+    kem_b = status_b["kem_public_key_hex"]
+    node_id_b = status_b["node_id"]
+
+    add_b_on_a = client_a.post(
+        "/api/v1/p2p/peers",
+        json={"host": "127.0.0.1", "port": PORT_B, "kem_public_key_hex": kem_b, "label": "node_b"},
+    )
+    step("A_add_peer_B", add_b_on_a.status_code == 200, {"status": add_b_on_a.status_code})
+
+    wb = client_b.post("/api/v1/wallet/create", json={"name": "node_b_wallet"})
+    step("B_create_wallet", wb.status_code == 200, {"status": wb.status_code})
+    address_b = wb.json()["address"]
+
+    pool_text = (
+        "Pool ARTCB E2E chiffré. Premier segment traité localement sur le coordinateur. "
+        "Deuxième segment envoyé au worker distant — jamais en clair sur le réseau. "
+        "Troisième segment pour valider le finalize avec contributors pool_worker."
+    )
+    pool_job = client_a.post(
+        "/api/v1/pool/jobs",
+        json={
+            "text": pool_text,
+            "visibility": "private",
+            "actor_address": address_a,
+            "wallet_name": "node_a_wallet",
+            "chunk_chars": 120,
+            "auto_dispatch": True,
+        },
+    )
+    pool_ok = pool_job.status_code == 200
+    job_body = pool_job.json() if pool_ok else {}
+    job_id = job_body.get("job", {}).get("job_id")
+    chunks = job_body.get("job", {}).get("chunks", [])
+    encrypted_chunks = all("envelope" in c and c["envelope"].get("kem_ct") for c in chunks) if chunks else False
+    step("A_pool_job_created_encrypted", pool_ok and encrypted_chunks, {
+        "status": pool_job.status_code,
+        "job_id": job_id,
+        "chunk_count": len(chunks),
+        "encrypted": encrypted_chunks,
+        "message": "Job pool — morceaux ML-KEM E2E, jamais texte clair réseau",
+    })
+
+    proc_a = client_a.post(
+        "/api/v1/pool/incoming/process-all",
+        json={"wallet_name": "node_a_wallet", "contributor_address": address_a},
+    )
+    proc_b = client_b.post(
+        "/api/v1/pool/incoming/process-all",
+        json={"wallet_name": "node_b_wallet", "contributor_address": address_b},
+    )
+    step("A_process_local_pool_chunks", proc_a.status_code == 200, {
+        "processed": proc_a.json().get("count") if proc_a.status_code == 200 else 0,
+    })
+    step("B_process_remote_pool_chunks", proc_b.status_code == 200, {
+        "processed": proc_b.json().get("count") if proc_b.status_code == 200 else 0,
+    })
+
+    finalize = client_a.post(
+        f"/api/v1/pool/jobs/{job_id}/finalize",
+        json={"full_text": pool_text},
+    )
+    fin_ok = finalize.status_code == 200
+    fin_body = finalize.json() if fin_ok else {}
+    contributors = fin_body.get("contributors", [])
+    pool_workers = [c for c in contributors if c.get("role") == "pool_worker"]
+    step("A_pool_finalize_with_workers", fin_ok and len(pool_workers) >= 1, {
+        "block_index": fin_body.get("block_index"),
+        "pool_worker_count": len(pool_workers),
+        "contributors": contributors,
+        "message": "Finalize owner — bloc PoL avec contributors pool_worker",
+    })
+
+    pool_status = client_a.get("/api/v1/pool/status").json()
+    step("pool_crypto_architecture", pool_status.get("plaintext_on_network") is False, {
+        "crypto": pool_status.get("crypto"),
+        "contexts": pool_status.get("contexts"),
+    })
+
+    graphs_b_pool = list((NODE_B_DIR / "data" / "graphs").glob("*.json")) if (NODE_B_DIR / "data" / "graphs").exists() else []
+    step("B_pool_worker_computed_locally", len(graphs_b_pool) >= 1, {
+        "graphs_on_B": len(graphs_b_pool),
+        "message": "Worker B a exécuté raisonnement LOCAL sur chunk déchiffré",
+    })
+
     results["conclusions"] = {
         "learning_reasoning_shared_between_pcs": False,
         "mining_compute_shared_between_pcs": False,
+        "pool_e2e_encrypted_opt_in": fin_ok and encrypted_chunks,
+        "pool_plaintext_on_network": False,
+        "pool_workers_contribute_pol": len(pool_workers) >= 1,
         "public_blocks_synced_via_p2p": incoming_count >= 1,
         "private_blocks_synced": False,
         "ir_graphs_synced": False,
-        "what_is_shared": "Uniquement métadonnées blocs PUBLIC (hash, PoL, graph_root) via P2P",
-        "what_stays_local": "Calcul apprentissage, raisonnement dual-agent, graphes IR, blocs private, clés API, wallets",
+        "what_is_shared": "Morceaux/résultats pool chiffrés ML-KEM + métadonnées blocs PUBLIC P2P",
+        "what_stays_local": "Déchiffrement et raisonnement dual-agent sur chaque machine — graphes IR locaux",
     }
 
     LOG_PATH.parent.mkdir(parents=True, exist_ok=True)

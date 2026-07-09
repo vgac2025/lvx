@@ -23,6 +23,7 @@ from artcb.p2p.node_identity import NodeIdentityStore
 from artcb.p2p.peers import PeerManager
 from artcb.p2p.public_archive import PublicBlockArchive
 from artcb.p2p.sync import P2PSyncService
+from artcb.pool.service import PoolService
 from artcb.rtleg.timeline import RTLEGTimeline
 
 
@@ -46,6 +47,7 @@ class AppState:
     p2p_identity: Any
     p2p_sync: P2PSyncService
     p2p_archive: PublicBlockArchive
+    pool: PoolService | None = None
     pol_state: dict[str, Any] = field(default_factory=lambda: {
         "pol_score": 0.6,
         "delta_compression": 0.68,
@@ -81,18 +83,21 @@ def build_app_state() -> AppState:
     p2p_identity = NodeIdentityStore(settings.data_dir).load_or_create(api_port=8000)
     p2p_archive = PublicBlockArchive(settings.data_dir)
     chain = ChainManager(settings.data_dir / "chain" / "blocks.jsonl")
+    dual = DualAgentLoop()
+    timeline = RTLEGTimeline()
     p2p_sync = P2PSyncService(
         chain=chain,
         peers=p2p_peers,
         identity=p2p_identity,
         archive=p2p_archive,
     )
+
     state = AppState(
         settings=settings,
         encoder=IREncoder(),
         decoder=IRDecoder(),
-        dual=DualAgentLoop(),
-        timeline=RTLEGTimeline(),
+        dual=dual,
+        timeline=timeline,
         scorer=PolScorer(),
         graphs=graphs,
         vectors=VectorStore(),
@@ -106,7 +111,64 @@ def build_app_state() -> AppState:
         p2p_identity=p2p_identity,
         p2p_sync=p2p_sync,
         p2p_archive=p2p_archive,
+        pool=None,  # type: ignore[arg-type]
     )
+
+    def _run_pool_reasoning(text: str) -> dict[str, Any]:
+        from artcb.ir.models import sha256_text
+
+        result = state.dual.run(text)
+        graph = result.graph
+        graph_root = sha256_text(graph.checksum).replace("sha256:", "")
+        state.register_graph(graph)
+        return {
+            "graph_id": graph.graph_id,
+            "pol_score": result.pol.pol_score,
+            "graph_root": graph_root,
+            "node_count": len(graph.nodes),
+        }
+
+    def _finalize_pool_job(job, full_text: str, extra_contributors: list[dict]) -> dict[str, Any]:
+        from artcb.mining.pipeline import MiningPipeline
+        from artcb.wallet.manager import WalletManager
+
+        pipeline = MiningPipeline(
+            dual=state.dual,
+            chain=state.chain,
+            wallet_manager=WalletManager(),
+            connectors=state.connectors,
+            groups=state.groups,
+            timeline=state.timeline,
+            register_graph=state.register_graph,
+        )
+        result = pipeline.run_from_text(
+            full_text,
+            session_id=f"pool_{job.job_id}",
+            actor_address=job.actor_address,
+            wallet_name=job.wallet_name,
+            visibility=job.visibility,
+            store_block=True,
+            extra_contributors=extra_contributors,
+            learning_source=f"pool:{job.job_id}",
+        )
+        return {
+            "job_id": job.job_id,
+            "graph_id": result.graph_id,
+            "block_index": result.block_index,
+            "block_hash": result.block_hash,
+            "contributors": result.contributors,
+            "pol_score": result.pol_score,
+        }
+
+    state.pool = PoolService(
+        settings.data_dir,
+        node_id=p2p_identity.node_id,
+        kem_public_hex=p2p_identity.kem_public_key_hex,
+        kem_secret_hex=p2p_identity.kem_secret_key_hex,
+        run_reasoning=_run_pool_reasoning,
+        finalize_job=_finalize_pool_job,
+    )
+
     for graph in graphs.load_all():
         state.register_graph(graph)
     return state

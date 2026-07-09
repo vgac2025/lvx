@@ -46,7 +46,9 @@ def p2p_status(request: Request) -> dict:
         "public_blocks_local": public_count,
         "public_blocks_incoming": incoming_count,
         "private_never_synced": True,
-        "message": "Calcul local — sync P2P limitée aux blocs publics chiffrés ML-KEM",
+        "pool_e2e_available": True,
+        "pool_crypto": "ML-KEM-768",
+        "message": "Calcul local par défaut — pool opt-in E2E ML-KEM ; sync P2P = blocs publics chiffrés",
     }
 
 

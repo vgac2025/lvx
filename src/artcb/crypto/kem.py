@@ -15,6 +15,8 @@ logger = logging.getLogger("artcb.crypto.kem")
 KEM_ALGORITHM: Final[str] = "ML-KEM-768"
 ENV_KEM_ENABLED = "ARTCB_KEM_ENABLED"
 NONCE_LEN = 12
+POOL_CHUNK_CONTEXT: Final[bytes] = b"artcb-pool-chunk-v1"
+POOL_RESULT_CONTEXT: Final[bytes] = b"artcb-pool-result-v1"
 
 
 class KEMError(Exception):
@@ -62,12 +64,17 @@ def derive_aes_key(shared_secret: bytes, *, context: bytes = b"artcb-p2p-v1") ->
     return hashlib.sha256(shared_secret + context).digest()
 
 
-def encrypt_payload(plaintext: bytes, peer_public_key: bytes) -> dict[str, str]:
+def encrypt_payload(
+    plaintext: bytes,
+    peer_public_key: bytes,
+    *,
+    context: bytes = b"artcb-p2p-v1",
+) -> dict[str, str]:
     """ML-KEM encapsulation + AES-256-GCM payload."""
     if not kem_enabled():
         raise KEMError("ML-KEM disabled — set ARTCB_KEM_ENABLED=true")
     ciphertext, shared = encapsulate(peer_public_key)
-    key = derive_aes_key(shared)
+    key = derive_aes_key(shared, context=context)
     nonce = secrets.token_bytes(NONCE_LEN)
     sealed = AESGCM(key).encrypt(nonce, plaintext, None)
     return {
@@ -75,16 +82,27 @@ def encrypt_payload(plaintext: bytes, peer_public_key: bytes) -> dict[str, str]:
         "kem_ct": ciphertext.hex(),
         "nonce": nonce.hex(),
         "ciphertext": sealed.hex(),
+        "context": context.decode("ascii", errors="replace"),
     }
 
 
-def decrypt_payload(envelope: dict[str, str], secret_key: bytes) -> bytes:
+def decrypt_payload(
+    envelope: dict[str, str],
+    secret_key: bytes,
+    *,
+    context: bytes | None = None,
+) -> bytes:
     """Decrypt envelope received from a peer."""
     if envelope.get("kem_alg") != KEM_ALGORITHM:
         raise KEMError(f"Unsupported KEM: {envelope.get('kem_alg')}")
+    ctx = context
+    if ctx is None and envelope.get("context"):
+        ctx = envelope["context"].encode("utf-8")
+    if ctx is None:
+        ctx = b"artcb-p2p-v1"
     kem_ct = bytes.fromhex(envelope["kem_ct"])
     nonce = bytes.fromhex(envelope["nonce"])
     sealed = bytes.fromhex(envelope["ciphertext"])
     shared = decapsulate(kem_ct, secret_key)
-    key = derive_aes_key(shared)
+    key = derive_aes_key(shared, context=ctx)
     return AESGCM(key).decrypt(nonce, sealed, None)

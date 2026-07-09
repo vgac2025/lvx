@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import {
   addP2PPeer,
+  createPoolJob,
   fetchNotificationChannels,
+  fetchPoolJobs,
+  fetchPoolStatus,
   fetchP2PStatus,
   fetchP2PPeers,
+  finalizePoolJob,
+  processAllPoolIncoming,
   saveNotificationChannel,
   syncP2PAll,
 } from "../api/client";
@@ -18,6 +23,12 @@ export function Network() {
   const [notifLabel, setNotifLabel] = useState("");
   const [notifSecret, setNotifSecret] = useState("");
   const [chatId, setChatId] = useState("");
+  const [poolText, setPoolText] = useState(
+    "Texte long pour pool E2E : segment A local, segment B distant — transport ML-KEM chiffré.",
+  );
+  const [poolWallet, setPoolWallet] = useState("");
+  const [poolStatus, setPoolStatus] = useState<Record<string, unknown> | null>(null);
+  const [poolJobs, setPoolJobs] = useState<Array<Record<string, unknown>>>([]);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -25,6 +36,8 @@ export function Network() {
     setStatus(await fetchP2PStatus());
     setPeers((await fetchP2PPeers()).peers);
     setChannels((await fetchNotificationChannels()).channels);
+    setPoolStatus(await fetchPoolStatus());
+    setPoolJobs((await fetchPoolJobs()).jobs);
   };
 
   useEffect(() => {
@@ -66,12 +79,55 @@ export function Network() {
     }
   };
 
+  const handleCreatePoolJob = async () => {
+    try {
+      const r = await createPoolJob({
+        text: poolText,
+        visibility: "private",
+        wallet_name: poolWallet || undefined,
+        auto_dispatch: true,
+        chunk_chars: 120,
+      });
+      setSuccess(`Job pool créé (${String(r.job.job_id)}) — transport chiffré ML-KEM`);
+      await reload();
+    } catch (e) {
+      setError(String(e));
+    }
+  };
+
+  const handleProcessPoolIncoming = async () => {
+    try {
+      const r = await processAllPoolIncoming({ wallet_name: poolWallet || undefined });
+      setSuccess(`Chunks pool traités localement : ${r.count}`);
+      await reload();
+    } catch (e) {
+      setError(String(e));
+    }
+  };
+
+  const handleFinalizeLatestPool = async () => {
+    try {
+      const ready = poolJobs.find((j) => j.status === "ready_finalize");
+      if (!ready) {
+        setError("Aucun job ready_finalize");
+        return;
+      }
+      await finalizePoolJob(String(ready.job_id), poolText);
+      setSuccess(`Job ${String(ready.job_id)} finalisé avec contributors pool_worker`);
+      await reload();
+    } catch (e) {
+      setError(String(e));
+    }
+  };
+
   return (
     <div className="mc-page">
-      <h1 className="dashboard-title">Réseau P2P · artcb-devnet</h1>
+      <h1 className="dashboard-title">Réseau P2P · Pool E2E</h1>
       <p className="mc-hint">
-        <strong>Calcul local</strong> — pas de pool distribué. Sync P2P = blocs <strong>publics</strong> uniquement,
-        transport chiffré <strong>ML-KEM-768</strong>. Les blocs privés ne quittent jamais votre machine.
+        <strong>Calcul local par défaut</strong> — le <strong>pool opt-in</strong> distribue des morceaux
+        chiffrés <strong>ML-KEM-768</strong> (contextes <code>artcb-pool-chunk-v1</code> / <code>artcb-pool-result-v1</code>).
+        Chaque worker déchiffre et raisonne <strong>localement</strong> — jamais de texte en clair sur le réseau.
+        Sync P2P classique = blocs <strong>publics</strong> uniquement.
       </p>
       {error && <p className="mc-error">{error}</p>}
       {success && <p className="mc-success">{success}</p>}
@@ -104,6 +160,35 @@ export function Network() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="mc-card">
+        <h2>Pool calcul distribué (E2E ML-KEM)</h2>
+        {poolStatus && (
+          <p>
+            Crypto: {String(poolStatus.crypto)} · Jobs: {String(poolStatus.job_count)} ·
+            Incoming: {String(poolStatus.incoming_pending)} · Réseau clair:{" "}
+            {poolStatus.plaintext_on_network ? "oui" : "non"}
+          </p>
+        )}
+        <label>
+          Texte à distribuer (découpé en chunks chiffrés)
+          <textarea value={poolText} onChange={(e) => setPoolText(e.target.value)} rows={3} />
+        </label>
+        <label>
+          Wallet (optionnel — signature PoL)
+          <input value={poolWallet} onChange={(e) => setPoolWallet(e.target.value)} placeholder="mon_wallet" />
+        </label>
+        <button type="button" className="mc-btn" onClick={handleCreatePoolJob} disabled={poolText.length < 20}>
+          Créer job pool + dispatch
+        </button>
+        <button type="button" className="mc-btn" onClick={handleProcessPoolIncoming}>
+          Traiter chunks incoming (worker)
+        </button>
+        <button type="button" className="mc-btn" onClick={handleFinalizeLatestPool}>
+          Finalize job (owner)
+        </button>
+        <p>Jobs: {poolJobs.length}</p>
       </section>
 
       <section className="mc-card">

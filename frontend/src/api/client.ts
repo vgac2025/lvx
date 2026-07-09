@@ -388,6 +388,42 @@ export async function syncP2PAll(fromIndex = 0) {
   return data as { results: unknown[]; peer_count: number };
 }
 
+// --- Pool calcul distribué E2E ---
+export async function fetchPoolStatus() {
+  const { data } = await api.get("/pool/status");
+  return data as Record<string, unknown>;
+}
+
+export async function fetchPoolJobs() {
+  const { data } = await api.get("/pool/jobs");
+  return data as { jobs: Array<Record<string, unknown>>; count: number };
+}
+
+export async function createPoolJob(body: {
+  text: string;
+  visibility?: string;
+  actor_address?: string;
+  wallet_name?: string;
+  chunk_chars?: number;
+  auto_dispatch?: boolean;
+}) {
+  const { data } = await api.post("/pool/jobs", body);
+  return data as { job: Record<string, unknown>; encrypted_transport: boolean };
+}
+
+export async function processAllPoolIncoming(body: {
+  wallet_name?: string;
+  contributor_address?: string;
+}) {
+  const { data } = await api.post("/pool/incoming/process-all", body);
+  return data as { processed: Array<Record<string, unknown>>; count: number };
+}
+
+export async function finalizePoolJob(jobId: string, fullText: string) {
+  const { data } = await api.post(`/pool/jobs/${jobId}/finalize`, { full_text: fullText });
+  return data as Record<string, unknown>;
+}
+
 // --- Notifications ---
 export async function fetchNotificationChannels() {
   const { data } = await api.get("/notifications/channels");

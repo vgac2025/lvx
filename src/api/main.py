@@ -15,6 +15,7 @@ from src.api.governance_routes import router as governance_router
 from src.api.groups_routes import router as groups_router
 from src.api.notifications_routes import router as notifications_router
 from src.api.p2p_routes import router as p2p_router
+from src.api.pool_routes import router as pool_router
 from src.api.routes import router as api_router
 from src.api.websocket import router as ws_router
 from artcb.logging_config import setup_logging
@@ -43,6 +44,7 @@ def create_app() -> FastAPI:
     app.include_router(mining_router)
     app.include_router(governance_router)
     app.include_router(p2p_router)
+    app.include_router(pool_router)
     app.include_router(notifications_router)
     app.include_router(dashboard_router)
     app.include_router(ws_router)

@@ -108,6 +108,7 @@ class MiningPipeline:
         store_block: bool = True,
         learning_source: str | None = None,
         learning_offset: int = 0,
+        extra_contributors: list[dict] | None = None,
     ) -> MiningPipelineResult:
         from artcb.ir.llm_encoder import LLMEncoder
 
@@ -181,6 +182,7 @@ class MiningPipeline:
                 pol_score=pol.pol_score,
                 wallet=wallet,
                 graph_root=graph_root,
+                extra_contributors=extra_contributors,
             )
 
             block = self.chain.append_block(
