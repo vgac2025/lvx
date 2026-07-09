@@ -259,6 +259,18 @@ def store(body: StoreRequest, request: Request) -> dict:
         )
     )
 
+    try:
+        state.notifications.broadcast(
+            event="block_stored",
+            subject=f"ARTCB bloc #{block.index}",
+            body=(
+                f"Graphe {graph.graph_id} gravé — visibilité {block.visibility} — "
+                f"PoL {pol.pol_score:.2f} — reward {block.block_reward / 1e8:.4f} ARTCB"
+            ),
+        )
+    except Exception as exc:
+        logger.warning("Notification broadcast failed (non bloquant): %s", exc)
+
     return {
         "block_index": block.index,
         "hash": block.hash,

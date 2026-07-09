@@ -226,3 +226,16 @@ Règles inchangées :
 - Images/audio/vidéo : **non implémentés** — couche `media_ingest` proposée rapport 061
 - Rapport : `rapports/061_sources_multimodales_apprentissage_formats.md`
 - Validation GO §8 rapport 061 avant tout dev multimédia
+
+## [2026-07-09T00:30:00Z] Phase 8 implémentée — GO utilisateur
+
+- **P2P artcb-devnet** : `src/artcb/p2p/*`, API `/api/v1/p2p`, UI `/network`
+- **ML-KEM-768** transport : `src/artcb/crypto/kem.py`
+- **Multimodal** : `src/artcb/io/media_ingest.py`, connecteurs `local_folder`, `pdf_file`
+- **OpenRouter + Ollama** : `llm_router.py` + UI Intégrations
+- **Alertes** Telegram/Gmail : `src/artcb/notifications/`, broadcast sur `POST /store`
+- **UI Gouvernance** : `/governance`
+- Blocs privés **jamais** sync P2P — archive `incoming_public.jsonl` pour blocs distants
+- Tests : **175 pytest**
+- Rapport : `rapports/062_phase8_p2p_multimodal_governance.md`
+- **Limites** : pas libp2p natif, pas pool calcul, pas fusion chaîne unique

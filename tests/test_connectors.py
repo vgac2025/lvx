@@ -51,6 +51,20 @@ def test_delete_connector(client: TestClient) -> None:
     assert client.get("/api/v1/connectors").json()["count"] == 0
 
 
+def test_save_openrouter_connector(client: TestClient) -> None:
+    r = client.post(
+        "/api/v1/connectors",
+        json={
+            "provider": "openrouter",
+            "label": "OpenRouter",
+            "api_key": "sk-or-test-key-12345678",
+            "config": {"model": "anthropic/claude-3.5-haiku"},
+        },
+    )
+    assert r.status_code == 200, r.text
+    assert r.json()["connector"]["provider"] == "openrouter"
+
+
 def test_sqlite_source_learn(tmp_path: Path, client: TestClient) -> None:
     db = tmp_path / "learn.db"
     import sqlite3

@@ -47,7 +47,7 @@ def fetch_learning_text_batched(
     offset: int = 0,
 ) -> LearningBatch:
     """Lecture paginée — banque / grosses bases (batch par batch)."""
-    if not record._api_key and record.provider not in ("sqlite",):
+    if not record._api_key and record.provider not in ("sqlite", "local_folder", "pdf_file"):
         raise DataSourceError("Connector has no API key / secret")
 
     if record.provider == "supabase":
@@ -58,6 +58,10 @@ def fetch_learning_text_batched(
         text, count, has_more = _fetch_postgres_batch(record, limit=limit, offset=offset)
     elif record.provider == "mysql":
         text, count, has_more = _fetch_mysql_batch(record, limit=limit, offset=offset)
+    elif record.provider == "local_folder":
+        text, count, has_more = _fetch_local_folder_batch(record, limit=limit, offset=offset)
+    elif record.provider == "pdf_file":
+        text, count, has_more = _fetch_pdf_file_batch(record, limit=limit, offset=offset)
     else:
         raise DataSourceError(f"Unsupported data source: {record.provider}")
 
@@ -179,6 +183,37 @@ def _fetch_mysql_batch(record: ConnectorRecord, *, limit: int, offset: int) -> t
     else:
         text = _rows_to_text(rows, source_label=f"MySQL:{table}@{offset}")
     return text, len(rows), len(rows) >= limit
+
+
+def _fetch_local_folder_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
+    from artcb.io.media_ingest import MediaIngestError, ingest_folder
+
+    folder_path = record.config.get("folder_path") or record.config.get("path", "")
+    if not folder_path:
+        raise DataSourceError("local_folder requires config.folder_path")
+    folder = Path(folder_path)
+    openai_key = record.config.get("openai_api_key_for_vision")
+    try:
+        text, count, has_more = ingest_folder(folder, limit=limit, offset=offset, openai_api_key=openai_key)
+    except MediaIngestError as exc:
+        raise DataSourceError(str(exc)) from exc
+    return text, count, has_more
+
+
+def _fetch_pdf_file_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
+    from artcb.io.media_ingest import MediaIngestError, ingest_file
+
+    file_path = record.config.get("file_path") or record.config.get("path", "")
+    if not file_path:
+        raise DataSourceError("pdf_file requires config.file_path")
+    path = Path(file_path)
+    if offset > 0:
+        return "", 0, False
+    try:
+        ingested = ingest_file(path)
+    except MediaIngestError as exc:
+        raise DataSourceError(str(exc)) from exc
+    return ingested.text, 1, False
 
 
 def _rows_to_text(rows: list[Any], *, source_label: str) -> str:

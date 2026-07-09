@@ -13,6 +13,8 @@ from src.api.mining_routes import router as mining_router
 from src.api.connectors_routes import router as connectors_router
 from src.api.governance_routes import router as governance_router
 from src.api.groups_routes import router as groups_router
+from src.api.notifications_routes import router as notifications_router
+from src.api.p2p_routes import router as p2p_router
 from src.api.routes import router as api_router
 from src.api.websocket import router as ws_router
 from artcb.logging_config import setup_logging
@@ -40,6 +42,8 @@ def create_app() -> FastAPI:
     app.include_router(connectors_router)
     app.include_router(mining_router)
     app.include_router(governance_router)
+    app.include_router(p2p_router)
+    app.include_router(notifications_router)
     app.include_router(dashboard_router)
     app.include_router(ws_router)
     logger.debug("ARTCB API started debug=%s", app.state.artcb.settings.debug)

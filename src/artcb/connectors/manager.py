@@ -18,15 +18,23 @@ ConnectorProvider = Literal[
     "openai",
     "anthropic",
     "bob",
+    "openrouter",
+    "ollama",
     "supabase",
     "postgres",
     "mysql",
     "sqlite",
+    "local_folder",
+    "pdf_file",
     "custom_webhook",
 ]
 
-LLM_PROVIDERS: frozenset[str] = frozenset({"openai", "anthropic", "bob"})
-DATA_SOURCE_PROVIDERS: frozenset[str] = frozenset({"supabase", "postgres", "mysql", "sqlite"})
+LLM_PROVIDERS: frozenset[str] = frozenset({"openai", "anthropic", "bob", "openrouter", "ollama"})
+DATA_SOURCE_PROVIDERS: frozenset[str] = frozenset({
+    "supabase", "postgres", "mysql", "sqlite", "local_folder", "pdf_file",
+})
+# local_folder / pdf_file : api_key = placeholder local (min 8 chars)
+LOCAL_SOURCE_PROVIDERS: frozenset[str] = frozenset({"local_folder", "pdf_file", "sqlite"})
 
 
 class ConnectorError(Exception):
@@ -136,6 +144,8 @@ class ConnectorManager:
             raise ConnectorError("api_key requise (min 8 caractères)")
         if provider not in LLM_PROVIDERS | DATA_SOURCE_PROVIDERS:
             raise ConnectorError(f"Provider inconnu: {provider}")
+        if provider in LOCAL_SOURCE_PROVIDERS and api_key.strip().startswith("local-"):
+            pass  # placeholder autorisé pour sources locales
 
         now = self._now()
         raw = self._read_raw()

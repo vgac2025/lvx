@@ -8,6 +8,8 @@ import { Groups } from "./pages/Groups";
 import { Integrations } from "./pages/Integrations";
 import { JoinGroup } from "./pages/JoinGroup";
 import { Home } from "./pages/Home";
+import { Governance } from "./pages/Governance";
+import { Network } from "./pages/Network";
 import { Logs } from "./pages/Logs";
 import { Memorize } from "./pages/Memorize";
 import { Mining } from "./pages/Mining";
@@ -33,6 +35,8 @@ export default function App() {
             <Route path="groups/join" element={<JoinGroup />} />
             <Route path="groups" element={<Groups />} />
             <Route path="integrations" element={<Integrations />} />
+            <Route path="governance" element={<Governance />} />
+            <Route path="network" element={<Network />} />
             <Route path="demo" element={<Navigate to="/memorize" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

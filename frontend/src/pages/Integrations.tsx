@@ -21,6 +21,8 @@ type ConnectorItem = {
 const LLM_PROVIDERS = [
   { id: "openai", name: "ChatGPT (OpenAI)", model: "gpt-4o-mini" },
   { id: "anthropic", name: "Claude (Anthropic)", model: "claude-3-5-haiku-20241022" },
+  { id: "openrouter", name: "OpenRouter (multi-modèles)", model: "anthropic/claude-3.5-haiku" },
+  { id: "ollama", name: "Ollama (100 % local)", model: "llama3.2" },
   { id: "bob", name: "IBM Bob", model: "ibm/granite-3-8b-instruct" },
 ];
 
@@ -29,6 +31,8 @@ const DATA_PROVIDERS = [
   { id: "sqlite", name: "SQLite (fichier local)" },
   { id: "postgres", name: "PostgreSQL" },
   { id: "mysql", name: "MySQL" },
+  { id: "local_folder", name: "Dossier local (txt, pdf, images, audio, vidéo)" },
+  { id: "pdf_file", name: "Fichier PDF" },
 ];
 
 export function Integrations() {
@@ -44,6 +48,8 @@ export function Integrations() {
   const [projectUrl, setProjectUrl] = useState("");
   const [table, setTable] = useState("");
   const [dbPath, setDbPath] = useState("");
+  const [folderPath, setFolderPath] = useState("");
+  const [pdfPath, setPdfPath] = useState("");
   const [model, setModel] = useState("gpt-4o-mini");
   const [learnLlm, setLearnLlm] = useState("openai");
 
@@ -74,6 +80,12 @@ export function Integrations() {
         config.database_path = dbPath;
         config.table = table;
         config.text_column = "content";
+      }
+      if (provider === "local_folder") {
+        config.folder_path = folderPath;
+      }
+      if (provider === "pdf_file") {
+        config.file_path = pdfPath;
       }
       if (provider === "postgres" || provider === "mysql") {
         config.table = table;
@@ -133,9 +145,10 @@ export function Integrations() {
     <div className="mc-page">
       <h1 className="dashboard-title">Intégrations · Clés API apprentissage</h1>
       <p className="mc-hint">
-        Connectez <strong>votre</strong> IA (ChatGPT, Claude…) et <strong>vos</strong> sources de données.
-        Les clés restent chiffrées sur <strong>votre machine</strong> — jamais sur un cloud ARTCB.
-        La blockchain ARTCB reste en JSON local ; vos bases servent uniquement de <em>source d&apos;apprentissage</em>.
+        Connectez <strong>votre</strong> IA (ChatGPT, Claude, OpenRouter, Ollama…) et <strong>vos</strong> sources.
+        Les clés restent chiffrées sur <strong>votre machine</strong>.
+        <strong> Calcul 100 % local</strong> — pas de pool. Images/audio/vidéo convertis en texte avant IR.
+        La blockchain reste JSON local.
       </p>
 
       {error && <p className="mc-error">{error}</p>}
@@ -198,10 +211,24 @@ export function Integrations() {
             <input value={table} onChange={(e) => setTable(e.target.value)} />
           </label>
         )}
+        {provider === "local_folder" && (
+          <label>
+            Chemin dossier
+            <input value={folderPath} onChange={(e) => setFolderPath(e.target.value)} placeholder="/chemin/mes_fichiers" />
+          </label>
+        )}
+        {provider === "pdf_file" && (
+          <label>
+            Chemin PDF
+            <input value={pdfPath} onChange={(e) => setPdfPath(e.target.value)} placeholder="/chemin/document.pdf" />
+          </label>
+        )}
         <label>
           {provider === "postgres" || provider === "mysql"
             ? "Chaîne de connexion (stockée chiffrée localement)"
-            : "Clé API (stockée chiffrée localement)"}
+            : provider === "local_folder" || provider === "pdf_file" || provider === "sqlite"
+              ? "Secret local (min 8 car.) — ex: local-folder-key"
+              : "Clé API (stockée chiffrée localement)"}
           <input
             type="password"
             value={apiKey}

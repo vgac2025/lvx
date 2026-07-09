@@ -38,6 +38,10 @@ class LLMRouter:
                 raw = self._anthropic_chat(api_key, prompt, model=model or "claude-3-5-haiku-20241022")
             elif record.provider == "bob":
                 raw = self._bob_chat(api_key, prompt, record, model=model)
+            elif record.provider == "openrouter":
+                raw = self._openrouter_chat(api_key, prompt, record, model=model)
+            elif record.provider == "ollama":
+                raw = self._ollama_chat(api_key, prompt, record, model=model)
             else:
                 logger.warning("Unsupported LLM provider: %s", record.provider)
                 return None
@@ -127,3 +131,43 @@ class LLMRouter:
             return str(data["choices"][0]["message"]["content"]).strip()
         finally:
             transport.close()
+
+    def _openrouter_chat(self, api_key: str, prompt: str, record: ConnectorRecord, *, model: str | None) -> str:
+        base = record.config.get("base_url", "https://openrouter.ai/api/v1")
+        model_name = model or record.config.get("model", "anthropic/claude-3.5-haiku")
+        with httpx.Client(timeout=90.0) as client:
+            r = client.post(
+                f"{base.rstrip('/')}/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": record.config.get("http_referer", "https://artcb.local"),
+                    "X-Title": record.config.get("app_title", "ARTCB"),
+                },
+                json={
+                    "model": model_name,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0.1,
+                },
+            )
+            r.raise_for_status()
+            return str(r.json()["choices"][0]["message"]["content"]).strip()
+
+    def _ollama_chat(self, api_key: str, prompt: str, record: ConnectorRecord, *, model: str | None) -> str:
+        base = record.config.get("base_url", "http://127.0.0.1:11434")
+        model_name = model or record.config.get("model", "llama3.2")
+        headers = {"Content-Type": "application/json"}
+        if api_key and not api_key.startswith("local-"):
+            headers["Authorization"] = f"Bearer {api_key}"
+        with httpx.Client(timeout=120.0) as client:
+            r = client.post(
+                f"{base.rstrip('/')}/api/chat",
+                headers=headers,
+                json={
+                    "model": model_name,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "stream": False,
+                },
+            )
+            r.raise_for_status()
+            return str(r.json()["message"]["content"]).strip()

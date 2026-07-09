@@ -21,6 +21,8 @@ const NAV = [
     { to: "/logs", label: "Logs", icon: "📜" },
     { to: "/console", label: "Console", icon: "⌨" },
     { to: "/integrations", label: "Intégrations", icon: "🔌" },
+    { to: "/network", label: "Réseau P2P", icon: "🌐" },
+    { to: "/governance", label: "Gouvernance", icon: "🗳" },
     { to: "/groups", label: "Groupes", icon: "👥" },
   ]},
 ];

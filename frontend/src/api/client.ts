@@ -331,3 +331,70 @@ export function wsUrl(sessionId: string): string {
   const host = window.location.host;
   return `${proto}://${host}/ws/graph/${sessionId}`;
 }
+
+// --- Governance ---
+export async function fetchGovernanceProposals(status?: string) {
+  const { data } = await api.get("/governance/proposals", { params: status ? { status } : {} });
+  return data as { proposals: Array<Record<string, unknown>>; count: number };
+}
+
+export async function createGovernanceProposal(body: {
+  title: string;
+  description: string;
+  version: string;
+  proposal_id?: string;
+}) {
+  const { data } = await api.post("/governance/proposals", body);
+  return data;
+}
+
+export async function castGovernanceVote(proposalId: string, walletAddress: string, choice: "yes" | "no") {
+  const { data } = await api.post("/governance/vote", {
+    proposal_id: proposalId,
+    wallet_address: walletAddress,
+    choice,
+  });
+  return data as { requires_rollback: boolean };
+}
+
+// --- P2P ---
+export async function fetchP2PStatus() {
+  const { data } = await api.get("/p2p/status");
+  return data as Record<string, unknown>;
+}
+
+export async function fetchP2PPeers() {
+  const { data } = await api.get("/p2p/peers");
+  return data as { peers: Array<Record<string, unknown>>; count: number };
+}
+
+export async function addP2PPeer(body: {
+  host: string;
+  port: number;
+  kem_public_key_hex: string;
+  label?: string;
+}) {
+  const { data } = await api.post("/p2p/peers", body);
+  return data;
+}
+
+export async function syncP2PAll(fromIndex = 0) {
+  const { data } = await api.post("/p2p/sync", null, { params: { from_index: fromIndex } });
+  return data as { results: unknown[]; peer_count: number };
+}
+
+// --- Notifications ---
+export async function fetchNotificationChannels() {
+  const { data } = await api.get("/notifications/channels");
+  return data as { channels: Array<Record<string, unknown>>; count: number };
+}
+
+export async function saveNotificationChannel(body: {
+  channel_type: "telegram" | "gmail";
+  label: string;
+  secret: string;
+  config?: Record<string, string>;
+}) {
+  const { data } = await api.post("/notifications/channels", body);
+  return data;
+}

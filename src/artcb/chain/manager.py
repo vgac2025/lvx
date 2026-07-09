@@ -304,3 +304,22 @@ class ChainManager:
             "hybrid_signatures": self.is_hybrid,
             "pqc_algorithm": PQC_SIG_ALGORITHM if self.is_hybrid else None,
         }
+
+    def verify_block_dict(self, block: dict) -> bool:
+        """Vérifie hash d'un bloc public local."""
+        if block.get("visibility") != "public":
+            return False
+        try:
+            expected = ffi.build_block_hash(
+                int(block["index"]),
+                str(block["timestamp"]),
+                str(block["prev_hash"]),
+                str(block["graph_root"]),
+                str(block.get("merkle_root") or block["graph_root"]),
+                float(block["pol_score"]),
+            )
+        except (KeyError, TypeError, ValueError):
+            return False
+        if block.get("hash") != expected:
+            return False
+        return self.verify_block_signature(str(block["hash"]), str(block.get("signature", "")))
