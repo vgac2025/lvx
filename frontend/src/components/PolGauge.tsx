@@ -28,7 +28,7 @@ export function PolGauge({ pol }: Props) {
         <div>Validation: {((pol?.validation_rate ?? 0) * 100).toFixed(0)}%</div>
         <div>Retrieval: {((pol?.retrieval_accuracy ?? 0) * 100).toFixed(0)}%</div>
         <div style={{ marginTop: 6, color: accepted ? "var(--critic)" : "var(--danger)" }}>
-          {accepted ? "Bloc accepté ✓" : "Sous le seuil"}
+          {accepted ? "Bloc accepté OK" : "Sous le seuil"}
         </div>
       </div>
     </div>

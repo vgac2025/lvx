@@ -47,6 +47,10 @@ export function Console() {
         out.push(JSON.stringify(await apiGet("/pol/score"), null, 2));
       } else if (trimmed === "metrics") {
         out.push(JSON.stringify(await apiGet("/metrics"), null, 2));
+      } else if (trimmed === "system hardware") {
+        out.push(JSON.stringify(await apiGet("/system/hardware"), null, 2));
+      } else if (trimmed === "system optimization") {
+        out.push(JSON.stringify(await apiGet("/system/optimization"), null, 2));
       } else if (trimmed === "chain") {
         out.push(JSON.stringify(await apiGet("/chain"), null, 2));
       } else if (trimmed === "chain verify") {

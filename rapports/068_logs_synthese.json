@@ -1,0 +1,439 @@
+{
+  "generated_at": "2026-07-09T01:41:12.927111+00:00",
+  "log_dir": "/workspace/logs",
+  "summary": {
+    "api_jsonl_files": 5,
+    "api_error_messages": 0,
+    "latest_pytest": {
+      "file": "pytest_063_latest.txt",
+      "passed": 186,
+      "failed": 0,
+      "ok": true
+    },
+    "latest_validate_two_nodes": {
+      "file": "validate_two_nodes_latest.json",
+      "steps_total": 18,
+      "steps_ok": 18,
+      "ok": true,
+      "conclusions": {
+        "learning_reasoning_shared_between_pcs": false,
+        "mining_compute_shared_between_pcs": false,
+        "pool_e2e_encrypted_opt_in": true,
+        "pool_plaintext_on_network": false,
+        "pool_workers_contribute_pol": true,
+        "public_blocks_synced_via_p2p": true,
+        "private_blocks_synced": false,
+        "ir_graphs_synced": false,
+        "what_is_shared": "Morceaux/résultats pool chiffrés ML-KEM + métadonnées blocs PUBLIC P2P",
+        "what_stays_local": "Déchiffrement et raisonnement dual-agent sur chaque machine — graphes IR locaux"
+      }
+    },
+    "plain_log_errors": 46,
+    "demo_runs_indexed": 19
+  },
+  "api_jsonl": [
+    {
+      "file": "20260709_artcb_api.json",
+      "lines": 569,
+      "levels": {
+        "DEBUG": 529,
+        "INFO": 40
+      },
+      "top_modules": [
+        [
+          "artcb.api",
+          444
+        ],
+        [
+          "artcb.api.groups",
+          85
+        ],
+        [
+          "artcb.api.routes",
+          40
+        ]
+      ],
+      "errors": []
+    },
+    {
+      "file": "20260708_artcb_api.json",
+      "lines": 501,
+      "levels": {
+        "DEBUG": 501
+      },
+      "top_modules": [
+        [
+          "artcb.api",
+          371
+        ],
+        [
+          "artcb.api.groups",
+          130
+        ]
+      ],
+      "errors": []
+    },
+    {
+      "file": "20260707_artcb_api.json",
+      "lines": 177,
+      "levels": {
+        "DEBUG": 177
+      },
+      "top_modules": [
+        [
+          "artcb.api",
+          124
+        ],
+        [
+          "artcb.api.groups",
+          53
+        ]
+      ],
+      "errors": []
+    },
+    {
+      "file": "20260704_artcb_api.json",
+      "lines": 91,
+      "levels": {
+        "DEBUG": 91
+      },
+      "top_modules": [
+        [
+          "artcb.api",
+          89
+        ],
+        [
+          "artcb.api.websocket",
+          2
+        ]
+      ],
+      "errors": []
+    },
+    {
+      "file": "20260705_artcb_api.json",
+      "lines": 167,
+      "levels": {
+        "DEBUG": 167
+      },
+      "top_modules": [
+        [
+          "artcb.api",
+          151
+        ],
+        [
+          "artcb.api.websocket",
+          16
+        ]
+      ],
+      "errors": []
+    }
+  ],
+  "pytest": [
+    {
+      "file": "pytest_063_latest.txt",
+      "passed": 186,
+      "failed": 0,
+      "ok": true
+    },
+    {
+      "file": "tests_groups_20260707.log",
+      "passed": 7,
+      "failed": 0,
+      "ok": true
+    },
+    {
+      "file": "tests_all_20260707.log",
+      "passed": 103,
+      "failed": 0,
+      "ok": true
+    },
+    {
+      "file": "tests_join_request_20260707.log",
+      "passed": 0,
+      "failed": 0,
+      "ok": false
+    },
+    {
+      "file": "tests_all_20260707_final.log",
+      "passed": 132,
+      "failed": 0,
+      "ok": true
+    },
+    {
+      "file": "tests_baseline_20260707.log",
+      "passed": 39,
+      "failed": 0,
+      "ok": true
+    },
+    {
+      "file": "tests_all_with_rewards_20260705_090134.log",
+      "passed": 0,
+      "failed": 0,
+      "ok": false
+    },
+    {
+      "file": "tests_all_with_rewards_20260705_090234.log",
+      "passed": 96,
+      "failed": 0,
+      "ok": true
+    }
+  ],
+  "validate_two_nodes": [
+    {
+      "file": "validate_two_nodes_latest.json",
+      "steps_total": 18,
+      "steps_ok": 18,
+      "ok": true,
+      "conclusions": {
+        "learning_reasoning_shared_between_pcs": false,
+        "mining_compute_shared_between_pcs": false,
+        "pool_e2e_encrypted_opt_in": true,
+        "pool_plaintext_on_network": false,
+        "pool_workers_contribute_pol": true,
+        "public_blocks_synced_via_p2p": true,
+        "private_blocks_synced": false,
+        "ir_graphs_synced": false,
+        "what_is_shared": "Morceaux/résultats pool chiffrés ML-KEM + métadonnées blocs PUBLIC P2P",
+        "what_stays_local": "Déchiffrement et raisonnement dual-agent sur chaque machine — graphes IR locaux"
+      }
+    }
+  ],
+  "plain_logs": {
+    "error_lines": [
+      {
+        "file": "api_audit_20260705_015945.log",
+        "line": 5,
+        "snippet": "ERROR:    [Errno 98] error while attempting to bind on address ('127.0.0.1', 8000): address already in use"
+      },
+      {
+        "file": "api_execution_20260705_101036.log",
+        "line": 1,
+        "snippet": "Traceback (most recent call last):"
+      },
+      {
+        "file": "audit_demo_20260705_1323.log",
+        "line": 2,
+        "snippet": "ERROR: [Errno 111] Connection refused"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 9,
+        "snippet": "______________________ ERROR collecting tests/test_api.py ______________________"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 12,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 18,
+        "snippet": "__________________ ERROR collecting tests/test_book_wailly.py __________________"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 21,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 29,
+        "snippet": "_____________________ ERROR collecting tests/test_chain.py _____________________"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 32,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 43,
+        "snippet": "ERROR tests/test_api.py"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 44,
+        "snippet": "ERROR tests/test_book_wailly.py"
+      },
+      {
+        "file": "audit_tests_20260705_015653.log",
+        "line": 45,
+        "snippet": "ERROR tests/test_chain.py"
+      },
+      {
+        "file": "demo_execution_20260705_045825.log",
+        "line": 1,
+        "snippet": "Traceback (most recent call last):"
+      },
+      {
+        "file": "demo_execution_20260705_045857.log",
+        "line": 2,
+        "snippet": "ERROR: [Errno 111] Connection refused"
+      },
+      {
+        "file": "frontend_build_20260707.log",
+        "line": 5,
+        "snippet": "src/pages/Groups.tsx(13,23): error TS2451: Cannot redeclare block-scoped variable 'setActorAddress'."
+      },
+      {
+        "file": "frontend_build_20260707.log",
+        "line": 6,
+        "snippet": "src/pages/Groups.tsx(15,24): error TS2451: Cannot redeclare block-scoped variable 'setActorAddress'."
+      },
+      {
+        "file": "mining_demo_20260705_101807.log",
+        "line": 1,
+        "snippet": "Traceback (most recent call last):"
+      },
+      {
+        "file": "mining_demo_20260705_101851.log",
+        "line": 87,
+        "snippet": "Traceback (most recent call last):"
+      },
+      {
+        "file": "test_wallet_rewards_20260705_052804.log",
+        "line": 6,
+        "snippet": "collecting ... collected 0 items / 1 error"
+      },
+      {
+        "file": "test_wallet_rewards_20260705_052804.log",
+        "line": 9,
+        "snippet": "________________ ERROR collecting tests/test_wallet_rewards.py _________________"
+      },
+      {
+        "file": "test_wallet_rewards_20260705_052804.log",
+        "line": 12,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "test_wallet_rewards_20260705_052804.log",
+        "line": 19,
+        "snippet": "ERROR tests/test_wallet_rewards.py"
+      },
+      {
+        "file": "test_wallet_rewards_20260705_052804.log",
+        "line": 20,
+        "snippet": "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!"
+      },
+      {
+        "file": "test_wallet_rewards_20260705_052804.log",
+        "line": 21,
+        "snippet": "=============================== 1 error in 0.09s ==============================="
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 9,
+        "snippet": "______________________ ERROR collecting tests/test_api.py ______________________"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 12,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 18,
+        "snippet": "__________________ ERROR collecting tests/test_book_wailly.py __________________"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 21,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 29,
+        "snippet": "_________________ ERROR collecting tests/test_optimizations.py _________________"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 32,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 40,
+        "snippet": "____________ ERROR collecting tests/test_optimizations_advanced.py _____________"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 43,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 52,
+        "snippet": "ERROR tests/test_api.py"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 53,
+        "snippet": "ERROR tests/test_book_wailly.py"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 54,
+        "snippet": "ERROR tests/test_optimizations.py"
+      },
+      {
+        "file": "tests_all_with_rewards_20260705_090134.log",
+        "line": 55,
+        "snippet": "ERROR tests/test_optimizations_advanced.py"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 3,
+        "snippet": "______________________ ERROR collecting tests/test_api.py ______________________"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 6,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 21,
+        "snippet": "_________________ ERROR collecting tests/test_dashboard_api.py _________________"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 24,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 39,
+        "snippet": "____________________ ERROR collecting tests/test_groups.py _____________________"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 42,
+        "snippet": "Traceback:"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 58,
+        "snippet": "ERROR tests/test_api.py"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 59,
+        "snippet": "ERROR tests/test_dashboard_api.py"
+      },
+      {
+        "file": "tests_join_request_20260707.log",
+        "line": 60,
+        "snippet": "ERROR tests/test_groups.py"
+      },
+      {
+        "file": "tests_with_security_20260705_091835.log",
+        "line": 116,
+        "snippet": "ERROR    artcb.chain.manager:manager.py:133 Block 1 rejected by Anti-Sybil: Contributor artcb1y8ae38... too fast: 0.0s < 60.0s"
+      }
+    ],
+    "error_count": 46
+  },
+  "recommendations": [
+    "Filtrer les fichiers .log avec le plus d'erreurs."
+  ]
+}

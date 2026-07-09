@@ -98,7 +98,7 @@ export function Governance() {
               <strong>{p.title}</strong> — v{p.version} — {p.status}
               <p>{p.description}</p>
               {p.tally && (
-                <p>Oui: {p.tally.yes} · Non: {p.tally.no} · Majorité oui: {p.tally.majority_yes ? "✓" : "✕"}</p>
+                <p>Oui: {p.tally.yes} · Non: {p.tally.no} · Majorité oui: {p.tally.majority_yes ? "OK" : "X"}</p>
               )}
               {p.status === "open" && (
                 <div className="mc-connector-actions">

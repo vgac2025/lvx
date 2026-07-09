@@ -70,6 +70,18 @@ def cmd_pol(args: argparse.Namespace) -> int:
     return _req("get", f"{API}/pol/score", base=args.base)
 
 
+def cmd_metrics(args: argparse.Namespace) -> int:
+    return _req("get", f"{API}/metrics", base=args.base)
+
+
+def cmd_system(args: argparse.Namespace) -> int:
+    if args.action == "hardware":
+        return _req("get", f"{API}/system/hardware", base=args.base)
+    if args.action == "optimization":
+        return _req("get", f"{API}/system/optimization", base=args.base)
+    return 1
+
+
 def cmd_wallet(args: argparse.Namespace) -> int:
     if args.action == "create":
         return _req("post", f"{API}/wallet/create", base=args.base, json={"name": args.name})
@@ -253,6 +265,12 @@ def build_parser() -> argparse.ArgumentParser:
     ch.set_defaults(func=cmd_chain)
 
     sub.add_parser("pol", help="GET /pol/score").set_defaults(func=cmd_pol)
+
+    sub.add_parser("metrics", help="GET /metrics (CPU, RAM, GPU, optimisations)").set_defaults(func=cmd_metrics)
+
+    sys_cmd = sub.add_parser("system", help="Materiel et optimisations")
+    sys_cmd.add_argument("action", choices=["hardware", "optimization"])
+    sys_cmd.set_defaults(func=cmd_system)
 
     w = sub.add_parser("wallet", help="Wallets")
     w.add_argument("action", choices=["create", "list", "balance"])

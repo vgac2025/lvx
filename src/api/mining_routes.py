@@ -28,7 +28,7 @@ class MiningPipelineRequest(BaseModel):
     use_distributed_pool: bool = False
     encrypt_transport: bool = True
     auto_finalize: bool = False
-    chunk_chars: int = Field(default=400, ge=100, le=8000)
+    chunk_chars: int | None = Field(default=None, ge=100, le=8000)
     limit: int = Field(default=50, ge=1, le=1000)
     offset: int = Field(default=0, ge=0)
     batch_index: int = 0
@@ -112,6 +112,14 @@ def run_mining_pipeline(body: MiningPipelineRequest, request: Request) -> dict:
                 raise HTTPException(status_code=400, detail=f"Wallet introuvable: {body.wallet_name}") from exc
         actor = body.actor_address or addr
 
+        chunk_chars = body.chunk_chars
+        if chunk_chars is None and state.optimization is not None:
+            chunk_chars = state.optimization.pool_chunk_chars
+        if chunk_chars is None:
+            from artcb.system.optimizer import default_pool_chunk_chars
+
+            chunk_chars = default_pool_chunk_chars()
+
         try:
             return run_mining_with_options(
                 text=body.text,
@@ -130,7 +138,7 @@ def run_mining_pipeline(body: MiningPipelineRequest, request: Request) -> dict:
                 use_llm=body.use_llm,
                 llm_provider=body.llm_provider,
                 store_block=body.store_block,
-                chunk_chars=body.chunk_chars,
+                chunk_chars=chunk_chars,
                 auto_dispatch=True,
                 auto_process_local=True,
                 auto_finalize=body.auto_finalize,

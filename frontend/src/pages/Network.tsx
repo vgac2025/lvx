@@ -160,7 +160,7 @@ export function Network() {
           {peers.map((p) => (
             <li key={String(p.peer_id)} className="mc-connector-item">
               {String(p.label || p.peer_id)} — {String(p.base_url)}
-              {p.last_sync_ok != null && <span> · sync {p.last_sync_ok ? "✓" : "✕"}</span>}
+              {p.last_sync_ok != null && <span> · sync {p.last_sync_ok ? "OK" : "X"}</span>}
             </li>
           ))}
         </ul>

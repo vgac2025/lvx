@@ -37,17 +37,17 @@ def print_metric(label: str, value, unit: str = ""):
 
 def compare_with_existing_systems():
     """Compare ARTCB avec Bitcoin, Ethereum, etc."""
-    print_header("📊 COMPARAISON AVEC SYSTÈMES EXISTANTS")
+    print_header(" COMPARAISON AVEC SYSTÈMES EXISTANTS")
     
     print("┌" + "─" * 78 + "┐")
     print("│ " + "Système".ljust(15) + " │ " + "Consensus".ljust(20) + " │ " + "Distribution Reward".ljust(38) + " │")
     print("├" + "─" * 78 + "┤")
     
     systems = [
-        ("Bitcoin (PoW)", "Proof-of-Work", "❌ Winner-takes-all (1 gagnant)"),
-        ("Ethereum (PoS)", "Proof-of-Stake", "⚠️  Validateurs sélectionnés"),
-        ("Filecoin (PoSt)", "Proof-of-Spacetime", "⚠️  Stockage prouvé"),
-        ("ARTCB (PoL)", "Proof-of-Learning", "✅ COLLECTIF proportionnel PoL"),
+        ("Bitcoin (PoW)", "Proof-of-Work", "FAIL Winner-takes-all (1 gagnant)"),
+        ("Ethereum (PoS)", "Proof-of-Stake", "WARN  Validateurs sélectionnés"),
+        ("Filecoin (PoSt)", "Proof-of-Spacetime", "WARN  Stockage prouvé"),
+        ("ARTCB (PoL)", "Proof-of-Learning", "OK COLLECTIF proportionnel PoL"),
     ]
     
     for system, consensus, reward in systems:
@@ -55,25 +55,25 @@ def compare_with_existing_systems():
     
     print("└" + "─" * 78 + "┘")
     
-    print("\n" + "🎯 INNOVATIONS ARTCB vs EXISTANTS ".center(80, "="))
+    print("\n" + " INNOVATIONS ARTCB vs EXISTANTS ".center(80, "="))
     print()
-    print("  1. ✅ REWARD COLLECTIF")
+    print("  1. OK REWARD COLLECTIF")
     print("     • Bitcoin: 1 mineur gagne tout (winner-takes-all)")
     print("     • ARTCB: TOUS les contributeurs PoL payés proportionnellement")
     print()
-    print("  2. ✅ TRAVAIL UTILE")
+    print("  2. OK TRAVAIL UTILE")
     print("     • Bitcoin: Hash SHA-256 compétitif (gaspillage volontaire)")
     print("     • ARTCB: Compression + validation (apprentissage utile)")
     print()
-    print("  3. ✅ GASPILLAGE MINIMAL")
+    print("  3. OK GASPILLAGE MINIMAL")
     print("     • Bitcoin: ~99% calcul perdu (sécurité PoW)")
     print("     • ARTCB: Calcul orienté apprentissage (minimal)")
     print()
-    print("  4. ✅ RÉVERSIBILITÉ 100%")
+    print("  4. OK RÉVERSIBILITÉ 100%")
     print("     • Systèmes existants: Pas de garantie reconstruction")
     print("     • ARTCB: Reconstruction exacte du texte original")
     print()
-    print("  5. ✅ DUAL-AGENT VALIDATION")
+    print("  5. OK DUAL-AGENT VALIDATION")
     print("     • Systèmes existants: Validation simple")
     print("     • ARTCB: Explorer propose + Critic valide")
     print()
@@ -83,7 +83,7 @@ def compare_with_existing_systems():
 def mine_book(pdf_path: Path, wallet_name: str = "miner_demo"):
     """Mine un livre PDF avec affichage console détaillé"""
     
-    print_header(f"🔨 MINAGE D'APPRENTISSAGE — {pdf_path.name}")
+    print_header(f" MINAGE D'APPRENTISSAGE — {pdf_path.name}")
     
     start_time = time.time()
     
@@ -99,13 +99,13 @@ def mine_book(pdf_path: Path, wallet_name: str = "miner_demo"):
     # Wallet
     try:
         wallet = wallet_manager.load_wallet(name=wallet_name)
-        print(f"✅ Wallet chargé: {wallet_name}")
+        print(f"OK Wallet chargé: {wallet_name}")
     except FileNotFoundError:
         wallet = wallet_manager.create_wallet(name=wallet_name)
-        print(f"✅ Nouveau wallet créé: {wallet_name}")
+        print(f"OK Nouveau wallet créé: {wallet_name}")
     
     address = wallet.address
-    print(f"📍 Adresse mineur: {address}\n")
+    print(f" Adresse mineur: {address}\n")
     
     # Étape 1: Chargement PDF
     print(f"[1/6] Chargement PDF...")
@@ -146,7 +146,7 @@ def mine_book(pdf_path: Path, wallet_name: str = "miner_demo"):
     
     print_metric("Texte reconstruit", f"{len(reconstructed):,}", "caractères")
     print_metric("Similarité", f"{similarity:.4f}")
-    print_metric("Réversible", "✅ OUI" if reversible else "❌ NON")
+    print_metric("Réversible", "OK OUI" if reversible else "FAIL NON")
     print_metric("Temps décodage", f"{decode_time:.2f}", "s")
     
     # Étape 4: Calcul PoL Score
@@ -162,10 +162,10 @@ def mine_book(pdf_path: Path, wallet_name: str = "miner_demo"):
     
     print_metric("PoL Score", f"{pol_score:.4f}")
     print_metric("Seuil acceptation", "0.6000")
-    print_metric("Bloc accepté", "✅ OUI" if pol_score >= 0.6 else "❌ NON")
+    print_metric("Bloc accepté", "OK OUI" if pol_score >= 0.6 else "FAIL NON")
     
     if pol_score < 0.6:
-        print("\n⚠️  PoL score insuffisant — bloc rejeté\n")
+        print("\nWARN  PoL score insuffisant — bloc rejeté\n")
         return None
     
     # Étape 5: Création bloc blockchain
@@ -221,8 +221,8 @@ def mine_book(pdf_path: Path, wallet_name: str = "miner_demo"):
     total_time = time.time() - start_time
     
     print("\n" + "-" * 80)
-    print_metric("⏱️  Temps total minage", f"{total_time:.2f}", "s")
-    print_metric("⚡ Vitesse", f"{len(text) / total_time:.0f}", "char/s")
+    print_metric("  Temps total minage", f"{total_time:.2f}", "s")
+    print_metric(" Vitesse", f"{len(text) / total_time:.0f}", "char/s")
     print("-" * 80 + "\n")
     
     return {
@@ -246,7 +246,7 @@ def mine_book(pdf_path: Path, wallet_name: str = "miner_demo"):
 def main():
     """Point d'entrée CLI"""
     print("\n" + "=" * 80)
-    print("  🔨 ARTCB — CLI de Minage d'Apprentissage (Proof-of-Learning)")
+    print("   ARTCB — CLI de Minage d'Apprentissage (Proof-of-Learning)")
     print("=" * 80 + "\n")
     
     # Comparer avec systèmes existants
@@ -262,7 +262,7 @@ def main():
     
     for book in books:
         if not book.exists():
-            print(f"⚠️  Fichier introuvable: {book}\n")
+            print(f"WARN  Fichier introuvable: {book}\n")
             continue
         
         result = mine_book(book)
@@ -273,7 +273,7 @@ def main():
     
     # Résumé final
     if results:
-        print_header("📈 RÉSUMÉ FINAL MINAGE")
+        print_header(" RÉSUMÉ FINAL MINAGE")
         
         total_reward = sum(r["reward_artcb"] for r in results)
         total_blocks = len(results)
@@ -284,14 +284,14 @@ def main():
         print_metric("Reward total", f"{total_reward:.8f}", "ARTCB")
         print_metric("PoL moyen", f"{avg_pol:.4f}")
         print_metric("Compression moyenne", f"{avg_compression:.2%}")
-        print_metric("Réversibilité", "✅ 100%" if all(r["reversible"] for r in results) else "⚠️  Partielle")
+        print_metric("Réversibilité", "OK 100%" if all(r["reversible"] for r in results) else "WARN  Partielle")
         
         # Balance finale (utiliser le dernier résultat)
         final_balance = results[-1]["balance_artcb"]
         print_metric("Balance finale", f"{final_balance:.8f}", "ARTCB")
         
         print("\n" + "=" * 80)
-        print("✅ Minage terminé avec succès !")
+        print("OK Minage terminé avec succès !")
         print("=" * 80 + "\n")
         
         # Sauvegarder résultats
@@ -312,7 +312,7 @@ def main():
                 }
             }, f, indent=2)
         
-        print(f"📄 Résultats sauvegardés: {output_file}\n")
+        print(f" Résultats sauvegardés: {output_file}\n")
 
 
 if __name__ == "__main__":

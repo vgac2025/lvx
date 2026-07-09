@@ -95,7 +95,7 @@ export function ChainPage() {
         </div>
         <div className="mc-slot">
           <div className="mc-kpi-label">Vérification</div>
-          <div className="mc-kpi-value">{verify?.valid ? "OK ✓" : verify ? "FAIL" : "…"}</div>
+          <div className="mc-kpi-value">{verify?.valid ? "OK OK" : verify ? "FAIL" : "…"}</div>
         </div>
         <div className="mc-slot">
           <div className="mc-kpi-label">epoch reward</div>

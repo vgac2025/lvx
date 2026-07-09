@@ -19,7 +19,7 @@ export function Reconstruct({ original, reconstructed, similarity, reversible, v
         </div>
         <div>
           <div className="mc-muted" style={{ marginBottom: 4 }}>
-            Reconstruit {reversible ? "✓ 100%" : `(${Math.round(similarity * 100)}%)`}
+            Reconstruit {reversible ? "OK 100%" : `(${Math.round(similarity * 100)}%)`}
           </div>
           <pre className={`mc-pre${reversible ? " mc-pre-ok" : ""}`}>{reconstructed}</pre>
         </div>

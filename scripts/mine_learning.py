@@ -47,13 +47,13 @@ class LearningMiner:
         # Créer ou charger wallet
         try:
             self.wallet = self.wallet_manager.load_wallet(wallet_name)
-            print(f"✅ Wallet chargé: {wallet_name}")
+            print(f"OK Wallet chargé: {wallet_name}")
         except FileNotFoundError:
             self.wallet = self.wallet_manager.create_wallet(wallet_name)
-            print(f"✅ Nouveau wallet créé: {wallet_name}")
+            print(f"OK Nouveau wallet créé: {wallet_name}")
         
         self.address = self.wallet["address"]
-        print(f"📍 Adresse: {self.address}\n")
+        print(f" Adresse: {self.address}\n")
     
     def print_header(self, title: str):
         """Affiche un header formaté"""
@@ -76,7 +76,7 @@ class LearningMiner:
         Returns:
             Dict avec métriques de minage
         """
-        self.print_header(f"🔨 MINAGE D'APPRENTISSAGE — {pdf_path.name}")
+        self.print_header(f" MINAGE D'APPRENTISSAGE — {pdf_path.name}")
         
         start_time = time.time()
         
@@ -129,7 +129,7 @@ class LearningMiner:
         
         self.print_metric("Texte reconstruit", len(reconstructed), "caractères")
         self.print_metric("Similarité", f"{similarity:.4f}")
-        self.print_metric("Réversible", "✅ OUI" if reversible else "❌ NON")
+        self.print_metric("Réversible", "OK OUI" if reversible else "FAIL NON")
         self.print_metric("Temps décodage", f"{decode_time:.2f}", "s")
         
         # Étape 5: Calcul PoL Score
@@ -143,10 +143,10 @@ class LearningMiner:
         
         self.print_metric("PoL Score", f"{pol_score:.4f}")
         self.print_metric("Seuil acceptation", "0.6000")
-        self.print_metric("Bloc accepté", "✅ OUI" if pol_score >= 0.6 else "❌ NON")
+        self.print_metric("Bloc accepté", "OK OUI" if pol_score >= 0.6 else "FAIL NON")
         
         if pol_score < 0.6:
-            print("\n⚠️  PoL score insuffisant — bloc rejeté")
+            print("\nWARN  PoL score insuffisant — bloc rejeté")
             return None
         
         # Étape 6: Création bloc blockchain
@@ -197,8 +197,8 @@ class LearningMiner:
         total_time = time.time() - start_time
         
         print("\n" + "-" * 80)
-        self.print_metric("⏱️  Temps total minage", f"{total_time:.2f}", "s")
-        self.print_metric("⚡ Vitesse", f"{len(text) / total_time:.0f}", "char/s")
+        self.print_metric("  Temps total minage", f"{total_time:.2f}", "s")
+        self.print_metric(" Vitesse", f"{len(text) / total_time:.0f}", "char/s")
         print("-" * 80)
         
         return {
@@ -238,7 +238,7 @@ class LearningMiner:
     
     def compare_with_existing_systems(self):
         """Compare ARTCB avec Bitcoin, Ethereum, etc."""
-        self.print_header("📊 COMPARAISON AVEC SYSTÈMES EXISTANTS")
+        self.print_header(" COMPARAISON AVEC SYSTÈMES EXISTANTS")
         
         comparisons = [
             {
@@ -271,7 +271,7 @@ class LearningMiner:
             {
                 "Système": "ARTCB (PoL)",
                 "Consensus": "Proof-of-Learning",
-                "Reward": "✨ Collectif proportionnel PoL",
+                "Reward": " Collectif proportionnel PoL",
                 "Travail": "Compression + validation",
                 "Gaspillage": "Minimal (apprentissage)",
                 "Supply": "21M ARTCB",
@@ -291,25 +291,25 @@ class LearningMiner:
             for header in headers:
                 value = comp[header]
                 if "ARTCB" in comp["Système"] and header == "Reward":
-                    value = f"✨ {value}"
+                    value = f" {value}"
                 print(f"{value:20}", end=" | ")
             print()
         
         print("\n" + "=" * 80)
-        print("🎯 INNOVATION ARTCB:")
+        print(" INNOVATION ARTCB:")
         print("=" * 80)
-        print("1. ✅ Reward COLLECTIF : Tous les contributeurs PoL payés proportionnellement")
-        print("2. ✅ Travail UTILE : Compression + validation (pas hash inutile)")
-        print("3. ✅ Gaspillage MINIMAL : Calcul orienté apprentissage")
-        print("4. ✅ Réversibilité 100% : Reconstruction exacte du texte original")
-        print("5. ✅ Dual-Agent : Explorer propose, Critic valide")
+        print("1. OK Reward COLLECTIF : Tous les contributeurs PoL payés proportionnellement")
+        print("2. OK Travail UTILE : Compression + validation (pas hash inutile)")
+        print("3. OK Gaspillage MINIMAL : Calcul orienté apprentissage")
+        print("4. OK Réversibilité 100% : Reconstruction exacte du texte original")
+        print("5. OK Dual-Agent : Explorer propose, Critic valide")
         print("=" * 80 + "\n")
 
 
 def main():
     """Point d'entrée CLI"""
     print("\n" + "=" * 80)
-    print("  🔨 ARTCB — CLI de Minage d'Apprentissage (Proof-of-Learning)")
+    print("   ARTCB — CLI de Minage d'Apprentissage (Proof-of-Learning)")
     print("=" * 80 + "\n")
     
     # Créer mineur
@@ -328,7 +328,7 @@ def main():
     
     for book in books:
         if not book.exists():
-            print(f"⚠️  Fichier introuvable: {book}")
+            print(f"WARN  Fichier introuvable: {book}")
             continue
         
         result = miner.mine_book(book)
@@ -339,7 +339,7 @@ def main():
     
     # Résumé final
     if results:
-        miner.print_header("📈 RÉSUMÉ FINAL MINAGE")
+        miner.print_header(" RÉSUMÉ FINAL MINAGE")
         
         total_reward = sum(r["reward_artcb"] for r in results)
         total_blocks = len(results)
@@ -350,14 +350,14 @@ def main():
         miner.print_metric("Reward total", f"{total_reward:.8f}", "ARTCB")
         miner.print_metric("PoL moyen", f"{avg_pol:.4f}")
         miner.print_metric("Compression moyenne", f"{avg_compression:.2%}")
-        miner.print_metric("Réversibilité", "✅ 100%" if all(r["reversible"] for r in results) else "⚠️  Partielle")
+        miner.print_metric("Réversibilité", "OK 100%" if all(r["reversible"] for r in results) else "WARN  Partielle")
         
         # Balance finale
         balance = miner.wallet_manager.get_balance(miner.address, miner.chain)
         miner.print_metric("Balance finale", f"{balance['balance_artcb']:.8f}", "ARTCB")
         
         print("\n" + "=" * 80)
-        print("✅ Minage terminé avec succès !")
+        print("OK Minage terminé avec succès !")
         print("=" * 80 + "\n")
         
         # Sauvegarder résultats
@@ -378,7 +378,7 @@ def main():
                 }
             }, f, indent=2)
         
-        print(f"📄 Résultats sauvegardés: {output_file}\n")
+        print(f" Résultats sauvegardés: {output_file}\n")
 
 
 if __name__ == "__main__":

@@ -31,13 +31,10 @@ export function Mining() {
 
   return (
     <div className="mc-page">
-      <h1 className="dashboard-title">Minage ⛏</h1>
+      <h1 className="dashboard-title">Minage</h1>
 
       <div className="panel mc-mining-panel">
         <div className="mc-mining-hero">
-          <span className="mc-pickaxe" aria-hidden>
-            ⛏
-          </span>
           <div>
             <h2>Proof-of-Learning Mining</h2>
             <p className="mc-muted">Epoch : {status?.current_reward_artcb ?? 1} ARTCB/bloc — pas de PoW</p>
@@ -46,7 +43,7 @@ export function Mining() {
 
         <div className="mc-hotbar">
           <McKpiSlot
-            icon="💎"
+            icon="PoL"
             label="PoL session"
             value={status?.pol_score?.toFixed(2) ?? "—"}
             gold

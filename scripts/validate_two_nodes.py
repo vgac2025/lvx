@@ -100,7 +100,7 @@ def run_validation() -> dict:
 
     def step(name: str, ok: bool, detail: dict) -> None:
         results["steps"].append({"name": name, "ok": ok, **detail})
-        print(f"{'✓' if ok else '✗'} {name}: {detail.get('message', detail)}")
+        print(f"{'OK' if ok else 'FAIL'} {name}: {detail.get('message', detail)}")
 
     client_a = httpx.Client(base_url=_base(PORT_A), timeout=60.0)
     client_b = httpx.Client(base_url=_base(PORT_B), timeout=60.0)

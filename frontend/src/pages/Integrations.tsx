@@ -251,7 +251,7 @@ export function Integrations() {
               <strong>{c.label}</strong> — {c.provider} ({c.kind})
               {c.api_key_masked && <span> · {c.api_key_masked}</span>}
               {c.last_test_ok != null && (
-                <span> · test {c.last_test_ok ? "✓" : "✕"} {c.last_test_message}</span>
+                <span> · test {c.last_test_ok ? "OK" : "X"} {c.last_test_message}</span>
               )}
               <div className="mc-connector-actions">
                 <button type="button" className="mc-btn-sm" onClick={() => handleTest(c.connector_id)}>Tester</button>

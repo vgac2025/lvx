@@ -123,14 +123,14 @@ def main():
     
     # Critères performance CDC NF-01, NF-02
     if enc['encode_ms'] < 2000:
-        print("✅ NF-01: Encodage 500 mots < 2s")
+        print("OK NF-01: Encodage 500 mots < 2s")
     else:
-        print(f"⚠️ NF-01: Encodage {enc['encode_ms']:.0f}ms > 2000ms")
+        print(f"WARN NF-01: Encodage {enc['encode_ms']:.0f}ms > 2000ms")
     
     if dec['decode_ms'] < 1000:
-        print("✅ NF-02: Reconstruction < 1s")
+        print("OK NF-02: Reconstruction < 1s")
     else:
-        print(f"⚠️ NF-02: Décodage {dec['decode_ms']:.0f}ms > 1000ms")
+        print(f"WARN NF-02: Décodage {dec['decode_ms']:.0f}ms > 1000ms")
 
 
 if __name__ == "__main__":

@@ -14,6 +14,8 @@ CONSOLE_HELP = """ARTCB Console — commandes (API réelle, pas de mock):
   health                  — GET /api/v1/health
   pol                     — GET /api/v1/pol/score
   metrics                 — GET /api/v1/metrics
+  system hardware         — GET /api/v1/system/hardware
+  system optimization     — GET /api/v1/system/optimization
 
   CHAÎNE
   chain                   — GET /api/v1/chain

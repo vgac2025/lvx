@@ -14,16 +14,16 @@ const NAV = [
   { section: "CHAIN", items: [
     { to: "/chain", label: "Chaîne", icon: "▣" },
     { to: "/wallets", label: "Wallets", icon: "◇" },
-    { to: "/mining", label: "Minage", icon: "⛏" },
+    { to: "/mining", label: "Minage", icon: "" },
   ]},
   { section: "SYSTEM", items: [
-    { to: "/system", label: "Système", icon: "⚙" },
-    { to: "/logs", label: "Logs", icon: "📜" },
+    { to: "/system", label: "Système", icon: "*" },
+    { to: "/logs", label: "Logs", icon: "L" },
     { to: "/console", label: "Console", icon: "⌨" },
-    { to: "/integrations", label: "Intégrations", icon: "🔌" },
-    { to: "/network", label: "Réseau P2P", icon: "🌐" },
-    { to: "/governance", label: "Gouvernance", icon: "🗳" },
-    { to: "/groups", label: "Groupes", icon: "👥" },
+    { to: "/integrations", label: "Intégrations", icon: "I" },
+    { to: "/network", label: "Réseau P2P", icon: "P" },
+    { to: "/governance", label: "Gouvernance", icon: "G" },
+    { to: "/groups", label: "Groupes", icon: "G" },
   ]},
 ];
 
@@ -69,14 +69,14 @@ export function DashboardLayout() {
     <div className="mc-dashboard">
       <header className="mc-header">
         <div className="mc-header-left">
-          <span className="mc-logo">⛏ ARTCB</span>
+          <span className="mc-logo">ARTCB</span>
           <span className={`mc-api-badge${apiOk === false ? " mc-api-down" : ""}`}>
-            {apiOk === null ? "…" : apiOk ? "♥ API OK" : "✕ API DOWN"}
+            {apiOk === null ? "…" : apiOk ? "+ API OK" : "X API DOWN"}
           </span>
           {polScore !== null && <span className="mc-header-kpi">◆ PoL {polScore.toFixed(2)}</span>}
           <span className="mc-header-kpi">▣ Blocs {blocks.length}</span>
           {chainValid !== null && (
-            <span className="mc-header-kpi">{chainValid ? "Chain ✓" : "Chain ✕"}</span>
+            <span className="mc-header-kpi">{chainValid ? "Chain OK" : "Chain X"}</span>
           )}
         </div>
         <div className="mc-header-right">

@@ -37,7 +37,7 @@ echo "=============================================="
 
 if [[ "$EXEC_ENV" == "CLOUD_AGENT" ]]; then
   echo ""
-  echo "⚠️  ATTENTION — Vous êtes sur la VM Cloud Agent (cursor /workspace)."
+  echo "WARN  ATTENTION — Vous êtes sur la VM Cloud Agent (cursor /workspace)."
   echo "    Ce n'est PAS la machine de l'utilisateur final."
   echo "    Pour exécuter chez VOUS : clonez le repo sur VOTRE PC et lancez"
   echo "    bash scripts/run_real_local.sh dans VOTRE terminal."

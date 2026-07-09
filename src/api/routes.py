@@ -316,67 +316,50 @@ def pol_score(request: Request) -> dict:
     return _state(request).pol_state
 
 @router.get("/metrics")
-def system_metrics() -> dict:
-    """Métriques système temps réel (CPU, RAM, Disk, Network)."""
+def system_metrics(request: Request) -> dict:
+    """Metriques temps reel + materiel + optimisations actives."""
     try:
-        import psutil
-        import platform
-        
-        # CPU
-        cpu_percent = psutil.cpu_percent(interval=0.1)
-        cpu_count = psutil.cpu_count()
-        cpu_freq = psutil.cpu_freq()
-        
-        # RAM
-        mem = psutil.virtual_memory()
-        
-        # Disk
-        disk = psutil.disk_usage('/')
-        
-        # Network
-        net_io = psutil.net_io_counters()
-        
-        # System info
-        sys_info = {
-            "platform": platform.system(),
-            "platform_release": platform.release(),
-            "platform_version": platform.version(),
-            "architecture": platform.machine(),
-            "hostname": platform.node(),
-            "processor": platform.processor(),
-        }
-        
+        from artcb.system.hardware import detect_hardware, live_metrics
+        from artcb.system.optimizer import build_optimization_profile
+
+        state = request.app.state.artcb
+        hw = state.hardware or detect_hardware()
+        opt = state.optimization or build_optimization_profile(hw)
+        live = live_metrics()
+        hw_dict = hw.to_dict()
         return {
-            "cpu": {
-                "percent": cpu_percent,
-                "count": cpu_count,
-                "freq_mhz": cpu_freq.current if cpu_freq else 0,
-            },
-            "memory": {
-                "total_gb": round(mem.total / (1024**3), 2),
-                "used_gb": round(mem.used / (1024**3), 2),
-                "available_gb": round(mem.available / (1024**3), 2),
-                "percent": mem.percent,
-            },
-            "disk": {
-                "total_gb": round(disk.total / (1024**3), 2),
-                "used_gb": round(disk.used / (1024**3), 2),
-                "free_gb": round(disk.free / (1024**3), 2),
-                "percent": disk.percent,
-            },
-            "network": {
-                "bytes_sent_mb": round(net_io.bytes_sent / (1024**2), 2),
-                "bytes_recv_mb": round(net_io.bytes_recv / (1024**2), 2),
-                "packets_sent": net_io.packets_sent,
-                "packets_recv": net_io.packets_recv,
-            },
-            "system": sys_info,
+            **live,
+            "system": hw_dict["platform"],
+            "hardware": hw_dict,
+            "optimization": opt.to_dict(),
         }
     except ImportError:
         raise HTTPException(status_code=500, detail="psutil not installed")
     except Exception as e:
-        logger.error(f"Error fetching system metrics: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error("Error fetching system metrics: %s", e)
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+@router.get("/system/hardware")
+def system_hardware(request: Request) -> dict:
+    """Profil materiel detecte (CPU, RAM, GPU, disque)."""
+    from artcb.system.hardware import detect_hardware
+
+    state = request.app.state.artcb
+    hw = state.hardware or detect_hardware()
+    return hw.to_dict()
+
+
+@router.get("/system/optimization")
+def system_optimization(request: Request) -> dict:
+    """Profil d'optimisation runtime adapte au materiel."""
+    from artcb.system.optimizer import build_optimization_profile
+
+    state = request.app.state.artcb
+    if state.optimization is not None:
+        return state.optimization.to_dict()
+    hw = state.hardware
+    return build_optimization_profile(hw).to_dict()
 
 
 # ============================================================================

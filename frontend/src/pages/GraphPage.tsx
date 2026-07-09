@@ -122,7 +122,7 @@ export function GraphPage() {
       <div className="mc-page mc-empty">
         <h1 className="dashboard-title">Graphe</h1>
         <div className="panel mc-empty-panel">
-          <p className="mc-empty-icon">📄</p>
+          <p className="mc-empty-icon"></p>
           <p>Aucun graphe — allez sur Mémoriser.</p>
         </div>
       </div>

@@ -25,6 +25,8 @@ from artcb.p2p.public_archive import PublicBlockArchive
 from artcb.p2p.sync import P2PSyncService
 from artcb.pool.service import PoolService
 from artcb.rtleg.timeline import RTLEGTimeline
+from artcb.system.hardware import HardwareProfile, detect_hardware
+from artcb.system.optimizer import OptimizationProfile, apply_optimization_profile, build_optimization_profile
 
 
 @dataclass
@@ -48,6 +50,8 @@ class AppState:
     p2p_sync: P2PSyncService
     p2p_archive: PublicBlockArchive
     pool: PoolService | None = None
+    hardware: HardwareProfile | None = None
+    optimization: OptimizationProfile | None = None
     pol_state: dict[str, Any] = field(default_factory=lambda: {
         "pol_score": 0.6,
         "delta_compression": 0.68,
@@ -73,6 +77,9 @@ class AppState:
 
 def build_app_state() -> AppState:
     settings = load_settings()
+    hardware = detect_hardware()
+    optimization = build_optimization_profile(hardware)
+    apply_optimization_profile(optimization)
     graphs = GraphStore(settings.data_dir / "graphs")
     groups_dir = settings.data_dir / "groups"
     groups = GroupManager(groups_dir)
@@ -112,6 +119,8 @@ def build_app_state() -> AppState:
         p2p_sync=p2p_sync,
         p2p_archive=p2p_archive,
         pool=None,  # type: ignore[arg-type]
+        hardware=hardware,
+        optimization=optimization,
     )
 
     def _run_pool_reasoning(text: str) -> dict[str, Any]:

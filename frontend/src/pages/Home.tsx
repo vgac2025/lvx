@@ -64,11 +64,11 @@ export function Home() {
       )}
 
       <div className="mc-hotbar">
-        <McKpiSlot icon="💎" label="PoL" value={pol?.toFixed(2) ?? "—"} barPct={(pol ?? 0) * 100} />
+        <McKpiSlot icon="PoL" label="PoL" value={pol?.toFixed(2) ?? "—"} barPct={(pol ?? 0) * 100} />
         <McKpiSlot icon="▣" label="Blocs" value={String(blocks.length)} sub={`réseau ${visibility}`} />
         <McKpiSlot icon="◇" label="Wallets" value={String(walletCount)} />
         <McKpiSlot icon="◎" label="Graphes" value={String(blocks.length)} sub="IR live" />
-        <McKpiSlot icon="✓" label="Chain" value={chainValid ? "VALID ✓" : "CHECK"} gold={chainValid} />
+        <McKpiSlot icon="OK" label="Chain" value={chainValid ? "VALID OK" : "CHECK"} gold={chainValid} />
       </div>
 
       <div className="panel mc-checklist">
@@ -76,7 +76,7 @@ export function Home() {
         <ul className="mc-checklist-list">
           {CHECKLIST.map((item) => (
             <li key={item.id}>
-              <span className="mc-check-box">{checklist[item.id] ? "[✓]" : "[ ]"}</span>
+              <span className="mc-check-box">{checklist[item.id] ? "[OK]" : "[ ]"}</span>
               <span>{item.label}</span>
               <Link to={item.to} className="mc-link-pill">
                 → Aller
@@ -86,7 +86,7 @@ export function Home() {
         </ul>
         {demoOk !== null && (
           <p className="mc-muted">
-            Dernière demo_live : {demoOk ? "OK ✓" : "non trouvée"} —{" "}
+            Dernière demo_live : {demoOk ? "OK OK" : "non trouvée"} —{" "}
             <Link to="/logs">Logs</Link>
           </p>
         )}

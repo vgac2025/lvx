@@ -46,7 +46,7 @@ def generate_founder_wallet(founder_id: int) -> dict:
         "founder_id": founder_id,
         "name": f"Founder {founder_id}",
         "address": address,
-        "private_key": private_key,  # ⚠️ SENSIBLE - Ne jamais committer
+        "private_key": private_key,  # WARN SENSIBLE - Ne jamais committer
         "allocation_artcb": FOUNDERS_ALLOCATION_ARTCB,
         "allocation_satoshi": FOUNDERS_ALLOCATION_SATOSHI,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -59,7 +59,7 @@ def create_founders_wallets() -> list[dict]:
     for i in range(1, FOUNDERS_COUNT + 1):
         wallet = generate_founder_wallet(i)
         wallets.append(wallet)
-        print(f"✅ Founder {i} créé")
+        print(f"OK Founder {i} créé")
         print(f"   Adresse: {wallet['address'][:32]}...")
         print(f"   Allocation: {wallet['allocation_artcb']:,} ARTCB")
     return wallets
@@ -82,7 +82,7 @@ def save_wallets(wallets: list[dict]) -> None:
             indent=2,
             ensure_ascii=False,
         )
-    print(f"\n💾 Wallets sauvegardés: {WALLETS_FILE}")
+    print(f"\n Wallets sauvegardés: {WALLETS_FILE}")
 
 
 def save_allocation(wallets: list[dict]) -> None:
@@ -107,7 +107,7 @@ def save_allocation(wallets: list[dict]) -> None:
     }
     with ALLOCATION_FILE.open("w", encoding="utf-8") as f:
         json.dump(allocation, f, indent=2, ensure_ascii=False)
-    print(f"💾 Allocation sauvegardée: {ALLOCATION_FILE}")
+    print(f" Allocation sauvegardée: {ALLOCATION_FILE}")
 
 
 def create_guide() -> None:
@@ -134,7 +134,7 @@ def create_guide() -> None:
 
 ### Fichiers Générés
 
-1. **`founders_wallets.json`** — Clés privées + adresses (⚠️ SENSIBLE)
+1. **`founders_wallets.json`** — Clés privées + adresses (WARN SENSIBLE)
 2. **`founders_allocation.json`** — Balances initiales (public)
 3. **`founders_guide.md`** — Ce guide (public)
 
@@ -155,7 +155,7 @@ Chaque wallet contient :
 }}
 ```
 
-**⚠️ SÉCURITÉ CRITIQUE :**
+**WARN SÉCURITÉ CRITIQUE :**
 - `private_key` = clé de signature Ed25519 (64 caractères hex)
 - **NE JAMAIS** committer `founders_wallets.json` sur GitHub
 - **NE JAMAIS** partager les clés privées
@@ -221,9 +221,9 @@ verify_key = signing.VerifyKey(address_b64, encoder=encoding.Base64Encoder)
 # Vérifier la signature
 try:
     verify_key.verify(message, bytes.fromhex(signature_hex))
-    print("✅ Signature valide")
+    print("OK Signature valide")
 except Exception:
-    print("❌ Signature invalide")
+    print("FAIL Signature invalide")
 ```
 
 ### 3.4 Transférer des ARTCB (CLI)
@@ -269,11 +269,11 @@ signed = signing_key.sign(message)
 
 try:
     verify_key.verify(message, signed.signature)
-    print(f"✅ Founder {{founder['founder_id']}} signature VALIDE")
+    print(f"OK Founder {{founder['founder_id']}} signature VALIDE")
     print(f"   Adresse: {{founder['address'][:32]}}...")
     print(f"   Balance: {{founder['allocation_artcb']:,}} ARTCB")
 except Exception as e:
-    print(f"❌ Erreur: {{e}}")
+    print(f"FAIL Erreur: {{e}}")
 ```
 
 ### 4.2 Vérifier Balance Blockchain
@@ -298,13 +298,13 @@ Last activity: Genesis
 
 ### 5.1 Protection des Clés Privées
 
-✅ **À FAIRE :**
+OK **À FAIRE :**
 - Stocker `founders_wallets.json` dans un coffre-fort chiffré (1Password, Bitwarden, etc.)
 - Utiliser un HSM (Hardware Security Module) pour la production
 - Sauvegarder les clés sur support physique déconnecté (USB chiffré)
 - Limiter l'accès aux clés privées (principe du moindre privilège)
 
-❌ **À NE JAMAIS FAIRE :**
+FAIL **À NE JAMAIS FAIRE :**
 - Committer `founders_wallets.json` sur GitHub
 - Envoyer les clés privées par email/Slack/Discord
 - Stocker les clés en clair sur un serveur cloud
@@ -410,7 +410,7 @@ jq '.founders_total_artcb' data/founders/founders_allocation.json
 
 ---
 
-**⚠️ RAPPEL SÉCURITÉ :**
+**WARN RAPPEL SÉCURITÉ :**
 - `founders_wallets.json` contient les clés privées → **NE JAMAIS COMMITTER**
 - `founders_allocation.json` est public → OK pour commit
 - Ce guide est public → OK pour commit
@@ -420,7 +420,7 @@ jq '.founders_total_artcb' data/founders/founders_allocation.json
     
     with GUIDE_FILE.open("w", encoding="utf-8") as f:
         f.write(guide)
-    print(f"📖 Guide créé: {GUIDE_FILE}")
+    print(f" Guide créé: {GUIDE_FILE}")
 
 
 def main() -> None:
@@ -444,20 +444,20 @@ def main() -> None:
     
     print()
     print("=" * 60)
-    print("✅ CRÉATION TERMINÉE")
+    print("OK CRÉATION TERMINÉE")
     print("=" * 60)
     print()
-    print("📁 Fichiers créés:")
-    print(f"   1. {WALLETS_FILE} (⚠️ SENSIBLE - Ne pas committer)")
+    print(" Fichiers créés:")
+    print(f"   1. {WALLETS_FILE} (WARN SENSIBLE - Ne pas committer)")
     print(f"   2. {ALLOCATION_FILE} (Public - OK pour commit)")
     print(f"   3. {GUIDE_FILE} (Public - OK pour commit)")
     print()
-    print("🔒 SÉCURITÉ:")
+    print(" SÉCURITÉ:")
     print("   - Sauvegarder founders_wallets.json dans un coffre-fort chiffré")
     print("   - Vérifier que data/founders/founders_wallets.json est dans .gitignore")
     print("   - Ne JAMAIS partager les clés privées")
     print()
-    print("📖 Lire le guide: cat data/founders/founders_guide.md")
+    print(" Lire le guide: cat data/founders/founders_guide.md")
     print()
 
 

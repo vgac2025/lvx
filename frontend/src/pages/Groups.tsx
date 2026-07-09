@@ -219,7 +219,7 @@ export function Groups() {
           {selectedGroup.members.map((m) => (
             <div key={m.address} className="mc-player-row">
               <div className="mc-player-head">
-                {m.role === "founder" ? "🧑" : m.role === "admin" ? "👤" : "👥"}
+                {m.role === "founder" ? "F" : m.role === "admin" ? "A" : "G"}
               </div>
               <div>
                 <strong>{m.role}</strong> — {m.address.slice(0, 20)}…

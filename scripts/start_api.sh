@@ -10,10 +10,10 @@ echo "=== Démarrage API ARTCB ==="
 
 # Vérifier venv
 if [ ! -d "venv" ]; then
-    echo "✗ venv manquant - création..."
+    echo "FAIL venv manquant - création..."
     python3 -m venv venv
     venv/bin/pip install -q -r requirements.txt
-    echo "✓ venv créé et dépendances installées"
+    echo "OK venv créé et dépendances installées"
 fi
 
 # Tuer processus existants
@@ -21,7 +21,7 @@ pkill -f "uvicorn.*8000" 2>/dev/null || true
 sleep 1
 
 # Démarrer API
-echo "✓ Lancement uvicorn sur http://localhost:8000"
+echo "OK Lancement uvicorn sur http://localhost:8000"
 venv/bin/uvicorn api.main:app \
     --app-dir src \
     --host 0.0.0.0 \
