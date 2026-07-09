@@ -1,0 +1,102 @@
+{
+  "environment": "CLOUD_AGENT_VM",
+  "note": "Simule 2 PC — pas le PC utilisateur physique",
+  "node_a": {
+    "port": 18001,
+    "data_dir": "/tmp/artcb_validate_node_a"
+  },
+  "node_b": {
+    "port": 18002,
+    "data_dir": "/tmp/artcb_validate_node_b"
+  },
+  "steps": [
+    {
+      "name": "A_create_wallet",
+      "ok": true,
+      "status": 200,
+      "message": "{\"name\":\"node_a_wallet\",\"address\":\"artcb14h6644jkaf6prulauvuh2656he4razhzr4e53f\",\"public_key_hex\":\"34851e1206ede94b2cb24c4d705ae964b3e0f7e08d42b2c238c1f7b9dc94e8b4\",\"public_key_b64\":\"NIUeEgbt6UssskxNc"
+    },
+    {
+      "name": "A_learning_reasoning_local",
+      "ok": true,
+      "status": 200,
+      "graph_id": "g_292a7e6b2913",
+      "message": "Apprentissage+raisonnement sur NODE A seulement"
+    },
+    {
+      "name": "A_store_public_block",
+      "ok": true,
+      "status": 200,
+      "block_index": 0,
+      "message": "Bloc PUBLIC gravé sur chaîne locale A"
+    },
+    {
+      "name": "A_store_private_block",
+      "ok": true,
+      "message": "Bloc PRIVATE sur A — ne doit PAS apparaître sur B"
+    },
+    {
+      "name": "B_initial_empty",
+      "ok": true,
+      "blocks": 0,
+      "graphs": 0,
+      "message": "NODE B démarre vide — pas de calcul partagé automatiquement"
+    },
+    {
+      "name": "B_add_peer_A",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "B_sync_from_A",
+      "ok": true,
+      "status": 200,
+      "results": [
+        {
+          "peer_id": "peer_127_0_0_1_18001",
+          "pull": {
+            "peer_id": "peer_127_0_0_1_18001",
+            "received": 1,
+            "imported": 1
+          },
+          "push": {
+            "peer_id": "peer_127_0_0_1_18001",
+            "pushed": 0,
+            "message": "Aucun bloc public à envoyer"
+          },
+          "ok": true
+        }
+      ],
+      "message": "Sync P2P déclenchée"
+    },
+    {
+      "name": "B_received_public_blocks",
+      "ok": true,
+      "incoming_public": 1,
+      "message": "Blocs PUBLIC de A archivés sur B"
+    },
+    {
+      "name": "B_NO_shared_learning_graph",
+      "ok": true,
+      "graph_fetch_status": 404,
+      "graphs_on_disk": 0,
+      "message": "Apprentissage/raisonnement NON partagé — graphe IR reste sur A"
+    },
+    {
+      "name": "B_NO_private_blocks",
+      "ok": true,
+      "private_in_incoming": 0,
+      "public_on_A": 1,
+      "message": "Blocs PRIVATE jamais synchronisés"
+    }
+  ],
+  "conclusions": {
+    "learning_reasoning_shared_between_pcs": false,
+    "mining_compute_shared_between_pcs": false,
+    "public_blocks_synced_via_p2p": true,
+    "private_blocks_synced": false,
+    "ir_graphs_synced": false,
+    "what_is_shared": "Uniquement métadonnées blocs PUBLIC (hash, PoL, graph_root) via P2P",
+    "what_stays_local": "Calcul apprentissage, raisonnement dual-agent, graphes IR, blocs private, clés API, wallets"
+  }
+}

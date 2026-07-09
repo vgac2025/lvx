@@ -249,3 +249,12 @@ Règles inchangées :
 - Tests : **186 pytest** — `tests/test_media_ingest.py` intégration JSON/CSV
 - Rapport : `rapports/063_multimodal_complet_telegram_release.md`
 - Logs : `logs/pytest_063_latest.txt`
+
+## [2026-07-09T01:00:00Z] Validation 2 nœuds — apprentissage NON partagé (test réel VM)
+
+- Script `scripts/validate_two_nodes.py --spawn` — 2 uvicorn, 2 ARTCB_DATA_DIR
+- **Résultat :** apprentissage/raisonnement **NON partagés** entre PC
+- P2P sync : blocs **public** uniquement → `incoming_public.jsonl`
+- Graphes IR, blocs private, calcul : **100 % local** par machine
+- Log : `logs/validate_two_nodes_latest.json` — 10/10 étapes OK
+- Rapport : `rapports/064_deux_pc_apprentissage_partage_ou_pas_test_reel.md`
