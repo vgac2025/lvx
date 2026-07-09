@@ -1,8 +1,20 @@
 # INDEX GÉNÉRAL — ARTCB
 
-**Horodatage :** 2026-07-05T11:04:00+02:00
-**Statut dépôt :** **MVP 100% OPÉRATIONNEL — BENCHMARK EXHAUSTIF 16 CONCURRENTS 2026**
-**Commit main :** `d343deb` → https://github.com/vgac2025/lvx
+**Horodatage :** 2026-07-09T01:35:00Z  
+**Statut dépôt :** **MVP + P2P + Pool E2E — API/CLI complet**  
+**Commit main :** `b783f7c` → https://github.com/vgac2025/lvx
+
+---
+
+## Nouveautés juillet 2026 (post-audit 067)
+
+| Fichier | Rôle |
+|---------|------|
+| **`API_REFERENCE_ARTCB.md`** | Référence ~70 endpoints REST |
+| **`scripts/artcb_cli.py`** | CLI terminal multi-plateforme |
+| **`rapports/067_audit_api_cli_complet.md`** | Audit API/CLI |
+| **`rapports/065–066`** | Pool E2E ML-KEM complet |
+| **210 pytest** | policy + intégration + stress + CLI |
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Mémoire persistante pour agents IA** : chaque pensée devient un nœud signé dans un graphe, compressible sans perte, retrouvable à l'identique.
 
-[![Tests](https://img.shields.io/badge/tests-96%2F96%20passing-brightgreen)](tests/)
+[![Tests](https://img.shields.io/badge/tests-210%2F210%20passing-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://python.org)
 [![License](https://img.shields.io/badge/license-Proprietary-red)](LICENSE)
 
@@ -45,6 +45,22 @@ cd frontend && npm install && npm run dev
 8. **Blockchain** : Footer "Bloc #7 signé ✓ — hash abc123..."
 9. **Rewards** : Distribution collective proportionnelle au PoL
 
+### 🖥️ CLI API complète (Linux / macOS / Windows)
+
+```bash
+# Démarrer l'API puis :
+export ARTCB_API_BASE=http://127.0.0.1:8000
+
+python3 scripts/artcb_cli.py health
+python3 scripts/artcb_cli.py wallet create --name mon_wallet
+python3 scripts/artcb_cli.py agents --text "Décision ARTCB importante."
+python3 scripts/artcb_cli.py mining pipeline --text "..." --visibility public --wallet mon_wallet
+python3 scripts/artcb_cli.py pool run --text "..." --distributed --visibility private --auto-finalize
+python3 scripts/artcb_cli.py p2p status
+```
+
+Référence complète : `API_REFERENCE_ARTCB.md` · Console web : `/console`
+
 ### 🎮 CLI Minage d'Apprentissage
 
 ```bash
@@ -70,7 +86,7 @@ python3 scripts/mine_learning_simple.py
 └──────────────────────────────┬──────────────────────────────┘
                                │ REST + WebSocket
 ┌──────────────────────────────▼──────────────────────────────┐
-│                    API FastAPI (12 endpoints)                │
+│                    API FastAPI (~70 endpoints)                 │
 └──┬──────────┬──────────┬──────────┬──────────┬──────────────┘
    │          │          │          │          │
    ▼          ▼          ▼          ▼          ▼
@@ -93,7 +109,7 @@ python3 scripts/mine_learning_simple.py
 | **PoL** | NumPy | Calcul compression + validation |
 | **Wallet** | Ed25519 + Bech32 | Adresses `artcb1q...` + balance |
 | **Frontend** | React + Vite + Cytoscape | Visualisation graphe interactive |
-| **Tests** | pytest | 96 tests (100% passent) |
+| **Tests** | pytest | 210 tests (100% passent) |
 
 ---
 
@@ -272,8 +288,8 @@ python3 scripts/create_founders_wallets.py
 - **Total** : 13,773 lignes
 
 ### Tests
-- **Tests totaux** : 96
-- **Tests réussis** : 96 (100%)
+- **Tests totaux** : 210
+- **Tests réussis** : 210 (100%)
 - **Couverture** : ~87%
 - **Temps exécution** : 2min09s
 

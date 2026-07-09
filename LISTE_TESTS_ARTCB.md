@@ -12,7 +12,7 @@
 
 | ID | Commande | Attendu | Statut | Dernière exec |
 |----|----------|---------|--------|---------------|
-| T-B01 | `python3 -m pytest tests/ -q` | 96+ passed | [x] | 2026-07-07 (134) |
+| T-B01 | `python3 -m pytest tests/ -q` | 205+ passed | [x] | 2026-07-09 (210) |
 | T-B02 | `python3 -m pytest tests/test_wallet_rewards.py -q` | all pass, reward 1 ARTCB | [x] | 2026-07-07 |
 | T-B03 | `python3 -m pytest tests/test_pol.py -q` | split 1.0 ARTCB | [x] | 2026-07-07 |
 | T-B04 | `python3 -m pytest tests/test_api.py -q` | API OK | [x] | 2026-07-07 |
@@ -100,4 +100,38 @@
 
 ---
 
-**Dernière mise à jour :** 2026-07-07T08:00:00Z
+**Dernière mise à jour :** 2026-07-09T01:35:00Z
+
+---
+
+## 7. Tests pool E2E + P2P (juillet 2026)
+
+| ID | Commande / scénario | Attendu | Statut | Dernière exec |
+|----|---------------------|---------|--------|---------------|
+| T-P01 | `pytest tests/test_pool_e2e.py` | crypto ML-KEM roundtrip | [x] | 2026-07-09 |
+| T-P02 | `pytest tests/test_pool_policy.py` | distribué exige chiffrement | [x] | 2026-07-09 |
+| T-P03 | `pytest tests/test_pool_integration.py` | private/public/group | [x] | 2026-07-09 |
+| T-P04 | `pytest tests/test_pool_stress.py` | volume + concurrence | [x] | 2026-07-09 |
+| T-P05 | `scripts/validate_two_nodes.py --spawn` | 18/18 étapes pool+P2P | [x] | 2026-07-09 |
+
+---
+
+## 8. Tests CLI terminal
+
+| ID | Commande | Attendu | Statut | Dernière exec |
+|----|----------|---------|--------|---------------|
+| T-C01 | `python3 scripts/artcb_cli.py --help` | exit 0, commandes pool/p2p | [x] | 2026-07-09 |
+| T-C02 | `pytest tests/test_artcb_cli.py` | health, wallet, mining local | [x] | 2026-07-09 |
+| T-C03 | Console UI `/console` commandes pool/p2p | fetch API réelle | [x] | 2026-07-09 |
+
+---
+
+## 4. Avancement % (mis à jour en temps réel)
+
+| Phase | Tâche | % | Tests liés |
+|-------|-------|---|------------|
+| **9** | Pool E2E + API/CLI audit | **100 %** | T-P*, T-C* |
+| **Global** | Système MVP + réseau + pool | **~95 %** | 210 pytest |
+
+**Avancement dashboard global : 100 %**  
+**Avancement API/CLI : 100 %**

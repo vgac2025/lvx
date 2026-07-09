@@ -1,6 +1,6 @@
 # CAHIER DES CHARGES — ARTCB MVP Avancé v1.2
 
-**Horodatage :** 2026-07-04T22:50:00Z (v1.2 — tokenomics PoL collectif + devnet)  
+**Horodatage :** 2026-07-09T01:35:00Z (v1.4 — pool E2E + API/CLI complet)  
 **Auteur :** Agent Cursor (Cloud)  
 **Statut :** Document de référence — Phase 1 ✅, tokenomics spécifiée, Phase 2+ en attente  
 **Dépôt :** https://github.com/vgac2025/lvx  
@@ -430,6 +430,12 @@ Block
 | GET | `/api/v1/pol/score` | Score PoL courant |
 | POST | `/api/v1/agents/run` | Lancer boucle dual-agent |
 | GET | `/api/v1/health` | Healthcheck |
+
+**v1.4 (2026-07-09) — API étendue :** voir `API_REFERENCE_ARTCB.md` pour la liste complète (~70 routes) :
+- Minage `/mining/pipeline` (local ou `use_distributed_pool`)
+- Pool E2E ML-KEM `/pool/*` (private/public/group)
+- P2P devnet `/p2p/*`, Groupes, Gouvernance, Connecteurs multimodal, Notifications Telegram
+- CLI : `python3 scripts/artcb_cli.py` — Linux/macOS/Windows
 
 ---
 

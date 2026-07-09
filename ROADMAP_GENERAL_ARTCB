@@ -96,27 +96,6 @@
 
 ---
 
-## Phase 6 — Extensions (P1/P2 — post-hackathon)
-
-- [x] Connecteurs IA utilisateur (OpenAI, Claude, Bob) — v1.3
-- [x] Connecteurs sources DB client (Supabase, Postgres, MySQL, SQLite) — v1.3
-- [x] Pipeline minage unifié apprentissage + raisonnement — v1.3
-- [x] Dashboard Intégrations `/integrations` — v1.3
-- [x] PQC ML-DSA-65 hybride — v1.3
-- [x] Gouvernance vote API — v1.3
-- [ ] Gradium TTS/STT intégration
-- [ ] P2P sync 2 nœuds (`artcb-devnet`)
-- [ ] ML-KEM transport P2P
-- [ ] Notifications Telegram / Gmail / SMTP
-- [ ] UI Gouvernance « Voter »
-- [ ] Publication blocs publics fédérés
-- [ ] CLI standalone
-- [ ] IR v0.2 grammaire enrichie
-- [ ] Whitepaper scientifique
-- [ ] Faucet tARTCB devnet
-
----
-
 ## Phase 7 — Minage apprentissage + raisonnement ✅ (juillet 2026)
 
 | Jalon | Livrable | Statut |
@@ -125,24 +104,71 @@
 | 7.2 | Lecture sources client (dont banque bulk) | ✅ |
 | 7.3 | Pipeline `/mining/pipeline` | ✅ |
 | 7.4 | Store avec `contributors[]` + signature | ✅ |
-| 7.5 | Tests `test_mining_pipeline.py` | ✅ 165 pytest total |
+| 7.5 | Tests `test_mining_pipeline.py` | ✅ |
 | 7.6 | Rapport `058` + CDC v1.3 | ✅ |
 
 **Progression Phase 7 : 100 %**
 
 ---
 
-## Phase 8 — Réseau & notifications (en cours — 0–15 %)
+## Phase 8 — Réseau P2P + multimodal + gouvernance ✅ (juillet 2026)
 
 | Jalon | Livrable | Statut |
 |-------|----------|--------|
-| 8.1 | P2P artcb-devnet 2+ nœuds | ❌ |
-| 8.2 | ML-KEM session transport | ❌ |
-| 8.3 | Telegram bot alertes | ❌ |
-| 8.4 | SMTP / Gmail / Outlook OAuth | ❌ |
-| 8.5 | UI vote gouvernance | ❌ |
+| 8.1 | P2P artcb-devnet HTTP + sync blocs publics | ✅ |
+| 8.2 | ML-KEM-768 transport P2P | ✅ |
+| 8.3 | Telegram alertes (Gmail retiré) | ✅ |
+| 8.4 | Multimodal 50+ formats | ✅ |
+| 8.5 | UI `/network` + `/governance` | ✅ |
+| 8.6 | Validation 2 nœuds VM | ✅ rapport 064 |
 
-**Progression Phase 8 : 0 %** — dépend libp2p + module notifiers
+**Progression Phase 8 : 100 %** (libp2p natif hors scope — HTTP gossip)
+
+---
+
+## Phase 9 — Pool E2E + API/CLI complet ✅ (juillet 2026)
+
+| Jalon | Livrable | Statut |
+|-------|----------|--------|
+| 9.1 | Pool distribué ML-KEM (`artcb-pool-chunk/result-v1`) | ✅ |
+| 9.2 | Choix utilisateur local vs distribué | ✅ |
+| 9.3 | Private / public / group pool + minage | ✅ |
+| 9.4 | `scripts/artcb_cli.py` multi-plateforme | ✅ |
+| 9.5 | Console UI synchronisée + `API_REFERENCE_ARTCB.md` | ✅ |
+| 9.6 | Tests policy + intégration + stress + CLI | ✅ 210 pytest |
+| 9.7 | Rapports 065–067 | ✅ |
+
+**Progression Phase 9 : 100 %**
+
+---
+
+## Phase 10 — Extensions futures (P1)
+
+- [ ] libp2p natif (remplacer HTTP gossip)
+- [ ] Gradium TTS/STT intégration
+- [ ] Faucet tARTCB devnet
+- [ ] IR v0.2 grammaire enrichie
+- [ ] Whitepaper scientifique
+
+---
+
+## Phase 6 — Extensions (P1/P2 — post-hackathon)
+
+- [x] Connecteurs IA utilisateur (OpenAI, Claude, Bob) — v1.3
+- [x] Connecteurs sources DB client (Supabase, Postgres, MySQL, SQLite) — v1.3
+- [x] Pipeline minage unifié apprentissage + raisonnement — v1.3
+- [x] Dashboard Intégrations `/integrations` — v1.3
+- [x] PQC ML-DSA-65 hybride — v1.3
+- [x] Gouvernance vote API — v1.3
+- [x] P2P sync 2 nœuds (`artcb-devnet`) — HTTP devnet
+- [x] ML-KEM transport P2P + pool
+- [x] Notifications Telegram
+- [x] UI Gouvernance + Network pool
+- [x] CLI standalone `artcb_cli.py`
+- [ ] Gradium TTS/STT intégration
+- [ ] IR v0.2 grammaire enrichie
+- [ ] Whitepaper scientifique
+- [ ] Faucet tARTCB devnet
 
 ---
 

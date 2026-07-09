@@ -258,3 +258,13 @@ Règles inchangées :
 - Graphes IR, blocs private, calcul : **100 % local** par machine
 - Log : `logs/validate_two_nodes_latest.json` — 10/10 étapes OK
 - Rapport : `rapports/064_deux_pc_apprentissage_partage_ou_pas_test_reel.md`
+
+## [2026-07-09T01:35:00Z] Audit API/CLI complet — pool E2E + documentation
+
+- `scripts/artcb_cli.py` — CLI multi-plateforme (health, chain, wallet, mining, pool, p2p, groups, governance, connectors, notifications, store)
+- `API_REFERENCE_ARTCB.md` — référence ~70 endpoints
+- Console `/console` synchronisée (commandes miroir CLI)
+- Tests : `test_artcb_cli.py` + pool policy/intégration/stress — **210 pytest**
+- CDC v1.4 §8, ROADMAP Phase 9, LISTE_TESTS §7–8, INDEX mis à jour
+- Rapport : `rapports/067_audit_api_cli_complet.md`
+- **Avancement global système : ~95 %** (hors libp2p natif, faucet devnet)
