@@ -144,9 +144,10 @@
 
 ## Phase 10 — Extensions futures (P1)
 
-- [ ] libp2p natif (remplacer HTTP gossip)
-- [ ] Gradium TTS/STT intégration
-- [ ] Faucet tARTCB devnet
+- [ ] libp2p natif (remplacer HTTP gossip — gossip HTTP port 18444 operationnel)
+- [x] Gradium TTS/STT intégration (API + fallback Web Speech)
+- [x] Faucet tARTCB devnet
+- [x] Registre symboles persistant + sync P2P + blockchain publique
 - [ ] IR v0.2 grammaire enrichie
 - [ ] Whitepaper scientifique
 

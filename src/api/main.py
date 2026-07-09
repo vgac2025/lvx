@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.deps import build_app_state
 from src.api.dashboard_routes import router as dashboard_router
+from src.api.devnet_routes import router as devnet_router
+from src.api.symbols_routes import router as symbols_router
 from src.api.mining_routes import router as mining_router
 from src.api.connectors_routes import router as connectors_router
 from src.api.governance_routes import router as governance_router
@@ -39,6 +41,8 @@ def create_app() -> FastAPI:
     )
     app.state.artcb = build_app_state()
     app.include_router(api_router)
+    app.include_router(devnet_router)
+    app.include_router(symbols_router)
     app.include_router(groups_router)
     app.include_router(connectors_router)
     app.include_router(mining_router)

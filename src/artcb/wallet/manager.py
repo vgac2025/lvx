@@ -255,4 +255,25 @@ class WalletManager:
             "balance_artcb": total_satoshi / 1e8,
             "block_count": len(rewards),
             "rewards": rewards,
+            "faucet_satoshi": 0,
+            "faucet_artcb": 0.0,
         }
+
+    def get_balance_with_faucet(self, address: str, blocks_path: Path, faucet_ledger: Path | None = None) -> dict:
+        """Balance chaine PoL + credits faucet devnet."""
+        base = self.get_balance(address, blocks_path)
+        faucet_satoshi = 0
+        if faucet_ledger and faucet_ledger.is_file():
+            for line in faucet_ledger.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                entry = json.loads(line)
+                if entry.get("address") == address:
+                    faucet_satoshi += int(entry.get("amount_satoshi", 0))
+        total = base["balance_satoshi"] + faucet_satoshi
+        base["faucet_satoshi"] = faucet_satoshi
+        base["faucet_artcb"] = faucet_satoshi / 1e8
+        base["balance_satoshi"] = total
+        base["balance_artcb"] = total / 1e8
+        return base

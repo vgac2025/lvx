@@ -235,6 +235,8 @@ def store(body: StoreRequest, request: Request) -> dict:
             graph_root=graph_root,
         )
 
+    public_symbols = graph.orig_symbols if body.visibility == "public" and graph.orig_symbols else None
+
     block = state.chain.append_block(
         graph_id=graph.graph_id,
         graph_root=graph_root,
@@ -242,7 +244,14 @@ def store(body: StoreRequest, request: Request) -> dict:
         visibility=body.visibility,
         group_id=group_id,
         contributors=contributors,
+        public_symbols=public_symbols,
     )
+    if body.visibility == "public" and public_symbols:
+        state.publish_public_symbols(
+            public_symbols,
+            block_index=block.index,
+            graph_id=graph.graph_id,
+        )
     state.pol_state["pol_score"] = pol.pol_score
     state.pol_state["delta_compression"] = pol.delta_compression
     state.pol_state["validation_rate"] = pol.validation_rate
@@ -413,7 +422,11 @@ def wallet_balance(body: WalletBalanceRequest, request: Request) -> dict:
     state = _state(request)
     wallet_mgr = WalletManager()
     
-    balance = wallet_mgr.get_balance(body.address, state.chain.blocks_path)
+    balance = wallet_mgr.get_balance_with_faucet(
+        body.address,
+        state.chain.blocks_path,
+        state.faucet.ledger_path,
+    )
     return balance
 
 
@@ -425,7 +438,11 @@ def wallet_balance_get(address: str, request: Request) -> dict:
     state = _state(request)
     wallet_mgr = WalletManager()
     
-    balance = wallet_mgr.get_balance(address, state.chain.blocks_path)
+    balance = wallet_mgr.get_balance_with_faucet(
+        address,
+        state.chain.blocks_path,
+        state.faucet.ledger_path,
+    )
     return balance
 
 
@@ -475,6 +492,11 @@ def agents_run(body: AgentRunRequest, request: Request) -> dict:
         "pol": pol.to_dict(),
         "nodes_validated": result.nodes_validated,
         "nodes_proposed": result.nodes_proposed,
+        "symbol_proposals": [
+            {"concept": p.concept, "symbol": p.symbol, "status": p.status, "reason": p.reason}
+            for p in result.symbol_proposals
+        ],
+        "orig_symbols": graph.orig_symbols,
     }
 
 

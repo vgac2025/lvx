@@ -158,11 +158,29 @@ export function GraphPage() {
             <button onClick={handleSearch}>Search</button>
             <button onClick={handleReconstruct}>Reconstruire</button>
             <button
-              onClick={() => {
-                if (nodeDetail && "speechSynthesis" in window) {
-                  const u = new SpeechSynthesisUtterance(nodeDetail);
-                  u.lang = "fr-FR";
-                  window.speechSynthesis.speak(u);
+              onClick={async () => {
+                if (!nodeDetail) return;
+                try {
+                  const r = await fetch("/api/v1/integrations/gradium/tts", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text: nodeDetail, language: "fr" }),
+                  });
+                  const data = await r.json();
+                  if (data.mode === "gradium" && data.audio_base64) {
+                    const audio = new Audio(`data:audio/mp3;base64,${data.audio_base64}`);
+                    await audio.play();
+                  } else if ("speechSynthesis" in window) {
+                    const u = new SpeechSynthesisUtterance(nodeDetail);
+                    u.lang = "fr-FR";
+                    window.speechSynthesis.speak(u);
+                  }
+                } catch {
+                  if ("speechSynthesis" in window && nodeDetail) {
+                    const u = new SpeechSynthesisUtterance(nodeDetail);
+                    u.lang = "fr-FR";
+                    window.speechSynthesis.speak(u);
+                  }
                 }
               }}
               disabled={!selectedNodeId}

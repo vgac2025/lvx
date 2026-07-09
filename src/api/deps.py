@@ -6,6 +6,12 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from artcb.agents.critic import DualAgentLoop
+from artcb.devnet.faucet import DevnetFaucet
+from artcb.agents.explorer import ExplorerAgent
+from artcb.ir.symbol_store import PersistentSymbolRegistry
+from artcb.p2p.gossip import GossipRegistry
+from artcb.p2p.symbol_archive import PublicSymbolArchive
+from artcb.p2p.symbol_sync import SymbolSyncService
 from artcb.chain.manager import ChainManager
 from artcb.config import ArtcbSettings, load_settings
 from artcb.ir.decoder import IRDecoder
@@ -49,6 +55,11 @@ class AppState:
     p2p_identity: Any
     p2p_sync: P2PSyncService
     p2p_archive: PublicBlockArchive
+    symbol_registry: PersistentSymbolRegistry
+    symbol_archive: PublicSymbolArchive
+    symbol_sync: SymbolSyncService
+    gossip: GossipRegistry
+    faucet: DevnetFaucet
     pool: PoolService | None = None
     hardware: HardwareProfile | None = None
     optimization: OptimizationProfile | None = None
@@ -74,6 +85,19 @@ class AppState:
             return self.graphs.cache[graph_id]
         return self.graphs.load(graph_id)
 
+    def publish_public_symbols(
+        self,
+        orig_symbols: dict[str, str],
+        *,
+        block_index: int | None = None,
+        graph_id: str | None = None,
+    ) -> dict[str, str]:
+        return self.symbol_sync.publish_public_symbols(
+            orig_symbols,
+            block_index=block_index,
+            graph_id=graph_id,
+        )
+
 
 def build_app_state() -> AppState:
     settings = load_settings()
@@ -89,19 +113,32 @@ def build_app_state() -> AppState:
     p2p_peers = PeerManager(settings.data_dir)
     p2p_identity = NodeIdentityStore(settings.data_dir).load_or_create(api_port=8000)
     p2p_archive = PublicBlockArchive(settings.data_dir)
+    symbol_registry = PersistentSymbolRegistry(settings.data_dir)
+    symbol_archive = PublicSymbolArchive(settings.data_dir)
+    symbol_sync = SymbolSyncService(
+        registry=symbol_registry,
+        archive=symbol_archive,
+        peers=p2p_peers,
+        node_id=p2p_identity.node_id,
+    )
+    gossip = GossipRegistry(settings.data_dir)
+    faucet = DevnetFaucet(settings.data_dir)
+    encoder = IREncoder(symbol_registry=symbol_registry.registry)
+    explorer = ExplorerAgent(encoder=encoder, symbol_registry=symbol_registry)
+    dual = DualAgentLoop(explorer=explorer)
     chain = ChainManager(settings.data_dir / "chain" / "blocks.jsonl")
-    dual = DualAgentLoop()
     timeline = RTLEGTimeline()
     p2p_sync = P2PSyncService(
         chain=chain,
         peers=p2p_peers,
         identity=p2p_identity,
         archive=p2p_archive,
+        symbol_sync=symbol_sync,
     )
 
     state = AppState(
         settings=settings,
-        encoder=IREncoder(),
+        encoder=encoder,
         decoder=IRDecoder(),
         dual=dual,
         timeline=timeline,
@@ -118,6 +155,11 @@ def build_app_state() -> AppState:
         p2p_identity=p2p_identity,
         p2p_sync=p2p_sync,
         p2p_archive=p2p_archive,
+        symbol_registry=symbol_registry,
+        symbol_archive=symbol_archive,
+        symbol_sync=symbol_sync,
+        gossip=gossip,
+        faucet=faucet,
         pool=None,  # type: ignore[arg-type]
         hardware=hardware,
         optimization=optimization,
@@ -149,6 +191,7 @@ def build_app_state() -> AppState:
             groups=state.groups,
             timeline=state.timeline,
             register_graph=state.register_graph,
+            publish_public_symbols=state.publish_public_symbols,
         )
         result = pipeline.run_from_text(
             full_text,

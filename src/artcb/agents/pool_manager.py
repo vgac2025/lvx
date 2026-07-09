@@ -61,7 +61,8 @@ class AgentPoolManager:
         
         def explore_one(text: str, gid: str | None) -> IRGraph:
             explorer = ExplorerAgent()
-            return explorer.explore(text, graph_id=gid)
+            result = explorer.explore(text, graph_id=gid)
+            return result.graph
         
         # Submit all tasks
         futures = []

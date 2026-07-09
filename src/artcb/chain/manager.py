@@ -38,6 +38,7 @@ class ChainBlock:
     group_id: str | None = None
     block_reward: int = 0
     contributors: list[dict] = field(default_factory=list)
+    public_symbols: dict[str, str] = field(default_factory=dict)
     hash_sha3: str | None = None
 
     def to_json_line(self) -> str:
@@ -56,6 +57,8 @@ class ChainBlock:
             "block_reward": self.block_reward,
             "contributors": self.contributors,
         }
+        if self.public_symbols:
+            payload["public_symbols"] = self.public_symbols
         if self.hash_sha3:
             payload["hash_sha3"] = self.hash_sha3
         return json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
@@ -202,6 +205,7 @@ class ChainManager:
         group_id: str | None = None,
         contributors: list[dict] | None = None,
         block_reward: int | None = None,
+        public_symbols: dict[str, str] | None = None,
     ) -> ChainBlock:
         all_blocks = self._read_all_blocks()
         index = len(all_blocks)
@@ -270,6 +274,7 @@ class ChainManager:
             group_id=group_id,
             block_reward=block_reward,
             contributors=final_contributors,
+            public_symbols=dict(public_symbols) if public_symbols and visibility == "public" else {},
         )
         with self.blocks_path.open("a", encoding="utf-8") as handle:
             handle.write(block.to_json_line() + "\n")

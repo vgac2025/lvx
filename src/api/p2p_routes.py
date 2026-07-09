@@ -130,6 +130,55 @@ def sync_peer(peer_id: str, request: Request, from_index: int = Query(0, ge=0)) 
     try:
         pulled = sync.pull_from_peer(peer, from_index=from_index)
         pushed = sync.push_to_peer(peer, from_index=from_index)
-        return {"peer_id": peer_id, "pull": pulled, "push": pushed}
+        sym = state.symbol_sync.sync_all_peers()
+        return {"peer_id": peer_id, "pull": pulled, "push": pushed, "symbols": sym}
     except P2PSyncError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@router.get("/symbols/public")
+def get_public_symbols(request: Request) -> dict:
+    symbols = _state(request).symbol_sync.get_local_symbols()
+    return {"symbols": symbols, "count": len(symbols), "node_id": _state(request).p2p_identity.node_id}
+
+
+@router.post("/symbols/receive")
+def receive_symbols(body: dict, request: Request) -> dict:
+    state = _state(request)
+    symbols = body.get("symbols", {})
+    from_node = body.get("from_node_id", "unknown")
+    merged = state.symbol_sync.import_remote_symbols(symbols, from_node_id=from_node)
+    return {"merged": merged, "received": len(symbols)}
+
+
+@router.post("/symbols/sync")
+def sync_symbols(request: Request) -> dict:
+    results = _state(request).symbol_sync.sync_all_peers()
+    return {"results": results}
+
+
+@router.get("/gossip/announcements")
+def gossip_announcements(request: Request) -> dict:
+    return {"announcements": _state(request).gossip.list_announcements()}
+
+
+@router.post("/gossip/announce")
+def gossip_announce(request: Request) -> dict:
+    state = _state(request)
+    identity = state.p2p_identity
+    entry = state.gossip.announce(
+        node_id=identity.node_id,
+        host="127.0.0.1",
+        api_port=identity.api_port,
+        p2p_port=identity.p2p_port,
+        kem_public_key_hex=identity.kem_public_key_hex,
+        symbol_count=len(state.symbol_registry.export()),
+    )
+    return {"announcement": entry, "network_id": "artcb-devnet-1", "p2p_port": identity.p2p_port}
+
+
+@router.post("/gossip/receive")
+def gossip_receive(body: dict, request: Request) -> dict:
+    entry = body.get("announcement", body)
+    ok = _state(request).gossip.merge_remote_announcement(entry)
+    return {"merged": ok}

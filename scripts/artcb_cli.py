@@ -70,6 +70,20 @@ def cmd_pol(args: argparse.Namespace) -> int:
     return _req("get", f"{API}/pol/score", base=args.base)
 
 
+def cmd_faucet(args: argparse.Namespace) -> int:
+    if args.status:
+        return _req("get", f"{API}/devnet/faucet/status", base=args.base)
+    return _req("post", f"{API}/devnet/faucet", base=args.base, json={"address": args.address})
+
+
+def cmd_symbols(args: argparse.Namespace) -> int:
+    if args.action == "registry":
+        return _req("get", f"{API}/symbols/registry", base=args.base)
+    if args.action == "sync":
+        return _req("post", f"{API}/symbols/sync", base=args.base)
+    return 1
+
+
 def cmd_metrics(args: argparse.Namespace) -> int:
     return _req("get", f"{API}/metrics", base=args.base)
 
@@ -272,6 +286,15 @@ def build_parser() -> argparse.ArgumentParser:
     sys_cmd.add_argument("action", choices=["hardware", "optimization"])
     sys_cmd.set_defaults(func=cmd_system)
 
+    fc = sub.add_parser("faucet", help="Faucet tARTCB devnet")
+    fc.add_argument("--address", default="")
+    fc.add_argument("--status", action="store_true")
+    fc.set_defaults(func=cmd_faucet)
+
+    sym = sub.add_parser("symbols", help="Registre symboles IA")
+    sym.add_argument("action", choices=["registry", "sync"])
+    sym.set_defaults(func=cmd_symbols)
+
     w = sub.add_parser("wallet", help="Wallets")
     w.add_argument("action", choices=["create", "list", "balance"])
     w.add_argument("--name", default="cli_wallet")
@@ -358,6 +381,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
+    if args.command == "faucet" and not args.status and not args.address:
+        parser.error("faucet requires --address or --status")
     if args.command == "mining" and args.action == "pipeline" and not args.text:
         parser.error("mining pipeline requires --text")
     if args.command == "pool" and args.action == "run" and not args.text:

@@ -25,7 +25,7 @@
 
 ## §5 Gate développement
 
-**Phase 2–9 : TERMINÉES** — API complète, pool E2E, CLI  
-**Reste P1 :** libp2p natif, faucet devnet, Gradium TTS
+**Phase 2–9 : TERMINÉES** — API complète, pool E2E, CLI, symboles 100%, faucet devnet, Gradium TTS  
+**Reste P1 :** libp2p natif (transport HTTP gossip operationnel)
 
-**Dernière validation :** 2026-07-09 — 210 pytest, validate_two_nodes 18/18
+**Dernière validation :** 2026-07-09 — 234 pytest, symboles + faucet + Gradium

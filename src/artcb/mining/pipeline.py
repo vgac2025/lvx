@@ -85,6 +85,7 @@ class MiningPipeline:
         groups: GroupManager | None = None,
         timeline: RTLEGTimeline | None = None,
         register_graph=None,
+        publish_public_symbols=None,
     ) -> None:
         self.dual = dual
         self.chain = chain
@@ -93,6 +94,7 @@ class MiningPipeline:
         self.groups = groups
         self.timeline = timeline
         self._register_graph = register_graph
+        self._publish_public_symbols = publish_public_symbols
 
     def run_from_text(
         self,
@@ -185,6 +187,8 @@ class MiningPipeline:
                 extra_contributors=extra_contributors,
             )
 
+            public_symbols = graph.orig_symbols if visibility == "public" and graph.orig_symbols else None
+
             block = self.chain.append_block(
                 graph_id=graph.graph_id,
                 graph_root=graph_root,
@@ -192,7 +196,14 @@ class MiningPipeline:
                 visibility=visibility,
                 group_id=group_id,
                 contributors=contributors if actor_address else None,
+                public_symbols=public_symbols,
             )
+            if visibility == "public" and public_symbols and self._publish_public_symbols:
+                self._publish_public_symbols(
+                    public_symbols,
+                    block_index=block.index,
+                    graph_id=graph.graph_id,
+                )
             block_index = block.index
             block_hash = block.hash
             block_reward = block.block_reward

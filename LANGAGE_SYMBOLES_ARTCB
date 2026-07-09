@@ -1,53 +1,64 @@
 # Langage IA — Symboles originaux ARTCB
 
-**Horodatage :** 2026-07-04T21:30:00Z
+**Horodatage :** 2026-07-09T02:10:00Z  
+**Statut :** **100 % integre**
 
 ---
 
-## Réponse directe : OUI, c'est inclus ✅
+## 3 couches de symboles
 
-Le langage IA ARTCB comporte **3 couches de symboles** :
-
-| Couche | Créateur | Exemples | Fichier |
-|--------|----------|----------|---------|
-| **1. USP fixes** | Spécification humaine | `O1`, `M1`, `P1`, `A1` | `grammar.py` |
-| **2. Macros auto** | IA (détection patterns) | `Ω1`, `Φ1`, `Ψ1` | `macros.py` |
-| **3. Originaux IA** | IA (concepts nouveaux) | `α1`, `β2`, `∇3` | `symbols.py` |
+| Couche | Createur | Exemples | Fichier | Statut |
+|--------|----------|----------|---------|--------|
+| **1. USP fixes** | Specification humaine | `O1`, `M1`, `P1`, `A1` | `grammar.py` | OK |
+| **2. Macros auto** | IA (detection patterns) | `Omega1`, `Phi1`, `Psi1` | `macros.py` | OK |
+| **3. Originaux IA** | IA (concepts nouveaux) | `alpha1`, `beta2`, `nabla3` | `symbols.py` | OK |
 
 ---
 
-## Couche 3 — Symboles originaux de création IA
-
-Quand l'IA rencontre un **concept absent du dictionnaire USP**, elle **crée** un symbole original :
+## Couche 3 — Symboles originaux
 
 ```
 Texte : "The flarnick process requires observation."
-         ↓
-Concept inconnu "flarnick" → mint_original() → symbole α1
-         ↓
-Nœud : { sym: "O1α1", orig_symbols: { "...flarnick...": "α1" } }
+         |
+Concept inconnu "flarnick" -> mint_original() -> symbole alpha1
+         |
+Noeud : { sym: "O1alpha1", orig_symbols: { "...flarnick...": "alpha1" } }
 ```
 
-**Propriétés :**
-- Stable : même concept → même symbole
-- Unique : chaque nouveau concept → nouveau symbole
-- Réversible : `txt` conserve le texte original intégral
+**Proprietes :**
+- Stable : meme concept -> meme symbole
+- Unique : chaque nouveau concept -> nouveau symbole
+- Reversible : `txt` conserve le texte original integral
 - Exportable : `graph.orig_symbols` dans le JSON IR
 
 ---
 
-## Tests qui le prouvent
+## Phase 2+ — COMPLETE
 
-```bash
-python3 -m pytest tests/test_symbols.py -v
-```
-
-3 tests dédiés — tous passent.
+| Element | Implementation | Statut |
+|---------|----------------|--------|
+| Agent **Explorateur** propose symboles | `explorer.py` `propose_symbols()` | OK |
+| Registre persistant | `data/symbols/registry.json` via `symbol_store.py` | OK |
+| Symboles partages blockchain publique | `public_symbols` sur blocs `visibility=public` | OK |
+| Sync P2P symboles | `/api/v1/p2p/symbols/*` + `symbol_sync.py` | OK |
+| Gossip devnet port 18444 | `/api/v1/p2p/gossip/*` + `gossip.py` | OK |
+| API registre | `GET /api/v1/symbols/registry` | OK |
 
 ---
 
-## Ce qui reste à enrichir (Phase 2+)
+## Tests
 
-- Agent **Explorateur** qui propose activement de nouveaux symboles
-- Registre global persistant entre sessions (`data/symbols/registry.json`)
-- Symboles partagés entre agents via blockchain publique (Phase 3+)
+```bash
+python3 -m pytest tests/test_symbols.py tests/test_symbol_store.py \
+  tests/test_explorer_symbols.py tests/test_symbol_p2p_integration.py -v
+```
+
+---
+
+## CLI / API
+
+```bash
+python3 scripts/artcb_cli.py symbols registry
+curl http://127.0.0.1:8000/api/v1/symbols/registry
+curl -X POST http://127.0.0.1:8000/api/v1/p2p/gossip/announce
+```

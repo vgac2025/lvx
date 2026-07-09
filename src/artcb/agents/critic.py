@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 
-from artcb.agents.explorer import ExplorerAgent
+from artcb.agents.explorer import ExplorerAgent, ExplorerResult
 from artcb.ir.decoder import IRDecoder
 from artcb.ir.models import IRGraph, sha256_text
 from artcb.pol.scorer import PolMetrics, PolScorer
@@ -19,11 +19,13 @@ class CriticResult:
         pol: PolMetrics,
         nodes_validated: int,
         nodes_proposed: int,
+        symbol_proposals: list | None = None,
     ) -> None:
         self.graph = graph
         self.pol = pol
         self.nodes_validated = nodes_validated
         self.nodes_proposed = nodes_proposed
+        self.symbol_proposals = symbol_proposals or []
 
 
 class CriticAgent:
@@ -87,5 +89,7 @@ class DualAgentLoop:
         self.critic = critic or CriticAgent()
 
     def run(self, text: str, *, graph_id: str | None = None) -> CriticResult:
-        graph = self.explorer.explore(text, graph_id=graph_id)
-        return self.critic.validate(graph)
+        explored: ExplorerResult = self.explorer.explore(text, graph_id=graph_id)
+        result = self.critic.validate(explored.graph)
+        result.symbol_proposals = explored.symbol_proposals
+        return result

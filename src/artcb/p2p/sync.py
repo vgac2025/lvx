@@ -14,6 +14,7 @@ from artcb.crypto.kem import decrypt_payload, encrypt_payload
 from artcb.p2p.node_identity import NodeIdentity
 from artcb.p2p.peers import PeerManager, PeerRecord
 from artcb.p2p.public_archive import PublicBlockArchive
+from artcb.p2p.symbol_sync import SymbolSyncService
 
 logger = logging.getLogger("artcb.p2p.sync")
 
@@ -35,11 +36,13 @@ class P2PSyncService:
         peers: PeerManager,
         identity: NodeIdentity,
         archive: PublicBlockArchive | None = None,
+        symbol_sync: SymbolSyncService | None = None,
     ) -> None:
         self.chain = chain
         self.peers = peers
         self.identity = identity
         self.archive = archive or PublicBlockArchive(chain.blocks_path.parent.parent)
+        self.symbol_sync = symbol_sync
 
     def get_public_blocks(self, *, from_index: int = 0) -> list[dict[str, Any]]:
         blocks = self.chain.list_blocks(visibility="public")
@@ -57,7 +60,12 @@ class P2PSyncService:
                 continue
             valid.append(block)
         if self.archive:
-            return self.archive.store_blocks(valid, from_node_id=from_node_id)
+            stored = self.archive.store_blocks(valid, from_node_id=from_node_id)
+            if self.symbol_sync:
+                self.symbol_sync.extract_from_blocks(valid, from_node_id=from_node_id)
+            return stored
+        if self.symbol_sync:
+            self.symbol_sync.extract_from_blocks(valid, from_node_id=from_node_id)
         return len(valid)
 
     @staticmethod
