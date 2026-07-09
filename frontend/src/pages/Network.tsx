@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDashboard } from "../context/DashboardContext";
 import {
   addP2PPeer,
   createPoolJob,
@@ -14,6 +15,7 @@ import {
 } from "../api/client";
 
 export function Network() {
+  const { visibility, groupId, useDistributedPool, setUseDistributedPool, encryptTransport } = useDashboard();
   const [status, setStatus] = useState<Record<string, unknown> | null>(null);
   const [peers, setPeers] = useState<Array<Record<string, unknown>>>([]);
   const [channels, setChannels] = useState<Array<Record<string, unknown>>>([]);
@@ -83,10 +85,12 @@ export function Network() {
     try {
       const r = await createPoolJob({
         text: poolText,
-        visibility: "private",
+        visibility,
+        group_id: visibility === "group" ? groupId ?? undefined : undefined,
         wallet_name: poolWallet || undefined,
         auto_dispatch: true,
         chunk_chars: 120,
+        encrypt_transport: true,
       });
       setSuccess(`Job pool créé (${String(r.job.job_id)}) — transport chiffré ML-KEM`);
       await reload();
@@ -176,7 +180,20 @@ export function Network() {
           <textarea value={poolText} onChange={(e) => setPoolText(e.target.value)} rows={3} />
         </label>
         <label>
-          Wallet (optionnel — signature PoL)
+          <input
+            type="checkbox"
+            checked={useDistributedPool}
+            onChange={(e) => setUseDistributedPool(e.target.checked)}
+          />{" "}
+          Activer calcul distribué par défaut (préférence UI)
+        </label>
+        <p className="mc-muted">
+          Visibilité : <strong>{visibility}</strong>
+          {visibility === "group" && groupId ? ` · groupe ${groupId.slice(0, 12)}…` : ""}
+          · Chiffrement pool : <strong>{encryptTransport ? "ML-KEM obligatoire" : "—"}</strong>
+        </p>
+        <label>
+          Wallet (optionnel)
           <input value={poolWallet} onChange={(e) => setPoolWallet(e.target.value)} placeholder="mon_wallet" />
         </label>
         <button type="button" className="mc-btn" onClick={handleCreatePoolJob} disabled={poolText.length < 20}>

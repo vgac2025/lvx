@@ -402,10 +402,12 @@ export async function fetchPoolJobs() {
 export async function createPoolJob(body: {
   text: string;
   visibility?: string;
+  group_id?: string;
   actor_address?: string;
   wallet_name?: string;
   chunk_chars?: number;
   auto_dispatch?: boolean;
+  encrypt_transport?: boolean;
 }) {
   const { data } = await api.post("/pool/jobs", body);
   return data as { job: Record<string, unknown>; encrypted_transport: boolean };
@@ -421,6 +423,48 @@ export async function processAllPoolIncoming(body: {
 
 export async function finalizePoolJob(jobId: string, fullText: string) {
   const { data } = await api.post(`/pool/jobs/${jobId}/finalize`, { full_text: fullText });
+  return data as Record<string, unknown>;
+}
+
+export async function fetchPoolPreferences() {
+  const { data } = await api.get("/pool/preferences");
+  return data as { preferences: Record<string, unknown> };
+}
+
+export async function savePoolPreferences(body: Record<string, unknown>) {
+  const { data } = await api.put("/pool/preferences", body);
+  return data;
+}
+
+export async function runPoolMining(body: {
+  text: string;
+  use_distributed_pool?: boolean;
+  encrypt_transport?: boolean;
+  visibility?: string;
+  group_id?: string | null;
+  actor_address?: string;
+  wallet_name?: string;
+  auto_finalize?: boolean;
+  chunk_chars?: number;
+}) {
+  const { data } = await api.post("/pool/run", body);
+  return data as Record<string, unknown>;
+}
+
+export async function runMiningPipeline(body: {
+  text: string;
+  session_id?: string;
+  use_llm?: boolean;
+  actor_address?: string;
+  wallet_name?: string;
+  visibility?: string;
+  group_id?: string | null;
+  use_distributed_pool?: boolean;
+  encrypt_transport?: boolean;
+  auto_finalize?: boolean;
+  chunk_chars?: number;
+}) {
+  const { data } = await api.post("/mining/pipeline", body);
   return data as Record<string, unknown>;
 }
 

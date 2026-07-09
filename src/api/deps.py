@@ -147,6 +147,7 @@ def build_app_state() -> AppState:
             actor_address=job.actor_address,
             wallet_name=job.wallet_name,
             visibility=job.visibility,
+            group_id=job.group_id,
             store_block=True,
             extra_contributors=extra_contributors,
             learning_source=f"pool:{job.job_id}",

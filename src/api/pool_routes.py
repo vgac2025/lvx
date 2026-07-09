@@ -9,6 +9,10 @@ import httpx
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
+from artcb.pool.discovery import build_peer_urls, discover_workers
+from artcb.pool.orchestrator import run_mining_with_options
+from artcb.pool.policy import PoolPolicyError, validate_pool_options
+from artcb.pool.preferences import PoolPreferences, PoolPreferencesStore
 from artcb.pool.service import PoolError
 
 logger = logging.getLogger("artcb.api.pool")
@@ -24,11 +28,44 @@ class PoolWorkerSpec(BaseModel):
 class CreatePoolJobRequest(BaseModel):
     text: str = Field(min_length=1)
     visibility: str = "private"
+    group_id: str | None = None
     workers: list[PoolWorkerSpec] = Field(default_factory=list)
     actor_address: str | None = None
     wallet_name: str | None = None
     chunk_chars: int = Field(default=400, ge=100, le=8000)
     auto_dispatch: bool = True
+    encrypt_transport: bool = True
+
+
+class PoolRunRequest(BaseModel):
+    """Cycle minage unifié — local OU pool distribué chiffré (choix utilisateur)."""
+
+    text: str = Field(min_length=1)
+    use_distributed_pool: bool = False
+    encrypt_transport: bool = True
+    visibility: str = "private"
+    group_id: str | None = None
+    actor_address: str | None = None
+    wallet_name: str | None = None
+    session_id: str = "pool_run"
+    use_llm: bool = False
+    llm_provider: str | None = None
+    store_block: bool = True
+    chunk_chars: int = Field(default=400, ge=100, le=8000)
+    auto_dispatch: bool = True
+    auto_process_local: bool = True
+    auto_finalize: bool = False
+
+
+class PoolPreferencesRequest(BaseModel):
+    use_distributed_pool: bool | None = None
+    encrypt_transport: bool | None = None
+    default_visibility: str | None = None
+    default_group_id: str | None = None
+    chunk_chars: int | None = Field(default=None, ge=100, le=8000)
+    auto_dispatch: bool | None = None
+    auto_process_incoming: bool | None = None
+    auto_finalize: bool | None = None
 
 
 class PoolResultRequest(BaseModel):
@@ -50,7 +87,14 @@ def _state(request: Request):
 
 
 def _pool(request: Request):
-    return _state(request).pool
+    pool = _state(request).pool
+    if pool is None:
+        raise HTTPException(status_code=503, detail="Pool non initialisé")
+    return pool
+
+
+def _prefs_store(request: Request) -> PoolPreferencesStore:
+    return PoolPreferencesStore(_state(request).settings.data_dir)
 
 
 def _owner_base_url(request: Request) -> str:
@@ -58,49 +102,54 @@ def _owner_base_url(request: Request) -> str:
 
 
 def _discover_workers(request: Request) -> list[dict[str, str]]:
-    """Auto-découverte : nœud local + pairs P2P (status HTTP)."""
-    state = _state(request)
-    identity = state.p2p_identity
-    workers: list[dict[str, str]] = [{
-        "node_id": identity.node_id,
-        "kem_public_hex": identity.kem_public_key_hex,
-        "base_url": _owner_base_url(request),
-    }]
-    seen = {identity.node_id}
-    for peer in state.p2p_peers.list_peers():
-        try:
-            with httpx.Client(timeout=8.0) as client:
-                r = client.get(f"{peer.base_url}/api/v1/p2p/status")
-                r.raise_for_status()
-                body = r.json()
-                nid = body["node_id"]
-                if nid in seen:
-                    continue
-                workers.append({
-                    "node_id": nid,
-                    "kem_public_hex": body["kem_public_key_hex"],
-                    "base_url": peer.base_url,
-                })
-                seen.add(nid)
-        except Exception as exc:
-            logger.warning("Pool worker discovery failed for %s: %s", peer.base_url, exc)
-    return workers
+    return discover_workers(_state(request), _owner_base_url(request))
 
 
 def _build_peer_urls(request: Request, workers: list[dict[str, str]] | None = None) -> dict[str, str]:
-    urls = {_state(request).p2p_identity.node_id: _owner_base_url(request)}
-    for w in workers or _discover_workers(request):
-        if w.get("base_url"):
-            urls[w["node_id"]] = w["base_url"].rstrip("/")
-    return urls
+    return build_peer_urls(_state(request), _owner_base_url(request), workers)
+
+
+def _wallet_sign(request: Request, wallet_name: str | None):
+    if not wallet_name:
+        return None, None
+    from artcb.wallet.manager import WalletManager
+
+    try:
+        wallet = WalletManager().load_wallet(name=wallet_name)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=400, detail=f"Wallet introuvable: {wallet_name}") from exc
+    return wallet.address, wallet.sign
+
+
+def _validate_visibility_request(
+    request: Request,
+    *,
+    visibility: str,
+    group_id: str | None,
+    actor_address: str | None,
+    use_distributed: bool,
+    encrypt_transport: bool,
+) -> None:
+    try:
+        validate_pool_options(
+            use_distributed=use_distributed,
+            encrypt_transport=encrypt_transport,
+            visibility=visibility,
+            group_id=group_id,
+            actor_address=actor_address,
+            groups=_state(request).groups,
+        )
+    except PoolPolicyError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @router.get("/status")
 def pool_status(request: Request) -> dict[str, Any]:
     state = _state(request)
-    pool = state.pool
+    pool = _pool(request)
     jobs = pool.list_jobs()
     incoming = pool.list_incoming()
+    prefs = _prefs_store(request).load()
     return {
         "enabled": True,
         "crypto": "ML-KEM-768",
@@ -110,8 +159,93 @@ def pool_status(request: Request) -> dict[str, Any]:
         "job_count": len(jobs),
         "incoming_pending": len(incoming),
         "plaintext_on_network": False,
-        "rule": "Calcul raisonnement local par worker — transport morceaux/résultats chiffrés E2E",
+        "user_choices": {
+            "use_distributed_pool": prefs.use_distributed_pool,
+            "encrypt_transport": prefs.encrypt_transport,
+            "default_visibility": prefs.default_visibility,
+            "default_group_id": prefs.default_group_id,
+        },
+        "rule": "Calcul local par défaut — pool opt-in chiffré E2E obligatoire si distribué",
     }
+
+
+@router.get("/preferences")
+def get_pool_preferences(request: Request) -> dict:
+    prefs = _prefs_store(request).load()
+    return {"preferences": prefs.to_dict()}
+
+
+@router.put("/preferences")
+def update_pool_preferences(body: PoolPreferencesRequest, request: Request) -> dict:
+    store = _prefs_store(request)
+    prefs = store.load()
+    data = body.model_dump(exclude_none=True)
+    merged = PoolPreferences.from_dict({**prefs.to_dict(), **data})
+    if merged.use_distributed_pool and not merged.encrypt_transport:
+        raise HTTPException(
+            status_code=400,
+            detail="encrypt_transport doit rester true si use_distributed_pool est activé",
+        )
+    store.save(merged)
+    return {"preferences": merged.to_dict(), "message": "Préférences pool enregistrées"}
+
+
+@router.post("/run")
+def run_pool_or_local_mining(body: PoolRunRequest, request: Request) -> dict:
+    """Point d'entrée unifié : calcul local OU pool distribué chiffré selon choix utilisateur."""
+    state = _state(request)
+    _validate_visibility_request(
+        request,
+        visibility=body.visibility,
+        group_id=body.group_id,
+        actor_address=body.actor_address,
+        use_distributed=body.use_distributed_pool,
+        encrypt_transport=body.encrypt_transport,
+    )
+    from artcb.mining.pipeline import MiningPipeline
+    from artcb.wallet.manager import WalletManager
+
+    pipeline = MiningPipeline(
+        dual=state.dual,
+        chain=state.chain,
+        wallet_manager=WalletManager(),
+        connectors=state.connectors,
+        groups=state.groups,
+        timeline=state.timeline,
+        register_graph=state.register_graph,
+    )
+    workers = _discover_workers(request) if body.use_distributed_pool else []
+    peer_urls = _build_peer_urls(request, workers) if body.use_distributed_pool else {}
+    addr, sign_fn = _wallet_sign(request, body.wallet_name)
+    actor = body.actor_address or addr
+
+    try:
+        return run_mining_with_options(
+            text=body.text,
+            use_distributed_pool=body.use_distributed_pool,
+            encrypt_transport=body.encrypt_transport,
+            visibility=body.visibility,
+            group_id=body.group_id,
+            actor_address=actor,
+            wallet_name=body.wallet_name,
+            groups=state.groups,
+            pipeline=pipeline,
+            pool=_pool(request),
+            workers=workers,
+            peer_urls=peer_urls,
+            session_id=body.session_id,
+            use_llm=body.use_llm,
+            llm_provider=body.llm_provider,
+            store_block=body.store_block,
+            chunk_chars=body.chunk_chars,
+            auto_dispatch=body.auto_dispatch,
+            auto_process_local=body.auto_process_local,
+            auto_finalize=body.auto_finalize,
+            contributor_address=actor,
+            sign_fn=sign_fn,
+        )
+    except PoolError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @router.get("/jobs")
@@ -130,6 +264,14 @@ def get_pool_job(job_id: str, request: Request) -> dict:
 
 @router.post("/jobs")
 def create_pool_job(body: CreatePoolJobRequest, request: Request) -> dict:
+    _validate_visibility_request(
+        request,
+        visibility=body.visibility,
+        group_id=body.group_id,
+        actor_address=body.actor_address,
+        use_distributed=True,
+        encrypt_transport=body.encrypt_transport,
+    )
     pool = _pool(request)
     workers = [w.model_dump() for w in body.workers] if body.workers else _discover_workers(request)
     if len(workers) < 1:
@@ -138,10 +280,12 @@ def create_pool_job(body: CreatePoolJobRequest, request: Request) -> dict:
         job = pool.create_job(
             body.text,
             visibility=body.visibility,
+            group_id=body.group_id,
             workers=workers,
             actor_address=body.actor_address,
             wallet_name=body.wallet_name,
             chunk_chars=body.chunk_chars,
+            encrypt_transport=body.encrypt_transport,
         )
     except PoolError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
@@ -155,7 +299,7 @@ def create_pool_job(body: CreatePoolJobRequest, request: Request) -> dict:
         "job": job.to_dict(),
         "workers": workers,
         "dispatch": dispatch_results,
-        "encrypted_transport": True,
+        "encrypted_transport": body.encrypt_transport,
         "message": "Job pool créé — morceaux chiffrés ML-KEM E2E par worker",
     }
 
@@ -189,17 +333,8 @@ def list_pool_incoming(request: Request) -> dict:
 @router.post("/incoming/{chunk_id}/process")
 def process_pool_chunk(chunk_id: str, body: ProcessIncomingRequest, request: Request) -> dict:
     pool = _pool(request)
-    sign_fn = None
-    contributor = body.contributor_address
-    if body.wallet_name:
-        from artcb.wallet.manager import WalletManager
-
-        try:
-            wallet = WalletManager().load_wallet(name=body.wallet_name)
-            contributor = contributor or wallet.address
-            sign_fn = wallet.sign
-        except FileNotFoundError as exc:
-            raise HTTPException(status_code=400, detail=f"Wallet introuvable: {body.wallet_name}") from exc
+    addr, sign_fn = _wallet_sign(request, body.wallet_name)
+    contributor = body.contributor_address or addr
     if not contributor:
         raise HTTPException(status_code=400, detail="contributor_address ou wallet_name requis")
     try:
@@ -211,17 +346,8 @@ def process_pool_chunk(chunk_id: str, body: ProcessIncomingRequest, request: Req
 @router.post("/incoming/process-all")
 def process_all_incoming(body: ProcessIncomingRequest, request: Request) -> dict:
     pool = _pool(request)
-    sign_fn = None
-    contributor = body.contributor_address
-    if body.wallet_name:
-        from artcb.wallet.manager import WalletManager
-
-        try:
-            wallet = WalletManager().load_wallet(name=body.wallet_name)
-            contributor = contributor or wallet.address
-            sign_fn = wallet.sign
-        except FileNotFoundError as exc:
-            raise HTTPException(status_code=400, detail=f"Wallet introuvable: {body.wallet_name}") from exc
+    addr, sign_fn = _wallet_sign(request, body.wallet_name)
+    contributor = body.contributor_address or addr
     if not contributor:
         raise HTTPException(status_code=400, detail="contributor_address ou wallet_name requis")
     results = pool.process_local_pending(contributor_address=contributor, sign_fn=sign_fn)

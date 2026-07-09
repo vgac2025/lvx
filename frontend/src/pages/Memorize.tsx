@@ -4,6 +4,7 @@ import {
   fetchWaillyExcerpt,
   fetchWallets,
   runAgents,
+  runMiningPipeline,
   storeGraph,
   wsUrl,
 } from "../api/client";
@@ -34,6 +35,10 @@ export function Memorize() {
     setChainBlock,
     visibility,
     groupId,
+    useDistributedPool,
+    encryptTransport,
+    setUseDistributedPool,
+    setEncryptTransport,
     markChecklist,
   } = useDashboard();
   const [loading, setLoading] = useState(false);
@@ -81,6 +86,37 @@ export function Memorize() {
     setChainBlock(null);
 
     try {
+      if (useDistributedPool) {
+        pushMessage("explorer", "Pool distribué ML-KEM E2E — dispatch chunks chiffrés…");
+        const mined = await runMiningPipeline({
+          text,
+          session_id: sessionId,
+          use_llm: useLlm,
+          actor_address: actorAddress || undefined,
+          visibility,
+          group_id: visibility === "group" ? groupId : null,
+          use_distributed_pool: true,
+          encrypt_transport: encryptTransport,
+          auto_finalize: false,
+          chunk_chars: 200,
+        });
+        pushMessage("critic", `Pool ${String(mined.mode)} — job ${String(mined.job_id ?? "—")} status ${String(mined.job_status ?? mined.message)}`);
+        if (mined.graph_id) setGraphId(String(mined.graph_id));
+        if (mined.pol_score != null) setPol({ pol_score: Number(mined.pol_score), block_accepted: true });
+        if (mined.block_index != null) {
+          setChainBlock({
+            index: Number(mined.block_index),
+            hash: String(mined.block_hash ?? ""),
+            signature: "",
+            pol_score: Number(mined.pol_score ?? 0),
+            graph_id: String(mined.graph_id ?? ""),
+            block_reward: 0,
+          });
+        }
+        markChecklist("memorized");
+        return;
+      }
+
       pushMessage("explorer", "Décomposition IR en cours…");
       await animateViaWebSocket(text);
       pushMessage("critic", "Validation PoL…");
@@ -150,7 +186,30 @@ export function Memorize() {
           <label>
             <input type="checkbox" checked={useLlm} onChange={(e) => setUseLlm(e.target.checked)} /> use_llm
           </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={useDistributedPool}
+              onChange={(e) => setUseDistributedPool(e.target.checked)}
+            />{" "}
+            calcul distribué (pool E2E)
+          </label>
+          {useDistributedPool && (
+            <label>
+              <input
+                type="checkbox"
+                checked={encryptTransport}
+                disabled
+                readOnly
+              />{" "}
+              ML-KEM chiffré (obligatoire)
+            </label>
+          )}
         </div>
+        <p className="mc-muted">
+          Visibilité actuelle : <strong>{visibility}</strong>
+          {visibility === "group" && !groupId && " — sélectionnez un groupe dans /groups"}
+        </p>
       </div>
 
       <div className="panel mc-crafting">

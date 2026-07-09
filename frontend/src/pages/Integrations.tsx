@@ -147,7 +147,7 @@ export function Integrations() {
       <p className="mc-hint">
         Connectez <strong>votre</strong> IA (ChatGPT, Claude, OpenRouter, Ollama…) et <strong>vos</strong> sources.
         Les clés restent chiffrées sur <strong>votre machine</strong>.
-        <strong> Calcul 100 % local</strong> — pas de pool. Formats : JSON, CSV, YAML, XML, PDF, images, audio, vidéo, DOCX, XLSX…
+        <strong> Calcul local par défaut</strong> — pool opt-in E2E ML-KEM si activé. Formats : JSON, CSV, YAML, XML, PDF, images, audio, vidéo, DOCX, XLSX…
         La blockchain reste JSON local.
       </p>
 

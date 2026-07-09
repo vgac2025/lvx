@@ -25,6 +25,10 @@ class MiningPipelineRequest(BaseModel):
     visibility: str = "private"
     group_id: str | None = None
     store_block: bool = True
+    use_distributed_pool: bool = False
+    encrypt_transport: bool = True
+    auto_finalize: bool = False
+    chunk_chars: int = Field(default=400, ge=100, le=8000)
     limit: int = Field(default=50, ge=1, le=1000)
     offset: int = Field(default=0, ge=0)
     batch_index: int = 0
@@ -66,11 +70,76 @@ def run_mining_pipeline(body: MiningPipelineRequest, request: Request) -> dict:
     """
     Pipeline unifié : source d'apprentissage → raisonnement (dual-agent) → minage PoL.
 
-    Les deux types de minage sont connectés :
-    - **Apprentissage** : ingestion texte / base client
-    - **Raisonnement** : Explorateur + Critique + score PoL
-    - **Minage** : bloc + reward collectif ``contributors[]``
+    Choix utilisateur :
+    - ``use_distributed_pool=false`` (défaut) : calcul 100 % local
+    - ``use_distributed_pool=true`` : pool distribué chiffré ML-KEM E2E (encrypt_transport obligatoire)
     """
+    state = _state(request)
+
+    if body.use_distributed_pool:
+        if not body.text:
+            raise HTTPException(status_code=422, detail="text required for distributed pool")
+        from artcb.pool.discovery import build_peer_urls, discover_workers
+        from artcb.pool.orchestrator import run_mining_with_options
+        from artcb.pool.service import PoolError
+        from artcb.pool.policy import PoolPolicyError, validate_pool_options
+
+        try:
+            validate_pool_options(
+                use_distributed=body.use_distributed_pool,
+                encrypt_transport=body.encrypt_transport,
+                visibility=body.visibility,
+                group_id=body.group_id,
+                actor_address=body.actor_address,
+                groups=state.groups,
+            )
+        except PoolPolicyError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+        if state.pool is None:
+            raise HTTPException(status_code=503, detail="Pool non initialisé")
+
+        base_url = str(request.base_url).rstrip("/")
+        workers = discover_workers(state, base_url)
+        peer_urls = build_peer_urls(state, base_url, workers)
+        addr, sign_fn = None, None
+        if body.wallet_name:
+            from artcb.wallet.manager import WalletManager
+            try:
+                wallet = WalletManager().load_wallet(name=body.wallet_name)
+                addr, sign_fn = wallet.address, wallet.sign
+            except FileNotFoundError as exc:
+                raise HTTPException(status_code=400, detail=f"Wallet introuvable: {body.wallet_name}") from exc
+        actor = body.actor_address or addr
+
+        try:
+            return run_mining_with_options(
+                text=body.text,
+                use_distributed_pool=True,
+                encrypt_transport=body.encrypt_transport,
+                visibility=body.visibility,
+                group_id=body.group_id,
+                actor_address=actor,
+                wallet_name=body.wallet_name,
+                groups=state.groups,
+                pipeline=_pipeline(request),
+                pool=state.pool,
+                workers=workers,
+                peer_urls=peer_urls,
+                session_id=body.session_id,
+                use_llm=body.use_llm,
+                llm_provider=body.llm_provider,
+                store_block=body.store_block,
+                chunk_chars=body.chunk_chars,
+                auto_dispatch=True,
+                auto_process_local=True,
+                auto_finalize=body.auto_finalize,
+                contributor_address=actor,
+                sign_fn=sign_fn,
+            )
+        except PoolError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
     pipeline = _pipeline(request)
     try:
         if body.connector_id:

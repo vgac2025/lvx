@@ -86,6 +86,8 @@ class PoolJob:
     created_at: str = ""
     actor_address: str | None = None
     wallet_name: str | None = None
+    group_id: str | None = None
+    encrypt_transport: bool = True
     final_graph_id: str | None = None
     block_index: int | None = None
 
@@ -100,6 +102,8 @@ class PoolJob:
             "created_at": self.created_at,
             "actor_address": self.actor_address,
             "wallet_name": self.wallet_name,
+            "group_id": self.group_id,
+            "encrypt_transport": self.encrypt_transport,
             "final_graph_id": self.final_graph_id,
             "block_index": self.block_index,
         }
@@ -116,6 +120,8 @@ class PoolJob:
             created_at=data.get("created_at", ""),
             actor_address=data.get("actor_address"),
             wallet_name=data.get("wallet_name"),
+            group_id=data.get("group_id"),
+            encrypt_transport=bool(data.get("encrypt_transport", True)),
             final_graph_id=data.get("final_graph_id"),
             block_index=data.get("block_index"),
         )
@@ -229,7 +235,9 @@ class PoolService:
         workers: list[dict[str, str]],
         actor_address: str | None = None,
         wallet_name: str | None = None,
+        group_id: str | None = None,
         chunk_chars: int = 400,
+        encrypt_transport: bool = True,
     ) -> PoolJob:
         """
         workers: [{node_id, kem_public_hex, base_url?}, ...] — doit inclure au moins ce nœud.
@@ -238,6 +246,10 @@ class PoolService:
             raise PoolError("Au moins un worker requis")
         if visibility not in ("private", "public", "group"):
             raise PoolError("visibility invalide")
+        if visibility == "group" and not group_id:
+            raise PoolError("group_id requis pour visibility=group")
+        if not encrypt_transport:
+            raise PoolError("encrypt_transport obligatoire pour pool distribué")
 
         pieces = split_text_chunks(text, chunk_chars=chunk_chars)
         job_id = f"job_{uuid.uuid4().hex[:12]}"
@@ -267,6 +279,8 @@ class PoolService:
             created_at=self._now(),
             actor_address=actor_address,
             wallet_name=wallet_name,
+            group_id=group_id,
+            encrypt_transport=encrypt_transport,
         )
         self._update_job(job)
         logger.info("Pool job %s created chunks=%d visibility=%s", job_id, len(chunks), visibility)
@@ -283,6 +297,7 @@ class PoolService:
                     "owner_kem_public_hex": job.owner_kem_public_hex,
                     "owner_callback_base": peer_urls.get(job.owner_node_id, ""),
                     "visibility": job.visibility,
+                    "group_id": job.group_id,
                     **chunk.to_dict(),
                 })
                 results.append({"chunk_id": chunk.chunk_id, "target": "local", "ok": True})
@@ -297,6 +312,7 @@ class PoolService:
                 "owner_kem_public_hex": job.owner_kem_public_hex,
                 "owner_callback_base": peer_urls.get(job.owner_node_id, ""),
                 "visibility": job.visibility,
+                "group_id": job.group_id,
                 **chunk.to_dict(),
             }
             try:
@@ -364,7 +380,10 @@ class PoolService:
         result_envelope = encrypt_result_payload(result_body, target["owner_kem_public_hex"])
 
         callback = target.get("owner_callback_base", "")
-        if callback:
+        owner_node = target.get("owner_node_id", "")
+        if owner_node == self.node_id:
+            self.receive_result(target["job_id"], chunk_id, result_envelope)
+        elif callback:
             try:
                 with httpx.Client(timeout=60.0) as client:
                     r = client.post(

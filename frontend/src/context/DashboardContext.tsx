@@ -22,6 +22,8 @@ interface DashboardState {
   selectedNodeId: string | null;
   chainBlock: ChainBlock | null;
   checklist: ChecklistState;
+  useDistributedPool: boolean;
+  encryptTransport: boolean;
   setSessionId: (s: string) => void;
   setUseLlm: (v: boolean) => void;
   setActorAddress: (a: string) => void;
@@ -36,9 +38,20 @@ interface DashboardState {
   setSelectedNodeId: (id: string | null) => void;
   setChainBlock: (b: ChainBlock | null) => void;
   markChecklist: (key: keyof ChecklistState) => void;
+  setUseDistributedPool: (v: boolean) => void;
+  setEncryptTransport: (v: boolean) => void;
 }
 
 const CHECKLIST_KEY = "artcb_dashboard_checklist";
+const POOL_PREFS_KEY = "artcb_pool_prefs";
+
+function loadPoolPrefs(): { useDistributedPool: boolean; encryptTransport: boolean } {
+  try {
+    const raw = localStorage.getItem(POOL_PREFS_KEY);
+    if (raw) return JSON.parse(raw) as { useDistributedPool: boolean; encryptTransport: boolean };
+  } catch { /* ignore */ }
+  return { useDistributedPool: false, encryptTransport: true };
+}
 
 const DashboardContext = createContext<DashboardState | null>(null);
 
@@ -64,6 +77,11 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [chainBlock, setChainBlock] = useState<ChainBlock | null>(null);
   const [checklist, setChecklist] = useState<ChecklistState>(loadChecklist);
+  const [poolPrefs, setPoolPrefs] = useState(loadPoolPrefs);
+
+  useEffect(() => {
+    localStorage.setItem(POOL_PREFS_KEY, JSON.stringify(poolPrefs));
+  }, [poolPrefs]);
 
   useEffect(() => {
     localStorage.setItem(CHECKLIST_KEY, JSON.stringify(checklist));
@@ -97,6 +115,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectedNodeId,
       chainBlock,
       checklist,
+      useDistributedPool: poolPrefs.useDistributedPool,
+      encryptTransport: poolPrefs.encryptTransport,
       setSessionId,
       setUseLlm,
       setActorAddress,
@@ -111,6 +131,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       setSelectedNodeId,
       setChainBlock,
       markChecklist,
+      setUseDistributedPool: (v: boolean) =>
+        setPoolPrefs((p) => ({ ...p, useDistributedPool: v, encryptTransport: v ? true : p.encryptTransport })),
+      setEncryptTransport: (v: boolean) => setPoolPrefs((p) => ({ ...p, encryptTransport: v })),
     }),
     [
       sessionId,
@@ -126,6 +149,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectedNodeId,
       chainBlock,
       checklist,
+      poolPrefs,
       pushMessage,
       clearMessages,
       markChecklist,
