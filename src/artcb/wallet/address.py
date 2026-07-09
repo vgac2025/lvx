@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import logging
 
-from nacl import encoding, signing
+from nacl import signing
 
 logger = logging.getLogger("artcb.wallet.address")
 
@@ -67,29 +67,29 @@ def _convertbits(data: bytes, frombits: int, tobits: int, pad: bool = True) -> l
 def generate_address(public_key_bytes: bytes, *, prefix: str = "artcb") -> str:
     """
     Generate ARTCB address from Ed25519 public key.
-    
+
     Format: artcb1<bech32_encoded_hash>
-    
+
     Args:
         public_key_bytes: 32-byte Ed25519 public key
         prefix: Address prefix (default: "artcb")
-    
+
     Returns:
         Bech32-encoded address (e.g., "artcb1q...")
     """
     if len(public_key_bytes) != 32:
         raise ValueError(f"Public key must be 32 bytes, got {len(public_key_bytes)}")
-    
+
     # Hash pubkey (SHA-256 then RIPEMD-160 like Bitcoin)
     sha256_hash = hashlib.sha256(public_key_bytes).digest()
     ripemd160_hash = hashlib.new("ripemd160", sha256_hash).digest()
-    
+
     # Convert to 5-bit groups for Bech32
     data = _convertbits(ripemd160_hash, 8, 5)
-    
+
     # Encode with checksum
     address = _bech32_encode(prefix, data)
-    
+
     logger.debug("Generated address=%s from pubkey_hash=%s", address, ripemd160_hash.hex()[:16])
     return address
 
@@ -97,35 +97,32 @@ def generate_address(public_key_bytes: bytes, *, prefix: str = "artcb") -> str:
 def verify_address(address: str, *, prefix: str = "artcb") -> bool:
     """
     Verify ARTCB address format and checksum.
-    
+
     Args:
         address: Address to verify
         prefix: Expected prefix
-    
+
     Returns:
         True if valid, False otherwise
     """
     if not address.startswith(prefix + "1"):
         return False
-    
+
     try:
         hrp, data_part = address.split("1", 1)
         if hrp != prefix:
             return False
-        
+
         # Decode data
         data = [BECH32_CHARSET.index(c) for c in data_part]
-        
+
         # Verify checksum
         hrp_expand = _bech32_hrp_expand(hrp)
         if _bech32_polymod(hrp_expand + data) != 1:
             return False
-        
+
         # Verify length (20 bytes RIPEMD-160 → ~32 chars + 6 checksum)
-        if len(data) < 6:
-            return False
-        
-        return True
+        return not len(data) < 6
     except (ValueError, IndexError):
         return False
 

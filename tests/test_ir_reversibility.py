@@ -9,7 +9,6 @@ import pytest
 from artcb.ir.decoder import IRDecoder
 from artcb.ir.encoder import IREncoder
 
-
 SAMPLE_TEXTS = [
     "Nous avons décidé d'utiliser FastAPI. Le problème est la perte de contexte.",
     "Observer le monde pour apprendre.",

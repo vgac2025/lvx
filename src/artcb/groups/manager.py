@@ -7,7 +7,7 @@ import logging
 import secrets
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
@@ -80,7 +80,7 @@ class GroupManager:
 
     def _audit(self, event: str, group_id: str, actor: str, detail: str = "") -> None:
         entry = {
-            "ts": datetime.now(timezone.utc).isoformat(),
+            "ts": datetime.now(UTC).isoformat(),
             "event": event,
             "group_id": group_id,
             "actor": actor,
@@ -92,7 +92,7 @@ class GroupManager:
 
     def create_group(self, name: str, founder_address: str) -> Group:
         group_id = f"g_{uuid.uuid4().hex[:12]}"
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         join_code = generate_join_code()
         group = Group(
             group_id=group_id,
@@ -134,9 +134,8 @@ class GroupManager:
         groups: list[Group] = []
         for path in self.groups_dir.glob("g_*.json"):
             group = self.get_group(path.stem)
-            if group and not group.dissolved:
-                if any(m.address == address for m in group.members):
-                    groups.append(group)
+            if group and not group.dissolved and any(m.address == address for m in group.members):
+                groups.append(group)
         return groups
 
     def _get_member(self, group: Group, address: str) -> GroupMember | None:
@@ -188,7 +187,7 @@ class GroupManager:
             raise ForbiddenGroupAction("Cannot assign founder role")
         if self._get_member(group, new_address):
             raise GroupError("Member already exists")
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         group.members.append(GroupMember(address=new_address, role=role, joined_at=now))
         self._save(group)
         self._audit("member_added", group_id, actor, new_address)

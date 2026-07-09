@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 
@@ -35,13 +35,13 @@ def setup_logging(module: str) -> logging.Logger:
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
 
-    file_path = log_dir / f"{datetime.now(timezone.utc).strftime('%Y%m%d')}_{module.replace('.', '_')}.json"
+    file_path = log_dir / f"{datetime.now(UTC).strftime('%Y%m%d')}_{module.replace('.', '_')}.json"
     file_handler = logging.FileHandler(file_path, encoding="utf-8")
 
     class JsonLineFormatter(logging.Formatter):
         def format(self, record: logging.LogRecord) -> str:
             payload = {
-                "ts": datetime.now(timezone.utc).isoformat(),
+                "ts": datetime.now(UTC).isoformat(),
                 "level": record.levelname,
                 "module": record.name,
                 "message": record.getMessage(),

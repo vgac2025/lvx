@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 
-class NodeType(str, Enum):
+class NodeType(StrEnum):
     FACT = "F"
     EVENT = "E"
     REASON = "R"
@@ -17,7 +17,7 @@ class NodeType(str, Enum):
     MACRO = "M"
 
 
-class EdgeType(str, Enum):
+class EdgeType(StrEnum):
     CAUSES = "→"
     IMPLIES = "⇒"
     DEPENDS = "⊃"

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 logger = logging.getLogger("artcb.devnet.faucet")
@@ -59,7 +59,7 @@ class DevnetFaucet:
             "amount_satoshi": self.amount_satoshi,
             "coin": "tARTCB",
             "network": "artcb-devnet-1",
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
         }
         with self.ledger_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(entry, ensure_ascii=False, separators=(",", ":")) + "\n")

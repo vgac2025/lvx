@@ -5,13 +5,20 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass
+from datetime import UTC
 from pathlib import Path
 
 from nacl import encoding, signing
 
 from artcb.config import load_settings
 from artcb.crypto.hybrid import sign_hybrid
-from artcb.crypto.pqc import PQC_SIG_ALGORITHM, generate_keypair, pack_keypair, pqc_enabled, unpack_keypair
+from artcb.crypto.pqc import (
+    PQC_SIG_ALGORITHM,
+    generate_keypair,
+    pack_keypair,
+    pqc_enabled,
+    unpack_keypair,
+)
 from artcb.wallet.address import (
     address_from_signing_key,
     hybrid_address_v2,
@@ -94,10 +101,7 @@ class WalletManager:
         if not pqc_path.is_file():
             return None
         raw = pqc_path.read_bytes()
-        if is_encrypted_key_blob(raw):
-            packed = decrypt_secret_blob(raw)
-        else:
-            packed = raw
+        packed = decrypt_secret_blob(raw) if is_encrypted_key_blob(raw) else raw
         try:
             secret, public = unpack_keypair(packed)
         except Exception as exc:
@@ -136,13 +140,13 @@ class WalletManager:
             except Exception as exc:
                 logger.warning("PQC key generation skipped: %s", exc)
 
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         meta_path = self.wallet_dir / f"{name}.json"
         metadata: dict = {
             "address": address,
             "public_key_hex": signing_key.verify_key.encode().hex(),
-            "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "created_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "key_encryption": "AES-256-GCM",
             "key_format": "ARTCBENC1",
             "hybrid": pqc_public is not None,

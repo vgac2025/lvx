@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import pytest
 
+from cryptography.exceptions import InvalidTag
+
 from artcb.crypto.kem import decrypt_payload, encrypt_payload, generate_kem_keypair
 
 
@@ -15,7 +17,7 @@ def test_kem_roundtrip_encrypt_decrypt() -> None:
     decrypted = decrypt_payload(envelope, sk_b)
     assert decrypted == plaintext
     # Wrong key fails
-    with pytest.raises(Exception):
+    with pytest.raises(InvalidTag):
         decrypt_payload(envelope, sk_a)
 
 

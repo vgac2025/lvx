@@ -7,7 +7,7 @@ import json
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,9 +59,10 @@ def _pqc_metrics() -> dict:
 
 
 def _wallet_key_metrics() -> dict:
-    from artcb.wallet.manager import WalletManager
     import os
     import tempfile
+
+    from artcb.wallet.manager import WalletManager
 
     os.environ.setdefault("ARTCB_WALLET_PASSPHRASE", "metrics-passphrase-artcb-32chars!")
     with tempfile.TemporaryDirectory() as tmp:
@@ -120,7 +121,7 @@ def _security_modules() -> dict:
 def collect(label: str) -> dict:
     return {
         "label": label,
-        "timestamp_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "timestamp_utc": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pytest": _run_pytest(),
         "wallet_key": _wallet_key_metrics(),
         "pqc": _pqc_metrics(),

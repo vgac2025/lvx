@@ -5,10 +5,11 @@ from __future__ import annotations
 import json
 import logging
 import uuid
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 import httpx
 
@@ -177,7 +178,7 @@ class PoolService:
 
     @staticmethod
     def _now() -> str:
-        return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     def _read_jobs(self) -> list[PoolJob]:
         if not self.jobs_path.is_file():

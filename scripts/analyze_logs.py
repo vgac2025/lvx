@@ -13,7 +13,7 @@ import argparse
 import json
 import re
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -132,7 +132,7 @@ def analyze_logs(log_dir: Path) -> dict[str, Any]:
         recommendations.append("Logs stables — poursuivre monitoring periodique.")
 
     return {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "log_dir": str(log_dir),
         "summary": {
             "api_jsonl_files": len(api_jsonl),

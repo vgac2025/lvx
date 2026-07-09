@@ -7,7 +7,7 @@ import uuid
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-from artcb.ir.models import IRGraph, sha256_text
+from artcb.ir.models import sha256_text
 from artcb.rtleg.events import RTLEGEvent
 
 if TYPE_CHECKING:
@@ -174,9 +174,14 @@ class MiningPipeline:
                 except FileNotFoundError:
                     logger.warning("Wallet %s not found for mining signature", wallet_name)
 
-            if visibility == "group" and group_id and self.groups and actor_address:
-                if not self.groups.is_member(group_id, actor_address):
-                    raise ValueError("actor not a group member")
+            if (
+                visibility == "group"
+                and group_id
+                and self.groups
+                and actor_address
+                and not self.groups.is_member(group_id, actor_address)
+            ):
+                raise ValueError("actor not a group member")
 
             graph_root = sha256_text(graph.checksum).replace("sha256:", "")
             contributors = build_contributors(

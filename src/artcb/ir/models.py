@@ -95,7 +95,4 @@ class IRGraph(BaseModel):
     def verify_integrity(self) -> bool:
         if self.checksum != sha256_text(self.source_text):
             return False
-        for node in self.nodes:
-            if node.checksum != sha256_text(node.txt):
-                return False
-        return True
+        return all(node.checksum == sha256_text(node.txt) for node in self.nodes)

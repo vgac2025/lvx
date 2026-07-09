@@ -21,7 +21,7 @@ class PolMetricsBatch:
     retrieval_accuracy: np.ndarray
     pol_score: np.ndarray
     block_accepted: np.ndarray
-    
+
     def to_list(self) -> list[dict]:
         """Convert to list of dicts."""
         return [
@@ -38,7 +38,7 @@ class PolMetricsBatch:
 
 class PolScorerNumPy:
     """Vectorized PoL scorer using NumPy for batch processing."""
-    
+
     def __init__(
         self,
         alpha: float | None = None,
@@ -51,7 +51,7 @@ class PolScorerNumPy:
         self.beta = beta if beta is not None else settings.pol_beta
         self.gamma = gamma if gamma is not None else settings.pol_gamma
         self.threshold = threshold if threshold is not None else settings.pol_threshold
-    
+
     def score_batch(
         self,
         graphs: list[IRGraph],
@@ -61,39 +61,33 @@ class PolScorerNumPy:
         nodes_correct: list[int] | None = None,
     ) -> PolMetricsBatch:
         """Score multiple graphs in parallel using NumPy vectorization.
-        
+
         Args:
             graphs: List of IR graphs to score
             nodes_validated: List of validated node counts (optional)
             nodes_proposed: List of proposed node counts (optional)
             nodes_retrieved: List of retrieved node counts (optional)
             nodes_correct: List of correct node counts (optional)
-        
+
         Returns:
             Batch PoL metrics
         """
         n = len(graphs)
-        
+
         # Convert to numpy arrays
         if nodes_proposed is None:
             proposed = np.array([len(g.nodes) for g in graphs], dtype=np.float32)
         else:
             proposed = np.array(nodes_proposed, dtype=np.float32)
-        
-        if nodes_validated is None:
-            validated = proposed.copy()
-        else:
-            validated = np.array(nodes_validated, dtype=np.float32)
-        
+
+        validated = proposed.copy() if nodes_validated is None else np.array(nodes_validated, dtype=np.float32)
+
         # Ensure validated <= proposed
         proposed = np.maximum(proposed, 1.0)
         validated = np.minimum(validated, proposed)
-        
-        if nodes_retrieved is None:
-            retrieved = proposed.copy()
-        else:
-            retrieved = np.array(nodes_retrieved, dtype=np.float32)
-        
+
+        retrieved = proposed.copy() if nodes_retrieved is None else np.array(nodes_retrieved, dtype=np.float32)
+
         if nodes_correct is None:
             correct = np.array([
                 retrieved[i] if graphs[i].verify_integrity() else 0.0
@@ -101,37 +95,37 @@ class PolScorerNumPy:
             ], dtype=np.float32)
         else:
             correct = np.array(nodes_correct, dtype=np.float32)
-        
+
         # Compute source lengths and IR sizes (vectorized)
         source_lens = np.array([max(len(g.source_text), 1) for g in graphs], dtype=np.float32)
         ir_sizes = np.array([len(g.to_json(indent=None)) for g in graphs], dtype=np.float32)
-        
+
         # Compute delta compression (vectorized)
         delta_compression = np.clip(1.0 - (ir_sizes / source_lens), 0.0, 1.0)
-        
+
         # Compute validation rate (vectorized)
         validation_rate = validated / proposed
-        
+
         # Compute retrieval accuracy (vectorized)
         retrieval_accuracy = correct / np.maximum(retrieved, 1.0)
-        
+
         # Compute PoL scores (vectorized)
         pol_scores = (
             self.alpha * delta_compression
             + self.beta * validation_rate
             + self.gamma * retrieval_accuracy
         )
-        
+
         # Determine block acceptance (vectorized)
         block_accepted = pol_scores >= self.threshold
-        
+
         logger.debug(
             "Scored %d graphs in batch: mean_pol=%.4f accepted=%d",
             n,
             np.mean(pol_scores),
             np.sum(block_accepted),
         )
-        
+
         return PolMetricsBatch(
             delta_compression=np.round(delta_compression, 4),
             validation_rate=np.round(validation_rate, 4),
@@ -139,24 +133,24 @@ class PolScorerNumPy:
             pol_score=np.round(pol_scores, 4),
             block_accepted=block_accepted,
         )
-    
+
     @staticmethod
     def split_reward_batch(
         block_rewards: np.ndarray,
         contributor_scores: list[dict[str, float]],
     ) -> list[dict[str, float]]:
         """Split rewards for multiple blocks using vectorized operations.
-        
+
         Args:
             block_rewards: Array of block rewards
             contributor_scores: List of dicts mapping addresses to scores
-        
+
         Returns:
             List of dicts mapping addresses to reward amounts
         """
         results = []
-        
-        for reward, scores in zip(block_rewards, contributor_scores):
+
+        for reward, scores in zip(block_rewards, contributor_scores, strict=False):
             total = sum(scores.values())
             if total <= 0:
                 results.append({k: 0.0 for k in scores})
@@ -165,7 +159,7 @@ class PolScorerNumPy:
                 addresses = list(scores.keys())
                 score_array = np.array([scores[addr] for addr in addresses], dtype=np.float32)
                 reward_array = (reward * score_array / total).round(8)
-                results.append(dict(zip(addresses, reward_array)))
-        
+                results.append(dict(zip(addresses, reward_array, strict=False)))
+
         return results
 

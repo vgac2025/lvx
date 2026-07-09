@@ -1,7 +1,6 @@
 """Tests wallet + rewards system — TOKENOMICS §6-7."""
 
 import json
-from pathlib import Path
 
 import pytest
 from nacl import signing
@@ -13,7 +12,7 @@ from artcb.wallet.address import (
     generate_address,
     verify_address,
 )
-from artcb.wallet.manager import Wallet, WalletManager
+from artcb.wallet.manager import WalletManager
 
 
 class TestAddressGeneration:
@@ -23,9 +22,9 @@ class TestAddressGeneration:
         """Generate address from Ed25519 public key."""
         signing_key = signing.SigningKey.generate()
         pubkey_bytes = signing_key.verify_key.encode()
-        
+
         address = generate_address(pubkey_bytes)
-        
+
         assert address.startswith("artcb1")
         assert len(address) > 10
         assert verify_address(address)
@@ -34,7 +33,7 @@ class TestAddressGeneration:
         """Generate address from SigningKey."""
         signing_key = signing.SigningKey.generate()
         address = address_from_signing_key(signing_key)
-        
+
         assert address.startswith("artcb1")
         assert verify_address(address)
 
@@ -42,7 +41,7 @@ class TestAddressGeneration:
         """Verify valid address."""
         signing_key = signing.SigningKey.generate()
         address = address_from_signing_key(signing_key)
-        
+
         assert verify_address(address) is True
 
     def test_verify_address_invalid_prefix(self):
@@ -57,10 +56,10 @@ class TestAddressGeneration:
         """Same key generates same address."""
         key_bytes = b"\x00" * 32
         signing_key = signing.SigningKey(key_bytes)
-        
+
         addr1 = address_from_signing_key(signing_key)
         addr2 = address_from_signing_key(signing_key)
-        
+
         assert addr1 == addr2
 
 
@@ -71,11 +70,11 @@ class TestWalletManager:
         """Create new wallet."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet = wallet_mgr.create_wallet(name="test_wallet")
-        
+
         assert wallet.address.startswith("artcb1")
         assert len(wallet.public_key_hex) == 64
         assert verify_address(wallet.address)
-        
+
         # Check files created
         assert (tmp_path / "test_wallet.key").exists()
         assert (tmp_path / "test_wallet.json").exists()
@@ -87,7 +86,7 @@ class TestWalletManager:
         """Cannot create duplicate wallet."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet_mgr.create_wallet(name="test_wallet")
-        
+
         with pytest.raises(FileExistsError):
             wallet_mgr.create_wallet(name="test_wallet")
 
@@ -95,16 +94,16 @@ class TestWalletManager:
         """Load existing wallet."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         created = wallet_mgr.create_wallet(name="test_wallet")
-        
+
         loaded = wallet_mgr.load_wallet(name="test_wallet")
-        
+
         assert loaded.address == created.address
         assert loaded.public_key_hex == created.public_key_hex
 
     def test_load_wallet_not_found(self, tmp_path):
         """Loading non-existent wallet fails."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
-        
+
         with pytest.raises(FileNotFoundError):
             wallet_mgr.load_wallet(name="nonexistent")
 
@@ -113,9 +112,9 @@ class TestWalletManager:
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet_mgr.create_wallet(name="wallet1")
         wallet_mgr.create_wallet(name="wallet2")
-        
+
         wallets = wallet_mgr.list_wallets()
-        
+
         assert len(wallets) == 2
         addresses = [w["address"] for w in wallets]
         assert all(addr.startswith("artcb1") for addr in addresses)
@@ -124,7 +123,7 @@ class TestWalletManager:
         """Wallet can sign messages."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet = wallet_mgr.create_wallet(name="test_wallet")
-        
+
         message = b"test message"
         signature = wallet.sign(message)
 
@@ -141,32 +140,32 @@ class TestBlockRewards:
     def test_calculate_block_reward_genesis(self, tmp_path):
         """Genesis block reward = 1 ARTCB."""
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
-        
+
         reward = chain._calculate_block_reward(0)
-        
+
         assert reward == 1 * 100_000_000  # 1 ARTCB in satoshi
 
     def test_calculate_block_reward_halving(self, tmp_path):
         """Reward halves every 210,000 blocks."""
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
-        
+
         # Before first halving
         assert chain._calculate_block_reward(0) == 1 * 100_000_000
         assert chain._calculate_block_reward(209_999) == 1 * 100_000_000
-        
+
         # After first halving
         assert chain._calculate_block_reward(210_000) == 50_000_000  # 0.5 ARTCB
         assert chain._calculate_block_reward(419_999) == 50_000_000
-        
+
         # After second halving
         assert chain._calculate_block_reward(420_000) == 25_000_000  # 0.25 ARTCB
 
     def test_calculate_block_reward_max_halvings(self, tmp_path):
         """After 64 halvings, reward is 0."""
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
-        
+
         reward = chain._calculate_block_reward(64 * 210_000)
-        
+
         assert reward == 0
 
     def test_split_reward_collective(self):
@@ -177,15 +176,15 @@ class TestBlockRewards:
             "artcb1bob": 0.70,
             "artcb1agent7": 0.50,
         }
-        
+
         rewards = PolScorer.split_reward(block_reward, contributor_scores)
-        
+
         # Check proportions
         total_score = 0.80 + 0.70 + 0.50  # 2.00
         assert rewards["artcb1alice"] == pytest.approx(block_reward * (0.80 / total_score))
         assert rewards["artcb1bob"] == pytest.approx(block_reward * (0.70 / total_score))
         assert rewards["artcb1agent7"] == pytest.approx(block_reward * (0.50 / total_score))
-        
+
         # Check sum
         assert sum(rewards.values()) == pytest.approx(block_reward)
 
@@ -193,18 +192,18 @@ class TestBlockRewards:
         """Single contributor gets full reward."""
         block_reward = 50.0
         contributor_scores = {"artcb1alice": 0.75}
-        
+
         rewards = PolScorer.split_reward(block_reward, contributor_scores)
-        
+
         assert rewards["artcb1alice"] == 50.0
 
     def test_split_reward_zero_scores(self):
         """Zero scores return zero rewards."""
         block_reward = 50.0
         contributor_scores = {"artcb1alice": 0.0, "artcb1bob": 0.0}
-        
+
         rewards = PolScorer.split_reward(block_reward, contributor_scores)
-        
+
         assert all(r == 0.0 for r in rewards.values())
 
 
@@ -214,46 +213,46 @@ class TestBlockWithRewards:
     def test_append_block_with_contributors(self, tmp_path):
         """Append block with contributors and rewards."""
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
-        
+
         contributors = [
             {"address": "artcb1alice", "pol_score": 0.80, "signature": "sig1"},
             {"address": "artcb1bob", "pol_score": 0.70, "signature": "sig2"},
         ]
-        
+
         block = chain.append_block(
             graph_id="g_test",
             graph_root="abc123",
             pol_score=0.75,
             contributors=contributors,
         )
-        
+
         assert block.block_reward == 1 * 100_000_000  # Genesis reward
         assert len(block.contributors) == 2
-        
+
         # Check rewards distributed
         alice_reward = block.contributors[0]["reward_satoshi"]
         bob_reward = block.contributors[1]["reward_satoshi"]
-        
+
         assert alice_reward > bob_reward  # Alice has higher PoL
         assert alice_reward + bob_reward == block.block_reward
 
     def test_append_block_without_contributors(self, tmp_path):
         """Block without contributors has no rewards."""
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
-        
+
         block = chain.append_block(
             graph_id="g_test",
             graph_root="abc123",
             pol_score=0.75,
         )
-        
+
         assert block.block_reward == 1 * 100_000_000
         assert len(block.contributors) == 0
 
     def test_block_json_includes_rewards(self, tmp_path):
         """Block JSON includes reward fields."""
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
-        
+
         contributors = [{"address": "artcb1alice", "pol_score": 0.80, "signature": "sig1"}]
         block = chain.append_block(
             graph_id="g_test",
@@ -261,10 +260,10 @@ class TestBlockWithRewards:
             pol_score=0.75,
             contributors=contributors,
         )
-        
+
         json_line = block.to_json_line()
         data = json.loads(json_line)
-        
+
         assert "block_reward" in data
         assert "contributors" in data
         assert data["block_reward"] == 1 * 100_000_000
@@ -278,10 +277,10 @@ class TestWalletBalance:
         """Balance is 0 for empty chain."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet = wallet_mgr.create_wallet(name="test")
-        
+
         blocks_path = tmp_path / "blocks.jsonl"
         balance = wallet_mgr.get_balance(wallet.address, blocks_path)
-        
+
         assert balance["balance_satoshi"] == 0
         assert balance["balance_artcb"] == 0.0
         assert balance["block_count"] == 0
@@ -290,7 +289,7 @@ class TestWalletBalance:
         """Balance from single block."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet = wallet_mgr.create_wallet(name="test")
-        
+
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
         contributors = [{"address": wallet.address, "pol_score": 1.0, "signature": "sig"}]
         chain.append_block(
@@ -299,9 +298,9 @@ class TestWalletBalance:
             pol_score=0.75,
             contributors=contributors,
         )
-        
+
         balance = wallet_mgr.get_balance(wallet.address, chain.blocks_path)
-        
+
         assert balance["balance_satoshi"] == 1 * 100_000_000
         assert balance["balance_artcb"] == 1.0
         assert balance["block_count"] == 1
@@ -310,10 +309,10 @@ class TestWalletBalance:
         """Balance accumulates across blocks."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet = wallet_mgr.create_wallet(name="test")
-        
+
         # Disable security for fast tests (no 60s delay)
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl", enable_security=False)
-        
+
         # Block 1: Full reward
         contributors1 = [{"address": wallet.address, "pol_score": 1.0, "signature": "sig1"}]
         chain.append_block(
@@ -322,7 +321,7 @@ class TestWalletBalance:
             pol_score=0.75,
             contributors=contributors1,
         )
-        
+
         # Block 2: Half reward (shared with another)
         contributors2 = [
             {"address": wallet.address, "pol_score": 0.5, "signature": "sig2"},
@@ -334,9 +333,9 @@ class TestWalletBalance:
             pol_score=0.80,
             contributors=contributors2,
         )
-        
+
         balance = wallet_mgr.get_balance(wallet.address, chain.blocks_path)
-        
+
         # 1 ARTCB (block 1) + 0.5 ARTCB (block 2, 50% share) = 1.5 ARTCB
         assert balance["balance_artcb"] == 1.5
         assert balance["block_count"] == 2
@@ -345,7 +344,7 @@ class TestWalletBalance:
         """Balance includes rewards history."""
         wallet_mgr = WalletManager(wallet_dir=tmp_path)
         wallet = wallet_mgr.create_wallet(name="test")
-        
+
         chain = ChainManager(blocks_path=tmp_path / "blocks.jsonl")
         contributors = [{"address": wallet.address, "pol_score": 0.80, "signature": "sig"}]
         chain.append_block(
@@ -354,9 +353,9 @@ class TestWalletBalance:
             pol_score=0.75,
             contributors=contributors,
         )
-        
+
         balance = wallet_mgr.get_balance(wallet.address, chain.blocks_path)
-        
+
         assert len(balance["rewards"]) == 1
         reward = balance["rewards"][0]
         assert reward["block_index"] == 0

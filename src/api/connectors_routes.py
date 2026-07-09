@@ -8,7 +8,12 @@ import uuid
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from artcb.connectors.manager import ConnectorError, ConnectorManager, DATA_SOURCE_PROVIDERS, LLM_PROVIDERS
+from artcb.connectors.manager import (
+    DATA_SOURCE_PROVIDERS,
+    LLM_PROVIDERS,
+    ConnectorError,
+    ConnectorManager,
+)
 from artcb.connectors.sources import DataSourceError, fetch_learning_text, test_connector
 
 logger = logging.getLogger("artcb.api.connectors")

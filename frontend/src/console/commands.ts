@@ -1,11 +1,6 @@
-#!/usr/bin/env python3
-"""Console.tsx — commandes miroir CLI artcb_cli.py (fetch API réelle)."""
+/** Console.tsx — commandes miroir CLI artcb_cli.py (fetch API réelle). */
 
-from __future__ import annotations
-
-# Documentation des commandes — synchronisée avec scripts/artcb_cli.py et API_REFERENCE_ARTCB.md
-
-CONSOLE_HELP = """ARTCB Console — commandes (API réelle, pas de mock):
+export const CONSOLE_HELP = `ARTCB Console — commandes (API réelle, pas de mock):
 
   help                    — cette aide
   clear                   — effacer l'écran
@@ -58,4 +53,4 @@ CONSOLE_HELP = """ARTCB Console — commandes (API réelle, pas de mock):
 CLI terminal équivalent:
   python3 scripts/artcb_cli.py <commande> [--base URL]
   Voir API_REFERENCE_ARTCB.md
-"""
+`;

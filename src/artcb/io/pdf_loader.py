@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from multiprocessing import Pool
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from pypdf import PdfReader
@@ -41,13 +41,12 @@ def _extract_page_text(page_data: tuple[str, int]) -> tuple[int, str]:
 
 
 def extract_pdf_text(path: Path, max_pages: int | None = None, parallel: bool = True) -> str:
-    """Extract text from PDF with optional parallel processing."""
+    """Extract text from PDF with optional parallel processing (threads — no fork)."""
     reader = PdfReader(str(path))
     total_pages = len(reader.pages)
     num_pages = min(max_pages, total_pages) if max_pages else total_pages
-    
+
     if not parallel or num_pages < 4:
-        # Sequential for small PDFs
         pages = reader.pages[:num_pages]
         chunks: list[str] = []
         for page in pages:
@@ -55,13 +54,12 @@ def extract_pdf_text(path: Path, max_pages: int | None = None, parallel: bool = 
             if text.strip():
                 chunks.append(text.strip())
         return "\n\n".join(chunks)
-    
-    # Parallel processing for large PDFs
+
     page_data = [(str(path), i) for i in range(num_pages)]
-    with Pool(processes=min(4, num_pages)) as pool:
-        results = pool.map(_extract_page_text, page_data)
-    
-    # Sort by page number and join
+    workers = min(4, num_pages)
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        results = list(executor.map(_extract_page_text, page_data))
+
     results.sort(key=lambda x: x[0])
     chunks = [text for _, text in results if text]
     return "\n\n".join(chunks)

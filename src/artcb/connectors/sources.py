@@ -109,7 +109,7 @@ def _fetch_sqlite_batch(record: ConnectorRecord, *, limit: int, offset: int) -> 
             (limit, offset),
         )
         cols = [d[0] for d in cur.description or []]
-        rows = [dict(zip(cols, row)) for row in cur.fetchall()]
+        rows = [dict(zip(cols, row, strict=False)) for row in cur.fetchall()]
     finally:
         conn.close()
     if text_column in cols:

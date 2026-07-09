@@ -81,8 +81,8 @@ def run_mining_pipeline(body: MiningPipelineRequest, request: Request) -> dict:
             raise HTTPException(status_code=422, detail="text required for distributed pool")
         from artcb.pool.discovery import build_peer_urls, discover_workers
         from artcb.pool.orchestrator import run_mining_with_options
-        from artcb.pool.service import PoolError
         from artcb.pool.policy import PoolPolicyError, validate_pool_options
+        from artcb.pool.service import PoolError
 
         try:
             validate_pool_options(

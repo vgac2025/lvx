@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from artcb.chain.manager import ChainManager
 from artcb.chain import ffi
+from artcb.chain.manager import ChainManager
 
 
 @pytest.fixture

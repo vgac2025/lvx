@@ -9,8 +9,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from api.main import create_app
-from artcb.chain.manager import ChainManager
-from artcb.mining.pipeline import MiningPipeline, build_contributors
+from artcb.mining.pipeline import build_contributors
 from artcb.wallet.manager import WalletManager
 
 

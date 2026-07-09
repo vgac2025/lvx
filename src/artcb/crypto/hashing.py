@@ -19,10 +19,7 @@ def sha3_256_hex(data: bytes | str) -> str:
 
 def dual_hash_hex(data: bytes | str) -> dict[str, str]:
     """Return both hashes for migration / audit."""
-    if isinstance(data, str):
-        payload = data.encode("utf-8")
-    else:
-        payload = data
+    payload = data.encode("utf-8") if isinstance(data, str) else data
     return {
         "sha256": hashlib.sha256(payload).hexdigest(),
         "sha3_256": hashlib.sha3_256(payload).hexdigest(),

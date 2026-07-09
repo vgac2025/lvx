@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
@@ -150,7 +150,7 @@ def sign_join_with_wallet(body: WalletJoinRequest, request: Request) -> dict:
     except FileNotFoundError as exc:
         raise HTTPException(status_code=404, detail=f"Wallet not found: {body.wallet_name}") from exc
 
-    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    timestamp = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     message = build_join_challenge(info["group_id"], info["join_code"], wallet.address, timestamp)
     signature = wallet.sign(message)
 

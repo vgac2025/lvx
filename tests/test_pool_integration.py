@@ -8,7 +8,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 from api.main import create_app
-from artcb.wallet.manager import WalletManager
 
 
 @pytest.fixture

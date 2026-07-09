@@ -6,7 +6,7 @@ import json
 import logging
 import uuid
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal
 
@@ -95,7 +95,7 @@ class ConnectorManager:
         self.store_path.chmod(0o600)
 
     def _now(self) -> str:
-        return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     def list_connectors(self, *, kind: str | None = None) -> list[ConnectorRecord]:
         records = [self._load_record(item) for item in self._read_raw().get("connectors", [])]

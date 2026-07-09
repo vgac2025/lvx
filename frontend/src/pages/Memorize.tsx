@@ -38,7 +38,6 @@ export function Memorize() {
     useDistributedPool,
     encryptTransport,
     setUseDistributedPool,
-    setEncryptTransport,
     markChecklist,
   } = useDashboard();
   const [loading, setLoading] = useState(false);
@@ -102,7 +101,15 @@ export function Memorize() {
         });
         pushMessage("critic", `Pool ${String(mined.mode)} — job ${String(mined.job_id ?? "—")} status ${String(mined.job_status ?? mined.message)}`);
         if (mined.graph_id) setGraphId(String(mined.graph_id));
-        if (mined.pol_score != null) setPol({ pol_score: Number(mined.pol_score), block_accepted: true });
+        if (mined.pol_score != null) {
+          setPol({
+            pol_score: Number(mined.pol_score),
+            delta_compression: 0,
+            validation_rate: 1,
+            retrieval_accuracy: 1,
+            block_accepted: true,
+          });
+        }
         if (mined.block_index != null) {
           setChainBlock({
             index: Number(mined.block_index),

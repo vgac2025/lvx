@@ -398,8 +398,8 @@ def _ingest_spreadsheet(path: Path) -> str:
 def _ingest_epub(path: Path) -> str:
     try:
         import ebooklib
-        from ebooklib import epub
         from bs4 import BeautifulSoup
+        from ebooklib import epub
     except ImportError as exc:
         raise MediaIngestError("pip install ebooklib beautifulsoup4 — ou: pip install -e '.[media]'") from exc
     book = epub.read_epub(str(path))
@@ -504,18 +504,17 @@ def _ingest_audio(path: Path, *, openai_api_key: str | None) -> tuple[str, list[
         try:
             import httpx
 
-            with path.open("rb") as f:
-                with httpx.Client(timeout=120.0) as client:
-                    r = client.post(
-                        "https://api.openai.com/v1/audio/transcriptions",
-                        headers={"Authorization": f"Bearer {openai_api_key}"},
-                        files={"file": (path.name, f, "application/octet-stream")},
-                        data={"model": "whisper-1", "language": "fr"},
-                    )
-                    r.raise_for_status()
-                    transcript = r.json().get("text", "")
-                    if transcript.strip():
-                        return f"[TRANSCRIPT]\n{transcript.strip()}", warnings
+            with path.open("rb") as f, httpx.Client(timeout=120.0) as client:
+                r = client.post(
+                    "https://api.openai.com/v1/audio/transcriptions",
+                    headers={"Authorization": f"Bearer {openai_api_key}"},
+                    files={"file": (path.name, f, "application/octet-stream")},
+                    data={"model": "whisper-1", "language": "fr"},
+                )
+                r.raise_for_status()
+                transcript = r.json().get("text", "")
+                if transcript.strip():
+                    return f"[TRANSCRIPT]\n{transcript.strip()}", warnings
         except Exception as exc:
             warnings.append(f"Whisper API échouée: {exc}")
 

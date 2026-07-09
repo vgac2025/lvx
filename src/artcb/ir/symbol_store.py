@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -49,7 +49,7 @@ class PersistentSymbolRegistry:
             logger.warning("Failed to load symbol registry: %s", exc)
 
     def save(self) -> None:
-        self._metadata["updated_at"] = datetime.now(timezone.utc).isoformat()
+        self._metadata["updated_at"] = datetime.now(UTC).isoformat()
         payload = {
             "metadata": self._metadata,
             "concepts": self._registry.export(),

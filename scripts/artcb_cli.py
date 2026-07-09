@@ -387,9 +387,8 @@ def main() -> int:
         parser.error("mining pipeline requires --text")
     if args.command == "pool" and args.action == "run" and not args.text:
         parser.error("pool run requires --text")
-    if args.command == "pool" and args.action == "finalize":
-        if not args.job_id or not args.text:
-            parser.error("pool finalize requires --job-id and --text")
+    if args.command == "pool" and args.action == "finalize" and (not args.job_id or not args.text):
+        parser.error("pool finalize requires --job-id and --text")
     return args.func(args)
 
 

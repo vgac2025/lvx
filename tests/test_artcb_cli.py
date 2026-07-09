@@ -8,11 +8,11 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from threading import Thread
 
 import httpx
 import pytest
 import uvicorn
-from threading import Thread
 
 from api.main import create_app
 

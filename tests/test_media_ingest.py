@@ -110,6 +110,7 @@ def test_local_folder_connector_learn_json_csv(tmp_path: Path, monkeypatch: pyte
     (folder / "users.csv").write_text("nom,role\nAlice,admin\n", encoding="utf-8")
 
     from fastapi.testclient import TestClient
+
     from api.main import create_app
 
     client = TestClient(create_app())
@@ -137,6 +138,7 @@ def test_local_folder_connector_learn_json_csv(tmp_path: Path, monkeypatch: pyte
 def test_connectors_formats_api(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("ARTCB_DATA_DIR", str(tmp_path / "data"))
     from fastapi.testclient import TestClient
+
     from api.main import create_app
 
     client = TestClient(create_app())

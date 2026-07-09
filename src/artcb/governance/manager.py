@@ -6,7 +6,7 @@ import json
 import logging
 import re
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Literal
 
@@ -101,7 +101,7 @@ class GovernanceManager:
             handle.write(json.dumps(vote.to_dict(), ensure_ascii=False) + "\n")
 
     def _next_proposal_id(self) -> str:
-        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        today = datetime.now(UTC).strftime("%Y-%m-%d")
         prefix = f"GOV-{today}-"
         existing = [p.proposal_id for p in self._read_proposals() if p.proposal_id.startswith(prefix)]
         seq = len(existing) + 1
@@ -117,7 +117,7 @@ class GovernanceManager:
         created_by: str = "VGACTech",
         proposal_id: str | None = None,
     ) -> Proposal:
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         closes = now + timedelta(days=vote_days)
         pid = proposal_id or self._next_proposal_id()
         if not GOV_ID_PATTERN.match(pid):
@@ -150,12 +150,12 @@ class GovernanceManager:
         return None
 
     def _refresh_statuses(self, proposals: list[Proposal]) -> list[Proposal]:
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         changed = False
         for proposal in proposals:
             if proposal.status != "open":
                 continue
-            closes = datetime.strptime(proposal.closes_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+            closes = datetime.strptime(proposal.closes_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
             if now <= closes:
                 continue
             tally = self.tally(proposal.proposal_id)
@@ -186,8 +186,8 @@ class GovernanceManager:
         if proposal.status != "open":
             raise GovernanceError(f"Proposal is not open (status={proposal.status})")
 
-        now = datetime.now(timezone.utc)
-        closes = datetime.strptime(proposal.closes_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+        now = datetime.now(UTC)
+        closes = datetime.strptime(proposal.closes_at, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
         if now > closes:
             raise GovernanceError("Voting period has ended")
 

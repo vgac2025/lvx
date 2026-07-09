@@ -10,8 +10,8 @@ from nacl import signing
 from artcb.wallet.encryption import (
     WalletEncryptionError,
     decrypt_private_key,
-    encrypt_private_key,
     encrypt_legacy_key_file,
+    encrypt_private_key,
     is_encrypted_key_blob,
     is_plain_ed25519_seed,
 )

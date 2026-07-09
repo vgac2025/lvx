@@ -19,7 +19,6 @@ from artcb.crypto.pqc import (
 from artcb.wallet.address import hybrid_address_v2, verify_address_v2
 from artcb.wallet.manager import WalletManager
 
-
 pytestmark = pytest.mark.skipif(not pqc_enabled(), reason="ARTCB_PQC_ENABLED=false")
 
 

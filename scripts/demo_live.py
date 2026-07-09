@@ -9,16 +9,16 @@ from __future__ import annotations
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
 
 BASE = os.getenv("ARTCB_API_BASE", "http://127.0.0.1:8000/api/v1")
 LOG_DIR = Path(os.getenv("ARTCB_LOG_DIR", "./logs"))
-SESSION = f"demo_live_{datetime.now(timezone.utc).strftime('%H%M%S')}"
+SESSION = f"demo_live_{datetime.now(UTC).strftime('%H%M%S')}"
 OUT_TXT = LOG_DIR / "demo_live_latest.txt"
-OUT_JSON = LOG_DIR / f"demo_live_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.json"
+OUT_JSON = LOG_DIR / f"demo_live_{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}.json"
 
 
 def log(msg: str) -> None:
@@ -30,7 +30,7 @@ def log(msg: str) -> None:
 
 def main() -> int:
     results: dict = {"session_id": SESSION, "steps": {}, "ok": True}
-    OUT_TXT.write_text(f"=== ARTCB Live Demo {datetime.now(timezone.utc).isoformat()} ===\n", encoding="utf-8")
+    OUT_TXT.write_text(f"=== ARTCB Live Demo {datetime.now(UTC).isoformat()} ===\n", encoding="utf-8")
 
     with httpx.Client(base_url=BASE, timeout=60.0) as client:
         try:

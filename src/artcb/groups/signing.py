@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from nacl.exceptions import BadSignatureError
 from nacl.signing import VerifyKey
@@ -18,7 +18,7 @@ JOIN_REQUEST_MAX_AGE_SECONDS = 300
 
 def build_join_challenge(group_id: str, join_code: str, address: str, timestamp: str) -> bytes:
     """Canonical message signed by invitee wallet (private key stays local)."""
-    return f"ARTCB-JOIN-REQUEST|{group_id}|{join_code}|{address}|{timestamp}".encode("utf-8")
+    return f"ARTCB-JOIN-REQUEST|{group_id}|{join_code}|{address}|{timestamp}".encode()
 
 
 def verify_join_signature(
@@ -62,7 +62,7 @@ def verify_join_signature(
 def parse_timestamp(ts: str) -> datetime | None:
     try:
         if ts.endswith("Z"):
-            return datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+            return datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
         return datetime.fromisoformat(ts)
     except ValueError:
         return None
@@ -72,6 +72,6 @@ def timestamp_fresh(ts: str, max_age: int = JOIN_REQUEST_MAX_AGE_SECONDS) -> boo
     parsed = parse_timestamp(ts)
     if not parsed:
         return False
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     age = (now - parsed).total_seconds()
     return 0 <= age <= max_age

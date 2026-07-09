@@ -1,5 +1,5 @@
 """Governance package."""
 
-from artcb.governance.manager import GovernanceManager, GovernanceError
+from artcb.governance.manager import GovernanceError, GovernanceManager
 
 __all__ = ["GovernanceManager", "GovernanceError"]

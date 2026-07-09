@@ -164,8 +164,8 @@ def run_validation() -> dict:
 
     status_a = client_a.get("/api/v1/p2p/status").json()
     kem_a = status_a["kem_public_key_hex"]
-    node_id_a = status_a["node_id"]
-    pub_blocks_a = client_a.get("/api/v1/p2p/blocks/public").json()["count"]
+    status_a["node_id"]
+    client_a.get("/api/v1/p2p/blocks/public").json()["count"]
 
     # --- NODE B : vide au départ ---
     chain_b_before = client_b.get("/api/v1/chain").json()
@@ -220,7 +220,7 @@ def run_validation() -> dict:
     # --- POOL E2E : calcul distribué chiffré ML-KEM ---
     status_b = client_b.get("/api/v1/p2p/status").json()
     kem_b = status_b["kem_public_key_hex"]
-    node_id_b = status_b["node_id"]
+    status_b["node_id"]
 
     add_b_on_a = client_a.post(
         "/api/v1/p2p/peers",

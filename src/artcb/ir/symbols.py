@@ -34,10 +34,7 @@ class SymbolRegistry:
 
         index = self._symbol_counter
         self._symbol_counter += 1
-        if index <= len(ORIGIN_ALPHABET):
-            symbol = f"{ORIGIN_ALPHABET[index - 1]}{index}"
-        else:
-            symbol = f"{ORIGIN_PREFIX}{index}"
+        symbol = f"{ORIGIN_ALPHABET[index - 1]}{index}" if index <= len(ORIGIN_ALPHABET) else f"{ORIGIN_PREFIX}{index}"
 
         self._concept_to_symbol[key] = symbol
         return symbol

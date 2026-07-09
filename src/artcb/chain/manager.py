@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from nacl import encoding, signing
@@ -14,11 +14,24 @@ from artcb.chain import ffi
 from artcb.config import load_settings
 from artcb.crypto.hashing import sha3_256_hex
 from artcb.crypto.hybrid import sign_hybrid, verify_hybrid
-from artcb.crypto.pqc import PQC_SIG_ALGORITHM, generate_keypair, pack_keypair, pqc_enabled, unpack_keypair
+from artcb.crypto.pqc import (
+    PQC_SIG_ALGORITHM,
+    generate_keypair,
+    pack_keypair,
+    pqc_enabled,
+    unpack_keypair,
+)
 from artcb.pol.scorer import PolScorer
 from artcb.security.anti_sybil import AntiSybilValidator
 from artcb.security.slashing import SlashingManager
-from artcb.wallet.encryption import decrypt_private_key, decrypt_secret_blob, encrypt_private_key, encrypt_secret_blob, is_encrypted_key_blob, is_plain_ed25519_seed
+from artcb.wallet.encryption import (
+    decrypt_private_key,
+    decrypt_secret_blob,
+    encrypt_private_key,
+    encrypt_secret_blob,
+    is_encrypted_key_blob,
+    is_plain_ed25519_seed,
+)
 
 logger = logging.getLogger("artcb.chain.manager")
 
@@ -209,7 +222,7 @@ class ChainManager:
     ) -> ChainBlock:
         all_blocks = self._read_all_blocks()
         index = len(all_blocks)
-        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        timestamp = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         prev_hash = self.last_hash()
         merkle = merkle_root or graph_root
 

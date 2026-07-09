@@ -68,10 +68,7 @@ def verify_hybrid(
             return False
 
     # Legacy ed25519-only: "ed25519:hex" or raw hex with VerifyKey
-    if signature_value.startswith(ED25519_PREFIX):
-        sig_hex = signature_value[len(ED25519_PREFIX) :]
-    else:
-        sig_hex = signature_value
+    sig_hex = signature_value[len(ED25519_PREFIX):] if signature_value.startswith(ED25519_PREFIX) else signature_value
     try:
         verify_key = signing.VerifyKey(ed25519_public_key)
         verify_key.verify(message, bytes.fromhex(sig_hex))

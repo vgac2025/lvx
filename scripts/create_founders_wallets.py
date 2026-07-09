@@ -13,7 +13,7 @@ SÉCURITÉ: Les clés privées sont générées localement et NE DOIVENT JAMAIS 
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from nacl import encoding, signing
@@ -37,11 +37,11 @@ def generate_founder_wallet(founder_id: int) -> dict:
     """Génère une paire de clés Ed25519 pour un founder."""
     signing_key = signing.SigningKey.generate()
     verify_key = signing_key.verify_key
-    
+
     # Adresse = verify_key en base64 (format ARTCB)
     address = verify_key.encode(encoder=encoding.Base64Encoder).decode("ascii")
     private_key = signing_key.encode(encoder=encoding.HexEncoder).decode("ascii")
-    
+
     return {
         "founder_id": founder_id,
         "name": f"Founder {founder_id}",
@@ -49,7 +49,7 @@ def generate_founder_wallet(founder_id: int) -> dict:
         "private_key": private_key,  # WARN SENSIBLE - Ne jamais committer
         "allocation_artcb": FOUNDERS_ALLOCATION_ARTCB,
         "allocation_satoshi": FOUNDERS_ALLOCATION_SATOSHI,
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
     }
 
 
@@ -71,7 +71,7 @@ def save_wallets(wallets: list[dict]) -> None:
         json.dump(
             {
                 "version": "1.0",
-                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_at": datetime.now(UTC).isoformat(),
                 "total_supply_artcb": TOTAL_SUPPLY_ARTCB,
                 "founders_count": FOUNDERS_COUNT,
                 "allocation_per_founder_artcb": FOUNDERS_ALLOCATION_ARTCB,
@@ -89,7 +89,7 @@ def save_allocation(wallets: list[dict]) -> None:
     """Sauvegarde l'allocation initiale dans founders_allocation.json."""
     allocation = {
         "version": "1.0",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "total_supply_artcb": TOTAL_SUPPLY_ARTCB,
         "founders_total_artcb": FOUNDERS_ALLOCATION_ARTCB * FOUNDERS_COUNT,
         "founders_total_satoshi": FOUNDERS_ALLOCATION_SATOSHI * FOUNDERS_COUNT,
@@ -114,8 +114,8 @@ def create_guide() -> None:
     """Crée le guide d'utilisation founders_guide.md."""
     guide = f"""# Guide d'Utilisation — Wallets Founders ARTCB
 
-**Date de création :** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}  
-**Version :** 1.0  
+**Date de création :** {datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S UTC')}
+**Version :** 1.0
 **Statut :** Allocation initiale 1% par founder (5 founders)
 
 ---
@@ -404,8 +404,8 @@ jq '.founders_total_artcb' data/founders/founders_allocation.json
 
 ## 8. Support et Contact
 
-**Questions techniques :** Ouvrir une issue sur GitHub  
-**Sécurité :** Contacter security@artcb.io (PGP requis)  
+**Questions techniques :** Ouvrir une issue sur GitHub
+**Sécurité :** Contacter security@artcb.io (PGP requis)
 **Founders :** Canal privé Discord #founders-only
 
 ---
@@ -415,9 +415,9 @@ jq '.founders_total_artcb' data/founders/founders_allocation.json
 - `founders_allocation.json` est public → OK pour commit
 - Ce guide est public → OK pour commit
 
-**Dernière mise à jour :** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}
+**Dernière mise à jour :** {datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S UTC')}
 """
-    
+
     with GUIDE_FILE.open("w", encoding="utf-8") as f:
         f.write(guide)
     print(f" Guide créé: {GUIDE_FILE}")
@@ -433,15 +433,15 @@ def main() -> None:
     print(f"Allocation totale: {FOUNDERS_ALLOCATION_ARTCB * FOUNDERS_COUNT:,} ARTCB (5%)")
     print("=" * 60)
     print()
-    
+
     # Créer les wallets
     wallets = create_founders_wallets()
-    
+
     # Sauvegarder
     save_wallets(wallets)
     save_allocation(wallets)
     create_guide()
-    
+
     print()
     print("=" * 60)
     print("OK CRÉATION TERMINÉE")

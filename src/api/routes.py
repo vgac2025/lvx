@@ -342,8 +342,8 @@ def system_metrics(request: Request) -> dict:
             "hardware": hw_dict,
             "optimization": opt.to_dict(),
         }
-    except ImportError:
-        raise HTTPException(status_code=500, detail="psutil not installed")
+    except ImportError as exc:
+        raise HTTPException(status_code=500, detail="psutil not installed") from exc
     except Exception as e:
         logger.error("Error fetching system metrics: %s", e)
         raise HTTPException(status_code=500, detail=str(e)) from e
@@ -387,10 +387,10 @@ class WalletBalanceRequest(BaseModel):
 def wallet_create(body: CreateWalletRequest, request: Request) -> dict:
     """Create new ARTCB wallet with Ed25519 keypair."""
     from artcb.wallet.manager import WalletManager
-    
-    state = _state(request)
+
+    _state(request)
     wallet_mgr = WalletManager()
-    
+
     try:
         wallet = wallet_mgr.create_wallet(name=body.name)
         logger.info("Created wallet name=%s address=%s", body.name, wallet.address)
@@ -401,14 +401,14 @@ def wallet_create(body: CreateWalletRequest, request: Request) -> dict:
             "public_key_b64": wallet.public_key_b64,
         }
     except FileExistsError as exc:
-        raise HTTPException(status_code=409, detail=str(exc))
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 @router.get("/wallet/list")
 def wallet_list(request: Request) -> dict:
     """List all wallets."""
     from artcb.wallet.manager import WalletManager
-    
+
     wallet_mgr = WalletManager()
     wallets = wallet_mgr.list_wallets()
     return {"wallets": wallets, "count": len(wallets)}
@@ -418,10 +418,10 @@ def wallet_list(request: Request) -> dict:
 def wallet_balance(body: WalletBalanceRequest, request: Request) -> dict:
     """Get wallet balance from blockchain."""
     from artcb.wallet.manager import WalletManager
-    
+
     state = _state(request)
     wallet_mgr = WalletManager()
-    
+
     balance = wallet_mgr.get_balance_with_faucet(
         body.address,
         state.chain.blocks_path,
@@ -434,10 +434,10 @@ def wallet_balance(body: WalletBalanceRequest, request: Request) -> dict:
 def wallet_balance_get(address: str, request: Request) -> dict:
     """Get wallet balance from blockchain (GET variant)."""
     from artcb.wallet.manager import WalletManager
-    
+
     state = _state(request)
     wallet_mgr = WalletManager()
-    
+
     balance = wallet_mgr.get_balance_with_faucet(
         address,
         state.chain.blocks_path,

@@ -51,7 +51,7 @@ class IREncoder:
                 # Return copy with new session_id if provided
                 new_graph_id = session_id or f"g_{uuid.uuid4().hex[:12]}"
                 return cached.model_copy(update={"graph_id": new_graph_id})
-        
+
         # Cache MISS or cache disabled: perform full encoding
         if not text or not text.strip():
             raise ValueError("Le texte à encoder ne peut pas être vide.")
@@ -116,13 +116,13 @@ class IREncoder:
             raise RuntimeError("Échec vérification intégrité après encodage.")
 
         graph = apply_macros_to_graph(graph)
-        
+
         # Store in cache for future reuse
         if self._cache_enabled and self._cache is not None:
             text_hash = sha256_text(text)
             self._cache[text_hash] = graph
             logger.debug("Cache STORE text_hash=%s", text_hash[:16])
-        
+
         logger.debug(
             "Encodage terminé nodes=%d edges=%d macros=%d compression=%.2f cache_size=%d",
             len(graph.nodes),

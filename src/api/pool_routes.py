@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-import httpx
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -63,7 +63,7 @@ class GossipRegistry:
             "symbol_count": symbol_count,
             "network_id": NETWORK_ID,
             "magic": GOSSIP_MAGIC,
-            "ts": datetime.now(timezone.utc).isoformat(),
+            "ts": datetime.now(UTC).isoformat(),
         }
         self._entries = [e for e in self._entries if e.get("node_id") != node_id]
         self._entries.append(entry)

@@ -6,7 +6,7 @@ import json
 import logging
 import uuid
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
@@ -140,7 +140,7 @@ class JoinRequestManager:
             if req.address == address and req.status == "pending":
                 raise GroupError("Pending request already exists")
 
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         request = JoinRequest(
             request_id=f"jr_{uuid.uuid4().hex[:12]}",
             group_id=group.group_id,
@@ -191,7 +191,7 @@ class JoinRequestManager:
         updated_group = self.group_manager.add_member_approved(
             group_id, actor, target.address, "contributor"
         )
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         for req in requests:
             if req.request_id == request_id:
                 req.status = "approved"
@@ -214,7 +214,7 @@ class JoinRequestManager:
         if not target or target.status != "pending":
             raise GroupError("Join request not found or not pending")
 
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         for req in requests:
             if req.request_id == request_id:
                 req.status = "rejected"

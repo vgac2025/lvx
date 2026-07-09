@@ -5,7 +5,12 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from artcb.crypto.kem import POOL_CHUNK_CONTEXT, POOL_RESULT_CONTEXT, decrypt_payload, encrypt_payload
+from artcb.crypto.kem import (
+    POOL_CHUNK_CONTEXT,
+    POOL_RESULT_CONTEXT,
+    decrypt_payload,
+    encrypt_payload,
+)
 
 
 def encrypt_chunk_payload(text: str, worker_kem_public_hex: str) -> dict[str, str]:
