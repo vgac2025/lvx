@@ -1,4 +1,4 @@
-"""Notifications REST — Telegram et Gmail."""
+"""Notifications REST — Telegram uniquement."""
 
 from __future__ import annotations
 
@@ -15,9 +15,9 @@ router = APIRouter(prefix="/api/v1/notifications", tags=["notifications"])
 
 
 class SaveChannelRequest(BaseModel):
-    channel_type: Literal["telegram", "gmail"]
+    channel_type: Literal["telegram"]
     label: str = Field(min_length=1, max_length=128)
-    secret: str = Field(min_length=8)
+    secret: str = Field(min_length=8, description="Bot token Telegram")
     config: dict = Field(default_factory=dict)
     channel_id: str | None = None
 
@@ -48,7 +48,8 @@ def list_channels(request: Request) -> dict:
     return {
         "channels": [c.public_dict() for c in channels],
         "count": len(channels),
-        "supported": ["telegram", "gmail"],
+        "supported": ["telegram"],
+        "note": "Gmail retiré — intégration OAuth Google trop complexe pour release MVP",
         "storage": "local_encrypted",
     }
 
@@ -64,7 +65,7 @@ def save_channel(body: SaveChannelRequest, request: Request) -> dict:
             config=body.config,
             channel_id=body.channel_id,
         )
-        return {"channel": channel.public_dict(), "message": "Canal enregistré (local chiffré)"}
+        return {"channel": channel.public_dict(), "message": "Canal Telegram enregistré (local chiffré)"}
     except NotificationError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 

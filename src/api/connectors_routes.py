@@ -39,6 +39,18 @@ def _connectors(request: Request) -> ConnectorManager:
     return _state(request).connectors
 
 
+@router.get("/formats")
+def list_supported_formats_endpoint() -> dict:
+    from artcb.io.media_ingest import list_supported_formats
+
+    fmts = list_supported_formats()
+    return {
+        "formats": fmts,
+        "total_extensions": len(fmts.get("all_extensions", [])),
+        "note": "JSON, CSV, YAML, TOML, XML, HTML, PDF, images, audio, vidéo, DOCX, XLSX, EPUB, sous-titres…",
+    }
+
+
 @router.get("")
 def list_connectors(
     request: Request,

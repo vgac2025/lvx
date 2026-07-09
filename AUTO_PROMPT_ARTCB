@@ -239,3 +239,13 @@ Règles inchangées :
 - Tests : **175 pytest**
 - Rapport : `rapports/062_phase8_p2p_multimodal_governance.md`
 - **Limites** : pas libp2p natif, pas pool calcul, pas fusion chaîne unique
+
+## [2026-07-09T00:50:00Z] Multimodal complet + Telegram seul (Gmail retiré)
+
+- **Formats étendus** : JSON, JSONL, CSV, TSV, YAML, TOML, XML, HTML, PDF, images, audio, vidéo, DOCX, XLSX, EPUB, RTF, sous-titres (SRT/VTT)
+- `GET /api/v1/connectors/formats` — liste publique des extensions
+- **Gmail retiré** — OAuth Google trop complexe ; alertes **Telegram uniquement**
+- `pip install -e ".[media]"` — pyyaml, openpyxl, ebooklib, etc.
+- Tests : **186 pytest** — `tests/test_media_ingest.py` intégration JSON/CSV
+- Rapport : `rapports/063_multimodal_complet_telegram_release.md`
+- Logs : `logs/pytest_063_latest.txt`

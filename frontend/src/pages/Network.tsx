@@ -15,11 +15,9 @@ export function Network() {
   const [host, setHost] = useState("127.0.0.1");
   const [port, setPort] = useState("8000");
   const [peerKem, setPeerKem] = useState("");
-  const [notifType, setNotifType] = useState<"telegram" | "gmail">("telegram");
   const [notifLabel, setNotifLabel] = useState("");
   const [notifSecret, setNotifSecret] = useState("");
   const [chatId, setChatId] = useState("");
-  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -54,20 +52,14 @@ export function Network() {
   };
 
   const handleSaveNotif = async () => {
-    const config: Record<string, string> = {};
-    if (notifType === "telegram") config.chat_id = chatId;
-    if (notifType === "gmail") {
-      config.from_email = email;
-      config.to_email = email;
-    }
     try {
       await saveNotificationChannel({
-        channel_type: notifType,
-        label: notifLabel || notifType,
+        channel_type: "telegram",
+        label: notifLabel || "Telegram",
         secret: notifSecret,
-        config,
+        config: { chat_id: chatId },
       });
-      setSuccess("Canal alerte enregistré (local chiffré)");
+      setSuccess("Canal Telegram enregistré (local chiffré)");
       await reload();
     } catch (e) {
       setError(String(e));
@@ -115,27 +107,18 @@ export function Network() {
       </section>
 
       <section className="mc-card">
-        <h2>Alertes Telegram / Gmail</h2>
-        <p className="mc-hint">Notifications envoyées à chaque bloc gravé (si canal actif).</p>
+        <h2>Alertes Telegram</h2>
+        <p className="mc-hint">
+          Notifications à chaque bloc gravé. Créez un bot via @BotFather, récupérez le token et votre chat_id.
+          Gmail retiré — OAuth Google trop complexe pour cette release.
+        </p>
+        <label>Nom<input value={notifLabel} onChange={(e) => setNotifLabel(e.target.value)} placeholder="Mon bot ARTCB" /></label>
+        <label>Chat ID<input value={chatId} onChange={(e) => setChatId(e.target.value)} placeholder="123456789" /></label>
         <label>
-          Type
-          <select value={notifType} onChange={(e) => setNotifType(e.target.value as "telegram" | "gmail")}>
-            <option value="telegram">Telegram</option>
-            <option value="gmail">Gmail (SMTP)</option>
-          </select>
-        </label>
-        <label>Nom<input value={notifLabel} onChange={(e) => setNotifLabel(e.target.value)} /></label>
-        {notifType === "telegram" && (
-          <label>Chat ID<input value={chatId} onChange={(e) => setChatId(e.target.value)} /></label>
-        )}
-        {notifType === "gmail" && (
-          <label>Email<input value={email} onChange={(e) => setEmail(e.target.value)} /></label>
-        )}
-        <label>
-          {notifType === "telegram" ? "Bot token" : "Mot de passe application Gmail"}
+          Bot token
           <input type="password" value={notifSecret} onChange={(e) => setNotifSecret(e.target.value)} />
         </label>
-        <button type="button" className="mc-btn" onClick={handleSaveNotif} disabled={notifSecret.length < 8}>Enregistrer</button>
+        <button type="button" className="mc-btn" onClick={handleSaveNotif} disabled={notifSecret.length < 8 || !chatId}>Enregistrer</button>
         <p>Canaux actifs: {channels.length}</p>
       </section>
     </div>

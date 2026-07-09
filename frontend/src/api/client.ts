@@ -326,6 +326,11 @@ export async function fetchPolScore() {
   return data;
 }
 
+export async function fetchConnectorFormats() {
+  const { data } = await api.get("/connectors/formats");
+  return data as { formats: Record<string, string[]>; total_extensions: number };
+}
+
 export function wsUrl(sessionId: string): string {
   const proto = window.location.protocol === "https:" ? "wss" : "ws";
   const host = window.location.host;
@@ -390,7 +395,7 @@ export async function fetchNotificationChannels() {
 }
 
 export async function saveNotificationChannel(body: {
-  channel_type: "telegram" | "gmail";
+  channel_type: "telegram";
   label: string;
   secret: string;
   config?: Record<string, string>;

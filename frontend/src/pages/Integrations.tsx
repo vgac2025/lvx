@@ -31,7 +31,7 @@ const DATA_PROVIDERS = [
   { id: "sqlite", name: "SQLite (fichier local)" },
   { id: "postgres", name: "PostgreSQL" },
   { id: "mysql", name: "MySQL" },
-  { id: "local_folder", name: "Dossier local (txt, pdf, images, audio, vidéo)" },
+  { id: "local_folder", name: "Dossier local (JSON, CSV, YAML, PDF, médias…)" },
   { id: "pdf_file", name: "Fichier PDF" },
 ];
 
@@ -147,7 +147,7 @@ export function Integrations() {
       <p className="mc-hint">
         Connectez <strong>votre</strong> IA (ChatGPT, Claude, OpenRouter, Ollama…) et <strong>vos</strong> sources.
         Les clés restent chiffrées sur <strong>votre machine</strong>.
-        <strong> Calcul 100 % local</strong> — pas de pool. Images/audio/vidéo convertis en texte avant IR.
+        <strong> Calcul 100 % local</strong> — pas de pool. Formats : JSON, CSV, YAML, XML, PDF, images, audio, vidéo, DOCX, XLSX…
         La blockchain reste JSON local.
       </p>
 

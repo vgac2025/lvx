@@ -42,6 +42,12 @@ media = [
     "python-docx>=1.1.0",
     "pillow>=10.0.0",
     "pytesseract>=0.3.10",
+    "pyyaml>=6.0.0",
+    "openpyxl>=3.1.0",
+    "xlrd>=2.0.0",
+    "ebooklib>=0.18",
+    "beautifulsoup4>=4.12.0",
+    "striprtf>=0.0.26",
 ]
 
 [tool.setuptools.packages.find]

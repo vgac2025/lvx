@@ -31,6 +31,20 @@ def test_save_telegram_channel(client: TestClient) -> None:
     assert r.status_code == 200, r.text
     listed = client.get("/api/v1/notifications/channels")
     assert listed.json()["count"] == 1
+    assert listed.json()["supported"] == ["telegram"]
+
+
+def test_gmail_rejected(client: TestClient) -> None:
+    r = client.post(
+        "/api/v1/notifications/channels",
+        json={
+            "channel_type": "gmail",
+            "label": "mail",
+            "secret": "password12345678",
+            "config": {"email": "a@b.com"},
+        },
+    )
+    assert r.status_code == 422
 
 
 @patch("artcb.notifications.manager.httpx.Client")

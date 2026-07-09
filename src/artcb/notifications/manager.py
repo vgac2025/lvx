@@ -1,13 +1,11 @@
-"""Alertes utilisateur — Telegram et Gmail (SMTP)."""
+"""Alertes utilisateur — Telegram uniquement (Gmail retiré : OAuth plateforme trop complexe)."""
 
 from __future__ import annotations
 
 import json
 import logging
-import smtplib
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from email.mime.text import MIMEText
 from pathlib import Path
 from typing import Any, Literal
 
@@ -17,7 +15,7 @@ from artcb.wallet.encryption import decrypt_secret_blob, encrypt_secret_blob
 
 logger = logging.getLogger("artcb.notifications.manager")
 
-ChannelType = Literal["telegram", "gmail"]
+ChannelType = Literal["telegram"]
 
 
 class NotificationError(Exception):
@@ -45,7 +43,7 @@ class NotificationChannel:
 
 
 class NotificationManager:
-    """Stocke tokens Telegram / mots de passe app Gmail localement chiffrés."""
+    """Stocke tokens Telegram localement chiffrés (AES-256-GCM)."""
 
     def __init__(self, data_dir: Path) -> None:
         self.store_path = Path(data_dir) / "notifications" / "channels.json"
@@ -65,7 +63,13 @@ class NotificationManager:
         return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     def list_channels(self) -> list[NotificationChannel]:
-        return [self._load(c) for c in self._read().get("channels", [])]
+        channels = []
+        for item in self._read().get("channels", []):
+            if item.get("channel_type") == "gmail":
+                logger.warning("Canal Gmail ignoré (retiré) — id=%s", item.get("channel_id"))
+                continue
+            channels.append(self._load(item))
+        return channels
 
     def _load(self, item: dict) -> NotificationChannel:
         secret = None
@@ -94,12 +98,17 @@ class NotificationManager:
     ) -> NotificationChannel:
         import uuid
 
+        if channel_type != "telegram":
+            raise NotificationError("Seul Telegram est supporté — Gmail retiré (OAuth complexe)")
         if len(secret.strip()) < 8:
-            raise NotificationError("secret requis (min 8 caractères)")
+            raise NotificationError("Bot token requis (min 8 caractères)")
+        if not (config or {}).get("chat_id"):
+            raise NotificationError("config.chat_id requis pour Telegram")
+
         cid = channel_id or f"notif_{uuid.uuid4().hex[:12]}"
         now = self._now()
         raw = self._read()
-        items = [c for c in raw.get("channels", []) if c["channel_id"] != cid]
+        items = [c for c in raw.get("channels", []) if c["channel_id"] != cid and c.get("channel_type") != "gmail"]
         items.append({
             "channel_id": cid,
             "channel_type": channel_type,
@@ -127,11 +136,7 @@ class NotificationManager:
         channel = next((c for c in self.list_channels() if c.channel_id == channel_id), None)
         if not channel or not channel.enabled or not channel._secret:
             raise NotificationError("Canal introuvable ou désactivé")
-        if channel.channel_type == "telegram":
-            return self._send_telegram(channel, body)
-        if channel.channel_type == "gmail":
-            return self._send_gmail(channel, subject, body)
-        raise NotificationError(f"Type inconnu: {channel.channel_type}")
+        return self._send_telegram(channel, body)
 
     def broadcast(self, *, event: str, subject: str, body: str) -> list[dict[str, Any]]:
         results = []
@@ -142,6 +147,7 @@ class NotificationManager:
                 r = self.send(channel.channel_id, subject=subject, body=f"[{event}]\n{body}")
                 results.append({"channel_id": channel.channel_id, "ok": True, **r})
             except NotificationError as exc:
+                logger.error("Notification failed channel=%s: %s", channel.channel_id, exc)
                 results.append({"channel_id": channel.channel_id, "ok": False, "error": str(exc)})
         return results
 
@@ -157,22 +163,5 @@ class NotificationManager:
             data = r.json()
         if not data.get("ok"):
             raise NotificationError(data.get("description", "Telegram API error"))
+        logger.debug("Telegram sent message_id=%s", data.get("result", {}).get("message_id"))
         return {"provider": "telegram", "message_id": data.get("result", {}).get("message_id")}
-
-    def _send_gmail(self, channel: NotificationChannel, subject: str, body: str) -> dict[str, Any]:
-        from_email = channel.config.get("from_email") or channel.config.get("email")
-        to_email = channel.config.get("to_email") or from_email
-        smtp_host = channel.config.get("smtp_host", "smtp.gmail.com")
-        smtp_port = int(channel.config.get("smtp_port", 587))
-        if not from_email or not to_email:
-            raise NotificationError("gmail requiert config.from_email et config.to_email")
-        password = channel._secret or ""
-        msg = MIMEText(body, "plain", "utf-8")
-        msg["Subject"] = subject
-        msg["From"] = from_email
-        msg["To"] = to_email
-        with smtplib.SMTP(smtp_host, smtp_port, timeout=30) as server:
-            server.starttls()
-            server.login(from_email, password)
-            server.sendmail(from_email, [to_email], msg.as_string())
-        return {"provider": "gmail", "to": to_email}
