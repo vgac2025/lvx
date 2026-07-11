@@ -1,0 +1,44 @@
+
+> artcb-frontend@0.4.0 dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  VITE v5.4.21  ready in 279 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+1:00:59 AM [vite] page reload index.html
+1:00:59 AM [vite] hmr update /src/App.tsx
+1:00:59 AM [vite] hmr update /src/pages/Groups.tsx, /src/pages/JoinGroup.tsx, /src/pages/Mining.tsx, /src/pages/Logs.tsx, /src/pages/Wallets.tsx, /src/layout/DashboardLayout.tsx, /src/pages/Network.tsx, /src/pages/Memorize.tsx, /src/pages/Governance.tsx, /src/pages/ChainPage.tsx, /src/pages/GraphPage.tsx, /src/pages/Integrations.tsx, /src/pages/Home.tsx
+1:00:59 AM [vite] hmr update /src/components/AgentPanel.tsx
+1:00:59 AM [vite] hmr update /src/components/GraphViewer.tsx
+1:00:59 AM [vite] hmr update /src/components/PolGauge.tsx
+1:00:59 AM [vite] hmr update /src/components/Reconstruct.tsx
+1:00:59 AM [vite] hmr update /src/components/SystemMetrics.tsx
+1:00:59 AM [vite] hmr update /src/index.css
+1:00:59 AM [vite] vite.config.ts changed, restarting server...
+1:00:59 AM [vite] hmr update /src/components/McBlockRow.tsx
+1:00:59 AM [vite] hmr update /src/components/McKpiSlot.tsx
+1:00:59 AM [vite] hmr update /src/pages/Console.tsx
+1:00:59 AM [vite] hmr update /src/context/DashboardContext.tsx
+1:00:59 AM [vite] hmr update /src/layout/DashboardLayout.tsx
+1:00:59 AM [vite] hmr update /src/pages/ChainPage.tsx
+1:00:59 AM [vite] hmr update /src/pages/Console.tsx
+1:00:59 AM [vite] hmr update /src/pages/Governance.tsx
+1:00:59 AM [vite] hmr update /src/pages/GraphPage.tsx
+1:00:59 AM [vite] hmr update /src/pages/Groups.tsx
+1:00:59 AM [vite] hmr update /src/pages/Home.tsx
+1:00:59 AM [vite] hmr update /src/pages/Integrations.tsx
+1:00:59 AM [vite] hmr update /src/pages/JoinGroup.tsx
+1:00:59 AM [vite] hmr update /src/pages/Logs.tsx
+1:00:59 AM [vite] hmr update /src/pages/Memorize.tsx
+1:00:59 AM [vite] hmr update /src/pages/Mining.tsx
+1:00:59 AM [vite] hmr update /src/pages/Network.tsx
+1:00:59 AM [vite] hmr update /src/pages/SystemPage.tsx
+1:00:59 AM [vite] hmr update /src/pages/Wallets.tsx
+Re-optimizing dependencies because lockfile has changed
+1:00:59 AM [vite] server restarted.
+1:00:59 AM [vite] page reload index.html
+1:00:59 AM [vite] vite.config.ts changed, restarting server...
+✘ [ERROR] The build was canceled
+
+1:00:59 AM [vite] server restarted.

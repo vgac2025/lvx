@@ -13,7 +13,7 @@ from typing import Any
 
 import httpx
 
-from artcb.pool.e2e import (
+from src.artcb.pool.e2e import (
     decrypt_chunk_payload,
     decrypt_result_payload,
     encrypt_chunk_payload,

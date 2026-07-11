@@ -7,7 +7,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from artcb.logging_config import setup_logging
+from src.artcb.logging_config import setup_logging
 from src.api.connectors_routes import router as connectors_router
 from src.api.dashboard_routes import router as dashboard_router
 from src.api.deps import build_app_state
@@ -53,6 +53,15 @@ def create_app() -> FastAPI:
     app.include_router(dashboard_router)
     app.include_router(ws_router)
     logger.debug("ARTCB API started debug=%s", app.state.artcb.settings.debug)
+    @app.get("/health")
+    async def health_check():
+        """Health check endpoint."""
+        return {
+            "status": "healthy",
+            "service": "ARTCB API",
+            "version": "0.3.0"
+        }
+    
     return app
 
 

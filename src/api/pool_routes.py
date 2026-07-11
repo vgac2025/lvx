@@ -8,11 +8,11 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
-from artcb.pool.discovery import build_peer_urls, discover_workers
-from artcb.pool.orchestrator import run_mining_with_options
-from artcb.pool.policy import PoolPolicyError, validate_pool_options
-from artcb.pool.preferences import PoolPreferences, PoolPreferencesStore
-from artcb.pool.service import PoolError
+from src.artcb.pool.discovery import build_peer_urls, discover_workers
+from src.artcb.pool.orchestrator import run_mining_with_options
+from src.artcb.pool.policy import PoolPolicyError, validate_pool_options
+from src.artcb.pool.preferences import PoolPreferences, PoolPreferencesStore
+from src.artcb.pool.service import PoolError
 
 logger = logging.getLogger("artcb.api.pool")
 router = APIRouter(prefix="/api/v1/pool", tags=["pool"])

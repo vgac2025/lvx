@@ -7,7 +7,7 @@ import logging
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from artcb.p2p.sync import P2PSyncError
+from src.artcb.p2p.sync import P2PSyncError
 
 logger = logging.getLogger("artcb.api.p2p")
 router = APIRouter(prefix="/api/v1/p2p", tags=["p2p"])

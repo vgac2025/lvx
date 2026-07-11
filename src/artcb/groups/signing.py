@@ -8,8 +8,8 @@ from datetime import UTC, datetime
 from nacl.exceptions import BadSignatureError
 from nacl.signing import VerifyKey
 
-from artcb.crypto.hybrid import verify_hybrid
-from artcb.wallet.address import address_from_public_key_bytes, verify_address
+from src.artcb.crypto.hybrid import verify_hybrid
+from src.artcb.wallet.address import address_from_public_key_bytes, verify_address
 
 logger = logging.getLogger("artcb.groups.signing")
 

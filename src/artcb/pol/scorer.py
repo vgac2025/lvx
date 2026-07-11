@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from artcb.config import load_settings
-from artcb.ir.models import IRGraph
+from src.artcb.config import load_settings
+from src.artcb.ir.models import IRGraph
 
 
 @dataclass(frozen=True)

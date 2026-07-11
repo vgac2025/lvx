@@ -8,7 +8,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-from artcb.ir.grammar import IR_VERSION
+from src.artcb.ir.grammar import IR_VERSION
 
 
 def sha256_text(text: str) -> str:

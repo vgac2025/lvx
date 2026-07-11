@@ -7,7 +7,7 @@ import os
 from dataclasses import dataclass
 from typing import Any
 
-from artcb.system.hardware import HardwareProfile, detect_hardware
+from src.artcb.system.hardware import HardwareProfile, detect_hardware
 
 logger = logging.getLogger("artcb.system.optimizer")
 

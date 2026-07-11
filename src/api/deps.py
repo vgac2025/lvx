@@ -5,34 +5,34 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from artcb.agents.critic import DualAgentLoop
-from artcb.agents.explorer import ExplorerAgent
-from artcb.chain.manager import ChainManager
-from artcb.config import ArtcbSettings, load_settings
-from artcb.connectors.manager import ConnectorManager
-from artcb.devnet.faucet import DevnetFaucet
-from artcb.governance.manager import GovernanceManager
-from artcb.groups.join_requests import JoinRequestManager
-from artcb.groups.manager import GroupManager
-from artcb.ir.decoder import IRDecoder
-from artcb.ir.encoder import IREncoder
-from artcb.ir.models import IRGraph
-from artcb.ir.symbol_store import PersistentSymbolRegistry
-from artcb.memory.graph_store import GraphStore
-from artcb.memory.vector_store import VectorStore
-from artcb.notifications.manager import NotificationManager
-from artcb.p2p.gossip import GossipRegistry
-from artcb.p2p.node_identity import NodeIdentityStore
-from artcb.p2p.peers import PeerManager
-from artcb.p2p.public_archive import PublicBlockArchive
-from artcb.p2p.symbol_archive import PublicSymbolArchive
-from artcb.p2p.symbol_sync import SymbolSyncService
-from artcb.p2p.sync import P2PSyncService
-from artcb.pol.scorer import PolScorer
-from artcb.pool.service import PoolService
-from artcb.rtleg.timeline import RTLEGTimeline
-from artcb.system.hardware import HardwareProfile, detect_hardware
-from artcb.system.optimizer import (
+from src.artcb.agents.critic import DualAgentLoop
+from src.artcb.agents.explorer import ExplorerAgent
+from src.artcb.chain.manager import ChainManager
+from src.artcb.config import ArtcbSettings, load_settings
+from src.artcb.connectors.manager import ConnectorManager
+from src.artcb.devnet.faucet import DevnetFaucet
+from src.artcb.governance.manager import GovernanceManager
+from src.artcb.groups.join_requests import JoinRequestManager
+from src.artcb.groups.manager import GroupManager
+from src.artcb.ir.decoder import IRDecoder
+from src.artcb.ir.encoder import IREncoder
+from src.artcb.ir.models import IRGraph
+from src.artcb.ir.symbol_store import PersistentSymbolRegistry
+from src.artcb.memory.graph_store import GraphStore
+from src.artcb.memory.vector_store import VectorStore
+from src.artcb.notifications.manager import NotificationManager
+from src.artcb.p2p.gossip import GossipRegistry
+from src.artcb.p2p.node_identity import NodeIdentityStore
+from src.artcb.p2p.peers import PeerManager
+from src.artcb.p2p.public_archive import PublicBlockArchive
+from src.artcb.p2p.symbol_archive import PublicSymbolArchive
+from src.artcb.p2p.symbol_sync import SymbolSyncService
+from src.artcb.p2p.sync import P2PSyncService
+from src.artcb.pol.scorer import PolScorer
+from src.artcb.pool.service import PoolService
+from src.artcb.rtleg.timeline import RTLEGTimeline
+from src.artcb.system.hardware import HardwareProfile, detect_hardware
+from src.artcb.system.optimizer import (
     OptimizationProfile,
     apply_optimization_profile,
     build_optimization_profile,

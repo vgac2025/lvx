@@ -8,7 +8,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from artcb.ir.symbols import SymbolRegistry
+from src.artcb.ir.symbols import SymbolRegistry
 
 logger = logging.getLogger("artcb.ir.symbol_store")
 

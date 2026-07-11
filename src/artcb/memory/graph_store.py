@@ -6,7 +6,7 @@ import json
 import logging
 from pathlib import Path
 
-from artcb.ir.models import IRGraph
+from src.artcb.ir.models import IRGraph
 
 logger = logging.getLogger("artcb.memory.graph_store")
 

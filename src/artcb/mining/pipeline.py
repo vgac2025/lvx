@@ -7,8 +7,8 @@ import uuid
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-from artcb.ir.models import sha256_text
-from artcb.rtleg.events import RTLEGEvent
+from src.artcb.ir.models import sha256_text
+from src.artcb.rtleg.events import RTLEGEvent
 
 if TYPE_CHECKING:
     from artcb.agents.critic import DualAgentLoop

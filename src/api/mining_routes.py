@@ -7,8 +7,8 @@ import logging
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
-from artcb.connectors.sources import DataSourceError
-from artcb.mining.pipeline import MiningPipeline
+from src.artcb.connectors.sources import DataSourceError
+from src.artcb.mining.pipeline import MiningPipeline
 
 logger = logging.getLogger("artcb.api.mining")
 router = APIRouter(prefix="/api/v1/mining", tags=["mining"])

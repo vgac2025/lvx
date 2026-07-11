@@ -11,7 +11,7 @@ from typing import Any, Literal
 
 import httpx
 
-from artcb.wallet.encryption import decrypt_secret_blob, encrypt_secret_blob
+from src.artcb.wallet.encryption import decrypt_secret_blob, encrypt_secret_blob
 
 logger = logging.getLogger("artcb.notifications.manager")
 

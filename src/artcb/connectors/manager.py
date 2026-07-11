@@ -10,7 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal
 
-from artcb.wallet.encryption import decrypt_secret_blob, encrypt_secret_blob
+from src.artcb.wallet.encryption import decrypt_secret_blob, encrypt_secret_blob
 
 logger = logging.getLogger("artcb.connectors.manager")
 

@@ -5,10 +5,10 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
-from artcb.ir.bob_client import BobClient
-from artcb.ir.encoder import IREncoder
-from artcb.ir.grammar import NodeType
-from artcb.ir.models import IRGraph
+from src.artcb.ir.bob_client import BobClient
+from src.artcb.ir.encoder import IREncoder
+from src.artcb.ir.grammar import NodeType
+from src.artcb.ir.models import IRGraph
 
 if TYPE_CHECKING:
     from artcb.connectors.manager import ConnectorManager

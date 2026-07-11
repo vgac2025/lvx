@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from artcb.crypto.kem import KEMError, generate_kem_keypair
+from src.artcb.crypto.kem import KEMError, generate_kem_keypair
 
 logger = logging.getLogger("artcb.p2p.node_identity")
 

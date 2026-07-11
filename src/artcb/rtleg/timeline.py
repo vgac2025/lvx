@@ -6,8 +6,8 @@ import json
 import logging
 from pathlib import Path
 
-from artcb.config import load_settings
-from artcb.rtleg.events import RTLEGEvent
+from src.artcb.config import load_settings
+from src.artcb.rtleg.events import RTLEGEvent
 
 logger = logging.getLogger("artcb.rtleg.timeline")
 

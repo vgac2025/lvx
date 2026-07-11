@@ -6,7 +6,7 @@ import json
 import logging
 from typing import Any
 
-from artcb.config import load_settings
+from src.artcb.config import load_settings
 
 logger = logging.getLogger("artcb.ir.bob_client")
 

@@ -7,8 +7,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from artcb.config import load_settings
-from artcb.ir.models import IRGraph
+from src.artcb.config import load_settings
+from src.artcb.ir.models import IRGraph
 
 logger = logging.getLogger("artcb.pol.scorer_numpy")
 

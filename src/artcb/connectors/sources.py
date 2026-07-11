@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 import httpx
 
-from artcb.connectors.manager import ConnectorRecord
+from src.artcb.connectors.manager import ConnectorRecord
 
 logger = logging.getLogger("artcb.connectors.sources")
 

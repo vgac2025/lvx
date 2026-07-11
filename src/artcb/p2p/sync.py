@@ -8,13 +8,13 @@ from typing import Any
 
 import httpx
 
-from artcb.chain import ffi
-from artcb.chain.manager import ChainManager
-from artcb.crypto.kem import decrypt_payload, encrypt_payload
-from artcb.p2p.node_identity import NodeIdentity
-from artcb.p2p.peers import PeerManager, PeerRecord
-from artcb.p2p.public_archive import PublicBlockArchive
-from artcb.p2p.symbol_sync import SymbolSyncService
+from src.artcb.chain import ffi
+from src.artcb.chain.manager import ChainManager
+from src.artcb.crypto.kem import decrypt_payload, encrypt_payload
+from src.artcb.p2p.node_identity import NodeIdentity
+from src.artcb.p2p.peers import PeerManager, PeerRecord
+from src.artcb.p2p.public_archive import PublicBlockArchive
+from src.artcb.p2p.symbol_sync import SymbolSyncService
 
 logger = logging.getLogger("artcb.p2p.sync")
 

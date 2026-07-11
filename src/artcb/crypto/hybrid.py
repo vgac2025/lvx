@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 from nacl import signing
 
-from artcb.crypto.pqc import PQC_SIG_ALGORITHM, sign_message, verify_message
+from src.artcb.crypto.pqc import PQC_SIG_ALGORITHM, sign_message, verify_message
 
 logger = logging.getLogger("artcb.crypto.hybrid")
 

@@ -8,9 +8,9 @@ from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from typing import TypeVar
 
-from artcb.agents.critic import CriticAgent
-from artcb.agents.explorer import ExplorerAgent
-from artcb.ir.models import IRGraph
+from src.artcb.agents.critic import CriticAgent
+from src.artcb.agents.explorer import ExplorerAgent
+from src.artcb.ir.models import IRGraph
 
 logger = logging.getLogger("artcb.agents.pool_manager")
 

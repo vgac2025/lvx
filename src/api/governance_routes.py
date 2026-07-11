@@ -8,7 +8,7 @@ from typing import Literal
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from artcb.governance.manager import GovernanceError, GovernanceManager
+from src.artcb.governance.manager import GovernanceError, GovernanceManager
 
 logger = logging.getLogger("artcb.api.governance")
 router = APIRouter(prefix="/api/v1/governance", tags=["governance"])

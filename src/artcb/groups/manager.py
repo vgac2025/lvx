@@ -11,7 +11,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
-from artcb.groups.policy import direct_member_invite_allowed
+from src.artcb.groups.policy import direct_member_invite_allowed
 
 logger = logging.getLogger("artcb.groups")
 

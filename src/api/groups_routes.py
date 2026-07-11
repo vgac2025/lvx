@@ -8,14 +8,14 @@ from datetime import UTC, datetime
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from artcb.groups.join_requests import JoinRequestManager
-from artcb.groups.manager import (
+from src.artcb.groups.join_requests import JoinRequestManager
+from src.artcb.groups.manager import (
     ForbiddenGroupAction,
     FounderImmutableError,
     GroupError,
     GroupManager,
 )
-from artcb.groups.signing import build_join_challenge
+from src.artcb.groups.signing import build_join_challenge
 
 logger = logging.getLogger("artcb.api.groups")
 router = APIRouter(prefix="/api/v1/groups", tags=["groups"])

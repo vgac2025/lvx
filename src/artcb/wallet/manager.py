@@ -10,20 +10,20 @@ from pathlib import Path
 
 from nacl import encoding, signing
 
-from artcb.config import load_settings
-from artcb.crypto.hybrid import sign_hybrid
-from artcb.crypto.pqc import (
+from src.artcb.config import load_settings
+from src.artcb.crypto.hybrid import sign_hybrid
+from src.artcb.crypto.pqc import (
     PQC_SIG_ALGORITHM,
     generate_keypair,
     pack_keypair,
     pqc_enabled,
     unpack_keypair,
 )
-from artcb.wallet.address import (
+from src.artcb.wallet.address import (
     address_from_signing_key,
     hybrid_address_v2,
 )
-from artcb.wallet.encryption import (
+from src.artcb.wallet.encryption import (
     decrypt_private_key,
     decrypt_secret_blob,
     encrypt_legacy_key_file,

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from collections import Counter
 
-from artcb.ir.grammar import EdgeType, NodeType
-from artcb.ir.models import IREdge, IRGraph, IRMacro, IRNode, sha256_text
+from src.artcb.ir.grammar import EdgeType, NodeType
+from src.artcb.ir.models import IREdge, IRGraph, IRMacro, IRNode, sha256_text
 
 MACRO_SYMBOLS = ["Ω", "Φ", "Ψ", "Γ", "Δ", "Σ", "Π"]
 MIN_PATTERN_OCCURRENCES = 3

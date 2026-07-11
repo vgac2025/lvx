@@ -5,8 +5,8 @@ from __future__ import annotations
 import logging
 from difflib import SequenceMatcher
 
-from artcb.ir.grammar import EdgeType, NodeType
-from artcb.ir.models import IRGraph
+from src.artcb.ir.grammar import EdgeType, NodeType
+from src.artcb.ir.models import IRGraph
 
 logger = logging.getLogger("artcb.ir.decoder")
 

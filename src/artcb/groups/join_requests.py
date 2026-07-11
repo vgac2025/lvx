@@ -10,8 +10,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
-from artcb.groups.manager import ForbiddenGroupAction, GroupError, GroupManager
-from artcb.groups.signing import build_join_challenge, timestamp_fresh, verify_join_signature
+from src.artcb.groups.manager import ForbiddenGroupAction, GroupError, GroupManager
+from src.artcb.groups.signing import build_join_challenge, timestamp_fresh, verify_join_signature
 
 logger = logging.getLogger("artcb.groups.join_requests")
 

@@ -3,36 +3,39 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import axios from "axios";
 import { chainQueryParams, fetchChain, fetchPolScore } from "../api/client";
 import { useDashboard } from "../context/DashboardContext";
+import { LanguageSelector } from "../i18n/LanguageSelector";
+import { useTranslation } from "../i18n/useTranslation";
 import type { ChainBlock } from "../types";
 
-const NAV = [
-  { section: "CORE", items: [
-    { to: "/", label: "Accueil", icon: "▶" },
-    { to: "/memorize", label: "Mémoriser", icon: " " },
-    { to: "/graph", label: "Graphe", icon: " " },
-  ]},
-  { section: "CHAIN", items: [
-    { to: "/chain", label: "Chaîne", icon: "▣" },
-    { to: "/wallets", label: "Wallets", icon: "◇" },
-    { to: "/mining", label: "Minage", icon: "" },
-  ]},
-  { section: "SYSTEM", items: [
-    { to: "/system", label: "Système", icon: "*" },
-    { to: "/logs", label: "Logs", icon: "L" },
-    { to: "/console", label: "Console", icon: "⌨" },
-    { to: "/integrations", label: "Intégrations", icon: "I" },
-    { to: "/network", label: "Réseau P2P", icon: "P" },
-    { to: "/governance", label: "Gouvernance", icon: "G" },
-    { to: "/groups", label: "Groupes", icon: "G" },
-  ]},
-];
-
 export function DashboardLayout() {
+  const { t } = useTranslation();
   const { visibility, setVisibility, groupId, chainBlock } = useDashboard();
   const [apiOk, setApiOk] = useState<boolean | null>(null);
   const [polScore, setPolScore] = useState<number | null>(null);
   const [blocks, setBlocks] = useState<ChainBlock[]>([]);
   const [chainValid, setChainValid] = useState<boolean | null>(null);
+
+  const NAV = [
+    { section: "CORE", items: [
+      { to: "/", label: t('nav_dashboard'), icon: "▶" },
+      { to: "/memorize", label: "Mémoriser", icon: " " },
+      { to: "/graph", label: "Graphe", icon: " " },
+    ]},
+    { section: "CHAIN", items: [
+      { to: "/chain", label: t('nav_chain'), icon: "▣" },
+      { to: "/wallets", label: "Wallets", icon: "◇" },
+      { to: "/mining", label: "Minage", icon: "" },
+    ]},
+    { section: "SYSTEM", items: [
+      { to: "/system", label: "Système", icon: "*" },
+      { to: "/logs", label: "Logs", icon: "L" },
+      { to: "/console", label: "Console", icon: "⌨" },
+      { to: "/integrations", label: "Intégrations", icon: "I" },
+      { to: "/network", label: "Réseau P2P", icon: "P" },
+      { to: "/governance", label: "Gouvernance", icon: "G" },
+      { to: "/groups", label: "Groupes", icon: "G" },
+    ]},
+  ];
 
   useEffect(() => {
     const tick = async () => {
@@ -80,6 +83,7 @@ export function DashboardLayout() {
           )}
         </div>
         <div className="mc-header-right">
+          <LanguageSelector />
           <span className="badge-debug">DEBUG</span>
           <Link to="/console" className="mc-console-link">⌨ CONSOLE</Link>
         </div>

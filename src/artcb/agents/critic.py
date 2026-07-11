@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import logging
 
-from artcb.agents.explorer import ExplorerAgent, ExplorerResult
-from artcb.ir.decoder import IRDecoder
-from artcb.ir.models import IRGraph, sha256_text
-from artcb.pol.scorer import PolMetrics, PolScorer
+from src.artcb.agents.explorer import ExplorerAgent, ExplorerResult
+from src.artcb.ir.decoder import IRDecoder
+from src.artcb.ir.models import IRGraph, sha256_text
+from src.artcb.pol.scorer import PolMetrics, PolScorer
 
 logger = logging.getLogger("artcb.agents.critic")
 

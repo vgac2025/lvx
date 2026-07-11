@@ -6,8 +6,8 @@ import logging
 from collections.abc import Callable
 from typing import Any
 
-from artcb.pool.policy import PoolPolicyError, validate_pool_options
-from artcb.pool.service import PoolError, PoolService
+from src.artcb.pool.policy import PoolPolicyError, validate_pool_options
+from src.artcb.pool.service import PoolError, PoolService
 
 logger = logging.getLogger("artcb.pool.orchestrator")
 

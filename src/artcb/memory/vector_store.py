@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from difflib import SequenceMatcher
 
-from artcb.ir.models import IRGraph, IRNode
+from src.artcb.ir.models import IRGraph, IRNode
 
 logger = logging.getLogger("artcb.memory.vector_store")
 

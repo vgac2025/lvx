@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from artcb.crypto.kem import kem_enabled
+from src.artcb.crypto.kem import kem_enabled
 
 if TYPE_CHECKING:
     from artcb.groups.manager import GroupManager

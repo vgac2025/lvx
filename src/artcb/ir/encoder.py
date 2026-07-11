@@ -6,7 +6,7 @@ import logging
 import uuid
 from dataclasses import dataclass
 
-from artcb.ir.grammar import (
+from src.artcb.ir.grammar import (
     ACTION_TRIGGERS,
     CONTEXT_KEYWORDS,
     DECISION_KEYWORDS,
@@ -19,9 +19,9 @@ from artcb.ir.grammar import (
     EdgeType,
     NodeType,
 )
-from artcb.ir.macros import apply_macros_to_graph
-from artcb.ir.models import IREdge, IRGraph, IRNode, sha256_text
-from artcb.ir.symbols import SymbolRegistry
+from src.artcb.ir.macros import apply_macros_to_graph
+from src.artcb.ir.models import IREdge, IRGraph, IRNode, sha256_text
+from src.artcb.ir.symbols import SymbolRegistry
 
 logger = logging.getLogger("artcb.ir.encoder")
 

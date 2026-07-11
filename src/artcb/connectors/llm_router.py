@@ -7,7 +7,7 @@ import logging
 
 import httpx
 
-from artcb.connectors.manager import ConnectorRecord
+from src.artcb.connectors.manager import ConnectorRecord
 
 logger = logging.getLogger("artcb.connectors.llm_router")
 

@@ -8,9 +8,9 @@ import uuid
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-from artcb.ir.encoder import IREncoder
-from artcb.ir.llm_encoder import LLMEncoder
-from artcb.rtleg.events import RTLEGEvent
+from src.artcb.ir.encoder import IREncoder
+from src.artcb.ir.llm_encoder import LLMEncoder
+from src.artcb.rtleg.events import RTLEGEvent
 
 logger = logging.getLogger("artcb.api.websocket")
 router = APIRouter()

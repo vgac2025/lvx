@@ -8,7 +8,7 @@ from typing import Literal
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
-from artcb.notifications.manager import NotificationError, NotificationManager
+from src.artcb.notifications.manager import NotificationError, NotificationManager
 
 logger = logging.getLogger("artcb.api.notifications")
 router = APIRouter(prefix="/api/v1/notifications", tags=["notifications"])

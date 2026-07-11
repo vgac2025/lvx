@@ -7,7 +7,7 @@ from typing import Any
 
 import httpx
 
-from artcb.config import ArtcbSettings, load_settings
+from src.artcb.config import ArtcbSettings, load_settings
 
 logger = logging.getLogger("artcb.integrations.gradium")
 

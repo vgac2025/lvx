@@ -7,8 +7,8 @@ import logging
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
-from artcb.devnet.faucet import FaucetError
-from artcb.integrations.gradium import GradiumError, synthesize_speech
+from src.artcb.devnet.faucet import FaucetError
+from src.artcb.integrations.gradium import GradiumError, synthesize_speech
 
 logger = logging.getLogger("artcb.api.devnet")
 router = APIRouter(prefix="/api/v1", tags=["devnet"])

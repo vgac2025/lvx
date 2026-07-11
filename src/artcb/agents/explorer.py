@@ -7,10 +7,10 @@ import re
 import uuid
 from dataclasses import dataclass, field
 
-from artcb.ir.encoder import IREncoder
-from artcb.ir.grammar import ACTION_TRIGGERS, OBJECT_TRIGGERS
-from artcb.ir.models import IRGraph
-from artcb.ir.symbol_store import PersistentSymbolRegistry
+from src.artcb.ir.encoder import IREncoder
+from src.artcb.ir.grammar import ACTION_TRIGGERS, OBJECT_TRIGGERS
+from src.artcb.ir.models import IRGraph
+from src.artcb.ir.symbol_store import PersistentSymbolRegistry
 
 logger = logging.getLogger("artcb.agents.explorer")
 

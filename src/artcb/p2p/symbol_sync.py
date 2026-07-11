@@ -7,9 +7,9 @@ from typing import Any
 
 import httpx
 
-from artcb.ir.symbol_store import PersistentSymbolRegistry
-from artcb.p2p.peers import PeerManager, PeerRecord
-from artcb.p2p.symbol_archive import PublicSymbolArchive
+from src.artcb.ir.symbol_store import PersistentSymbolRegistry
+from src.artcb.p2p.peers import PeerManager, PeerRecord
+from src.artcb.p2p.symbol_archive import PublicSymbolArchive
 
 logger = logging.getLogger("artcb.p2p.symbol_sync")
 
