@@ -1,0 +1,701 @@
+INFO:     Will watch for changes in these directories: ['/home/lvx/ARTCB/lvx']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [56121] using WatchFiles
+Chain PQC key invalid or undecryptable, regenerating: ARTCB_WALLET_PASSPHRASE is not set — cannot encrypt or decrypt wallet private keys. Set a strong passphrase in .env (never commit it).
+liboqs-python faulthandler is disabled
+Chain PQC key generation skipped: ARTCB_WALLET_PASSPHRASE is not set — cannot encrypt or decrypt wallet private keys. Set a strong passphrase in .env (never commit it).
+2026-07-11T18:53:36 [DEBUG] artcb.api: ARTCB API started debug=True
+INFO:     Started server process [56137]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:35026 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56482 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56482 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:35406 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35438 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35412 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35432 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35428 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35440 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35446 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35450 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35466 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35476 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35480 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35490 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35498 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35500 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35504 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35516 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35532 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35544 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41160 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41166 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41168 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41176 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41188 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41194 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41200 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41202 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53354 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53370 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53376 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53390 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53398 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53408 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53410 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53420 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58380 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58418 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58396 - "GET /api/v1/chain?visibility=public HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58424 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58402 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58440 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58450 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58456 - "GET /api/v1/chain?visibility=public HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58470 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58472 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58478 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58488 - "GET /api/v1/chain?visibility=public HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58504 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58508 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58520 - "GET /api/v1/chain?visibility=group HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58524 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58550 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58540 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58564 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58570 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58582 - "GET /api/v1/chain?visibility=group HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58590 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58600 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58616 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58598 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58602 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58622 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58638 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58646 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58660 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58676 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52964 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52976 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52992 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53008 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53022 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53036 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53046 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53052 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53056 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53068 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51206 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51210 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51216 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51220 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51236 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51242 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51252 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51268 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51280 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51284 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47306 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47314 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47322 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47326 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47328 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47348 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47334 - "GET /api/v1/rtleg/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47374 - "GET /api/v1/rtleg/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47358 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47388 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47392 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47400 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47402 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35026 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35038 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35044 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35052 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35060 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35076 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35082 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35090 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35106 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35108 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49062 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49064 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49076 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49088 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49090 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49096 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49112 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49118 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47310 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47320 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47334 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47346 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47356 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47364 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47374 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47380 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41928 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41942 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41946 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41954 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41962 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41966 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41972 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41976 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34890 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34898 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34902 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34904 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34910 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34916 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34918 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34926 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38338 - "GET /api/v1/p2p/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38344 - "GET /api/v1/p2p/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38356 - "GET /api/v1/p2p/peers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38358 - "GET /api/v1/p2p/peers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38372 - "GET /api/v1/notifications/channels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38384 - "GET /api/v1/notifications/channels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38386 - "GET /api/v1/pool/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38392 - "GET /api/v1/pool/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38398 - "GET /api/v1/pool/jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38404 - "GET /api/v1/pool/jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38416 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38428 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38438 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38448 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38464 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38472 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38488 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38498 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56668 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56668 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56692 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56694 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56708 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56714 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39014 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39018 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39024 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39034 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39046 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39060 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39086 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39070 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39098 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39076 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39112 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39128 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39138 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39154 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39158 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39162 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39172 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39178 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39190 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39192 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39204 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39214 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39226 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39238 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39240 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39244 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39258 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39272 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39286 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43984 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43998 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44010 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44024 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44036 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44040 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44048 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44054 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44064 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44072 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44088 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44098 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44106 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44108 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44120 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44104 - "GET /api/v1/demo/wailly-excerpt?max_pages=2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44126 - "GET /api/v1/demo/wailly-excerpt?max_pages=2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44128 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44130 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44132 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44136 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56580 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56588 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56594 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56602 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56604 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56618 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56622 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56634 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56636 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56646 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56660 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56668 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56680 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56682 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56696 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56698 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43886 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43888 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43900 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43902 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43908 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43910 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43920 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43934 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43942 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43944 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43950 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43952 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43962 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43966 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43968 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43972 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43984 - "GET /api/v1/dashboard/founders/allocation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43976 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43996 - "GET /api/v1/dashboard/founders/allocation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44000 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44004 - "GET /api/v1/wallet/balance/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44020 - "GET /api/v1/wallet/balance/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44022 - "GET /api/v1/wallet/balance/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44038 - "GET /api/v1/dashboard/wallet/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44046 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44028 - "GET /api/v1/wallet/balance/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44058 - "GET /api/v1/dashboard/wallet/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44060 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44064 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44074 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44082 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44084 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35742 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35750 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35760 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35768 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35784 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35790 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35798 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35812 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35822 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35834 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35840 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35846 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35848 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35864 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35878 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35890 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35894 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35908 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35914 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35928 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42338 - "POST /api/v1/wallet/create HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/lvx/.local/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/middleware/cors.py", line 96, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/middleware/cors.py", line 154, in simple_response
+    await self.app(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 2683, in app
+    await route.handle(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 1753, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 2738, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 1773, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 1264, in handle
+    await app(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 150, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 136, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 690, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/fastapi/routing.py", line 346, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/anyio/to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2596, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/lvx/.local/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1029, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/ARTCB/lvx/src/api/routes.py", line 395, in wallet_create
+    wallet = wallet_mgr.create_wallet(name=body.name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/ARTCB/lvx/src/artcb/wallet/manager.py", line 128, in create_wallet
+    key_path.write_bytes(encrypt_private_key(seed))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/ARTCB/lvx/src/artcb/wallet/encryption.py", line 95, in encrypt_private_key
+    return encrypt_secret_blob(seed, passphrase)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/ARTCB/lvx/src/artcb/wallet/encryption.py", line 66, in encrypt_secret_blob
+    phrase = passphrase or get_wallet_passphrase()
+                           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lvx/ARTCB/lvx/src/artcb/wallet/encryption.py", line 37, in get_wallet_passphrase
+    raise WalletEncryptionError(
+artcb.wallet.encryption.WalletEncryptionError: ARTCB_WALLET_PASSPHRASE is not set — cannot encrypt or decrypt wallet private keys. Set a strong passphrase in .env (never commit it).
+INFO:     127.0.0.1:42342 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42346 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42360 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42368 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42384 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42398 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42410 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42418 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42432 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42446 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42458 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42470 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42472 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42478 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42484 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42486 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42488 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56042 - "GET /api/v1/dashboard/wallet/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56056 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56068 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56082 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56088 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56104 - "GET /api/v1/dashboard/mining/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56100 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56114 - "GET /api/v1/dashboard/logs/mining-latest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56120 - "GET /api/v1/dashboard/mining/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56130 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56132 - "GET /api/v1/dashboard/logs/mining-latest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56144 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56158 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56172 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56180 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41246 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41262 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41268 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41270 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41282 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41298 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41302 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41312 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41324 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41326 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50156 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50172 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50178 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50184 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50190 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50200 - "GET /api/v1/rtleg/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50214 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50222 - "GET /api/v1/rtleg/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50236 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50244 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50248 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50252 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50268 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50276 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50284 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50294 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50300 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50308 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50318 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50328 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50338 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40714 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40720 - "GET /api/v1/dashboard/mining/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40748 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40736 - "GET /api/v1/dashboard/logs/mining-latest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40752 - "GET /api/v1/dashboard/mining/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40762 - "GET /api/v1/dashboard/logs/mining-latest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40764 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40778 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40784 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40800 - "GET /api/v1/dashboard/founders/allocation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40794 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40808 - "GET /api/v1/dashboard/founders/allocation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40822 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40828 - "GET /api/v1/wallet/balance/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40826 - "GET /api/v1/wallet/balance/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40844 - "GET /api/v1/wallet/balance/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40854 - "GET /api/v1/wallet/balance/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40866 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40872 - "GET /api/v1/dashboard/wallet/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40886 - "GET /api/v1/dashboard/wallet/artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40892 - "GET /api/v1/dashboard/wallet/artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85/rewards HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40896 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40902 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40918 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40924 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34644 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34656 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34660 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34662 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34676 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34686 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34692 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34702 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34716 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34732 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34748 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34758 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34712 - "GET /api/v1/metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34780 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34766 - "GET /api/v1/rtleg/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34784 - "GET /api/v1/rtleg/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34782 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39858 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39862 - "GET /api/v1/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39870 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39876 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39892 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39894 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39908 - "GET /api/v1/p2p/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39910 - "GET /api/v1/p2p/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39926 - "GET /api/v1/p2p/peers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39938 - "GET /api/v1/p2p/peers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39954 - "GET /api/v1/notifications/channels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39970 - "GET /api/v1/notifications/channels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39974 - "GET /api/v1/pool/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39986 - "GET /api/v1/pool/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39990 - "GET /api/v1/pool/jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40000 - "GET /api/v1/pool/jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40004 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40006 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40008 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40016 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37280 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37286 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37302 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37308 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37314 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37328 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37342 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37348 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35586 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35592 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35598 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35606 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35610 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35612 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35616 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35618 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54922 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54932 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54934 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54950 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54954 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54958 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54974 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54982 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54986 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54990 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55002 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55012 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53566 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53580 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53582 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53586 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53602 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53604 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53612 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53614 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53002 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53010 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53024 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53032 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53042 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53054 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53068 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53082 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40774 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40788 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40802 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40810 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40814 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40816 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40832 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40836 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48566 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48572 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48574 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48578 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48594 - "POST /api/v1/pool/jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48602 - "GET /api/v1/p2p/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48612 - "GET /api/v1/p2p/peers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48616 - "GET /api/v1/notifications/channels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48620 - "GET /api/v1/pool/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48630 - "GET /api/v1/pool/jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48646 - "POST /api/v1/pool/incoming/process-all HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:48654 - "POST /api/v1/pool/incoming/process-all HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:48668 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48672 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48674 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48684 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53520 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53524 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53526 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53534 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53536 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53550 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53562 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53572 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60366 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60360 - "GET /api/v1/governance/proposals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60380 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60390 - "GET /api/v1/governance/proposals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60402 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60416 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60428 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60438 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60440 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60450 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60458 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60460 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60476 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60478 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60488 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60496 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33576 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33592 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33604 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33616 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33624 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33638 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33648 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33662 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43388 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43390 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43394 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43398 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43410 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43418 - "GET /api/v1/groups?address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43426 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43434 - "GET /api/v1/groups?address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43442 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43458 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43472 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43484 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46886 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46902 - "GET /api/v1/groups?address=artcb1juqdyyyl3w5clp7hslkltpn4cpg8npyrc65m85 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46908 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46916 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46920 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46930 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46954 - "GET /api/v1/groups?address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46944 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46968 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46958 - "GET /api/v1/groups/g_2e7654af4326/join-requests?actor_address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4&status=pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46970 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46984 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46988 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46990 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47004 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47006 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47022 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59684 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59690 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59706 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59722 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59732 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59748 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59754 - "GET /api/v1/groups/by-code/---%20EXPL HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:59770 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59786 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59790 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59800 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59806 - "POST /api/v1/groups/join-requests/sign-with-wallet HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:52152 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52166 - "GET /api/v1/groups?address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52180 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52190 - "GET /api/v1/groups?address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52198 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52202 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52212 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52218 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52224 - "GET /api/v1/groups/g_2e7654af4326/join-requests?actor_address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4&status=pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52232 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52240 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52254 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52262 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36820 - "GET /api/v1/groups/g_54aaf83498b1/join-requests?actor_address=artcb1e30pa3faqct9pzajhv2pym0v29zj8gwvz6c2c4&status=pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36836 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36850 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36858 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36872 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36880 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36892 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36904 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36906 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36922 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36934 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36950 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36960 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37318 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37334 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37346 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37348 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37364 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37374 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37410 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37396 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37404 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37390 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37422 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37442 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37458 - "GET /api/v1/dashboard/logs/demo-live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37436 - "GET /api/v1/wallet/list HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37464 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37476 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37482 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37486 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49898 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49906 - "GET /api/v1/pol/score HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49908 - "GET /api/v1/chain HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49920 - "GET /api/v1/chain/verify HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [56137]
+INFO:     Stopping reloader process [56121]
