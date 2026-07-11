@@ -1,0 +1,12 @@
+
+> artcb-frontend@0.4.0 dev
+> vite
+
+Re-optimizing dependencies because lockfile has changed
+
+  VITE v5.4.21  ready in 604 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+7:09:12 AM [vite] hmr update /src/index.css
+7:10:28 AM [vite] hmr update /src/index.css
