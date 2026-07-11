@@ -8,19 +8,19 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from artcb.logging_config import setup_logging
-from src.api.connectors_routes import router as connectors_router
-from src.api.dashboard_routes import router as dashboard_router
-from src.api.deps import build_app_state
-from src.api.devnet_routes import router as devnet_router
-from src.api.governance_routes import router as governance_router
-from src.api.groups_routes import router as groups_router
-from src.api.mining_routes import router as mining_router
-from src.api.notifications_routes import router as notifications_router
-from src.api.p2p_routes import router as p2p_router
-from src.api.pool_routes import router as pool_router
-from src.api.routes import router as api_router
-from src.api.symbols_routes import router as symbols_router
-from src.api.websocket import router as ws_router
+from api.connectors_routes import router as connectors_router
+from api.dashboard_routes import router as dashboard_router
+from api.deps import build_app_state
+from api.devnet_routes import router as devnet_router
+from api.governance_routes import router as governance_router
+from api.groups_routes import router as groups_router
+from api.mining_routes import router as mining_router
+from api.notifications_routes import router as notifications_router
+from api.p2p_routes import router as p2p_router
+from api.pool_routes import router as pool_router
+from api.routes import router as api_router
+from api.symbols_routes import router as symbols_router
+from api.websocket import router as ws_router
 
 setup_logging("artcb.api")
 logger = logging.getLogger("artcb.api")
