@@ -1,31 +1,35 @@
-/* ARTCB Dashboard — Retro 2D × Minecraft design tokens */
+/* ARTCB Dashboard — Terminal Console Moderne */
 
 :root {
-  --mc-bedrock: #2d2d2d;
-  --mc-deepslate: #505050;
-  --mc-stone: #7f7f7f;
-  --mc-dirt: #8b6914;
-  --mc-grass: #5d9b3a;
-  --mc-sky: #6ba3d6;
-  --mc-diamond: #4aedd9;
-  --mc-gold: #ffcc00;
-  --mc-redstone: #ff3333;
-  --mc-obsidian: #1a0a2e;
+  /* Palette Terminal Moderne */
+  --terminal-bg: #0a0e14;
+  --terminal-surface: #1e2530;
+  --terminal-border: #2d3748;
+  --terminal-text: #e6edf3;
+  --terminal-muted: #8b949e;
+  
+  /* Accents Modernes */
+  --accent-green: #7cfc00;
+  --accent-cyan: #00d9ff;
+  --accent-yellow: #ffd700;
+  --accent-red: #ff4757;
+  
+  /* Variables Globales */
+  --bg: var(--terminal-bg);
+  --panel: var(--terminal-surface);
+  --border-light: #4a5568;
+  --border-dark: var(--terminal-border);
+  --text: var(--terminal-text);
+  --muted: var(--terminal-muted);
+  --explorer: var(--accent-cyan);
+  --critic: var(--accent-green);
+  --accent: var(--accent-cyan);
+  --danger: var(--accent-red);
+  --warning: var(--accent-yellow);
 
-  --bg: var(--mc-bedrock);
-  --panel: var(--mc-stone);
-  --border-light: #b0b0b0;
-  --border-dark: #3a3a3a;
-  --text: #ffffff;
-  --muted: #c6c6c6;
-  --explorer: var(--mc-sky);
-  --critic: var(--mc-grass);
-  --accent: var(--mc-diamond);
-  --danger: var(--mc-redstone);
-  --warning: var(--mc-gold);
-
-  --font-hud: "Press Start 2P", monospace;
-  --font-body: "VT323", monospace;
+  /* Typographie Moderne */
+  --font-hud: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  --font-body: "JetBrains Mono", "Fira Code", "Consolas", monospace;
   --grid: 16px;
 }
 
@@ -36,11 +40,13 @@
 body {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: 400;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  image-rendering: pixelated;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
@@ -48,42 +54,63 @@ h2,
 h3,
 .dashboard-title {
   font-family: var(--font-hud);
-  font-size: 0.75rem;
-  line-height: 1.6;
-  letter-spacing: 0.02em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
 h2 {
-  font-size: 0.65rem;
-  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
 }
 
 a {
-  color: var(--mc-diamond);
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* Minecraft bevel button */
+a:hover {
+  color: var(--accent-green);
+}
+
+/* Boutons Modernes */
 button {
   cursor: pointer;
   font-family: var(--font-body);
-  font-size: 1.1rem;
-  border: 4px solid;
-  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
-  background: var(--mc-deepslate);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid var(--border-dark);
+  background: var(--panel);
   color: var(--text);
-  border-radius: 0;
-  padding: 0.4rem 0.85rem;
-  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  background: var(--terminal-border);
+  border-color: var(--accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 button:active {
-  border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
-  transform: translate(1px, 1px);
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 button.primary {
-  background: var(--mc-grass);
-  border-color: #8fd45a #3d6b24 #3d6b24 #8fd45a;
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  color: var(--terminal-bg);
+}
+
+button.primary:hover {
+  background: #6ee000;
+  border-color: #6ee000;
 }
 
 button:disabled {
@@ -95,9 +122,19 @@ input,
 textarea,
 select {
   font-family: var(--font-body);
-  font-size: 1.1rem;
-  background: var(--mc-obsidian);
-  border: 4px solid var(--border-dark);
+  font-size: 0.95rem;
+  background: var(--terminal-surface);
+  border: 1px solid var(--border-dark);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
   color: var(--text);
   border-radius: 0;
   padding: 0.5rem 0.65rem;
