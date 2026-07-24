@@ -39,6 +39,8 @@ class LLMRouter:
                 raw = self._bob_chat(api_key, prompt, record, model=model)
             elif record.provider == "openrouter":
                 raw = self._openrouter_chat(api_key, prompt, record, model=model)
+            elif record.provider == "cursor":
+                raw = self._cursor_chat(api_key, prompt, record, model=model)
             elif record.provider == "ollama":
                 raw = self._ollama_chat(api_key, prompt, record, model=model)
             else:
@@ -151,6 +153,49 @@ class LLMRouter:
             )
             r.raise_for_status()
             return str(r.json()["choices"][0]["message"]["content"]).strip()
+
+    def _cursor_chat(self, api_key: str, prompt: str, record: ConnectorRecord, *, model: str | None) -> str:
+        """Client natif Cursor IDE — API api.cursor.com/v1/messages (format Anthropic messages)."""
+        base = record.config.get("base_url", "https://api.cursor.com")
+        # Cursor expose ses modèles sous des IDs courts (claude-sonnet-5, gpt-5.6-sol, etc.)
+        model_name = model or record.config.get("model", "claude-sonnet-4-6")
+        with httpx.Client(timeout=90.0) as client:
+            # Cursor utilise le format /v1/messages (Anthropic-compatible)
+            r = client.post(
+                f"{base.rstrip('/')}/v1/messages",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": model_name,
+                    "max_tokens": 1024,
+                    "messages": [{"role": "user", "content": prompt}],
+                },
+            )
+            if r.status_code == 404:
+                # Fallback: essayons /v1/chat/completions (OpenAI-compatible)
+                r = client.post(
+                    f"{base.rstrip('/')}/v1/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json",
+                    },
+                    json={
+                        "model": model_name,
+                        "messages": [{"role": "user", "content": prompt}],
+                        "max_tokens": 1024,
+                    },
+                )
+                r.raise_for_status()
+                return str(r.json()["choices"][0]["message"]["content"]).strip()
+            r.raise_for_status()
+            data = r.json()
+            # Format Anthropic: content est une liste
+            if isinstance(data.get("content"), list):
+                return str(data["content"][0].get("text", "")).strip()
+            # Format OpenAI
+            return str(data.get("content") or data["choices"][0]["message"]["content"]).strip()
 
     def _ollama_chat(self, api_key: str, prompt: str, record: ConnectorRecord, *, model: str | None) -> str:
         base = record.config.get("base_url", "http://127.0.0.1:11434")

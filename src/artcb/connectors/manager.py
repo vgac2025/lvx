@@ -20,6 +20,7 @@ ConnectorProvider = Literal[
     "bob",
     "openrouter",
     "ollama",
+    "cursor",
     "supabase",
     "postgres",
     "mysql",
@@ -30,7 +31,7 @@ ConnectorProvider = Literal[
     "custom_webhook",
 ]
 
-LLM_PROVIDERS: frozenset[str] = frozenset({"openai", "anthropic", "bob", "openrouter", "ollama"})
+LLM_PROVIDERS: frozenset[str] = frozenset({"openai", "anthropic", "bob", "openrouter", "ollama", "cursor"})
 DATA_SOURCE_PROVIDERS: frozenset[str] = frozenset({
     "supabase", "postgres", "mysql", "sqlite", "local_folder", "pdf_file", "github",
 })
