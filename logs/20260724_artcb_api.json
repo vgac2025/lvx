@@ -23,3 +23,4 @@
 {"ts": "2026-07-24T19:53:08.315782+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
 {"ts": "2026-07-24T19:53:46.502649+00:00", "level": "ERROR", "module": "artcb.api.p2p", "message": "P2P receive failed: "}
 {"ts": "2026-07-24T20:59:13.661334+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-24T22:04:11.926531+00:00", "level": "INFO", "module": "artcb.api.routes", "message": "Created wallet name=smoketest_wallet address=artcb1h5hj5u9sw4sdwaaf849kkuy30e7vmrxlwtt5y7"}

@@ -64,7 +64,8 @@ function loadChecklist(): ChecklistState {
 }
 
 export function DashboardProvider({ children }: { children: ReactNode }) {
-  const [sessionId, setSessionId] = useState("demo_hackathon");
+  /* BUG-R3: session_id vide par défaut pour éviter texte corrompu en test */
+  const [sessionId, setSessionId] = useState("");
   const [useLlm, setUseLlm] = useState(false);
   const [actorAddress, setActorAddress] = useState("");
   const [visibility, setVisibility] = useState<NetworkVisibility>("private");

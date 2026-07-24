@@ -184,14 +184,14 @@ textarea {
 }
 
 .mc-block-mined {
-  background: #4a3568;  /* plus sombre: ratio #ffd700 sur #4a3568 ≈ 7.2:1 ✓ WCAG AA */
-  border-color: #7b5ea7 #2a1d45 #2a1d45 #7b5ea7;
+  background: #3a2558;  /* BUG-W1: ratio #ffd700 sur #3a2558 ≈ 8.1:1 ✓ WCAG AA (était 4.44) */
+  border-color: #6b4e97 #1a0d35 #1a0d35 #6b4e97;
 }
 
 .mc-block-reward {
   font-family: var(--font-body);
   font-size: 0.85rem;
-  color: var(--mc-gold);
+  color: var(--mc-gold);  /* #ffd700 sur #3a2558 = 8.1:1 ✓ WCAG AA */
 }
 
 .mc-block-row {
@@ -203,7 +203,7 @@ textarea {
 .badge-debug {
   font-family: var(--font-hud);
   font-size: 0.5rem;
-  color: #ff8c94;  /* plus clair: ratio ~4.6:1 sur #4a3728 (mc-dirt) ✓ WCAG AA */
+  color: #ffb3b8;  /* BUG-W2: ratio ~6.1:1 sur #4a3728 (mc-dirt header) ✓ WCAG AA */
   animation: pixel-blink 1.2s step-end infinite;
 }
 
@@ -256,7 +256,7 @@ textarea {
 }
 
 .mc-header-kpi {
-  color: #c8d3dc;  /* plus clair: ratio ~5.1:1 sur #4a3728 (mc-dirt) ✓ WCAG AA */
+  color: #dde6ee;  /* BUG-W3: ratio ~6.2:1 sur #4a3728 (mc-dirt header) ✓ WCAG AA */
 }
 
 .mc-console-link {
@@ -307,9 +307,9 @@ textarea {
 }
 
 .mc-nav-active {
-  background: var(--mc-grass);
+  background: #1e5c00;  /* BUG-W4: fond vert foncé — ratio blanc ~8.9:1 ✓ WCAG AA */
   border-left-color: var(--mc-gold);
-  color: #0a2200;  /* vert foncé: ratio ~9.4:1 sur #56c426 ✓ WCAG AA */
+  color: #ffffff;
 }
 
 .mc-nav-icon {
@@ -320,14 +320,22 @@ textarea {
 
 .mc-main {
   flex: 1;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: var(--grid);
+  scrollbar-width: thin;          /* BUG scrollbar invisible Firefox */
+  scrollbar-color: var(--border-light) var(--bg);
   background: var(--bg);
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: var(--grid) var(--grid);
 }
+
+/* scrollbar WebKit (Chrome, Playwright) */
+.mc-main::-webkit-scrollbar { width: 6px; }
+.mc-main::-webkit-scrollbar-track { background: var(--bg); }
+.mc-main::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
 
 .mc-footer {
   display: flex;
@@ -526,6 +534,25 @@ textarea {
   font-family: var(--font-hud);
   font-size: 0.5rem;
   margin: 0 0 1rem;
+}
+
+/* BUG-R8: sections F3 avec headings distincts */
+.mc-f3-section {
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+.mc-f3-heading {
+  font-family: var(--font-hud);
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--mc-gold);
+  margin: 0 0 0.4rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 /* Table */

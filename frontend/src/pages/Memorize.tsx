@@ -34,6 +34,7 @@ export function Memorize() {
     clearMessages,
     setChainBlock,
     visibility,
+    setVisibility,
     groupId,
     useDistributedPool,
     encryptTransport,
@@ -188,7 +189,12 @@ export function Memorize() {
         <div className="toolbar">
           <label>
             session_id:
-            <input value={sessionId} onChange={(e) => setSessionId(e.target.value)} />
+            {/* BUG-R3: placeholder visible — sessionId vide par défaut */}
+            <input
+              value={sessionId}
+              onChange={(e) => setSessionId(e.target.value)}
+              placeholder="demo_hackathon"
+            />
           </label>
           <label>
             <input type="checkbox" checked={useLlm} onChange={(e) => setUseLlm(e.target.checked)} /> use_llm

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CONSOLE_HELP } from "../console/commands";
 
 async function apiGet(path: string): Promise<unknown> {
@@ -28,6 +28,12 @@ async function apiPost(path: string, body?: unknown): Promise<unknown> {
 export function Console() {
   const [lines, setLines] = useState<string[]>(["ARTCB Console v0.4 — tapez help", "> "]);
   const [input, setInput] = useState("");
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  /* BUG-R2: auto-scroll après chaque mise à jour des lignes */
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [lines]);
 
   const runCommand = async (cmd: string) => {
     const trimmed = cmd.trim();
@@ -130,6 +136,8 @@ export function Console() {
             {line}
           </div>
         ))}
+        {/* BUG-R2: sentinel pour auto-scroll */}
+        <div ref={bottomRef} />
       </div>
       <form
         className="mc-console-input-row"

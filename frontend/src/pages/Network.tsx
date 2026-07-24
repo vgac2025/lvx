@@ -19,8 +19,9 @@ export function Network() {
   const [status, setStatus] = useState<Record<string, unknown> | null>(null);
   const [peers, setPeers] = useState<Array<Record<string, unknown>>>([]);
   const [channels, setChannels] = useState<Array<Record<string, unknown>>>([]);
-  const [host, setHost] = useState("127.0.0.1");
-  const [port, setPort] = useState("8000");
+  /* BUG-R4: champs vides par défaut — évite duplication quand l'utilisateur tape */
+  const [host, setHost] = useState("");
+  const [port, setPort] = useState("");
   const [peerKem, setPeerKem] = useState("");
   const [notifLabel, setNotifLabel] = useState("");
   const [notifSecret, setNotifSecret] = useState("");

@@ -72,10 +72,12 @@ export function SystemMetrics() {
   const hw = metrics.hardware;
   const opt = metrics.optimization;
 
+  /* BUG-R8: chaque section reçoit un heading <h3> distinct pour la lisibilité */
   return (
     <div className="mc-f3-grid">
-      <div>
-        <div>CPU ({metrics.cpu.count} cores) - {metrics.cpu.percent.toFixed(1)}%</div>
+      <div className="mc-f3-section">
+        <h3 className="mc-f3-heading">CPU</h3>
+        <div>{metrics.cpu.count} cœurs · {metrics.cpu.percent.toFixed(1)}%</div>
         {bar(metrics.cpu.percent)}
         <div className="mc-muted">{metrics.cpu.freq_mhz.toFixed(0)} MHz</div>
         {hw && (
@@ -84,29 +86,29 @@ export function SystemMetrics() {
           </div>
         )}
       </div>
-      <div>
-        <div>RAM - {metrics.memory.percent.toFixed(1)}%</div>
+      <div className="mc-f3-section">
+        <h3 className="mc-f3-heading">RAM</h3>
+        <div>{metrics.memory.percent.toFixed(1)}%</div>
         {bar(metrics.memory.percent)}
         <div className="mc-muted">
           {metrics.memory.used_gb.toFixed(1)} / {metrics.memory.total_gb.toFixed(1)} GB
         </div>
       </div>
-      <div>
-        <div>Disque - {metrics.disk.percent.toFixed(1)}%</div>
+      <div className="mc-f3-section">
+        <h3 className="mc-f3-heading">Disque</h3>
+        <div>{metrics.disk.percent.toFixed(1)}%</div>
         {bar(metrics.disk.percent)}
         <div className="mc-muted">{metrics.disk.free_gb.toFixed(1)} GB libre</div>
       </div>
-      <div>
-        <div>Reseau ^ {metrics.network.bytes_sent_mb.toFixed(1)} MB</div>
-        <div>v {metrics.network.bytes_recv_mb.toFixed(1)} MB</div>
+      <div className="mc-f3-section">
+        <h3 className="mc-f3-heading">Réseau</h3>
+        <div>↑ {metrics.network.bytes_sent_mb.toFixed(1)} MB</div>
+        <div>↓ {metrics.network.bytes_recv_mb.toFixed(1)} MB</div>
       </div>
-      <div>
-        <div>
-          <strong>{metrics.system.hostname}</strong>
-        </div>
-        <div>
-          {metrics.system.system} {metrics.system.release}
-        </div>
+      <div className="mc-f3-section">
+        <h3 className="mc-f3-heading">Système</h3>
+        <div><strong>{metrics.system.hostname}</strong></div>
+        <div>{metrics.system.system} {metrics.system.release}</div>
         <div className="mc-muted">{metrics.system.processor}</div>
       </div>
       {hw && (

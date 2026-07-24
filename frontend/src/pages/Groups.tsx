@@ -134,7 +134,17 @@ export function Groups() {
       <div className="panel">
         <h2>Wallet actif</h2>
         {wallets.length ? (
-          <select value={actorAddress} onChange={(e) => setActorAddress(e.target.value)}>
+          /* BUG-R7: forcer onChange même quand la 1ère option est déjà affichée
+             en initialisant actorAddress dès le chargement (fait dans useEffect),
+             et en ajoutant une option vide initiale si actorAddress est encore vide */
+          <select
+            value={actorAddress || ""}
+            onChange={(e) => setActorAddress(e.target.value)}
+            aria-label="Sélectionner un wallet actif"
+          >
+            {!actorAddress && (
+              <option value="" disabled>— choisir un wallet —</option>
+            )}
             {wallets.map((w) => (
               <option key={w.address} value={w.address}>
                 {w.name} — {w.address.slice(0, 12)}…

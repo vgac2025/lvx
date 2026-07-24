@@ -84,12 +84,12 @@ export function Home() {
             </li>
           ))}
         </ul>
-        {demoOk !== null && (
-          <p className="mc-muted">
-            Dernière demo_live : {demoOk ? "OK OK" : "non trouvée"} —{" "}
-            <Link to="/logs">Logs</Link>
-          </p>
-        )}
+        {/* BUG-R5: espace réservé (min-height) pour éviter layout shift quand demo_live charge */}
+        <p className="mc-muted" style={{ minHeight: "1.5em" }}>
+          {demoOk !== null
+            ? <>Dernière demo_live : {demoOk ? "OK OK" : "non trouvée"} — <Link to="/logs">Logs</Link></>
+            : null}
+        </p>
       </div>
 
       <div className="panel">
