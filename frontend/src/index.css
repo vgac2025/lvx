@@ -27,6 +27,14 @@
   --danger: var(--accent-red);
   --warning: var(--accent-yellow);
 
+  /* Palette Minecraft / rétro — BUG4: --mc-gold ratio ≥ 4.5:1 sur #1e2530 */
+  --mc-gold: #ffd700;      /* ratio ~13.6:1 sur #0a0e14, ~9.8:1 sur #1e2530 ✓ WCAG AA */
+  --mc-grass: #56c426;     /* vert herbe */
+  --mc-dirt: #4a3728;      /* terre */
+  --mc-redstone: #ff4757;  /* redstone */
+  --mc-sky: #5bc0de;       /* ciel */
+  --mc-wood: #8b6914;      /* bois */
+
   /* Typographie Moderne */
   --font-hud: "JetBrains Mono", "Fira Code", "Consolas", monospace;
   --font-body: "JetBrains Mono", "Fira Code", "Consolas", monospace;
@@ -176,8 +184,8 @@ textarea {
 }
 
 .mc-block-mined {
-  background: #7b5ea7;
-  border-color: #b08fe0 #4a3568 #4a3568 #b08fe0;
+  background: #4a3568;  /* plus sombre: ratio #ffd700 sur #4a3568 ≈ 7.2:1 ✓ WCAG AA */
+  border-color: #7b5ea7 #2a1d45 #2a1d45 #7b5ea7;
 }
 
 .mc-block-reward {
@@ -195,7 +203,7 @@ textarea {
 .badge-debug {
   font-family: var(--font-hud);
   font-size: 0.5rem;
-  color: var(--mc-redstone);
+  color: #ff8c94;  /* plus clair: ratio ~4.6:1 sur #4a3728 (mc-dirt) ✓ WCAG AA */
   animation: pixel-blink 1.2s step-end infinite;
 }
 
@@ -248,7 +256,7 @@ textarea {
 }
 
 .mc-header-kpi {
-  color: var(--muted);
+  color: #c8d3dc;  /* plus clair: ratio ~5.1:1 sur #4a3728 (mc-dirt) ✓ WCAG AA */
 }
 
 .mc-console-link {
@@ -301,7 +309,7 @@ textarea {
 .mc-nav-active {
   background: var(--mc-grass);
   border-left-color: var(--mc-gold);
-  color: #fff;
+  color: #0a2200;  /* vert foncé: ratio ~9.4:1 sur #56c426 ✓ WCAG AA */
 }
 
 .mc-nav-icon {
@@ -616,6 +624,16 @@ textarea {
 
 .mc-error {
   color: var(--mc-redstone);
+}
+
+.mc-success {
+  color: var(--mc-grass);
+}
+
+.mc-hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
 }
 
 /* Console */

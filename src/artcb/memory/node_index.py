@@ -6,7 +6,7 @@ import logging
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from artcb.ir.models import IRGraph, IRNode
+    from src.artcb.ir.models import IRGraph, IRNode
 
 logger = logging.getLogger("artcb.memory.node_index")
 

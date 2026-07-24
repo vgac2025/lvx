@@ -111,7 +111,7 @@ def _build_peer_urls(request: Request, workers: list[dict[str, str]] | None = No
 def _wallet_sign(request: Request, wallet_name: str | None):
     if not wallet_name:
         return None, None
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.wallet.manager import WalletManager
 
     try:
         wallet = WalletManager().load_wallet(name=wallet_name)
@@ -201,8 +201,8 @@ def run_pool_or_local_mining(body: PoolRunRequest, request: Request) -> dict:
         use_distributed=body.use_distributed_pool,
         encrypt_transport=body.encrypt_transport,
     )
-    from artcb.mining.pipeline import MiningPipeline
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.mining.pipeline import MiningPipeline
+    from src.artcb.wallet.manager import WalletManager
 
     pipeline = MiningPipeline(
         dual=state.dual,

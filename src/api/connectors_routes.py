@@ -46,7 +46,7 @@ def _connectors(request: Request) -> ConnectorManager:
 
 @router.get("/formats")
 def list_supported_formats_endpoint() -> dict:
-    from artcb.io.media_ingest import list_supported_formats
+    from src.artcb.io.media_ingest import list_supported_formats
 
     fmts = list_supported_formats()
     return {
@@ -130,8 +130,8 @@ def learn_from_source(connector_id: str, body: LearnFromSourceRequest, request: 
     if not text.strip():
         raise HTTPException(status_code=400, detail="Source vide — rien à apprendre")
 
-    from artcb.ir.llm_encoder import LLMEncoder
-    from artcb.rtleg.events import RTLEGEvent
+    from src.artcb.ir.llm_encoder import LLMEncoder
+    from src.artcb.rtleg.events import RTLEGEvent
 
     session_id = body.session_id or f"g_{uuid.uuid4().hex[:12]}"
     llm_encoder = LLMEncoder(encoder=state.encoder, connectors=mgr)

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Language, getCurrentLanguage, setLanguage } from './translations';
 
 const languages: { code: Language; name: string; flag: string }[] = [

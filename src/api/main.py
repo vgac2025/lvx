@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import logging
+import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from src.artcb.logging_config import setup_logging
 from src.api.connectors_routes import router as connectors_router
@@ -30,11 +33,7 @@ def create_app() -> FastAPI:
     app = FastAPI(title="ARTCB API", version="0.3.0")
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-            "http://localhost:3000",
-        ],
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -61,7 +60,25 @@ def create_app() -> FastAPI:
             "service": "ARTCB API",
             "version": "0.3.0"
         }
-    
+
+    # Serve React frontend (built dist/) at root
+    _dist = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")
+    _dist = os.path.normpath(_dist)
+    if os.path.isdir(_dist):
+        app.mount("/assets", StaticFiles(directory=os.path.join(_dist, "assets")), name="assets")
+
+        @app.get("/")
+        async def serve_spa_root():
+            return FileResponse(os.path.join(_dist, "index.html"))
+
+        @app.get("/{full_path:path}")
+        async def serve_spa_fallback(full_path: str):
+            # API routes take precedence — only catch unknown paths
+            if full_path.startswith("api/") or full_path.startswith("ws"):
+                from fastapi import HTTPException
+                raise HTTPException(status_code=404)
+            return FileResponse(os.path.join(_dist, "index.html"))
+
     return app
 
 

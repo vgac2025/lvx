@@ -3,8 +3,8 @@ import {
   castGovernanceVote,
   createGovernanceProposal,
   fetchGovernanceProposals,
+  fetchWallets,
 } from "../api/client";
-import { fetchWallets } from "../api/client";
 
 type Proposal = {
   proposal_id: string;
@@ -27,21 +27,29 @@ export function Governance() {
   const [walletAddress, setWalletAddress] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [version, setVersion] = useState("0.4.0");
 
   const reload = async () => {
-    const data = await fetchGovernanceProposals();
-    setProposals(data.proposals as Proposal[]);
+    try {
+      const data = await fetchGovernanceProposals();
+      setProposals(data.proposals as Proposal[]);
+    } catch (e) {
+      setError(String(e));
+    }
   };
 
   useEffect(() => {
-    reload().catch((e) => setError(String(e)));
-    fetchWallets().then((w) => {
-      setWallets(w);
-      if (w[0]) setWalletAddress(w[0].address);
-    }).catch(() => {});
+    setLoading(true);
+    Promise.all([
+      reload(),
+      fetchWallets().then((w) => {
+        setWallets(w);
+        if (w[0]) setWalletAddress(w[0].address);
+      }).catch(() => {}),
+    ]).finally(() => setLoading(false));
   }, []);
 
   const handleVote = async (proposalId: string, choice: "yes" | "no") => {
@@ -72,13 +80,14 @@ export function Governance() {
   };
 
   return (
-    <div className="mc-page">
+    <div className="mc-page" aria-label="Page gouvernance">
       <h1 className="dashboard-title">Gouvernance · Vote communautaire</h1>
       <p className="mc-hint">
         1 wallet = 1 voix. Les mises à jour majeures VGACTech peuvent être acceptées ou rejetées par la communauté.
       </p>
-      {error && <p className="mc-error">{error}</p>}
-      {success && <p className="mc-success">{success}</p>}
+      {loading && <p className="mc-muted" aria-live="polite">Chargement des propositions…</p>}
+      {error && <p className="mc-error" role="alert">{error}</p>}
+      {success && <p className="mc-success" aria-live="polite">{success}</p>}
 
       <section className="mc-card">
         <h2>Votre wallet votant</h2>
@@ -89,9 +98,11 @@ export function Governance() {
         </select>
       </section>
 
-      <section className="mc-card">
+      <section className="mc-card" aria-live="polite" aria-label="Liste des propositions">
         <h2>Propositions ({proposals.length})</h2>
-        {proposals.length === 0 && <p>Aucune proposition ouverte.</p>}
+        {!loading && proposals.length === 0 && (
+          <p className="mc-muted">Aucune proposition ouverte pour le moment.</p>
+        )}
         <ul className="mc-connector-list">
           {proposals.map((p) => (
             <li key={p.proposal_id} className="mc-connector-item">

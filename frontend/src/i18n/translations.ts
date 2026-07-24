@@ -12,6 +12,17 @@ export interface Translations {
   nav_agents: string;
   nav_chain: string;
   nav_pol: string;
+  nav_memorize: string;
+  nav_graph: string;
+  nav_wallets: string;
+  nav_mining: string;
+  nav_system: string;
+  nav_logs: string;
+  nav_console: string;
+  nav_integrations: string;
+  nav_network: string;
+  nav_governance: string;
+  nav_groups: string;
   
   // Dashboard
   dashboard_title: string;
@@ -19,6 +30,19 @@ export interface Translations {
   dashboard_blocks: string;
   dashboard_pol_score: string;
   dashboard_graphs: string;
+  
+  // Layout
+  layout_visibility: string;
+  layout_visibility_private: string;
+  layout_visibility_public: string;
+  layout_visibility_group: string;
+  layout_select_group: string;
+  layout_no_group: string;
+  layout_create_group_first: string;
+  layout_select_wallet: string;
+  layout_no_wallet: string;
+  layout_create_wallet_first: string;
+  layout_language: string;
   
   // Encode
   encode_title: string;
@@ -40,6 +64,24 @@ export interface Translations {
   chain_valid: string;
   chain_invalid: string;
   chain_verify: string;
+  chain_block_detail: string;
+  chain_back: string;
+  chain_timestamp: string;
+  chain_hash: string;
+  chain_signature: string;
+  chain_reward: string;
+  chain_contributors: string;
+  chain_address: string;
+  chain_pol_score: string;
+  chain_share: string;
+  chain_height: string;
+  chain_verification: string;
+  chain_epoch_reward: string;
+  chain_recent_blocks: string;
+  chain_detailed_table: string;
+  chain_index: string;
+  chain_visibility: string;
+  chain_graph_id: string;
   
   // PoL
   pol_title: string;
@@ -47,6 +89,9 @@ export interface Translations {
   pol_compression: string;
   pol_validation: string;
   pol_retrieval: string;
+  pol_gauge_title: string;
+  pol_gauge_accepted: string;
+  pol_gauge_below_threshold: string;
   
   // Common
   loading: string;
@@ -59,6 +104,29 @@ export interface Translations {
   delete: string;
   edit: string;
   view: string;
+  common_back: string;
+  common_next: string;
+  common_search: string;
+  common_filter: string;
+  common_export: string;
+  common_import: string;
+  common_refresh: string;
+  common_none: string;
+  common_all: string;
+  common_yes: string;
+  common_no: string;
+  common_ok: string;
+  common_create: string;
+  common_blocks: string;
+  common_block: string;
+  common_wallet: string;
+  common_wallets: string;
+  common_group: string;
+  common_groups: string;
+  common_members: string;
+  common_pending: string;
+  common_active: string;
+  common_inactive: string;
   
   // Status
   status_healthy: string;
@@ -66,9 +134,148 @@ export interface Translations {
   status_pending: string;
   status_completed: string;
   status_failed: string;
+  
+  // Home Page
+  home_title: string;
+  home_alerts_debug: string;
+  home_kpi_pol: string;
+  home_kpi_blocks: string;
+  home_kpi_wallets: string;
+  home_kpi_graphs: string;
+  home_kpi_chain: string;
+  home_kpi_network: string;
+  home_chain_valid: string;
+  home_chain_check: string;
+  home_checklist_title: string;
+  home_checklist_memorize: string;
+  home_checklist_explore: string;
+  home_checklist_search: string;
+  home_checklist_sign: string;
+  home_checklist_goto: string;
+  home_demo_last: string;
+  home_demo_ok: string;
+  home_demo_not_found: string;
+  home_activity_heatmap: string;
+  home_latest_blocks: string;
+  home_view_all: string;
+  home_reward_note: string;
+  home_ir_live: string;
+  
+  // Memorize Page
+  memorize_title: string;
+  memorize_session: string;
+  memorize_session_id: string;
+  memorize_use_llm: string;
+  memorize_use_pool: string;
+  memorize_encrypt_transport: string;
+  memorize_visibility_current: string;
+  memorize_select_group: string;
+  memorize_source_title: string;
+  memorize_placeholder: string;
+  memorize_button: string;
+  memorize_button_loading: string;
+  memorize_graph_title: string;
+  memorize_graph_id: string;
+  memorize_nodes: string;
+  memorize_sign_block: string;
+  memorize_sign_loading: string;
+  
+  // Graph Page
+  graph_title: string;
+  graph_title_with_id: string;
+  graph_no_graph: string;
+  graph_selected: string;
+  graph_search_placeholder: string;
+  graph_search_button: string;
+  graph_tts_button: string;
+  graph_sign_button: string;
+  graph_found: string;
+  graph_error: string;
+  graph_block_signed: string;
+  
+  // Wallets Page
+  wallets_title: string;
+  wallets_create_title: string;
+  wallets_create_placeholder: string;
+  wallets_create_button: string;
+  wallets_balance: string;
+  wallets_address: string;
+  wallets_founders_title: string;
+  wallets_rewards_title: string;
+  wallets_rewards_block: string;
+  wallets_rewards_amount: string;
+  wallets_rewards_timestamp: string;
+  wallets_error: string;
+  
+  // Mining Page
+  mining_title: string;
+  mining_hero_title: string;
+  mining_hero_subtitle: string;
+  mining_epoch: string;
+  mining_kpi_pol_session: string;
+  mining_kpi_blocks_mined: string;
+  mining_kpi_rewards_total: string;
+  mining_kpi_halving: string;
+  mining_kpi_halving_blocks: string;
+  mining_last_result_title: string;
+  mining_last_result_pol: string;
+  mining_last_result_reversible: string;
+  mining_last_result_nodes: string;
+  mining_last_result_reward: string;
+  mining_launch_hint: string;
+  mining_real_scripts: string;
+  
+  // System Page
+  system_title: string;
+  system_f3_title: string;
+  system_cpu: string;
+  system_cores: string;
+  system_ram: string;
+  system_disk: string;
+  system_disk_free: string;
+  system_network: string;
+  system_hostname: string;
+  system_gpu_faiss: string;
+  system_gpu_none: string;
+  system_gpu_faiss_count: string;
+  system_optimizations: string;
+  system_workers: string;
+  system_chunk_pool: string;
+  system_faiss: string;
+  system_physical_cores: string;
+  system_logical_cores: string;
+  system_error_metrics: string;
+  system_loading_metrics: string;
+  
+  // Logs Page
+  logs_title: string;
+  logs_demo_title: string;
+  logs_demo_loading: string;
+  logs_rtleg_title: string;
+  logs_rtleg_error: string;
+  
+  // Console Page
+  console_title: string;
+  console_hint: string;
+  console_placeholder: string;
+  console_execute: string;
+  console_unknown_command: string;
+  console_type_help: string;
+  console_welcome: string;
+  
+  // Components
+  agent_panel_title: string;
+  agent_panel_empty: string;
+  agent_explorer: string;
+  agent_critic: string;
+  reconstruct_title: string;
+  reconstruct_original: string;
+  reconstruct_reconstructed: string;
+  reconstruct_ok: string;
+  block_row_no_blocks: string;
 }
 
-export const translations: Record<Language, Translations> = {
+export const translations: Record<Language, Partial<Translations> & Pick<Translations, 'nav_dashboard'>> = {
   fr: {
     // Navigation
     nav_dashboard: 'Tableau de bord',
@@ -76,6 +283,17 @@ export const translations: Record<Language, Translations> = {
     nav_agents: 'Agents',
     nav_chain: 'Chaîne',
     nav_pol: 'PoL',
+    nav_memorize: 'Mémoriser',
+    nav_graph: 'Graphe',
+    nav_wallets: 'Wallets',
+    nav_mining: 'Minage',
+    nav_system: 'Système',
+    nav_logs: 'Logs',
+    nav_console: 'Console',
+    nav_integrations: 'Intégrations',
+    nav_network: 'Réseau P2P',
+    nav_governance: 'Gouvernance',
+    nav_groups: 'Groupes',
     
     // Dashboard
     dashboard_title: 'Tableau de bord ARTCB',
@@ -139,6 +357,17 @@ export const translations: Record<Language, Translations> = {
     nav_agents: 'Agents',
     nav_chain: 'Chain',
     nav_pol: 'PoL',
+    nav_memorize: 'Memorize',
+    nav_graph: 'Graph',
+    nav_wallets: 'Wallets',
+    nav_mining: 'Mining',
+    nav_system: 'System',
+    nav_logs: 'Logs',
+    nav_console: 'Console',
+    nav_integrations: 'Integrations',
+    nav_network: 'P2P Network',
+    nav_governance: 'Governance',
+    nav_groups: 'Groups',
     
     // Dashboard
     dashboard_title: 'ARTCB Dashboard',
@@ -512,7 +741,7 @@ export const translations: Record<Language, Translations> = {
 };
 
 export function getTranslation(lang: Language, key: keyof Translations): string {
-  return translations[lang][key] || translations.en[key];
+  return (translations[lang][key] as string | undefined) || (translations.en[key] as string | undefined) || (translations.fr[key] as string) || key;
 }
 
 export function getCurrentLanguage(): Language {

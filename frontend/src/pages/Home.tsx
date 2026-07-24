@@ -17,7 +17,7 @@ const CHECKLIST = [
   { id: "memorized" as const, label: "Mémoriser un texte", to: "/memorize" },
   { id: "explored" as const, label: "Explorer le graphe", to: "/graph" },
   { id: "searched" as const, label: "Rechercher un nœud", to: "/graph" },
-  { id: "signed" as const, label: "Reconstruire + signer bloc", to: "/graph" },
+  { id: "signed" as const, label: "Reconstruire + signer bloc", to: "/chain" },
 ];
 
 export function Home() {

@@ -170,7 +170,7 @@ def build_app_state() -> AppState:
     )
 
     def _run_pool_reasoning(text: str) -> dict[str, Any]:
-        from artcb.ir.models import sha256_text
+        from src.artcb.ir.models import sha256_text
 
         result = state.dual.run(text)
         graph = result.graph
@@ -184,8 +184,8 @@ def build_app_state() -> AppState:
         }
 
     def _finalize_pool_job(job, full_text: str, extra_contributors: list[dict]) -> dict[str, Any]:
-        from artcb.mining.pipeline import MiningPipeline
-        from artcb.wallet.manager import WalletManager
+        from src.artcb.mining.pipeline import MiningPipeline
+        from src.artcb.wallet.manager import WalletManager
 
         pipeline = MiningPipeline(
             dual=state.dual,

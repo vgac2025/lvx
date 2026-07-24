@@ -213,7 +213,19 @@ export function Memorize() {
             </label>
           )}
         </div>
-        <p className="mc-muted">
+        <label className="mc-network-select" aria-label="Visibilité réseau mémorisation">
+          Réseau :
+          <select
+            value={visibility}
+            aria-label="Visibilité réseau"
+            onChange={(e) => setVisibility(e.target.value as "private" | "group" | "public")}
+          >
+            <option value="private">PRIVÉ</option>
+            <option value="group">GROUPE{groupId ? ` (${groupId.slice(0, 8)}…)` : ""}</option>
+            <option value="public">PUBLIC</option>
+          </select>
+        </label>
+        <p className="mc-muted" aria-live="polite">
           Visibilité actuelle : <strong>{visibility}</strong>
           {visibility === "group" && !groupId && " — sélectionnez un groupe dans /groups"}
         </p>

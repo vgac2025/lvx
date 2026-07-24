@@ -11,7 +11,7 @@ from src.artcb.ir.grammar import NodeType
 from src.artcb.ir.models import IRGraph
 
 if TYPE_CHECKING:
-    from artcb.connectors.manager import ConnectorManager
+    from src.artcb.connectors.manager import ConnectorManager
 
 logger = logging.getLogger("artcb.ir.llm_encoder")
 
@@ -67,7 +67,7 @@ class LLMEncoder:
 
     def _classify(self, sentences: list[str], *, llm_provider: str | None) -> list[dict[str, str]] | None:
         if llm_provider and self.connectors:
-            from artcb.connectors.llm_router import LLMRouter
+            from src.artcb.connectors.llm_router import LLMRouter
 
             active = self.connectors.get_active_llm_key(llm_provider)
             if active:

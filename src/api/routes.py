@@ -59,7 +59,7 @@ def _state(request: Request):
 @router.get("/demo/wailly-excerpt")
 def wailly_excerpt(request: Request, max_pages: int = 3) -> dict:
     """Load Wailly book excerpt for hackathon demo (D-010)."""
-    from artcb.io.pdf_loader import extract_pdf_text, resolve_book_path
+    from src.artcb.io.pdf_loader import extract_pdf_text, resolve_book_path
 
     path = resolve_book_path()
     state = _state(request)
@@ -217,7 +217,7 @@ def store(body: StoreRequest, request: Request) -> dict:
     actor = body.actor_address
     wallet = None
     if body.wallet_name:
-        from artcb.wallet.manager import WalletManager
+        from src.artcb.wallet.manager import WalletManager
 
         try:
             wallet = WalletManager().load_wallet(name=body.wallet_name)
@@ -226,7 +226,7 @@ def store(body: StoreRequest, request: Request) -> dict:
             raise HTTPException(status_code=404, detail=f"wallet not found: {body.wallet_name}") from exc
 
     if actor:
-        from artcb.mining.pipeline import build_contributors
+        from src.artcb.mining.pipeline import build_contributors
 
         contributors = build_contributors(
             actor_address=actor,
@@ -328,8 +328,8 @@ def pol_score(request: Request) -> dict:
 def system_metrics(request: Request) -> dict:
     """Metriques temps reel + materiel + optimisations actives."""
     try:
-        from artcb.system.hardware import detect_hardware, live_metrics
-        from artcb.system.optimizer import build_optimization_profile
+        from src.artcb.system.hardware import detect_hardware, live_metrics
+        from src.artcb.system.optimizer import build_optimization_profile
 
         state = request.app.state.artcb
         hw = state.hardware or detect_hardware()
@@ -352,7 +352,7 @@ def system_metrics(request: Request) -> dict:
 @router.get("/system/hardware")
 def system_hardware(request: Request) -> dict:
     """Profil materiel detecte (CPU, RAM, GPU, disque)."""
-    from artcb.system.hardware import detect_hardware
+    from src.artcb.system.hardware import detect_hardware
 
     state = request.app.state.artcb
     hw = state.hardware or detect_hardware()
@@ -362,7 +362,7 @@ def system_hardware(request: Request) -> dict:
 @router.get("/system/optimization")
 def system_optimization(request: Request) -> dict:
     """Profil d'optimisation runtime adapte au materiel."""
-    from artcb.system.optimizer import build_optimization_profile
+    from src.artcb.system.optimizer import build_optimization_profile
 
     state = request.app.state.artcb
     if state.optimization is not None:
@@ -386,7 +386,7 @@ class WalletBalanceRequest(BaseModel):
 @router.post("/wallet/create")
 def wallet_create(body: CreateWalletRequest, request: Request) -> dict:
     """Create new ARTCB wallet with Ed25519 keypair."""
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.wallet.manager import WalletManager
 
     _state(request)
     wallet_mgr = WalletManager()
@@ -407,7 +407,7 @@ def wallet_create(body: CreateWalletRequest, request: Request) -> dict:
 @router.get("/wallet/list")
 def wallet_list(request: Request) -> dict:
     """List all wallets."""
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.wallet.manager import WalletManager
 
     wallet_mgr = WalletManager()
     wallets = wallet_mgr.list_wallets()
@@ -417,7 +417,7 @@ def wallet_list(request: Request) -> dict:
 @router.post("/wallet/balance")
 def wallet_balance(body: WalletBalanceRequest, request: Request) -> dict:
     """Get wallet balance from blockchain."""
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.wallet.manager import WalletManager
 
     state = _state(request)
     wallet_mgr = WalletManager()
@@ -433,7 +433,7 @@ def wallet_balance(body: WalletBalanceRequest, request: Request) -> dict:
 @router.get("/wallet/balance/{address}")
 def wallet_balance_get(address: str, request: Request) -> dict:
     """Get wallet balance from blockchain (GET variant)."""
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.wallet.manager import WalletManager
 
     state = _state(request)
     wallet_mgr = WalletManager()

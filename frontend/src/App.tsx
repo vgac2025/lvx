@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { DashboardProvider } from "./context/DashboardContext";
 import { DashboardLayout } from "./layout/DashboardLayout";
 import { ChainPage } from "./pages/ChainPage";
@@ -19,7 +19,7 @@ import { Wallets } from "./pages/Wallets";
 export default function App() {
   return (
     <DashboardProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route element={<DashboardLayout />}>
             <Route index element={<Home />} />
@@ -41,7 +41,7 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </DashboardProvider>
   );
 }

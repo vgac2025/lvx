@@ -18,22 +18,22 @@ export function DashboardLayout() {
   const NAV = [
     { section: "CORE", items: [
       { to: "/", label: t('nav_dashboard'), icon: "▶" },
-      { to: "/memorize", label: "Mémoriser", icon: " " },
-      { to: "/graph", label: "Graphe", icon: " " },
+      { to: "/memorize", label: t('nav_memorize'), icon: "✎" },
+      { to: "/graph", label: t('nav_graph'), icon: "◎" },
     ]},
     { section: "CHAIN", items: [
       { to: "/chain", label: t('nav_chain'), icon: "▣" },
-      { to: "/wallets", label: "Wallets", icon: "◇" },
-      { to: "/mining", label: "Minage", icon: "" },
+      { to: "/wallets", label: t('nav_wallets'), icon: "◇" },
+      { to: "/mining", label: t('nav_mining'), icon: "⛏" },
     ]},
     { section: "SYSTEM", items: [
-      { to: "/system", label: "Système", icon: "*" },
-      { to: "/logs", label: "Logs", icon: "L" },
-      { to: "/console", label: "Console", icon: "⌨" },
-      { to: "/integrations", label: "Intégrations", icon: "I" },
-      { to: "/network", label: "Réseau P2P", icon: "P" },
-      { to: "/governance", label: "Gouvernance", icon: "G" },
-      { to: "/groups", label: "Groupes", icon: "G" },
+      { to: "/system", label: t('nav_system'), icon: "F3" },
+      { to: "/logs", label: t('nav_logs'), icon: "≡" },
+      { to: "/console", label: t('nav_console'), icon: "⌨" },
+      { to: "/integrations", label: t('nav_integrations'), icon: "⚙" },
+      { to: "/network", label: t('nav_network'), icon: "⇄" },
+      { to: "/governance", label: t('nav_governance'), icon: "⚖" },
+      { to: "/groups", label: t('nav_groups'), icon: "👥" },
     ]},
   ];
 
@@ -83,6 +83,18 @@ export function DashboardLayout() {
           )}
         </div>
         <div className="mc-header-right">
+          <label className="mc-network-select" aria-label="Sélecteur réseau">
+            Réseau:
+            <select
+              value={visibility}
+              aria-label="Visibilité réseau"
+              onChange={(e) => setVisibility(e.target.value as "private" | "group" | "public")}
+            >
+              <option value="private">PRIVÉ</option>
+              <option value="group">GROUPE{groupId ? ` (${groupId.slice(0, 8)}…)` : ""}</option>
+              <option value="public">PUBLIC</option>
+            </select>
+          </label>
           <LanguageSelector />
           <span className="badge-debug">DEBUG</span>
           <Link to="/console" className="mc-console-link">⌨ CONSOLE</Link>
@@ -121,17 +133,6 @@ export function DashboardLayout() {
             : "Aucun bloc"}
           {lastBlock?.pol_score != null && ` · PoL ${lastBlock.pol_score.toFixed(2)}`}
         </span>
-        <label className="mc-network-select">
-          Réseau:
-          <select
-            value={visibility}
-            onChange={(e) => setVisibility(e.target.value as "private" | "group" | "public")}
-          >
-            <option value="private">PRIVÉ</option>
-            <option value="group">GROUPE{groupId ? ` (${groupId.slice(0, 8)}…)` : ""}</option>
-            <option value="public">PUBLIC</option>
-          </select>
-        </label>
       </footer>
     </div>
   );

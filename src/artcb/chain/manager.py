@@ -302,7 +302,7 @@ class ChainManager:
         return block
 
     def _calculate_block_reward(self, block_index: int) -> int:
-        from artcb.tokenomics import HALVING_INTERVAL, INITIAL_BLOCK_REWARD_SATOSHI, MAX_HALVINGS
+        from src.artcb.tokenomics import HALVING_INTERVAL, INITIAL_BLOCK_REWARD_SATOSHI, MAX_HALVINGS
 
         halvings = block_index // HALVING_INTERVAL
         if halvings >= MAX_HALVINGS:

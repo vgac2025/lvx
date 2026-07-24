@@ -353,7 +353,7 @@ def _ingest_html(path: Path) -> str:
 
 
 def _ingest_pdf(path: Path, warnings: list[str]) -> str:
-    from artcb.io.pdf_loader import extract_pdf_text
+    from src.artcb.io.pdf_loader import extract_pdf_text
 
     text = extract_pdf_text(path)
     if not text.strip():

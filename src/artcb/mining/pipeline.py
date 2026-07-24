@@ -11,12 +11,12 @@ from src.artcb.ir.models import sha256_text
 from src.artcb.rtleg.events import RTLEGEvent
 
 if TYPE_CHECKING:
-    from artcb.agents.critic import DualAgentLoop
-    from artcb.chain.manager import ChainManager
-    from artcb.connectors.manager import ConnectorManager
-    from artcb.groups.manager import GroupManager
-    from artcb.rtleg.timeline import RTLEGTimeline
-    from artcb.wallet.manager import Wallet, WalletManager
+    from src.artcb.agents.critic import DualAgentLoop
+    from src.artcb.chain.manager import ChainManager
+    from src.artcb.connectors.manager import ConnectorManager
+    from src.artcb.groups.manager import GroupManager
+    from src.artcb.rtleg.timeline import RTLEGTimeline
+    from src.artcb.wallet.manager import Wallet, WalletManager
 
 logger = logging.getLogger("artcb.mining.pipeline")
 
@@ -112,7 +112,7 @@ class MiningPipeline:
         learning_offset: int = 0,
         extra_contributors: list[dict] | None = None,
     ) -> MiningPipelineResult:
-        from artcb.ir.llm_encoder import LLMEncoder
+        from src.artcb.ir.llm_encoder import LLMEncoder
 
         phases: dict[str, Any] = {"learning": None, "reasoning": None, "mining": None}
 
@@ -256,7 +256,7 @@ class MiningPipeline:
         batch_index: int = 0,
         **kwargs: Any,
     ) -> MiningPipelineResult:
-        from artcb.connectors.sources import DataSourceError, fetch_learning_text_batched
+        from src.artcb.connectors.sources import DataSourceError, fetch_learning_text_batched
 
         if not self.connectors:
             raise DataSourceError("ConnectorManager not configured")

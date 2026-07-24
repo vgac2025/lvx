@@ -173,7 +173,7 @@ class GovernanceManager:
         return proposals
 
     def cast_vote(self, *, proposal_id: str, wallet_address: str, choice: VoteChoice) -> Vote:
-        from artcb.wallet.address import verify_address
+        from src.artcb.wallet.address import verify_address
 
         if choice not in ("yes", "no"):
             raise GovernanceError("choice must be 'yes' or 'no'")

@@ -135,7 +135,7 @@ def sign_join_with_wallet(body: WalletJoinRequest, request: Request) -> dict:
     Devnet dashboard: l'invité signe avec SON wallet (fichier local data/wallets/).
     L'inviteur ne voit jamais la clé privée — uniquement la demande résultante.
     """
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.wallet.manager import WalletManager
 
     jr = _join_requests(request)
     settings = _state(request).settings

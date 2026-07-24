@@ -52,7 +52,7 @@ def _state(request: Request):
 
 def _pipeline(request: Request) -> MiningPipeline:
     state = _state(request)
-    from artcb.wallet.manager import WalletManager
+    from src.artcb.wallet.manager import WalletManager
 
     return MiningPipeline(
         dual=state.dual,
@@ -79,10 +79,10 @@ def run_mining_pipeline(body: MiningPipelineRequest, request: Request) -> dict:
     if body.use_distributed_pool:
         if not body.text:
             raise HTTPException(status_code=422, detail="text required for distributed pool")
-        from artcb.pool.discovery import build_peer_urls, discover_workers
-        from artcb.pool.orchestrator import run_mining_with_options
-        from artcb.pool.policy import PoolPolicyError, validate_pool_options
-        from artcb.pool.service import PoolError
+        from src.artcb.pool.discovery import build_peer_urls, discover_workers
+        from src.artcb.pool.orchestrator import run_mining_with_options
+        from src.artcb.pool.policy import PoolPolicyError, validate_pool_options
+        from src.artcb.pool.service import PoolError
 
         try:
             validate_pool_options(
@@ -104,7 +104,7 @@ def run_mining_pipeline(body: MiningPipelineRequest, request: Request) -> dict:
         peer_urls = build_peer_urls(state, base_url, workers)
         addr, sign_fn = None, None
         if body.wallet_name:
-            from artcb.wallet.manager import WalletManager
+            from src.artcb.wallet.manager import WalletManager
             try:
                 wallet = WalletManager().load_wallet(name=body.wallet_name)
                 addr, sign_fn = wallet.address, wallet.sign
@@ -116,7 +116,7 @@ def run_mining_pipeline(body: MiningPipelineRequest, request: Request) -> dict:
         if chunk_chars is None and state.optimization is not None:
             chunk_chars = state.optimization.pool_chunk_chars
         if chunk_chars is None:
-            from artcb.system.optimizer import default_pool_chunk_chars
+            from src.artcb.system.optimizer import default_pool_chunk_chars
 
             chunk_chars = default_pool_chunk_chars()
 
@@ -242,7 +242,7 @@ def run_bulk_mining(body: BulkMiningRequest, request: Request) -> dict:
         record = _state(request).connectors.get_connector(body.connector_id)
         if not record:
             break
-        from artcb.connectors.sources import fetch_learning_text_batched
+        from src.artcb.connectors.sources import fetch_learning_text_batched
 
         probe = fetch_learning_text_batched(record, limit=1, offset=offset)
         if not probe.has_more and probe.row_count == 0:

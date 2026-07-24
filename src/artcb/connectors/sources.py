@@ -186,7 +186,7 @@ def _fetch_mysql_batch(record: ConnectorRecord, *, limit: int, offset: int) -> t
 
 
 def _fetch_local_folder_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
-    from artcb.io.media_ingest import MediaIngestError, ingest_folder
+    from src.artcb.io.media_ingest import MediaIngestError, ingest_folder
 
     folder_path = record.config.get("folder_path") or record.config.get("path", "")
     if not folder_path:
@@ -201,7 +201,7 @@ def _fetch_local_folder_batch(record: ConnectorRecord, *, limit: int, offset: in
 
 
 def _fetch_pdf_file_batch(record: ConnectorRecord, *, limit: int, offset: int) -> tuple[str, int, bool]:
-    from artcb.io.media_ingest import MediaIngestError, ingest_file
+    from src.artcb.io.media_ingest import MediaIngestError, ingest_file
 
     file_path = record.config.get("file_path") or record.config.get("path", "")
     if not file_path:
@@ -227,7 +227,7 @@ def test_connector(record: ConnectorRecord) -> tuple[bool, str]:
     """Teste la connexion sans stocker de données ARTCB."""
     try:
         if record.provider in {"openai", "anthropic", "bob"}:
-            from artcb.connectors.llm_router import LLMRouter
+            from src.artcb.connectors.llm_router import LLMRouter
 
             result = LLMRouter().classify_sentences(
                 ["Test de connexion ARTCB."],

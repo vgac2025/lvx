@@ -100,7 +100,7 @@ class LLMRouter:
             return str(data["content"][0]["text"]).strip()
 
     def _bob_chat(self, api_key: str, prompt: str, record: ConnectorRecord, *, model: str | None) -> str:
-        from artcb.config import load_settings
+        from src.artcb.config import load_settings
 
         settings = load_settings()
         base = record.config.get("base_url") or settings.bob_api_base

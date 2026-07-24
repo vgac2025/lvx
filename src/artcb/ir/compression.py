@@ -8,7 +8,7 @@ import logging
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from artcb.ir.models import IRGraph
+    from src.artcb.ir.models import IRGraph
 
 logger = logging.getLogger("artcb.ir.compression")
 
@@ -55,7 +55,7 @@ class GraphCompressor:
         Returns:
             Decompressed IR graph
         """
-        from artcb.ir.models import IRGraph
+        from src.artcb.ir.models import IRGraph
 
         # Decompress
         json_bytes = gzip.decompress(compressed)

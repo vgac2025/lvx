@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 from src.artcb.crypto.kem import kem_enabled
 
 if TYPE_CHECKING:
-    from artcb.groups.manager import GroupManager
+    from src.artcb.groups.manager import GroupManager
 
 
 class PoolPolicyError(Exception):
