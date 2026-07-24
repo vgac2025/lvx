@@ -17,3 +17,8 @@
 {"ts": "2026-07-24T19:30:25.042195+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
 {"ts": "2026-07-24T19:31:30.712041+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
 {"ts": "2026-07-24T19:42:59.688194+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-24T19:46:34.660397+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket connected session_id=journey_smoke"}
+{"ts": "2026-07-24T19:46:34.962955+00:00", "level": "DEBUG", "module": "artcb.api.websocket", "message": "WebSocket disconnected session_id=journey_smoke"}
+{"ts": "2026-07-24T19:51:46.909246+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-24T19:53:08.315782+00:00", "level": "DEBUG", "module": "artcb.api", "message": "ARTCB API started debug=True"}
+{"ts": "2026-07-24T19:53:46.502649+00:00", "level": "ERROR", "module": "artcb.api.p2p", "message": "P2P receive failed: "}

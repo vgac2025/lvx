@@ -26,14 +26,15 @@ ConnectorProvider = Literal[
     "sqlite",
     "local_folder",
     "pdf_file",
+    "github",
     "custom_webhook",
 ]
 
 LLM_PROVIDERS: frozenset[str] = frozenset({"openai", "anthropic", "bob", "openrouter", "ollama"})
 DATA_SOURCE_PROVIDERS: frozenset[str] = frozenset({
-    "supabase", "postgres", "mysql", "sqlite", "local_folder", "pdf_file",
+    "supabase", "postgres", "mysql", "sqlite", "local_folder", "pdf_file", "github",
 })
-# local_folder / pdf_file : api_key = placeholder local (min 8 chars)
+# local_folder / pdf_file / sqlite : api_key = placeholder local (min 8 chars)
 LOCAL_SOURCE_PROVIDERS: frozenset[str] = frozenset({"local_folder", "pdf_file", "sqlite"})
 
 
@@ -140,8 +141,10 @@ class ConnectorManager:
         config: dict[str, Any] | None = None,
         connector_id: str | None = None,
     ) -> ConnectorRecord:
-        if not api_key or len(api_key.strip()) < 8:
-            raise ConnectorError("api_key requise (min 8 caractères)")
+        if not api_key or (len(api_key.strip()) < 8 and provider != "github"):
+                raise ConnectorError("api_key requise (min 8 caractères)")
+        if provider == "github" and not api_key.strip():
+                api_key = "github-public"  # placeholder pour dépôts publics
         if provider not in LLM_PROVIDERS | DATA_SOURCE_PROVIDERS:
             raise ConnectorError(f"Provider inconnu: {provider}")
         if provider in LOCAL_SOURCE_PROVIDERS and api_key.strip().startswith("local-"):

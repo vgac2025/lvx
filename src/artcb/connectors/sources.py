@@ -62,6 +62,8 @@ def fetch_learning_text_batched(
         text, count, has_more = _fetch_local_folder_batch(record, limit=limit, offset=offset)
     elif record.provider == "pdf_file":
         text, count, has_more = _fetch_pdf_file_batch(record, limit=limit, offset=offset)
+    elif record.provider == "github":
+        text, count, has_more = _fetch_github_batch(record, limit=limit, offset=offset)
     else:
         raise DataSourceError(f"Unsupported data source: {record.provider}")
 
@@ -216,6 +218,101 @@ def _fetch_pdf_file_batch(record: ConnectorRecord, *, limit: int, offset: int) -
     return ingested.text, 1, False
 
 
+def _fetch_github_batch(
+    record: ConnectorRecord,
+    *,
+    limit: int,
+    offset: int,
+) -> tuple[str, int, bool]:
+    """
+    Lit récursivement un dépôt GitHub via l'API REST v3.
+    config attendu :
+      repo     : "owner/repo"            (ex: "vgac2025/lvx")
+      branch   : "main"                  (optionnel, défaut "main")
+      path     : ""                      (sous-dossier, optionnel)
+      extensions: "py,ts,md,txt,js,tsx"  (optionnel, filtre d'extensions)
+    api_key   : token GitHub (ghp_…) ou token fine-grained — peut être vide pour dépôt public
+    """
+    repo = record.config.get("repo", "").strip()
+    if not repo or "/" not in repo:
+        raise DataSourceError("github connector requires config.repo = 'owner/repo'")
+
+    branch    = record.config.get("branch", "main").strip() or "main"
+    root_path = record.config.get("path", "").strip().strip("/")
+    raw_exts  = record.config.get("extensions", "py,ts,tsx,md,txt,js,json,yaml,yml,toml,rst,css,html")
+    allowed   = {e.strip().lstrip(".").lower() for e in raw_exts.split(",") if e.strip()}
+
+    headers: dict[str, str] = {"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+    token = record._api_key or ""
+    # N'ajoute le token que si c'est un vrai token GitHub — pas le placeholder "github-public"
+    if token and not token.startswith("local-") and not token.startswith("github-"):
+        headers["Authorization"] = f"Bearer {token}"
+
+    api_base = record.config.get("api_base", "https://api.github.com").rstrip("/")
+
+    def _list_tree(path: str = "") -> list[dict]:
+        """Récupère récursivement tous les fichiers texte du repo."""
+        url = f"{api_base}/repos/{repo}/git/trees/{branch}?recursive=1"
+        with httpx.Client(timeout=60.0) as client:
+            r = client.get(url, headers=headers)
+            if r.status_code == 401:
+                raise DataSourceError("GitHub token invalide ou dépôt privé sans token")
+            if r.status_code == 403:
+                raise DataSourceError("GitHub rate limit atteint — ajoutez un token personnel")
+            if r.status_code == 404:
+                raise DataSourceError(f"Dépôt GitHub introuvable: {repo} (branche: {branch})")
+            r.raise_for_status()
+            data = r.json()
+        if data.get("truncated"):
+            logger.warning("GitHub tree truncated for %s — repo très large, résultats partiels", repo)
+        files = [
+            item for item in data.get("tree", [])
+            if item.get("type") == "blob"
+            and (not path or item["path"].startswith(path))
+            and (not allowed or item["path"].rsplit(".", 1)[-1].lower() in allowed)
+        ]
+        return files
+
+    def _get_file_content(file_path: str) -> str:
+        url = f"{api_base}/repos/{repo}/contents/{file_path}?ref={branch}"
+        with httpx.Client(timeout=30.0) as client:
+            r = client.get(url, headers=headers)
+            r.raise_for_status()
+            data = r.json()
+        if data.get("encoding") == "base64":
+            import base64
+            raw_bytes = base64.b64decode(data["content"].replace("\n", ""))
+            try:
+                return raw_bytes.decode("utf-8")
+            except UnicodeDecodeError:
+                return raw_bytes.decode("latin-1", errors="replace")
+        return data.get("content", "")
+
+    all_files = _list_tree(root_path)
+    total     = len(all_files)
+    page      = all_files[offset : offset + limit]
+    has_more  = (offset + limit) < total
+
+    if not page:
+        return f"[GitHub:{repo}] Aucun fichier trouvé (offset={offset}, exts={raw_exts})", 0, False
+
+    parts: list[str] = []
+    for item in page:
+        try:
+            content = _get_file_content(item["path"])
+            size_kb = round(item.get("size", 0) / 1024, 1)
+            parts.append(
+                f"=== {item['path']} ({size_kb} KB) ===\n{content}"
+            )
+        except Exception as exc:
+            logger.warning("GitHub: skip %s — %s", item["path"], exc)
+
+    text = f"\n\n".join(parts)
+    logger.info("GitHub fetch: repo=%s branch=%s files=%d/%d offset=%d has_more=%s",
+                repo, branch, len(page), total, offset, has_more)
+    return text, len(page), has_more
+
+
 def _rows_to_text(rows: list[Any], *, source_label: str) -> str:
     if not rows:
         return f"[{source_label}] Aucune ligne récupérée."
@@ -226,7 +323,7 @@ def _rows_to_text(rows: list[Any], *, source_label: str) -> str:
 def test_connector(record: ConnectorRecord) -> tuple[bool, str]:
     """Teste la connexion sans stocker de données ARTCB."""
     try:
-        if record.provider in {"openai", "anthropic", "bob"}:
+        if record.provider in {"openai", "anthropic", "bob", "openrouter", "ollama"}:
             from src.artcb.connectors.llm_router import LLMRouter
 
             result = LLMRouter().classify_sentences(
@@ -237,6 +334,30 @@ def test_connector(record: ConnectorRecord) -> tuple[bool, str]:
             if result is None:
                 return False, "LLM n'a pas répondu — vérifiez la clé et le modèle"
             return True, f"LLM {record.provider} connecté"
+        if record.provider == "github":
+            # Test léger : juste l'API repos (pas de téléchargement)
+            repo  = record.config.get("repo", "")
+            branch = record.config.get("branch", "main")
+            token = record._api_key or ""
+            hdrs: dict[str, str] = {"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+            # N'ajoute le token que si c'est un vrai token GitHub (ghp_*, github_pat_*, etc.)
+            if token and not token.startswith("local-") and not token.startswith("github-"):
+                hdrs["Authorization"] = f"Bearer {token}"
+            with httpx.Client(timeout=15.0) as client:
+                r = client.get(f"https://api.github.com/repos/{repo}", headers=hdrs)
+            if r.status_code == 401:
+                return False, "Token GitHub invalide"
+            if r.status_code == 403:
+                return False, "GitHub rate limit — ajoutez un token"
+            if r.status_code == 404:
+                return False, f"Dépôt introuvable: {repo}"
+            r.raise_for_status()
+            info = r.json()
+            return True, (
+                f"GitHub OK — {info.get('full_name')} "
+                f"({info.get('stargazers_count', 0)}★, branche: {branch}, "
+                f"privé: {info.get('private', False)})"
+            )
         text = fetch_learning_text(record, limit=3)
         preview = text[:120].replace("\n", " ")
         return True, f"Source OK — aperçu: {preview}…"

@@ -27,6 +27,7 @@ const LLM_PROVIDERS = [
 ];
 
 const DATA_PROVIDERS = [
+  { id: "github", name: "GitHub (dépôt complet)" },
   { id: "supabase", name: "Supabase (lecture table client)" },
   { id: "sqlite", name: "SQLite (fichier local)" },
   { id: "postgres", name: "PostgreSQL" },
@@ -52,6 +53,11 @@ export function Integrations() {
   const [pdfPath, setPdfPath] = useState("");
   const [model, setModel] = useState("gpt-4o-mini");
   const [learnLlm, setLearnLlm] = useState("openai");
+  // GitHub fields
+  const [ghRepo, setGhRepo] = useState("");
+  const [ghBranch, setGhBranch] = useState("main");
+  const [ghPath, setGhPath] = useState("");
+  const [ghExtensions, setGhExtensions] = useState("py,ts,tsx,md,txt,js,json,yaml,yml,toml,css");
 
   const reload = async () => {
     const data = await fetchConnectors();
@@ -71,6 +77,14 @@ export function Integrations() {
       const config: Record<string, string> = {};
       if (LLM_PROVIDERS.some((p) => p.id === provider)) {
         config.model = model;
+      }
+      if (provider === "github") {
+        if (!ghRepo || !ghRepo.includes("/"))
+          throw new Error("Dépôt GitHub requis au format owner/repo (ex: vgac2025/lvx)");
+        config.repo = ghRepo.trim();
+        config.branch = ghBranch.trim() || "main";
+        if (ghPath.trim()) config.path = ghPath.trim();
+        if (ghExtensions.trim()) config.extensions = ghExtensions.trim();
       }
       if (provider === "supabase") {
         config.project_url = projectUrl;
@@ -211,6 +225,42 @@ export function Integrations() {
             <input value={table} onChange={(e) => setTable(e.target.value)} />
           </label>
         )}
+        {provider === "github" && (
+          <>
+            <label>
+              Dépôt GitHub (owner/repo)
+              <input
+                value={ghRepo}
+                onChange={(e) => setGhRepo(e.target.value)}
+                placeholder="vgac2025/lvx"
+              />
+            </label>
+            <label>
+              Branche
+              <input
+                value={ghBranch}
+                onChange={(e) => setGhBranch(e.target.value)}
+                placeholder="main"
+              />
+            </label>
+            <label>
+              Sous-dossier (optionnel)
+              <input
+                value={ghPath}
+                onChange={(e) => setGhPath(e.target.value)}
+                placeholder="src/ ou frontend/src"
+              />
+            </label>
+            <label>
+              Extensions à lire (séparées par virgule)
+              <input
+                value={ghExtensions}
+                onChange={(e) => setGhExtensions(e.target.value)}
+                placeholder="py,ts,tsx,md,txt,js,json"
+              />
+            </label>
+          </>
+        )}
         {provider === "local_folder" && (
           <label>
             Chemin dossier
@@ -228,7 +278,9 @@ export function Integrations() {
             ? "Chaîne de connexion (stockée chiffrée localement)"
             : provider === "local_folder" || provider === "pdf_file" || provider === "sqlite"
               ? "Secret local (min 8 car.) — ex: local-folder-key"
-              : "Clé API (stockée chiffrée localement)"}
+              : provider === "github"
+                ? "Token GitHub (ghp_… ou fine-grained) — optionnel pour dépôts publics"
+                : "Clé API (stockée chiffrée localement)"}
           <input
             type="password"
             value={apiKey}
@@ -237,7 +289,12 @@ export function Integrations() {
             autoComplete="off"
           />
         </label>
-        <button type="button" className="mc-btn" disabled={loading || apiKey.length < 8} onClick={handleSave}>
+        <button
+          type="button"
+          className="mc-btn"
+          disabled={loading || (provider !== "github" && apiKey.length < 8) || (provider === "github" && !ghRepo.includes("/"))}
+          onClick={handleSave}
+        >
           Connecter
         </button>
       </section>
